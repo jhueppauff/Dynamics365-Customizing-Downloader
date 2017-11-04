@@ -12,6 +12,11 @@ namespace Dynamics365CustomizingDownloader.xrm
 {
     using System;
     using Microsoft.Xrm.Tooling.Connector;
+    using System.Collections.Generic;
+    using Microsoft.Xrm.Sdk.Query;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Crm.Sdk.Messages;
+    using System.IO;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
@@ -29,7 +34,7 @@ namespace Dynamics365CustomizingDownloader.xrm
             try
             {
                 crmServiceClient = new CrmServiceClient(connectionString);
-                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                 if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
                     return crmServiceClient;
                 }
@@ -44,6 +49,56 @@ namespace Dynamics365CustomizingDownloader.xrm
 
                 throw;
             }
+        }
+
+        /// <summary>
+        /// Get all installed CRM Solutions
+        /// </summary>
+        /// <param name="crmServiceClient"><see cref="CrmServiceClient"/></param>
+        /// <returns>Returns <see cref="List{CrmSolution}"/></returns>
+        public List<CrmSolution> GetCrmSolutions (CrmServiceClient crmServiceClient)
+        {
+            QueryExpression query = new QueryExpression()
+            {
+                EntityName = "solution",
+                ColumnSet = new ColumnSet(true),
+                Criteria = new FilterExpression()
+            };
+
+            EntityCollection result = crmServiceClient.RetrieveMultiple(query);
+            List<CrmSolution> SolutionList = new List<CrmSolution>();
+
+            foreach (var solution in result.Entities)
+            {
+                if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
+                {
+                    SolutionList.Add(
+                        new CrmSolution()
+                        {
+                            Id = (Guid)solution["solutionid"],
+                            Name = solution["friendlyname"].ToString(),
+                            PublisherId = ((EntityReference)solution["publisherid"]).Id,
+                            UniqueName = solution["uniquename"].ToString()
+                        });
+                }
+            }
+
+            return SolutionList;
+        }
+
+        public void DownloadSolution (CrmServiceClient crmServiceClient, string crmSolutionName, string filePath)
+        {
+            ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
+            {
+                Managed = false,
+                SolutionName = crmSolutionName
+            };
+
+            ExportSolutionResponse exportSolutionResponse = (ExportSolutionResponse)crmServiceClient.Execute(exportSolutionRequest);
+
+            byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
+            string filename = Path.Combine(filePath, crmSolutionName +".zip");
+            File.WriteAllBytes(filename, exportXml);
         }
     }
 }

@@ -7,8 +7,10 @@
         mc:Ignorable="d"
         Title="Dynamics Customizing Downloader" Height="350" Width="525">
     <Grid>
-        <Button x:Name="btn_connect" Content="Connect to dynamics" HorizontalAlignment="Left" Margin="385,10,0,0" VerticalAlignment="Top" Width="124" Click="btn_connect_Click"/>
-        <TextBox x:Name="tbx_connectionString" HorizontalAlignment="Left" Height="82" Margin="10,10,0,0" TextWrapping="Wrap" Text="AuthType=AD;Url=http://contoso:8080/Test;" VerticalAlignment="Top" Width="370"/>
-
+        <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbx_connection_SelectionChanged"/>
+        <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="210,36,0,0" VerticalAlignment="Top" Width="225"/>
+        <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="440,36,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
     </Grid>
 </Window>

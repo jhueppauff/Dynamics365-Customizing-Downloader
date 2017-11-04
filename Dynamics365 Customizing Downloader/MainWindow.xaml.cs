@@ -10,42 +10,107 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using Microsoft.Xrm.Tooling.Connector;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        private string crmConnectionString;
-        private CrmServiceClient crmServiceClient;
 
         public MainWindow()
         {
             InitializeComponent();
+            cbx_connection.Items.Add("New");
+            try
+            {
+                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+
+                foreach (xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    cbx_connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignor File Not found
+            }
         }
 
-        private void btn_connect_Click(object sender, RoutedEventArgs e)
+        private void cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            crmConnectionString = tbx_connectionString.Text;
+            try
+            {
+                if (cbx_connection.SelectedItem.ToString() == "New")
+                {
+                    ConnectionManger connectionManger = new ConnectionManger();
+                    connectionManger.ShowDialog();
+                    ReloadConnections();
+                }
+                else
+                {
+                    xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
 
-            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
-            crmServiceClient = toolingConnector.GetCrmServiceClient(crmConnectionString);
+                    List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+                                       
+                    // Get Crm Solutions
+                    List <xrm.CrmSolution> crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
 
+                    foreach (xrm.CrmSolution crmSolution in crmSolutions)
+                    {
+                        cbx_crmsolution.Items.Add(crmSolution.UniqueName);
+                    }
+                }
+            }
+            catch (NullReferenceException)
+            {
+                // Ignor, reload will change the index and will trigger this without items
+            }
+        }
+
+        /// <summary>
+        /// Reloads the Connection Drop down after a connection was created
+        /// </summary>
+        private void ReloadConnections()
+        {
+            try
+            {
+                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                cbx_connection.Items.Clear();
+
+                cbx_connection.Items.Add("New");
+
+                foreach (xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    cbx_connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignor File Not found
+            }
+        }
+
+        /// <summary>
+        /// Download Button Click Event
+        /// </summary>
+        /// <param name="sender">Button sender object</param>
+        /// <param name="e">Button event args</param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+            xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+
+            DownloadDialog downloadDialog = new DownloadDialog
+            {
+                CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
+                CrmConnectionString = crmConnection.ConnectionString
+            };
+            downloadDialog.ShowDialog();
         }
     }
 }
