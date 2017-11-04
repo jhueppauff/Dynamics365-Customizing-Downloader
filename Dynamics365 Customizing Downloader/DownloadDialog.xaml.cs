@@ -30,13 +30,30 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class DownloadDialog : Window
     {
-        public string CrmSolutionName;
+        public string CrmSolutionName, CrmConnectionString;
 
         public DownloadDialog()
         {
             InitializeComponent();
         }
 
+        /// <summary>
+        /// Button Action, Download
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btn_download_Click(object sender, RoutedEventArgs e)
+        {
+            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(CrmConnectionString), CrmSolutionName, tbx_filepath.Text);
+            this.Close();
+        }
+
+        /// <summary>
+        /// Button Action, Select Path
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void btn_selectPath_Click(object sender, RoutedEventArgs e)
         {
             using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
@@ -46,8 +63,6 @@ namespace Dynamics365CustomizingDownloader
                 {
                     tbx_filepath.Text = dialog.SelectedPath;
                 }
-              
-
             }
         }
     }

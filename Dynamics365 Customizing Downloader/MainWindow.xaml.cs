@@ -102,9 +102,13 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+            xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+
             DownloadDialog downloadDialog = new DownloadDialog
             {
-                CrmSolutionName = cbx_crmsolution.SelectedItem.ToString()
+                CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
+                CrmConnectionString = crmConnection.ConnectionString
             };
             downloadDialog.ShowDialog();
         }

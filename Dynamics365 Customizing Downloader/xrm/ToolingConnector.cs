@@ -15,6 +15,8 @@ namespace Dynamics365CustomizingDownloader.xrm
     using System.Collections.Generic;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Sdk;
+    using Microsoft.Crm.Sdk.Messages;
+    using System.IO;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
@@ -49,6 +51,11 @@ namespace Dynamics365CustomizingDownloader.xrm
             }
         }
 
+        /// <summary>
+        /// Get all installed CRM Solutions
+        /// </summary>
+        /// <param name="crmServiceClient"><see cref="CrmServiceClient"/></param>
+        /// <returns>Returns <see cref="List{CrmSolution}"/></returns>
         public List<CrmSolution> GetCrmSolutions (CrmServiceClient crmServiceClient)
         {
             QueryExpression query = new QueryExpression()
@@ -77,6 +84,21 @@ namespace Dynamics365CustomizingDownloader.xrm
             }
 
             return SolutionList;
+        }
+
+        public void DownloadSolution (CrmServiceClient crmServiceClient, string crmSolutionName, string filePath)
+        {
+            ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
+            {
+                Managed = false,
+                SolutionName = crmSolutionName
+            };
+
+            ExportSolutionResponse exportSolutionResponse = (ExportSolutionResponse)crmServiceClient.Execute(exportSolutionRequest);
+
+            byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
+            string filename = Path.Combine(filePath, crmSolutionName +".zip");
+            File.WriteAllBytes(filename, exportXml);
         }
     }
 }

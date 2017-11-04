@@ -8,7 +8,7 @@
         Title="DownloadDialog" Height="132.103" Width="300">
     <Grid>
         <ProgressBar HorizontalAlignment="Left" Height="29" Margin="10,60,0,0" VerticalAlignment="Top" Width="272"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="147"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="147" Click="btn_download_Click"/>
         <TextBox x:Name="tbx_filepath" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="btn_selectPath" Content="Select Path" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="147" Click="btn_selectPath_Click"/>
 
