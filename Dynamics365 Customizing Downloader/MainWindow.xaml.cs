@@ -10,22 +10,10 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using Microsoft.Xrm.Tooling.Connector;
     using System;
     using System.Collections.Generic;
-    using System.IO.IsolatedStorage;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -37,27 +25,56 @@ namespace Dynamics365CustomizingDownloader
         {
             InitializeComponent();
             cbx_connection.Items.Add("New");
-
-            List<xrm.CrmConnection> crmConnections =  StorageExtensions.Load();
-
-            foreach (xrm.CrmConnection crmConnection in crmConnections)
+            try
             {
-                cbx_connection.Items.Add(crmConnection.Name);
+                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+
+                foreach (xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    cbx_connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignor File Not found
             }
         }
 
         private void cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cbx_connection.SelectedItem.ToString() == "New")
+            try
             {
-                ConnectionManger connectionManger = new ConnectionManger();
-                connectionManger.ShowDialog();
+                if (cbx_connection.SelectedItem.ToString() == "New")
+                {
+                    ConnectionManger connectionManger = new ConnectionManger();
+                    connectionManger.ShowDialog();
+                    ReloadConnections();
+                }
+            }
+            catch (NullReferenceException)
+            {
+                // Ignor, reload will change the index and will trigger this without items
             }
         }
 
-        private void ReloadConnections ()
+        private void ReloadConnections()
         {
+            try
+            {
+                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                cbx_connection.Items.Clear();
 
+                cbx_connection.Items.Add("New");
+
+                foreach (xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    cbx_connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignor File Not found
+            }
         }
     }
 }

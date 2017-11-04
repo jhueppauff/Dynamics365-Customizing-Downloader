@@ -36,25 +36,43 @@ namespace Dynamics365CustomizingDownloader
 
             if (crmServiceClient != null)
             {
-                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-
-                foreach (xrm.CrmConnection crmTempConnection in crmConnections)
+                try
                 {
-                    if (crmTempConnection.Name != crmServiceClient.ConnectedOrgFriendlyName)
-                    {
-                        xrm.CrmConnection crmConnection = new xrm.CrmConnection
-                        {
-                            ConnectionString = tbx_connectionString.Text,
-                            Name = crmServiceClient.ConnectedOrgFriendlyName
-                        };
-                        StorageExtensions.Save(crmConnection);
-                    }
-                    else
-                    {
-                        MessageBox.Show($"Connection {crmTempConnection.Name} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                }
+                    List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
 
+                    foreach (xrm.CrmConnection crmTempConnection in crmConnections)
+                    {
+                        if (crmTempConnection.Name != crmServiceClient.ConnectedOrgFriendlyName)
+                        {
+                            xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                            {
+                                ConnectionString = tbx_connectionString.Text,
+                                Name = crmServiceClient.ConnectedOrgFriendlyName
+                            };
+                            StorageExtensions.Save(crmConnection);
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show($"Connection {crmTempConnection.Name} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+                    }
+
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    // Ignor
+                }
+                finally
+                {
+                    xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                    {
+                        ConnectionString = tbx_connectionString.Text,
+                        Name = crmServiceClient.ConnectedOrgFriendlyName
+                    };
+                    StorageExtensions.Save(crmConnection);
+                    this.Close();
+                }
             }
         }
     }
