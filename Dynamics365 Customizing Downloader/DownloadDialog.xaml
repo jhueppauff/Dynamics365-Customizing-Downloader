@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dynamics365CustomizingDownloader"
         mc:Ignorable="d"
-        Title="DownloadDialog" Height="132.103" Width="300">
+        Title="DownloadDialog" Height="132.103" Width="467.898">
     <Grid>
-        <ProgressBar HorizontalAlignment="Left" Height="29" Margin="10,60,0,0" VerticalAlignment="Top" Width="272"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="135,35,0,0" VerticalAlignment="Top" Width="147" Click="btn_download_Click"/>
-        <TextBox x:Name="tbx_filepath" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-        <Button x:Name="btn_selectPath" Content="Select Path" HorizontalAlignment="Left" Margin="135,10,0,0" VerticalAlignment="Top" Width="147" Click="btn_selectPath_Click"/>
+        <ProgressBar HorizontalAlignment="Left" Height="29" Margin="10,60,0,0" VerticalAlignment="Top" Width="440"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="303,35,0,0" VerticalAlignment="Top" Width="147" Click="btn_download_Click"/>
+        <TextBox x:Name="tbx_filepath" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="288"/>
+        <Button x:Name="btn_selectPath" Content="Select Path" HorizontalAlignment="Left" Margin="303,10,0,0" VerticalAlignment="Top" Width="147" Click="btn_selectPath_Click"/>
+        <CheckBox Content="Extract Solution" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,38,0,0" Width="120" IsChecked="True"/>
 
     </Grid>
 </Window>
