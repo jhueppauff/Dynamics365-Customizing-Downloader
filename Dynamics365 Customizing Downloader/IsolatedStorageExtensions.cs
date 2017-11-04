@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="None">
+// <copyright file="IsolatedStorageExtensions.cs" company="None">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -10,49 +10,52 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using Microsoft.Xrm.Tooling.Connector;
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.IO.IsolatedStorage;
     using System.Linq;
+    using System.Runtime.Serialization.Formatters.Binary;
     using System.Text;
     using System.Threading.Tasks;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Input;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-    using System.Windows.Navigation;
-    using System.Windows.Shapes;
 
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public static class IsolatedStorageExtensions
     {
-        private IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-        private DataStoreContainer data = new DataStoreContainer();
+        private static string storagePath = Path.Combine(System.Reflection.Assembly.GetExecutingAssembly().Location, "Dyn365_Configuration.dat");
 
-        public MainWindow()
+        public static void SaveObject(this IsolatedStorage isoStorage, object obj)
         {
-            InitializeComponent();
-            cbx_connection.Items.Add("New");
+            IsolatedStorageFileStream writeStream = new IsolatedStorageFileStream(storagePath, FileMode.Create);
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(writeStream, obj);
+            writeStream.Flush();
+            writeStream.Close();
         }
 
-        private void cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        public static T LoadObject<T>(this IsolatedStorage isoStorage)
         {
-            if (cbx_connection.SelectedItem.ToString() == "New")
-            {
-                ConnectionManger connectionManger = new ConnectionManger();
-                connectionManger.ShowDialog();
-            }
-        }
+            IsolatedStorageFileStream readStream = new IsolatedStorageFileStream(storagePath, FileMode.Open);
+            BinaryFormatter formatter = new BinaryFormatter();
+            T readData = (T)formatter.Deserialize(readStream);
+            readStream.Flush();
+            readStream.Close();
 
-        private void ReloadConnections ()
-        {
-            data = isoStore.LoadObject<DataStoreContainer>();
+            return readData;
         }
     }
+
+
+
+    [Serializable]
+    internal class DataStoreContainer
+    {
+        public DataStoreContainer()
+        {
+            List<xrm.CrmConnection> crmConnection = new List<xrm.CrmConnection>();
+        }
+
+        public List<xrm.CrmConnection> CrmConnections { get; set; }
+    }
+
+
 }

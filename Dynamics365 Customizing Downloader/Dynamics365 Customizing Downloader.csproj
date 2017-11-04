@@ -93,7 +93,17 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ConnectionManger.xaml.cs">
+      <DependentUpon>ConnectionManger.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Cryptography.cs" />
+    <Compile Include="IsolatedStorageExtensions.cs" />
+    <Compile Include="xrm\CrmConnection.cs" />
     <Compile Include="xrm\ToolingConnector.cs" />
+    <Page Include="ConnectionManger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
