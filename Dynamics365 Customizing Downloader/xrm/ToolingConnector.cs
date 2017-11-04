@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="App.xaml.cs" company="None">
+// <copyright file="ToolingConnector.cs" company="None">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -8,20 +8,42 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader
+namespace Dynamics365CustomizingDownloader.xrm
 {
     using System;
-    using System.Collections.Generic;
-    using System.Configuration;
-    using System.Data;
-    using System.Linq;
-    using System.Threading.Tasks;
-    using System.Windows;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
-    /// Interaction logic for App.xaml
+    /// XRM/CRM Tooling Connector
     /// </summary>
-    public partial class App : Application
+    public class ToolingConnector
     {
+        /// <summary>
+        /// Connect to crm and get the crm service client
+        /// </summary>
+        /// <param name="connectionString">XRM Connection String</param>
+        /// <returns>Returns <see cref="CrmServiceClient"/></returns>
+        public CrmServiceClient GetCrmServiceClient (string connectionString)
+        {
+            CrmServiceClient crmServiceClient;
+            try
+            {
+                crmServiceClient = new CrmServiceClient(connectionString);
+                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                {
+                    return crmServiceClient;
+                }
+                else
+                {
+                    // CRM Client is empty
+                    throw new NullReferenceException("CRM Service Client is empty");
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
     }
 }
