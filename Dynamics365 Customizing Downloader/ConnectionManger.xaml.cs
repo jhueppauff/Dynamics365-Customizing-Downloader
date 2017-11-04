@@ -22,8 +22,6 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class ConnectionManger : Window
     {
-        private IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-        private DataStoreContainer data = new DataStoreContainer();
 
         public ConnectionManger()
         {
@@ -38,19 +36,26 @@ namespace Dynamics365CustomizingDownloader
 
             if (crmServiceClient != null)
             {
-                data = isoStore.LoadObject<DataStoreContainer>();
+                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
 
-                xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                foreach (xrm.CrmConnection crmTempConnection in crmConnections)
                 {
-                    ConnectionString = tbx_connectionString.Text,
-                    Name = crmServiceClient.ConnectedOrgFriendlyName
-                };
+                    if (crmTempConnection.Name != crmServiceClient.ConnectedOrgFriendlyName)
+                    {
+                        xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                        {
+                            ConnectionString = tbx_connectionString.Text,
+                            Name = crmServiceClient.ConnectedOrgFriendlyName
+                        };
+                        StorageExtensions.Save(crmConnection);
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Connection {crmTempConnection.Name} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
 
-                data.CrmConnections.Add(crmConnection);
-
-                isoStore.SaveObject(data);
             }
-
         }
     }
 }

@@ -29,7 +29,7 @@ namespace Dynamics365CustomizingDownloader.xrm
             try
             {
                 crmServiceClient = new CrmServiceClient(connectionString);
-                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                 if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
                     return crmServiceClient;
                 }

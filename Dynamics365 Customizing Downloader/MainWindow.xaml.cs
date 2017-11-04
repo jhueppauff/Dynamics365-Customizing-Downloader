@@ -32,13 +32,18 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class MainWindow : Window
     {
-        private IsolatedStorageFile isoStore = IsolatedStorageFile.GetStore(IsolatedStorageScope.User | IsolatedStorageScope.Assembly, null, null);
-        private DataStoreContainer data = new DataStoreContainer();
 
         public MainWindow()
         {
             InitializeComponent();
             cbx_connection.Items.Add("New");
+
+            List<xrm.CrmConnection> crmConnections =  StorageExtensions.Load();
+
+            foreach (xrm.CrmConnection crmConnection in crmConnections)
+            {
+                cbx_connection.Items.Add(crmConnection.Name);
+            }
         }
 
         private void cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -52,7 +57,7 @@ namespace Dynamics365CustomizingDownloader
 
         private void ReloadConnections ()
         {
-            data = isoStore.LoadObject<DataStoreContainer>();
+
         }
     }
 }
