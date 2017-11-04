@@ -50,6 +50,21 @@ namespace Dynamics365CustomizingDownloader
                     connectionManger.ShowDialog();
                     ReloadConnections();
                 }
+                else
+                {
+                    xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+
+                    List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+                                       
+                    // Get Crm Solutions
+                    List <xrm.CrmSolution> crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+
+                    foreach (xrm.CrmSolution crmSolution in crmSolutions)
+                    {
+                        cbx_crmsolution.Items.Add(crmSolution.UniqueName);
+                    }
+                }
             }
             catch (NullReferenceException)
             {
@@ -57,6 +72,9 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Reloads the Connection Drop down after a connection was created
+        /// </summary>
         private void ReloadConnections()
         {
             try
@@ -75,6 +93,16 @@ namespace Dynamics365CustomizingDownloader
             {
                 // Ignor File Not found
             }
+        }
+
+        /// <summary>
+        /// Download Button Click Event
+        /// </summary>
+        /// <param name="sender">Button sender object</param>
+        /// <param name="e">Button event args</param>
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

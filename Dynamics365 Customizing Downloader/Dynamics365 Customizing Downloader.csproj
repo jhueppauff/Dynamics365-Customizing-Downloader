@@ -102,6 +102,7 @@
     <Compile Include="Cryptography.cs" />
     <Compile Include="StorageExtensions.cs" />
     <Compile Include="xrm\CrmConnection.cs" />
+    <Compile Include="xrm\CrmSolution.cs" />
     <Compile Include="xrm\ToolingConnector.cs" />
     <Page Include="ConnectionManger.xaml">
       <SubType>Designer</SubType>

@@ -9,5 +9,8 @@
     <Grid>
         <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="cbx_connection_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="210,36,0,0" VerticalAlignment="Top" Width="225"/>
+        <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="440,36,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
     </Grid>
 </Window>
