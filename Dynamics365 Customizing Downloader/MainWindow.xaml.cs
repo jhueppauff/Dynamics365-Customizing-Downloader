@@ -12,14 +12,82 @@ namespace Dynamics365CustomizingDownloader
 {
     using System;
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        /// <summary>
+        /// BackGround Worker
+        /// </summary>
+        private readonly BackgroundWorker worker = new BackgroundWorker();
+
+        private string selectedCrmConnection;
+
+        private List<xrm.CrmSolution> crmSolutions = new List<xrm.CrmSolution>();
+
+        private bool panelLoading;
+        private string panelMainMessage = "Please wait, connecting to Crm and retriving the Solutions";
+
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [panel loading].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [panel loading]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PanelLoading
+        {
+            get
+            {
+                return panelLoading;
+            }
+            set
+            {
+                panelLoading = value;
+                RaisePropertyChanged("PanelLoading");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the panel main message.
+        /// </summary>
+        /// <value>The panel main message.</value>
+        public string PanelMainMessage
+        {
+            get
+            {
+                return panelMainMessage;
+            }
+            set
+            {
+                panelMainMessage = value;
+                RaisePropertyChanged("PanelMainMessage");
+            }
+        }
+
+        /// <summary>
+        /// Gets the hide panel command.
+        /// </summary>
+        public ICommand HidePanelCommand
+        {
+            get
+            {
+                return new HelperClasses.DelegateCommand(() =>
+                {
+                    PanelLoading = false;
+                });
+            }
+        }
 
         public MainWindow()
         {
@@ -44,6 +112,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
+                // Will cause an error when connections was flushed
                 if (cbx_connection.SelectedItem.ToString() == "New")
                 {
                     ConnectionManger connectionManger = new ConnectionManger();
@@ -52,24 +121,51 @@ namespace Dynamics365CustomizingDownloader
                 }
                 else
                 {
-                    xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+                    loadingPanel.IsLoading = true;
 
-                    List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-                    xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
-                                       
-                    // Get Crm Solutions
-                    List <xrm.CrmSolution> crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+                    worker.DoWork += worker_DoWork;
+                    worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+                    worker.RunWorkerAsync();
 
-                    foreach (xrm.CrmSolution crmSolution in crmSolutions)
-                    {
-                        cbx_crmsolution.Items.Add(crmSolution.UniqueName);
-                    }
+                    selectedCrmConnection = cbx_connection.SelectedItem.ToString();
+
+
                 }
             }
             catch (NullReferenceException)
             {
                 // Ignor, reload will change the index and will trigger this without items
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured: " + ex.Message);
+                loadingPanel.IsLoading = false;
+            }
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+
+            List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+            xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == selectedCrmConnection);
+
+            // Get Crm Solutions
+            crmSolutions.Clear();
+            crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+
+            
+        }
+
+        private void worker_RunWorkerCompleted(object sender,
+                                               RunWorkerCompletedEventArgs e)
+        {
+            foreach (xrm.CrmSolution crmSolution in crmSolutions)
+            {
+                cbx_crmsolution.Items.Add(crmSolution.UniqueName);
+            }
+
+            loadingPanel.IsLoading = false;
         }
 
         /// <summary>
@@ -111,6 +207,18 @@ namespace Dynamics365CustomizingDownloader
                 CrmConnectionString = crmConnection.ConnectionString
             };
             downloadDialog.ShowDialog();
+        }
+
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            }
         }
     }
 }

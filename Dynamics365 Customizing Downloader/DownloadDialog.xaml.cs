@@ -10,15 +10,83 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System.ComponentModel;
     using System.IO;
     using System.Windows;
+    using System.Windows.Input;
 
     /// <summary>
     /// Interaction logic for DownloadDialog.xaml
     /// </summary>
     public partial class DownloadDialog : Window
     {
+        /// <summary>
+        /// BackGround Worker
+        /// </summary>
+        private readonly BackgroundWorker worker = new BackgroundWorker();
+
         public string CrmSolutionName, CrmConnectionString;
+
+        private string selectedPath;
+
+        private bool panelLoading;
+        private string panelMainMessage = "Please wait, downloading and extracting Solution";
+
+        /// <summary>
+        /// Occurs when a property value changes.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets a value indicating whether [panel loading].
+        /// </summary>
+        /// <value>
+        /// <c>true</c> if [panel loading]; otherwise, <c>false</c>.
+        /// </value>
+        public bool PanelLoading
+        {
+            get
+            {
+                return panelLoading;
+            }
+            set
+            {
+                panelLoading = value;
+                RaisePropertyChanged("PanelLoading");
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the panel main message.
+        /// </summary>
+        /// <value>The panel main message.</value>
+        public string PanelMainMessage
+        {
+            get
+            {
+                return panelMainMessage;
+            }
+            set
+            {
+                panelMainMessage = value;
+                RaisePropertyChanged("PanelMainMessage");
+            }
+        }
+
+        /// <summary>
+        /// Gets the hide panel command.
+        /// </summary>
+        public ICommand HidePanelCommand
+        {
+            get
+            {
+                return new HelperClasses.DelegateCommand(() =>
+                {
+                    PanelLoading = false;
+                });
+            }
+        }
+
 
         public DownloadDialog()
         {
@@ -32,14 +100,34 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e"></param>
         private void btn_download_Click(object sender, RoutedEventArgs e)
         {
+            loadingPanel.IsLoading = true;
+            selectedPath = tbx_filepath.Text;
+
+            // Background Worker
+            worker.DoWork += worker_DoWork;
+            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
+            worker.RunWorkerAsync();
+
+        }
+
+        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        {
             xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
-            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, tbx_filepath.Text);
+            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, selectedPath);
 
             xrm.CrmSolutionPackager crmSolutionPackager = new xrm.CrmSolutionPackager();
-            crmSolutionPackager.ExtractCustomizing(Path.Combine(tbx_filepath.Text, this.CrmSolutionName + ".zip"), Path.Combine(tbx_filepath.Text, this.CrmSolutionName));
+            crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
 
+            File.Delete(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"));
+        }
+
+        private void worker_RunWorkerCompleted(object sender,
+                                               RunWorkerCompletedEventArgs e)
+        {
+            loadingPanel.IsLoading = false;
             this.Close();
         }
+
 
         /// <summary>
         /// Button Action, Select Path
@@ -55,6 +143,18 @@ namespace Dynamics365CustomizingDownloader
                 {
                     tbx_filepath.Text = dialog.SelectedPath;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        protected void RaisePropertyChanged(string propertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
     }
