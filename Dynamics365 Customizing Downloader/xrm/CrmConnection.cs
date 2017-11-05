@@ -8,13 +8,21 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.xrm
-{
-
+namespace Dynamics365CustomizingDownloader.Xrm
+{ 
+    /// <summary>
+    /// CRM Connection
+    /// </summary>
     public class CrmConnection
     {
+        /// <summary>
+        /// Gets or sets the name of the CRM Connection = Organisation Name
+        /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Connection String
+        /// </summary>
         public string ConnectionString { get; set; }
     }
-
 }

@@ -18,7 +18,7 @@ namespace Dynamics365CustomizingDownloader
     using System.Windows.Input;
 
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainWindow
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
@@ -27,12 +27,47 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
+        /// <summary>
+        /// Selected CRM Connection
+        /// </summary>
         private string selectedCrmConnection;
 
-        private List<xrm.CrmSolution> crmSolutions = new List<xrm.CrmSolution>();
+        /// <summary>
+        /// List of all CRM Solutions/>
+        /// </summary>
+        private List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
 
+        /// <summary>
+        /// Indicates if the panel is loading
+        /// </summary>
         private bool panelLoading;
+
+        /// <summary>
+        /// Panel Message
+        /// </summary>
         private string panelMainMessage = "Please wait, connecting to Crm and retriving the Solutions";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            this.cbx_connection.Items.Add("New");
+            try
+            {
+                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+
+                foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    this.cbx_connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignor File Not found
+            }
+        }
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -49,12 +84,13 @@ namespace Dynamics365CustomizingDownloader
         {
             get
             {
-                return panelLoading;
+                return this.panelLoading;
             }
+
             set
             {
-                panelLoading = value;
-                RaisePropertyChanged("PanelLoading");
+                this.panelLoading = value;
+                this.RaisePropertyChanged("PanelLoading");
             }
         }
 
@@ -66,12 +102,13 @@ namespace Dynamics365CustomizingDownloader
         {
             get
             {
-                return panelMainMessage;
+                return this.panelMainMessage;
             }
+
             set
             {
-                panelMainMessage = value;
-                RaisePropertyChanged("PanelMainMessage");
+                this.panelMainMessage = value;
+                this.RaisePropertyChanged("PanelMainMessage");
             }
         }
 
@@ -84,52 +121,45 @@ namespace Dynamics365CustomizingDownloader
             {
                 return new HelperClasses.DelegateCommand(() =>
                 {
-                    PanelLoading = false;
+                    this.PanelLoading = false;
                 });
             }
         }
 
-        public MainWindow()
+        /// <summary>
+        /// Raises the property changed.
+        /// </summary>
+        /// <param name="propertyName">Name of the property.</param>
+        protected void RaisePropertyChanged(string propertyName)
         {
-            InitializeComponent();
-            cbx_connection.Items.Add("New");
-            try
-            {
-                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-
-                foreach (xrm.CrmConnection crmConnection in crmConnections)
-                {
-                    cbx_connection.Items.Add(crmConnection.Name);
-                }
-            }
-            catch (System.IO.FileNotFoundException)
-            {
-                // Ignor File Not found
-            }
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private void cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        /// <summary>
+        /// Event Selection Changed
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void Cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
                 // Will cause an error when connections was flushed
-                if (cbx_connection.SelectedItem.ToString() == "New")
+                if (this.cbx_connection.SelectedItem.ToString() == "New")
                 {
                     ConnectionManger connectionManger = new ConnectionManger();
                     connectionManger.ShowDialog();
-                    ReloadConnections();
+                    this.ReloadConnections();
                 }
                 else
                 {
-                    loadingPanel.IsLoading = true;
+                    this.loadingPanel.IsLoading = true;
 
-                    worker.DoWork += worker_DoWork;
-                    worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-                    worker.RunWorkerAsync();
+                    this.worker.DoWork += this.Worker_DoWork;
+                    this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
+                    this.worker.RunWorkerAsync();
 
-                    selectedCrmConnection = cbx_connection.SelectedItem.ToString();
-
-
+                    this.selectedCrmConnection = this.cbx_connection.SelectedItem.ToString();
                 }
             }
             catch (NullReferenceException)
@@ -143,29 +173,36 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
+        /// <summary>
+        /// Background Worker Event DoWork
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
 
-            List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-            xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == selectedCrmConnection);
+            List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+            Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
 
             // Get Crm Solutions
-            crmSolutions.Clear();
-            crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
-
-            
+            this.crmSolutions.Clear();
+            this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
         }
 
-        private void worker_RunWorkerCompleted(object sender,
-                                               RunWorkerCompletedEventArgs e)
+        /// <summary>
+        /// Background Worker Event RunWorkerCompleted
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            foreach (xrm.CrmSolution crmSolution in crmSolutions)
+            foreach (Xrm.CrmSolution crmSolution in this.crmSolutions)
             {
-                cbx_crmsolution.Items.Add(crmSolution.UniqueName);
+                this.cbx_crmsolution.Items.Add(crmSolution.UniqueName);
             }
 
-            loadingPanel.IsLoading = false;
+            this.loadingPanel.IsLoading = false;
         }
 
         /// <summary>
@@ -175,14 +212,14 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-                cbx_connection.Items.Clear();
+                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                this.cbx_connection.Items.Clear();
 
-                cbx_connection.Items.Add("New");
+                this.cbx_connection.Items.Add("New");
 
-                foreach (xrm.CrmConnection crmConnection in crmConnections)
+                foreach (Xrm.CrmConnection crmConnection in crmConnections)
                 {
-                    cbx_connection.Items.Add(crmConnection.Name);
+                    this.cbx_connection.Items.Add(crmConnection.Name);
                 }
             }
             catch (System.IO.FileNotFoundException)
@@ -198,27 +235,16 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-            xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+            List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+            Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
             DownloadDialog downloadDialog = new DownloadDialog
             {
                 CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
                 CrmConnectionString = crmConnection.ConnectionString
             };
-            downloadDialog.ShowDialog();
-        }
 
-        /// <summary>
-        /// Raises the property changed.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        protected void RaisePropertyChanged(string propertyName)
-        {
-            if (PropertyChanged != null)
-            {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-            }
+            downloadDialog.ShowDialog();
         }
     }
 }

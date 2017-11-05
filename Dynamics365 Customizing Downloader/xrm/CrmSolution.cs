@@ -8,10 +8,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.xrm
+namespace Dynamics365CustomizingDownloader.Xrm
 {
     using System;
 
+    /// <summary>
+    /// CRM Solution
+    /// </summary>
     public class CrmSolution
     {
         /// <summary>

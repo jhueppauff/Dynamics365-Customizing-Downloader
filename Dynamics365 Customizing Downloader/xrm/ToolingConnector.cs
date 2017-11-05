@@ -8,15 +8,15 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.xrm
+namespace Dynamics365CustomizingDownloader.Xrm
 {
     using System;
-    using Microsoft.Xrm.Tooling.Connector;
     using System.Collections.Generic;
-    using Microsoft.Xrm.Sdk.Query;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Crm.Sdk.Messages;
     using System.IO;
+    using Microsoft.Crm.Sdk.Messages;
+    using Microsoft.Xrm.Sdk;
+    using Microsoft.Xrm.Sdk.Query;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
@@ -24,11 +24,11 @@ namespace Dynamics365CustomizingDownloader.xrm
     public class ToolingConnector
     {
         /// <summary>
-        /// Connect to crm and get the crm service client
+        /// Connect to CRM and get the CRM service client
         /// </summary>
         /// <param name="connectionString">XRM Connection String</param>
         /// <returns>Returns <see cref="CrmServiceClient"/></returns>
-        public CrmServiceClient GetCrmServiceClient (string connectionString)
+        public CrmServiceClient GetCrmServiceClient(string connectionString)
         {
             CrmServiceClient crmServiceClient;
             try
@@ -46,7 +46,6 @@ namespace Dynamics365CustomizingDownloader.xrm
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
@@ -54,9 +53,9 @@ namespace Dynamics365CustomizingDownloader.xrm
         /// <summary>
         /// Get all installed CRM Solutions
         /// </summary>
-        /// <param name="crmServiceClient"><see cref="CrmServiceClient"/></param>
+        /// <param name="crmServiceClient">CRM Service Client <see cref="CrmServiceClient"/></param>
         /// <returns>Returns <see cref="List{CrmSolution}"/></returns>
-        public List<CrmSolution> GetCrmSolutions (CrmServiceClient crmServiceClient)
+        public List<CrmSolution> GetCrmSolutions(CrmServiceClient crmServiceClient)
         {
             QueryExpression query = new QueryExpression()
             {
@@ -66,13 +65,13 @@ namespace Dynamics365CustomizingDownloader.xrm
             };
 
             EntityCollection result = crmServiceClient.RetrieveMultiple(query);
-            List<CrmSolution> SolutionList = new List<CrmSolution>();
+            List<CrmSolution> solutionList = new List<CrmSolution>();
 
             foreach (var solution in result.Entities)
             {
                 if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
-                    SolutionList.Add(
+                    solutionList.Add(
                         new CrmSolution()
                         {
                             Id = (Guid)solution["solutionid"],
@@ -83,10 +82,16 @@ namespace Dynamics365CustomizingDownloader.xrm
                 }
             }
 
-            return SolutionList;
+            return solutionList;
         }
 
-        public void DownloadSolution (CrmServiceClient crmServiceClient, string crmSolutionName, string filePath)
+        /// <summary>
+        /// Downloads the CRM Solution
+        /// </summary>
+        /// <param name="crmServiceClient">CRM Service Client</param>
+        /// <param name="crmSolutionName">CRM Solution Name</param>
+        /// <param name="filePath">File Path</param>
+        public void DownloadSolution(CrmServiceClient crmServiceClient, string crmSolutionName, string filePath)
         {
             ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
             {
@@ -97,7 +102,7 @@ namespace Dynamics365CustomizingDownloader.xrm
             ExportSolutionResponse exportSolutionResponse = (ExportSolutionResponse)crmServiceClient.Execute(exportSolutionRequest);
 
             byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
-            string filename = Path.Combine(filePath, crmSolutionName +".zip");
+            string filename = Path.Combine(filePath, crmSolutionName + ".zip");
             File.WriteAllBytes(filename, exportXml);
         }
     }
