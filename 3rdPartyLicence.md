@@ -23,6 +23,7 @@ https://github.com/AzureAD/azure-activedirectory-library-for-dotnet
 #### StyleCop
 Microsoft Public License (Ms-PL)
 Copyright (c) Microsoft Corporation
+
 https://github.com/StyleCop/StyleCop
 
 
