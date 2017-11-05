@@ -19,6 +19,15 @@ Copyright (c) Microsoft Corporation
 
 https://github.com/AzureAD/azure-activedirectory-library-for-dotnet
 
+
+#### StyleCop
+Microsoft Public License (Ms-PL)
+Copyright (c) Microsoft Corporation
+https://github.com/StyleCop/StyleCop
+
+
+
 #### Microsoft CRM SDK
 https://download.microsoft.com/download/E/1/8/E18C0FAD-FEC8-44CD-9A16-98EDC4DAC7A2/LicenseTerms.docx
 Copyright (c) Microsoft Corporation
+
