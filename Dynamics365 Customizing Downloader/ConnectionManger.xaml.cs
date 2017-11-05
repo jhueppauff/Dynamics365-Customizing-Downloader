@@ -11,6 +11,7 @@
 namespace Dynamics365CustomizingDownloader
 {
     using System.Collections.Generic;
+    using System.ComponentModel;
     using System.Windows;
 
     /// <summary>
@@ -18,6 +19,10 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class ConnectionManger : Window
     {
+        /// <summary>
+        /// BackGround Worker
+        /// </summary>
+        private readonly BackgroundWorker worker = new BackgroundWorker();
 
         public ConnectionManger()
         {

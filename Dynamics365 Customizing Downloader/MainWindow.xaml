@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dynamics365CustomizingDownloader"
+        xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls"
         mc:Ignorable="d"
         Title="Dynamics Customizing Downloader" Height="350" Width="525">
     <Grid>
@@ -12,5 +13,11 @@
         <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="210,36,0,0" VerticalAlignment="Top" Width="225"/>
         <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="440,36,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
+        <ctr:LoadingPanel x:Name="loadingPanel"
+                        IsLoading="{Binding PanelLoading}"
+                        Message="{Binding PanelMainMessage}"
+                        SubMessage="{Binding PanelSubMessage}" 
+                        ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,201,0,0" Foreground="#FF494949" />
     </Grid>
+
 </Window>
