@@ -1,9 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows.Input;
+﻿//  --------------------------------
+//  <copyright file="DelegateCommand.cs" company="None">
+//  Copyright (c) Huy Pham. All rights reserved.
+//  This source code is made available under the terms of the Microsoft Public License (Ms-PL)
+//  http://www.opensource.org/licenses/ms-pl.html
+//  </copyright>
+//  ---------------------------------
 
 namespace Dynamics365CustomizingDownloader.HelperClasses
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Windows.Input;
+
     /// <summary>
     /// This class allows delegating the commanding logic to methods passed as parameters,
     /// and enables a View to bind commands to objects that are not part of the element tree.
@@ -12,9 +20,20 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
     {
         #region Fields
 
-        private readonly Action _executeMethod;
-        private readonly Func<bool> _canExecuteMethod;
-        private List<WeakReference> _canExecuteChangedHandlers;
+        /// <summary>
+        /// Execute Method
+        /// </summary>
+        private readonly Action executeMethod;
+
+        /// <summary>
+        /// Can Execute Method
+        /// </summary>
+        private readonly Func<bool> canExecuteMethod;
+
+        /// <summary>
+        /// can Execute Changed Handlers
+        /// </summary>
+        private List<WeakReference> canExecuteChangedHandlers;
 
         #endregion
 
@@ -40,8 +59,8 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
                 throw new ArgumentNullException("executeMethod");
             }
 
-            _executeMethod = executeMethod;
-            _canExecuteMethod = canExecuteMethod;
+            this.executeMethod = executeMethod;
+            this.canExecuteMethod = canExecuteMethod;
         }
 
         #endregion
@@ -55,11 +74,12 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         {
             add
             {
-                CommandManagerHelper.AddWeakReferenceHandler(ref _canExecuteChangedHandlers, value);
+                CommandManagerHelper.AddWeakReferenceHandler(ref this.canExecuteChangedHandlers, value);
             }
+
             remove
             {
-                CommandManagerHelper.RemoveWeakReferenceHandler(_canExecuteChangedHandlers, value);
+                CommandManagerHelper.RemoveWeakReferenceHandler(this.canExecuteChangedHandlers, value);
             }
         }
 
@@ -74,7 +94,7 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         /// <returns><c>true</c> if this command can be executed; otherwise, <c>false</c>.</returns>
         bool ICommand.CanExecute(object parameter)
         {
-            return CanExecute();
+            return this.CanExecute();
         }
 
         /// <summary>
@@ -83,7 +103,7 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         /// <param name="parameter">Data used by the command.  If the command does not require data to be passed, this object can be set to null.</param>
         void ICommand.Execute(object parameter)
         {
-            Execute();
+            this.Execute();
         }
 
         #endregion
@@ -96,9 +116,9 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         /// <returns><c>true</c> if this instance can execute; otherwise, <c>false</c>.</returns>
         public bool CanExecute()
         {
-            if (_canExecuteMethod != null)
+            if (this.canExecuteMethod != null)
             {
-                return _canExecuteMethod();
+                return this.canExecuteMethod();
             }
 
             return true;
@@ -109,18 +129,15 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         /// </summary>
         public void Execute()
         {
-            if (_executeMethod != null)
-            {
-                _executeMethod();
-            }
+            this.executeMethod?.Invoke();
         }
 
         /// <summary>
-        /// Raises the CanExecuteChaged event
+        /// Raises the CanExecuteChanged event
         /// </summary>
         public void RaiseCanExecuteChanged()
         {
-            OnCanExecuteChanged();
+            this.OnCanExecuteChanged();
         }
 
         /// <summary>
@@ -128,7 +145,7 @@ namespace Dynamics365CustomizingDownloader.HelperClasses
         /// </summary>
         protected virtual void OnCanExecuteChanged()
         {
-            CommandManagerHelper.CallWeakReferenceHandlers(_canExecuteChangedHandlers);
+            CommandManagerHelper.CallWeakReferenceHandlers(this.canExecuteChangedHandlers);
         }
 
         #endregion

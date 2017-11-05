@@ -1,4 +1,10 @@
-﻿
+﻿//  --------------------------------
+//  <copyright file="CircularProgressBar.xaml.cs" company="None">
+//  Copyright (c) Huy Pham. All rights reserved.
+//  This source code is made available under the terms of the Microsoft Public License (Ms-PL)
+//  http://www.opensource.org/licenses/ms-pl.html
+//  </copyright>
+//  ---------------------------------
 
 namespace Dynamics365CustomizingDownloader.Controls
 {
@@ -8,22 +14,34 @@ namespace Dynamics365CustomizingDownloader.Controls
     using System.Windows.Threading;
 
     /// <summary>
-    /// Interaction logic for CircularProgressBar.xaml
+    /// Interaction logic for CircularProgressBars
     /// </summary>
     public partial class CircularProgressBar
     {
+        /// <summary>
+        /// UIPropertyMetadata MinimumProperty
+        /// </summary>
         public static readonly DependencyProperty MinimumProperty =
             DependencyProperty.Register("Minimum", typeof(int), typeof(CircularProgressBar), new UIPropertyMetadata(1));
 
+        /// <summary>
+        /// UIPropertyMetadata MaximumProperty
+        /// </summary>
         public static readonly DependencyProperty MaximumProperty =
             DependencyProperty.Register("Maximum", typeof(int), typeof(CircularProgressBar), new UIPropertyMetadata(1));
 
+        /// <summary>
+        /// UIPropertyMetadata ValueProperty
+        /// </summary>
         public static readonly DependencyProperty ValueProperty =
             DependencyProperty.Register("Value", typeof(int), typeof(CircularProgressBar), new UIPropertyMetadata(100));
 
         #region Fields
 
-        private readonly DispatcherTimer _animationTimer;
+        /// <summary>
+        /// Animation Timer
+        /// </summary>
+        private readonly DispatcherTimer animationTimer;
 
         #endregion
 
@@ -34,11 +52,11 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         public CircularProgressBar()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
-            IsVisibleChanged += OnVisibleChanged;
+            this.IsVisibleChanged += this.OnVisibleChanged;
 
-            _animationTimer = new DispatcherTimer(DispatcherPriority.ContextIdle, Dispatcher)
+            this.animationTimer = new DispatcherTimer(DispatcherPriority.ContextIdle, this.Dispatcher)
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 75)
             };
@@ -85,7 +103,7 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         /// <param name="ellipse">The ellipse.</param>
         /// <param name="offset">The offset.</param>
-        /// <param name="posOffSet">The pos off set.</param>
+        /// <param name="posOffSet">The position off set.</param>
         /// <param name="step">The step to change.</param>
         private static void SetPosition(DependencyObject ellipse, double offset, double posOffSet, double step)
         {
@@ -98,8 +116,8 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         private void Start()
         {
-            _animationTimer.Tick += OnAnimationTick;
-            _animationTimer.Start();
+            this.animationTimer.Tick += this.OnAnimationTick;
+            this.animationTimer.Start();
         }
 
         /// <summary>
@@ -107,8 +125,8 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         private void Stop()
         {
-            _animationTimer.Stop();
-            _animationTimer.Tick -= OnAnimationTick;
+            this.animationTimer.Stop();
+            this.animationTimer.Tick -= this.OnAnimationTick;
         }
 
         /// <summary>
@@ -118,7 +136,7 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void OnAnimationTick(object sender, EventArgs e)
         {
-            _spinnerRotate.Angle = (_spinnerRotate.Angle + 36) % 360;
+            spinnerRotate.Angle = (spinnerRotate.Angle + 36) % 360;
         }
 
         /// <summary>
@@ -128,18 +146,18 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void OnCanvasLoaded(object sender, RoutedEventArgs e)
         {
-            const double offset = Math.PI;
-            const double step = Math.PI * 2 / 10.0;
+            const double Offset = Math.PI;
+            const double Step = Math.PI * 2 / 10.0;
 
-            SetPosition(_circle0, offset, 0.0, step);
-            SetPosition(_circle1, offset, 1.0, step);
-            SetPosition(_circle2, offset, 2.0, step);
-            SetPosition(_circle3, offset, 3.0, step);
-            SetPosition(_circle4, offset, 4.0, step);
-            SetPosition(_circle5, offset, 5.0, step);
-            SetPosition(_circle6, offset, 6.0, step);
-            SetPosition(_circle7, offset, 7.0, step);
-            SetPosition(_circle8, offset, 8.0, step);
+            SetPosition(_circle0, Offset, 0.0, Step);
+            SetPosition(_circle1, Offset, 1.0, Step);
+            SetPosition(_circle2, Offset, 2.0, Step);
+            SetPosition(_circle3, Offset, 3.0, Step);
+            SetPosition(_circle4, Offset, 4.0, Step);
+            SetPosition(_circle5, Offset, 5.0, Step);
+            SetPosition(_circle6, Offset, 6.0, Step);
+            SetPosition(_circle7, Offset, 7.0, Step);
+            SetPosition(_circle8, Offset, 8.0, Step);
         }
 
         /// <summary>
@@ -149,7 +167,7 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void OnCanvasUnloaded(object sender, RoutedEventArgs e)
         {
-            Stop();
+            this.Stop();
         }
 
         /// <summary>
@@ -163,11 +181,11 @@ namespace Dynamics365CustomizingDownloader.Controls
 
             if (isVisible)
             {
-                Start();
+                this.Start();
             }
             else
             {
-                Stop();
+                this.Stop();
             }
         }
     }

@@ -112,10 +112,10 @@
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="StorageExtensions.cs" />
-    <Compile Include="xrm\CrmConnection.cs" />
-    <Compile Include="xrm\CrmSolution.cs" />
-    <Compile Include="xrm\CrmSolutionPackager.cs" />
-    <Compile Include="xrm\ToolingConnector.cs" />
+    <Compile Include="Xrm\CrmConnection.cs" />
+    <Compile Include="Xrm\CrmSolution.cs" />
+    <Compile Include="Xrm\CrmSolutionPackager.cs" />
+    <Compile Include="Xrm\ToolingConnector.cs" />
     <Page Include="ConnectionManger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

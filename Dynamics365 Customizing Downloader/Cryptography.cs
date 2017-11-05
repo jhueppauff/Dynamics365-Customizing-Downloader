@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="IsolatedStorageExtensions.cs" company="None">
+// <copyright file="Cryptography.cs" company="None">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -16,13 +16,15 @@ namespace Dynamics365CustomizingDownloader
     using System.Text;
 
     /// <summary>
-    /// Cryptography Extention using Rijndael
+    /// Cryptography Extension using Rijndael
     /// </summary>
     public static class Cryptography
     {
-        //While an app specific salt is not the best practice for
-        //password based encryption, it's probably safe enough as long as
-        //it is truly uncommon. Also too much work to alter this answer otherwise.
+        /// <summary>
+        /// While an app specific salt is not the best practice for
+        /// password based encryption, it's probably safe enough as long as
+        /// it is truly uncommon. Also too much work to alter this answer otherwise.
+        /// </summary>
         private static byte[] salt = Encoding.ASCII.GetBytes("6t672zd8j2i##@5677a&/&$/9=H/$/9*'*~3");
 
         /// <summary>
@@ -31,15 +33,24 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         /// <param name="plainText">The text to encrypt.</param>
         /// <param name="sharedSecret">A password used to generate a key for encryption.</param>
+        /// <returns>Returns a encrypted string</returns>
         public static string EncryptStringAES(string plainText, string sharedSecret)
         {
             if (string.IsNullOrEmpty(plainText))
+            {
                 throw new ArgumentNullException("plainText");
-            if (string.IsNullOrEmpty(sharedSecret))
-                throw new ArgumentNullException("sharedSecret");
+            }
 
-            string outStr = null;                       // Encrypted string to return
-            RijndaelManaged aesAlg = null;              // RijndaelManaged object used to encrypt the data.
+            if (string.IsNullOrEmpty(sharedSecret))
+            {
+                throw new ArgumentNullException("sharedSecret");
+            }
+
+            // Encrypted string to return
+            string outStr = null;
+
+            // RijndaelManaged object used to encrypt the data.
+            RijndaelManaged aesAlg = null;              
 
             try
             {
@@ -59,14 +70,16 @@ namespace Dynamics365CustomizingDownloader
                     // prepend the IV
                     msEncrypt.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
                     msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
+
                     using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                     {
                         using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
                         {
-                            //Write all data to the stream.
+                            // Write all data to the stream.
                             swEncrypt.Write(plainText);
                         }
                     }
+
                     outStr = Convert.ToBase64String(msEncrypt.ToArray());
                 }
             }
@@ -74,7 +87,9 @@ namespace Dynamics365CustomizingDownloader
             {
                 // Clear the RijndaelManaged object.
                 if (aesAlg != null)
+                {
                     aesAlg.Clear();
+                }
             }
 
             // Return the encrypted bytes from the memory stream.
@@ -87,12 +102,18 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         /// <param name="cipherText">The text to decrypt.</param>
         /// <param name="sharedSecret">A password used to generate a key for decryption.</param>
+        /// <returns>Returns a decrypted string</returns>
         public static string DecryptStringAES(string cipherText, string sharedSecret)
         {
             if (string.IsNullOrEmpty(cipherText))
+            {
                 throw new ArgumentNullException("cipherText");
+            }
+
             if (string.IsNullOrEmpty(sharedSecret))
+            {
                 throw new ArgumentNullException("sharedSecret");
+            }
 
             // Declare the RijndaelManaged object
             // used to decrypt the data.
@@ -100,7 +121,7 @@ namespace Dynamics365CustomizingDownloader
 
             // Declare the string used to hold
             // the decrypted text.
-            string plaintext = null;
+            string plainText = null;
 
             try
             {
@@ -115,17 +136,21 @@ namespace Dynamics365CustomizingDownloader
                     // with the specified key and IV.
                     aesAlg = new RijndaelManaged();
                     aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
+
                     // Get the initialization vector from the encrypted stream
                     aesAlg.IV = ReadByteArray(msDecrypt);
+
                     // Create a decrytor to perform the stream transform.
                     ICryptoTransform decryptor = aesAlg.CreateDecryptor(aesAlg.Key, aesAlg.IV);
+
                     using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                     {
                         using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-
+                        {
                             // Read the decrypted bytes from the decrypting stream
                             // and place them in a string.
-                            plaintext = srDecrypt.ReadToEnd();
+                            plainText = srDecrypt.ReadToEnd();
+                        }
                     }
                 }
             }
@@ -133,12 +158,19 @@ namespace Dynamics365CustomizingDownloader
             {
                 // Clear the RijndaelManaged object.
                 if (aesAlg != null)
+                {
                     aesAlg.Clear();
+                }
             }
 
-            return plaintext;
+            return plainText;
         }
 
+        /// <summary>
+        /// Read Byte Array
+        /// </summary>
+        /// <param name="s"><see cref="Stream"/> Stream</param>
+        /// <returns>Returns <see cref="byte[]"/></returns>
         private static byte[] ReadByteArray(Stream s)
         {
             byte[] rawLength = new byte[sizeof(int)];

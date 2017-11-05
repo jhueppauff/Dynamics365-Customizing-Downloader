@@ -101,7 +101,7 @@
                  Opacity="0.2" />
 
                 <Canvas.RenderTransform>
-                    <RotateTransform x:Name="_spinnerRotate" Angle="0" />
+                    <RotateTransform x:Name="spinnerRotate" Angle="0" />
                 </Canvas.RenderTransform>
             </Canvas>
         </Grid>

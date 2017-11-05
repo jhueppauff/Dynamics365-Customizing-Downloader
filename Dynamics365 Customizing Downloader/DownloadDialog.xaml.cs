@@ -16,26 +16,55 @@ namespace Dynamics365CustomizingDownloader
     using System.Windows.Input;
 
     /// <summary>
-    /// Interaction logic for DownloadDialog.xaml
+    /// Interaction logic for DownloadDialog
     /// </summary>
     public partial class DownloadDialog : Window
     {
+        #region Fields
         /// <summary>
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
-        public string CrmSolutionName, CrmConnectionString;
-
+        /// <summary>
+        /// selected File Path
+        /// </summary>
         private string selectedPath;
 
+        /// <summary>
+        /// Indicates if the panel is loading
+        /// </summary>
         private bool panelLoading;
+
+        /// <summary>
+        /// Panel Message
+        /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
+        #endregion
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadDialog"/> class
+        /// </summary>
+        public DownloadDialog()
+        {
+            this.InitializeComponent();
+        }
 
         /// <summary>
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Properties
+        /// <summary>
+        /// Gets or sets the CRM Solution Name
+        /// </summary>
+        public string CrmSolutionName { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CRM Connection String
+        /// </summary>
+        public string CrmConnectionString { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
@@ -47,12 +76,13 @@ namespace Dynamics365CustomizingDownloader
         {
             get
             {
-                return panelLoading;
+                return this.panelLoading;
             }
+
             set
             {
-                panelLoading = value;
-                RaisePropertyChanged("PanelLoading");
+                this.panelLoading = value;
+                this.RaisePropertyChanged("PanelLoading");
             }
         }
 
@@ -64,12 +94,13 @@ namespace Dynamics365CustomizingDownloader
         {
             get
             {
-                return panelMainMessage;
+                return this.panelMainMessage;
             }
+
             set
             {
-                panelMainMessage = value;
-                RaisePropertyChanged("PanelMainMessage");
+                this.panelMainMessage = value;
+                this.RaisePropertyChanged("PanelMainMessage");
             }
         }
 
@@ -86,68 +117,7 @@ namespace Dynamics365CustomizingDownloader
                 });
             }
         }
-
-
-        public DownloadDialog()
-        {
-            InitializeComponent();
-        }
-
-        /// <summary>
-        /// Button Action, Download
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_download_Click(object sender, RoutedEventArgs e)
-        {
-            loadingPanel.IsLoading = true;
-            selectedPath = tbx_filepath.Text;
-
-            // Background Worker
-            worker.DoWork += worker_DoWork;
-            worker.RunWorkerCompleted += worker_RunWorkerCompleted;
-            worker.RunWorkerAsync();
-
-        }
-
-        private void worker_DoWork(object sender, DoWorkEventArgs e)
-        {
-            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
-            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, selectedPath);
-
-            xrm.CrmSolutionPackager crmSolutionPackager = new xrm.CrmSolutionPackager();
-            if (cbx_extract.IsChecked == true)
-            {
-                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
-            }
-            
-            File.Delete(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"));
-        }
-
-        private void worker_RunWorkerCompleted(object sender,
-                                               RunWorkerCompletedEventArgs e)
-        {
-            loadingPanel.IsLoading = false;
-            this.Close();
-        }
-
-
-        /// <summary>
-        /// Button Action, Select Path
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void btn_selectPath_Click(object sender, RoutedEventArgs e)
-        {
-            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
-            {
-                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
-                if (result.ToString() == "OK")
-                {
-                    tbx_filepath.Text = dialog.SelectedPath;
-                }
-            }
-        }
+        #endregion
 
         /// <summary>
         /// Raises the property changed.
@@ -155,9 +125,69 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="propertyName">Name of the property.</param>
         protected void RaisePropertyChanged(string propertyName)
         {
-            if (PropertyChanged != null)
+            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        /// <summary>
+        /// Button Action, Download
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_download_Click(object sender, RoutedEventArgs e)
+        {
+            this.loadingPanel.IsLoading = true;
+            this.selectedPath = this.tbx_filepath.Text;
+
+            // Background Worker
+            this.worker.DoWork += this.Worker_DoWork;
+            this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
+            this.worker.RunWorkerAsync();
+        }
+
+        /// <summary>
+        /// Background Worker Event DoWork
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
+        private void Worker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
+            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.selectedPath);
+
+            Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
+            if (this.cbx_extract.IsChecked == true)
             {
-                PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
+            }
+            
+            File.Delete(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"));
+        }
+
+        /// <summary>
+        /// Background Worker Event Worker_RunWorkerCompleted
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            this.loadingPanel.IsLoading = false;
+            this.Close();
+        }
+
+        /// <summary>
+        /// Button Action, Select Path
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_selectPath_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+                if (result.ToString() == "OK")
+                {
+                    this.tbx_filepath.Text = dialog.SelectedPath;
+                }
             }
         }
     }

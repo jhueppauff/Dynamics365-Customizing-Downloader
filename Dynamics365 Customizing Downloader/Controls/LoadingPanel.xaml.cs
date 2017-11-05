@@ -1,23 +1,42 @@
-﻿
+﻿//  --------------------------------
+//  <copyright file="LoadingPanel.xaml.cs" company="None">
+//  Copyright (c) Huy Pham. All rights reserved.
+//  This source code is made available under the terms of the Microsoft Public License (Ms-PL)
+//  http://www.opensource.org/licenses/ms-pl.html
+//  </copyright>
+//  ---------------------------------
+
 namespace Dynamics365CustomizingDownloader.Controls
 {
     using System.Windows;
     using System.Windows.Input;
 
     /// <summary>
-    /// Interaction logic for LoadingPanel.xaml
+    /// Interaction logic for LoadingPanel
     /// </summary>
     public partial class LoadingPanel
     {
+        /// <summary>
+        /// IsLoading Property
+        /// </summary>
         public static readonly DependencyProperty IsLoadingProperty =
             DependencyProperty.Register("IsLoading", typeof(bool), typeof(LoadingPanel), new UIPropertyMetadata(false));
 
+        /// <summary>
+        /// Message Property
+        /// </summary>
         public static readonly DependencyProperty MessageProperty =
             DependencyProperty.Register("Message", typeof(string), typeof(LoadingPanel), new UIPropertyMetadata("Loading..."));
 
+        /// <summary>
+        /// SubMessage Property
+        /// </summary>
         public static readonly DependencyProperty SubMessageProperty =
             DependencyProperty.Register("SubMessage", typeof(string), typeof(LoadingPanel), new UIPropertyMetadata(string.Empty));
 
+        /// <summary>
+        /// ClosePanelCommand Property
+        /// </summary>
         public static readonly DependencyProperty ClosePanelCommandProperty =
             DependencyProperty.Register("ClosePanelCommand", typeof(ICommand), typeof(LoadingPanel));
 
@@ -78,11 +97,10 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void OnCloseClick(object sender, RoutedEventArgs e)
         {
-            if (ClosePanelCommand != null)
+            if (this.ClosePanelCommand != null)
             {
-                ClosePanelCommand.Execute(null);
+                this.ClosePanelCommand.Execute(null);
             }
         }
     }
 }
-

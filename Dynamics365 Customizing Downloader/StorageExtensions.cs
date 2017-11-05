@@ -17,7 +17,7 @@ namespace Dynamics365CustomizingDownloader
     using Newtonsoft.Json;
 
     /// <summary>
-    /// Json.Net Storage Adapter for saving CRM Connection to file
+    /// JSON.Net Storage Adapter for saving CRM Connection to file
     /// </summary>
     public static class StorageExtensions
     {
@@ -27,12 +27,12 @@ namespace Dynamics365CustomizingDownloader
         private static string storagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dyn365_Configuration.json");
 
         /// <summary>
-        /// Saves the <see cref="xrm.CrmConnection"/> to the local Configuration
+        /// Saves the <see cref="Xrm.CrmConnection"/> to the local Configuration
         /// </summary>
-        /// <param name="crmConnection">CRM Connection <see cref="xrm.CrmConnection"/></param>
-        public static void Save(xrm.CrmConnection crmConnection)
+        /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
+        public static void Save(Xrm.CrmConnection crmConnection)
         {
-            List<xrm.CrmConnection> crmConnections = new List<xrm.CrmConnection>();
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             // Create if File does not exist
             if (!File.Exists(storagePath))
@@ -60,7 +60,7 @@ namespace Dynamics365CustomizingDownloader
                     }
 
                     // Convert Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<xrm.CrmConnection>>(stringBuilder.ToString());
+                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
 
                     // Encrypt Connection String
                     crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
@@ -80,10 +80,10 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Loads the current configuration
         /// </summary>
-        /// <returns>Returns <see cref="List{xrm.CrmConnection}"/></returns>
-        public static List<xrm.CrmConnection> Load()
+        /// <returns>Returns <see cref="List{Xrm.CrmConnection}"/></returns>
+        public static List<Xrm.CrmConnection> Load()
         {
-            List<xrm.CrmConnection> crmConnections = new List<xrm.CrmConnection>();
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             if (File.Exists(storagePath))
             {
@@ -99,9 +99,9 @@ namespace Dynamics365CustomizingDownloader
                     }
 
                     // Converts Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<xrm.CrmConnection>>(stringBuilder.ToString());
+                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
 
-                    foreach (xrm.CrmConnection crmTempConnection in crmConnections)
+                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
                         crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
                     }

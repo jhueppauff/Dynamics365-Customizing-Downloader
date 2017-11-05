@@ -15,7 +15,7 @@ namespace Dynamics365CustomizingDownloader
     using System.Windows;
 
     /// <summary>
-    /// Interactionlogic for ConnectionManger.xaml
+    /// Interaction logic for ConnectionManger
     /// </summary>
     public partial class ConnectionManger : Window
     {
@@ -24,28 +24,35 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ConnectionManger"/> class.
+        /// </summary>
         public ConnectionManger()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        // Button Click Action, Connect and add CRM Organisation
+        /// <summary>
+        /// Button Click Action, Connect and add a CRM Organisation
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
+            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
             var crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
 
             if (crmServiceClient != null)
             {
                 try
                 {
-                    List<xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
 
-                    foreach (xrm.CrmConnection crmTempConnection in crmConnections)
+                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
                         if (crmTempConnection.Name != crmServiceClient.ConnectedOrgFriendlyName)
                         {
-                            xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                            Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
                             {
                                 ConnectionString = tbx_connectionString.Text,
                                 Name = crmServiceClient.ConnectedOrgFriendlyName
@@ -58,7 +65,6 @@ namespace Dynamics365CustomizingDownloader
                             MessageBox.Show($"Connection {crmTempConnection.Name} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
-
                 }
                 catch (System.IO.FileNotFoundException)
                 {
@@ -66,7 +72,7 @@ namespace Dynamics365CustomizingDownloader
                 }
                 finally
                 {
-                    xrm.CrmConnection crmConnection = new xrm.CrmConnection
+                    Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
                     {
                         ConnectionString = tbx_connectionString.Text,
                         Name = crmServiceClient.ConnectedOrgFriendlyName
