@@ -40,6 +40,11 @@ namespace Dynamics365CustomizingDownloader
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
+
+        /// <summary>
+        /// Indicates if a Solution should be extracted
+        /// </summary>
+        private bool extractSolution = false;
         #endregion
 
         /// <summary>
@@ -138,6 +143,8 @@ namespace Dynamics365CustomizingDownloader
             this.loadingPanel.IsLoading = true;
             this.selectedPath = this.tbx_filepath.Text;
 
+            extractSolution = (bool)this.cbx_extract.IsChecked;
+
             // Background Worker
             this.worker.DoWork += this.Worker_DoWork;
             this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
@@ -155,7 +162,7 @@ namespace Dynamics365CustomizingDownloader
             toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.selectedPath);
 
             Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
-            if (this.cbx_extract.IsChecked == true)
+            if (extractSolution)
             {
                 crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
             }
