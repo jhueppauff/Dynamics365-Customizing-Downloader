@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System.IO;
     using System.Windows;
 
     /// <summary>
@@ -33,6 +34,10 @@ namespace Dynamics365CustomizingDownloader
         {
             xrm.ToolingConnector toolingConnector = new xrm.ToolingConnector();
             toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, tbx_filepath.Text);
+
+            xrm.CrmSolutionPackager crmSolutionPackager = new xrm.CrmSolutionPackager();
+            crmSolutionPackager.ExtractCustomizing(Path.Combine(tbx_filepath.Text, this.CrmSolutionName + ".zip"), Path.Combine(tbx_filepath.Text, this.CrmSolutionName));
+
             this.Close();
         }
 
