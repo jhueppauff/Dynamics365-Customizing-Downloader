@@ -116,8 +116,11 @@ namespace Dynamics365CustomizingDownloader
             toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, selectedPath);
 
             xrm.CrmSolutionPackager crmSolutionPackager = new xrm.CrmSolutionPackager();
-            crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
-
+            if (cbx_extract.IsChecked == true)
+            {
+                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
+            }
+            
             File.Delete(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"));
         }
 
