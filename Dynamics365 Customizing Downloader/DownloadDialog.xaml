@@ -11,7 +11,7 @@
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="303,35,0,0" VerticalAlignment="Top" Width="147" Click="btn_download_Click"/>
         <TextBox x:Name="tbx_filepath" HorizontalAlignment="Left" Height="23" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="288"/>
         <Button x:Name="btn_selectPath" Content="Select Path" HorizontalAlignment="Left" Margin="303,10,0,0" VerticalAlignment="Top" Width="147" Click="btn_selectPath_Click"/>
-        <CheckBox Content="Extract Solution" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,38,0,0" Width="120" IsChecked="True"/>
+        <CheckBox x:Name="cbx_extract" Content="Extract Solution" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,38,0,0" Width="120" IsChecked="True"/>
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
