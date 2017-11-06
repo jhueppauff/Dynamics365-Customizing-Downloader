@@ -8,16 +8,37 @@
         mc:Ignorable="d"
         Title="Dynamics Customizing Downloader" Height="350" Width="525">
     <Grid>
-        <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="120" SelectionChanged="Cbx_connection_SelectionChanged"/>
-        <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="210,36,0,0" VerticalAlignment="Top" Width="225"/>
-        <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="210,10,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="440,36,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
+        <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Cbx_connection_SelectionChanged"/>
+        <Label Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="208,66,0,0" VerticalAlignment="Top" Width="225"/>
+        <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="208,40,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="438,67,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
                         SubMessage="{Binding PanelSubMessage}" 
                         ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,201,0,0" Foreground="#FF494949" />
+        <Menu Height="21" VerticalAlignment="Top" Margin="0,0,-0.333,0" IsMainMenu="True">
+            <MenuItem Header="_File">
+
+                <MenuItem Header="Enable Debugging" IsCheckable="True" />
+                <Separator />
+                <MenuItem Header="_Exit" />
+            </MenuItem>
+
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_Cut" Command="Cut">
+                </MenuItem>
+                <MenuItem Header="_Copy" Command="Copy">
+                </MenuItem>
+                <MenuItem Header="_Paste" Command="Paste">
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="_Info">
+                <MenuItem Header="_About" Click="MenuItemAbout_Click"></MenuItem>
+                <MenuItem Header="_Updates" Click="MenuItemUpdate_Click"></MenuItem>
+            </MenuItem>
+        </Menu>
     </Grid>
 
 </Window>

@@ -275,5 +275,27 @@ namespace Dynamics365CustomizingDownloader
 
             downloadDialog.ShowDialog();
         }
+
+        /// <summary>
+        /// Menu Item Click Event, Info
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://github.com/jhueppauff/Dynamics365-Customizing-Downloader").Dispose();
+        }
+
+        /// <summary>
+        /// Menu Item Click Event, Update
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            // ToDo
+            NotImplementedException notImplementedException = new NotImplementedException();
+            MessageBox.Show(notImplementedException.Message,"Error",MessageBoxButton.OK,MessageBoxImage.Warning);
+        }
     }
 }
