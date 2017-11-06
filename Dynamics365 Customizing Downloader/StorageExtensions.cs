@@ -130,7 +130,7 @@ namespace Dynamics365CustomizingDownloader
 
             crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = crmConnection.ConnectionString;
+            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
             crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
