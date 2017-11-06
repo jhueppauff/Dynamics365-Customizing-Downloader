@@ -118,5 +118,23 @@ namespace Dynamics365CustomizingDownloader
 
             return crmConnections;
         }
+
+        /// <summary>
+        /// Updates an existing CRM Connection
+        /// </summary>
+        /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
+        public static void Update(Xrm.CrmConnection crmConnection)
+        {
+            string json = File.ReadAllText(storagePath);
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+
+            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
+            crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
+
+            string jsonNew = JsonConvert.SerializeObject(crmConnections);
+            File.WriteAllText(storagePath, jsonNew);
+        }
     }
 }
