@@ -23,7 +23,7 @@
 
                 <MenuItem Header="Enable Debugging" IsCheckable="True" />
                 <Separator />
-                <MenuItem Header="_Exit" />
+                <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
             </MenuItem>
 
             <MenuItem Header="_Edit">

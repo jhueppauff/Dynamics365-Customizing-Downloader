@@ -295,7 +295,17 @@ namespace Dynamics365CustomizingDownloader
         {
             // ToDo
             NotImplementedException notImplementedException = new NotImplementedException();
-            MessageBox.Show(notImplementedException.Message,"Error",MessageBoxButton.OK,MessageBoxImage.Warning);
+            MessageBox.Show(notImplementedException.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        /// <summary>
+        /// Menu Item Click Event, Exit
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
