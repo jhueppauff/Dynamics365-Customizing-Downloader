@@ -28,6 +28,11 @@ namespace Dynamics365CustomizingDownloader
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
+        /// Dispose bool
+        /// </summary>
+        private bool disposed = false;
+
+        /// <summary>
         /// Selected CRM Connection
         /// </summary>
         private string selectedCrmConnection;
@@ -115,14 +120,37 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets the hide panel command.
         /// </summary>
-        public ICommand HidePanelCommand
+        public ICommand HidePanelCommand => new HelperClasses.DelegateCommand(() =>
+                                                          {
+                                                              this.PanelLoading = false;
+                                                          });
+
+        /// <summary>
+        /// Implement IDisposable.
+        /// </summary>
+        public void Dispose()
         {
-            get
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose class
+        /// </summary>
+        /// <param name="disposing">bool disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
             {
-                return new HelperClasses.DelegateCommand(() =>
+                if (disposing)
                 {
-                    this.PanelLoading = false;
-                });
+                    // Free other state (managed objects).
+                    this.worker.Dispose();
+                }
+
+                // Free your own state (unmanaged objects).
+                // Set large fields to null.
+                this.disposed = true;
             }
         }
 

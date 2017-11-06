@@ -10,7 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using System.Collections.Generic;
+    using System;
     using System.ComponentModel;
     using System.IO;
     using System.Windows;
@@ -26,6 +26,11 @@ namespace Dynamics365CustomizingDownloader
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
+
+        /// <summary>
+        /// Dispose bool
+        /// </summary>
+        private bool disposed = false;
 
         /// <summary>
         /// Indicates if the panel is loading
@@ -46,11 +51,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadDialog"/> class
         /// </summary>
+        /// <param name="localPath">specified the saved local path</param>
         public DownloadDialog(string localPath = "")
         {
             this.InitializeComponent();
-            SelectedPath = localPath;
-            tbx_filepath.Text = SelectedPath;
+            this.SelectedPath = localPath;
+            tbx_filepath.Text = this.SelectedPath;
         }
 
         /// <summary>
@@ -70,12 +76,12 @@ namespace Dynamics365CustomizingDownloader
         public string CrmConnectionString { get; set; }
 
         /// <summary>
-        /// selected File Path
+        /// Gets or sets the selected File Path
         /// </summary>
         public string SelectedPath { get; set; }
 
         /// <summary>
-        /// Connection Name
+        /// Gets or sets the Connection Name
         /// </summary>
         public string ConnectionName { get; set; }
 
@@ -120,17 +126,40 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets the hide panel command.
         /// </summary>
-        public ICommand HidePanelCommand
+        public ICommand HidePanelCommand => new HelperClasses.DelegateCommand(() =>
+                                                          {
+                                                              PanelLoading = false;
+                                                          });
+        #endregion
+
+        /// <summary>
+        /// Implement IDisposable.
+        /// </summary>
+        public void Dispose()
         {
-            get
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose class
+        /// </summary>
+        /// <param name="disposing">Bool disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
             {
-                return new HelperClasses.DelegateCommand(() =>
+                if (disposing)
                 {
-                    PanelLoading = false;
-                });
+                    // Free other state (managed objects).
+                    this.worker.Dispose();
+                }
+
+                // Free your own state (unmanaged objects).
+                // Set large fields to null.
+                this.disposed = true;
             }
         }
-        #endregion
 
         /// <summary>
         /// Raises the property changed.
@@ -153,15 +182,15 @@ namespace Dynamics365CustomizingDownloader
 
             Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
             {
-                ConnectionString = CrmConnectionString,
-                LocalPath = SelectedPath,
-                Name = ConnectionName
+                ConnectionString = this.CrmConnectionString,
+                LocalPath = this.SelectedPath,
+                Name = this.ConnectionName
             };
 
             // Update Connection
             StorageExtensions.Update(crmConnection);
 
-            extractSolution = (bool)this.cbx_extract.IsChecked;
+            this.extractSolution = (bool)this.cbx_extract.IsChecked;
 
             // Background Worker
             this.worker.DoWork += this.Worker_DoWork;
@@ -180,7 +209,7 @@ namespace Dynamics365CustomizingDownloader
             toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.SelectedPath);
 
             Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
-            if (extractSolution)
+            if (this.extractSolution)
             {
                 crmSolutionPackager.ExtractCustomizing(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.SelectedPath, this.CrmSolutionName));
             }
