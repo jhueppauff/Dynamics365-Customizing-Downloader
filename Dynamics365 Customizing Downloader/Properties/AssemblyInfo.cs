@@ -16,7 +16,7 @@ using System.Windows;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Dynamics365 Customizing Downloader")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("A Downloader and extractor for Dynamics365. See also https://github.com/jhueppauff/Dynamics365-Customizing-Downloader")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("Dynamics365 Customizing Downloader")]
@@ -56,5 +56,5 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.17310")]
-[assembly: AssemblyFileVersion("2.0.0.17310")]
+[assembly: AssemblyVersion("2.0.0.17311")]
+[assembly: AssemblyFileVersion("2.0.0.17311")]

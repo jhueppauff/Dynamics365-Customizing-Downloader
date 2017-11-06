@@ -283,7 +283,9 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void MenuItemAbout_Click(object sender, RoutedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://github.com/jhueppauff/Dynamics365-Customizing-Downloader").Dispose();
+            About about = new About();
+            about.ShowDialog();
+            about.Dispose();
         }
 
         /// <summary>
