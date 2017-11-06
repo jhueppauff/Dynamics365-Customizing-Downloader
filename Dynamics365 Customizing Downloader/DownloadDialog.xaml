@@ -16,7 +16,7 @@
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
                         SubMessage="{Binding PanelSubMessage}" 
-                        ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,97,0,0" Foreground="#FF494949" RenderTransformOrigin="0.5,0.5" />
+                        ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,74,0.333,0.333" Foreground="#FF494949" RenderTransformOrigin="0.5,0.5" />
     </Grid>
 
 </Window>
