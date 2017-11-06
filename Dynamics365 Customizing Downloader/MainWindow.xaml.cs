@@ -238,10 +238,11 @@ namespace Dynamics365CustomizingDownloader
             List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
             Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
-            DownloadDialog downloadDialog = new DownloadDialog
+            DownloadDialog downloadDialog = new DownloadDialog(crmConnection.LocalPath)
             {
                 CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
-                CrmConnectionString = crmConnection.ConnectionString
+                CrmConnectionString = crmConnection.ConnectionString,
+                SelectedPath = crmConnection.LocalPath
             };
 
             downloadDialog.ShowDialog();

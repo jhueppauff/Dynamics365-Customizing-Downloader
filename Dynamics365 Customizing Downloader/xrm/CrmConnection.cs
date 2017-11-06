@@ -24,5 +24,10 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// Gets or sets the Connection String
         /// </summary>
         public string ConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the local path
+        /// </summary>
+        public string LocalPath { get; set; }
     }
 }

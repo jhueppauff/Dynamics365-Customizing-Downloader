@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.IO;
     using System.Windows;
@@ -25,11 +26,6 @@ namespace Dynamics365CustomizingDownloader
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
-
-        /// <summary>
-        /// selected File Path
-        /// </summary>
-        private string selectedPath;
 
         /// <summary>
         /// Indicates if the panel is loading
@@ -50,9 +46,11 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="DownloadDialog"/> class
         /// </summary>
-        public DownloadDialog()
+        public DownloadDialog(string localPath = "")
         {
             this.InitializeComponent();
+            SelectedPath = localPath;
+            tbx_filepath.Text = SelectedPath;
         }
 
         /// <summary>
@@ -70,6 +68,16 @@ namespace Dynamics365CustomizingDownloader
         /// Gets or sets the CRM Connection String
         /// </summary>
         public string CrmConnectionString { get; set; }
+
+        /// <summary>
+        /// selected File Path
+        /// </summary>
+        public string SelectedPath { get; set; }
+
+        /// <summary>
+        /// Connection Name
+        /// </summary>
+        public string ConnectionName { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
@@ -141,7 +149,17 @@ namespace Dynamics365CustomizingDownloader
         private void Btn_download_Click(object sender, RoutedEventArgs e)
         {
             this.loadingPanel.IsLoading = true;
-            this.selectedPath = this.tbx_filepath.Text;
+            this.SelectedPath = this.tbx_filepath.Text;
+
+            Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+            {
+                ConnectionString = CrmConnectionString,
+                LocalPath = SelectedPath,
+                Name = ConnectionName
+            };
+
+            // Update Connection
+            StorageExtensions.Update(crmConnection);
 
             extractSolution = (bool)this.cbx_extract.IsChecked;
 
@@ -159,15 +177,15 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
             Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.selectedPath);
+            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.SelectedPath);
 
             Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
             if (extractSolution)
             {
-                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.selectedPath, this.CrmSolutionName));
+                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.SelectedPath, this.CrmSolutionName));
             }
-            
-            File.Delete(Path.Combine(this.selectedPath, this.CrmSolutionName + ".zip"));
+
+            File.Delete(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"));
         }
 
         /// <summary>
@@ -178,6 +196,7 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.loadingPanel.IsLoading = false;
+            MessageBox.Show("Finished download/extraction", "Process completed", MessageBoxButton.OK, MessageBoxImage.Information);
             this.Close();
         }
 
