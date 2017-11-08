@@ -38,7 +38,7 @@
                 <MenuItem Header="_Updates" Click="MenuItemUpdate_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <Button Content="Download Multiple" HorizontalAlignment="Left" Margin="384,152,0,0" VerticalAlignment="Top" Width="124" Click="Button_Click_1"/>
+        <Button Content="Download Multiple" Visibility="Hidden" HorizontalAlignment="Left" Margin="384,152,0,0" VerticalAlignment="Top" Width="124" Click="Button_Click_1"/>
     </Grid>
 
 </Window>
