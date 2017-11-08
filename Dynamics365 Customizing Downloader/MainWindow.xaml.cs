@@ -313,5 +313,11 @@ namespace Dynamics365CustomizingDownloader
         {
             this.Close();
         }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            DownloadMultiple downloadMultiple = new DownloadMultiple();
+            downloadMultiple.ShowDialog();
+        }
     }
 }
