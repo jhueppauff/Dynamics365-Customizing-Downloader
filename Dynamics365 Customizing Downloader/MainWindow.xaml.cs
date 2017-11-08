@@ -172,6 +172,9 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
+                // Clear solution combo box
+                this.cbx_crmsolution.Items.Clear();
+
                 // Will cause an error when connections was flushed
                 if (this.cbx_connection.SelectedItem.ToString() == "New")
                 {
@@ -242,6 +245,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
                 this.cbx_connection.Items.Clear();
+                this.cbx_crmsolution.Items.Clear();
 
                 this.cbx_connection.Items.Add("New");
 
