@@ -19,9 +19,25 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class DownloadMultiple : Window
     {
+        private int downloadIndex = 0;
+
         public DownloadMultiple()
         {
             InitializeComponent();
+            this.Btn_close.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Closes the Form on Button Action
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_close_Click(object sender, RoutedEventArgs e)
+        {
+            if (downloadIndex == 0)
+            {
+                this.Close();
+            }
         }
     }
 }

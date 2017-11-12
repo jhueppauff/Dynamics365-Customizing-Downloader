@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="DownloadMultiple" Height="340.506" Width="774.262">
+        Title="DownloadMultiple" Height="413.779" Width="646.872">
     <Grid>
-        <StackPanel HorizontalAlignment="Left" Margin="10,10,0,10.333" Width="616">
-            <DataGrid Height="156"/>
-            <TextBox Height="135" TextWrapping="Wrap" Text="TextBox"/>
+        <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" Width="616" Height="315" VerticalAlignment="Top">
+            <TextBox Height="287" TextWrapping="Wrap" Text="TextBox"/>
+            <ProgressBar Height="22"/>
         </StackPanel>
+        <Button x:Name="Btn_close" Content="Close" HorizontalAlignment="Left" Height="37" Margin="484,330,0,0" VerticalAlignment="Top" Width="142" Click="Btn_close_Click"/>
     </Grid>
 </Window>

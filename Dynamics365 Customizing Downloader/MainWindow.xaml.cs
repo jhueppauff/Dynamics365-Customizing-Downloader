@@ -228,6 +228,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            this.Dtg_Solutions.ItemsSource = this.crmSolutions;
             foreach (Xrm.CrmSolution crmSolution in this.crmSolutions)
             {
                 this.cbx_crmsolution.Items.Add(crmSolution.UniqueName);

@@ -17,12 +17,24 @@ namespace Dynamics365CustomizingDownloader.Xrm
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Tooling.Connector;
+    using Microsoft.Win32.SafeHandles;
+    using System.Runtime.InteropServices;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
     /// </summary>
-    public class ToolingConnector
+    public class ToolingConnector : IDisposable
     {
+        /// <summary>
+        /// Has Dispose already been called?
+        /// </summary>
+        private bool disposed = false;
+
+        /// <summary>
+        /// Instantiate a SafeHandle instance.
+        /// </summary>
+        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+
         /// <summary>
         /// Connect to CRM and get the CRM service client
         /// </summary>
@@ -34,7 +46,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
             try
             {
                 crmServiceClient = new CrmServiceClient(connectionString);
-                 if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
                     return crmServiceClient;
                 }
@@ -104,6 +116,38 @@ namespace Dynamics365CustomizingDownloader.Xrm
             byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
             string filename = Path.Combine(filePath, crmSolutionName + ".zip");
             File.WriteAllBytes(filename, exportXml);
+        }
+
+        /// <summary>
+        /// Public implementation of Dispose pattern callable by consumers.
+        /// </summary>
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Protected implementation of Dispose pattern
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (disposed)
+                return;
+
+            if (disposing)
+            {
+                handle.Dispose();
+                // Free any other managed objects here.
+                //
+            }
+
+            // Free any unmanaged objects here.
+            //
+            disposed = true;
         }
     }
 }

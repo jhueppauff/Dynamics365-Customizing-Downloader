@@ -205,16 +205,27 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.CrmConnectionString), this.CrmSolutionName, this.SelectedPath);
-
-            Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
-            if (this.extractSolution)
+            try
             {
-                crmSolutionPackager.ExtractCustomizing(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.SelectedPath, this.CrmSolutionName));
-            }
+                using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                {
+                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CrmConnectionString), this.CrmSolutionName, this.SelectedPath);
 
-            File.Delete(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"));
+                    Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
+                    if (this.extractSolution)
+                    {
+                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"), Path.Combine(this.SelectedPath, this.CrmSolutionName));
+                    }
+
+                    File.Delete(Path.Combine(this.SelectedPath, this.CrmSolutionName + ".zip"));
+                    toolingConnector.Dispose();
+                }
+            }
+            catch (Exception)
+            {
+                CrmConnectionString = null;
+                throw;
+            }
         }
 
         /// <summary>
