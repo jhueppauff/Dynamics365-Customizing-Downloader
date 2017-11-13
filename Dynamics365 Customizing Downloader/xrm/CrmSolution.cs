@@ -52,6 +52,6 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// <summary>
         /// Flag if Solution sh
         /// </summary>
-        public int DownloadIsChecked { get; set; }
+        public bool DownloadIsChecked { get; set; }
     }
 }

@@ -19,6 +19,8 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class DownloadMultiple : Window
     {
+        public List<Xrm.CrmSolution> CRMSolutions;
+        public Xrm.CrmConnection CRMConnection;
         private int downloadIndex = 0;
 
         public DownloadMultiple()

@@ -266,8 +266,21 @@ namespace Dynamics365CustomizingDownloader
             List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
             Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
+            List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
+            foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+            {
+                if (crmSolution.DownloadIsChecked)
+                {
+                    crmSolutions.Add(crmSolution);
+                }
+            }
 
-
+            DownloadMultiple downloadMultiple = new DownloadMultiple
+            {
+                CRMSolutions = crmSolutions,
+                CRMConnection = crmConnection
+            };
+            downloadMultiple.ShowDialog();
         }
 
         /// <summary>
