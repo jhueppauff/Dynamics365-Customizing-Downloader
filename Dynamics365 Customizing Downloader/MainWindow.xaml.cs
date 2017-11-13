@@ -195,7 +195,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (NullReferenceException)
             {
-                // Ignor, reload will change the index and will trigger this without items
+                // Ignore, reload will change the index and will trigger this without items
             }
             catch (Exception ex)
             {
