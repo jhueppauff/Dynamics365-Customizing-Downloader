@@ -172,8 +172,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                // Clear solution combo box
-                this.cbx_crmsolution.Items.Clear();
+                Dtg_Solutions.ItemsSource = null;
 
                 // Will cause an error when connections was flushed
                 if (this.cbx_connection.SelectedItem.ToString() == "New")
@@ -229,10 +228,6 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
-            foreach (Xrm.CrmSolution crmSolution in this.crmSolutions)
-            {
-                this.cbx_crmsolution.Items.Add(crmSolution.UniqueName);
-            }
 
             this.loadingPanel.IsLoading = false;
         }
@@ -246,7 +241,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
                 this.cbx_connection.Items.Clear();
-                this.cbx_crmsolution.Items.Clear();
+                this.Dtg_Solutions.ItemsSource = null;
 
                 this.cbx_connection.Items.Add("New");
 
@@ -271,15 +266,8 @@ namespace Dynamics365CustomizingDownloader
             List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
             Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
-            DownloadDialog downloadDialog = new DownloadDialog(crmConnection.LocalPath)
-            {
-                CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
-                CrmConnectionString = crmConnection.ConnectionString,
-                SelectedPath = crmConnection.LocalPath,
-                ConnectionName = crmConnection.Name
-            };
 
-            downloadDialog.ShowDialog();
+
         }
 
         /// <summary>

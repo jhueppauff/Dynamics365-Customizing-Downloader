@@ -9,9 +9,7 @@
     <Grid>
         <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Cbx_connection_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
-        <ComboBox x:Name="cbx_crmsolution" HorizontalAlignment="Left" Margin="208,66,0,0" VerticalAlignment="Top" Width="225"/>
-        <Label Content="Crm Solution:" HorizontalAlignment="Left" Margin="208,40,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="438,67,0,0" VerticalAlignment="Top" Width="67" Click="Button_Click"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="309" Click="Button_Click"/>
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
@@ -39,9 +37,11 @@
             </MenuItem>
         </Menu>
         <Button Content="Download Multiple" Visibility="Hidden" HorizontalAlignment="Left" Margin="384,152,0,0" VerticalAlignment="Top" Width="124" Click="Button_Click_1"/>
-        <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" AutoGenerateColumns="False">
+        <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{x:Null}" ClipboardContentBinding="{x:Null}"/>
+                <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header=""/>
+                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name"></DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

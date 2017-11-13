@@ -83,7 +83,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
             {
                 if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
-                    solutionList.Add(
+                    if (solution["uniquename"].ToString() != "" && solution["friendlyname"].ToString() != "")
+                    {
+                        solutionList.Add(
                         new CrmSolution()
                         {
                             Id = (Guid)solution["solutionid"],
@@ -91,6 +93,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                             PublisherId = ((EntityReference)solution["publisherid"]).Id,
                             UniqueName = solution["uniquename"].ToString()
                         });
+                    }
                 }
             }
 
