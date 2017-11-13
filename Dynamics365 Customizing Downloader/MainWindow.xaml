@@ -36,7 +36,6 @@
                 <MenuItem Header="_Updates" Click="MenuItemUpdate_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <Button Content="Download Multiple" Visibility="Hidden" HorizontalAlignment="Left" Margin="384,152,0,0" VerticalAlignment="Top" Width="124" Click="Button_Click_1"/>
         <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header=""/>

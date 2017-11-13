@@ -275,11 +275,7 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
 
-            DownloadMultiple downloadMultiple = new DownloadMultiple
-            {
-                CRMSolutions = crmSolutions,
-                CRMConnection = crmConnection
-            };
+            DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
             downloadMultiple.ShowDialog();
         }
 
@@ -315,12 +311,6 @@ namespace Dynamics365CustomizingDownloader
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            DownloadMultiple downloadMultiple = new DownloadMultiple();
-            downloadMultiple.ShowDialog();
         }
     }
 }

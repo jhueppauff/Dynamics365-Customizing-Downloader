@@ -1,15 +1,18 @@
-﻿<Window x:Class="Dynamics365CustomizingDownloader.DownloadMultiple"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:Dynamics365CustomizingDownloader.Controls" x:Class="Dynamics365CustomizingDownloader.DownloadMultiple"
         mc:Ignorable="d"
-        Title="DownloadMultiple" Height="413.779" Width="646.872">
+        Title="DownloadMultiple" Height="547.632" Width="646.872">
     <Grid>
         <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" Width="616" Height="315" VerticalAlignment="Top">
-            <TextBox Height="287" TextWrapping="Wrap" Text="TextBox"/>
-            <ProgressBar Height="22"/>
+            <TextBox x:Name="tbx_status" Height="287" TextWrapping="Wrap"/>
         </StackPanel>
-        <Button x:Name="Btn_close" Content="Close" HorizontalAlignment="Left" Height="37" Margin="484,330,0,0" VerticalAlignment="Top" Width="142" Click="Btn_close_Click"/>
+        <Button x:Name="Btn_close" Content="Close" HorizontalAlignment="Left" Height="37" Margin="556,330,0,0" VerticalAlignment="Top" Width="70" Click="Btn_close_Click"/>
+        <Button Content="Download" HorizontalAlignment="Left" Margin="426,330,0,0" VerticalAlignment="Top" Width="125" Height="37" Click="Button_Click"/>
+        <TextBox x:Name="tbx_download" HorizontalAlignment="Left" Height="37" Margin="10,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="411"/>
+        <Controls:LoadingPanel x:Name="loadingPanel" HorizontalAlignment="Left" Height="146" Margin="0,372,0,0" VerticalAlignment="Top" Width="640"/>
     </Grid>
 </Window>
