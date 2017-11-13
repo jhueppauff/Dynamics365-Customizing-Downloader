@@ -70,7 +70,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (System.IO.FileNotFoundException)
             {
-                // Ignor File Not found
+                // Ignore File Not found
             }
         }
 
