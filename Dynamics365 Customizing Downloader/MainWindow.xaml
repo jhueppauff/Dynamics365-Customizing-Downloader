@@ -18,7 +18,7 @@
         <Menu Height="21" VerticalAlignment="Top" Margin="0,0,-0.333,0" IsMainMenu="True">
             <MenuItem Header="_File">
 
-                <MenuItem Header="Enable Debugging" IsCheckable="True" />
+                <MenuItem x:Name="Cbx_DebuggingEnabled" Header="Enable Debugging" IsCheckable="True" Click="Cbx_DebuggingEnabled_Click"  />
                 <Separator />
                 <MenuItem Header="_Exit" Click="MenuItemExit_Click" />
             </MenuItem>
@@ -39,8 +39,8 @@
         <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header=""/>
-                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True"></DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>

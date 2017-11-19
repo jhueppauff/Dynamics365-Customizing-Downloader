@@ -39,6 +39,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 CreateNoWindow = true,
                 UseShellExecute = false,
                 FileName = "SolutionPackager.exe",
+                RedirectStandardOutput = true,
                 WindowStyle = ProcessWindowStyle.Normal,
                 Arguments = $"/action:Extract /zipfile:{path} /folder:{extractFolder} /packagetype:Unmanaged /allowWrite:yes /allowDelete:yes /clobber /nologo"
             };
@@ -48,7 +49,8 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 // Start the process with the info we specified.
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
-                {           
+                {
+                    DownloadMultiple.UpdateUI(exeProcess.StandardOutput.ReadToEnd(), false);
                     exeProcess.WaitForExit();
                     return log;
                 }

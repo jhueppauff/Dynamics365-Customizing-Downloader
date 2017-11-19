@@ -15,6 +15,7 @@ namespace Dynamics365CustomizingDownloader
     using System.ComponentModel;
     using System.IO;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
 
     /// <summary>
@@ -22,6 +23,11 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class DownloadMultiple : Window
     {
+        /// <summary>
+        /// Static Status Text Box, used for multi threading UI Update
+        /// </summary>
+        private static TextBox statusTextBox;
+
         /// <summary>
         /// BackGround Worker
         /// </summary>
@@ -60,11 +66,29 @@ namespace Dynamics365CustomizingDownloader
         public DownloadMultiple(Xrm.CrmConnection crmConnection, List<Xrm.CrmSolution> crmSolutions)
         {
             this.InitializeComponent();
+            DownloadMultiple.statusTextBox = this.tbx_status;
+            DownloadMultiple.LogToUI("Started Form");
             this.Btn_close.IsEnabled = false;
             this.CRMConnection = crmConnection;
+            DownloadMultiple.LogToUI($"CRM Connection: {this.CRMConnection.Name}", true);
             this.CRMSolutions = crmSolutions;
+
+            foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
+            {
+                DownloadMultiple.LogToUI($"Added Solution: { crmSolution.Name}to Download List");
+                this.downloadIndex++;
+            }
+
             this.tbx_download.Text = crmConnection.LocalPath;
+            DownloadMultiple.LogToUI($"Pulled Path form config: {crmConnection.LocalPath}");
         }
+
+        /// <summary>
+        /// Delegated UI Update 
+        /// </summary>
+        /// <param name="message">Message to log</param>
+        /// <param name="isDebugging">Identifies if the message is a Debug Message.</param>
+        public delegate void UpdateTextCallback(string message, bool isDebugging);
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -126,6 +150,37 @@ namespace Dynamics365CustomizingDownloader
         {
             PanelLoading = false;
         });
+
+        /// <summary>
+        /// Updated the UI Status Text Box
+        /// </summary>
+        /// <param name="message">Message to show</param>
+        /// <param name="isDebugging">Identifies if the message is a Debugging Message, Default = false</param>
+        public static void LogToUI(string message, bool isDebugging = false)
+        {
+            if (isDebugging && (bool)App.Current.Properties["Debugging.Enabled"])
+            {
+                // Debug Messages
+                statusTextBox.Text += $"{DateTime.Now} : Debug: {message}\n";
+            }
+            else if (!isDebugging)
+            {
+                statusTextBox.Text += $"{DateTime.Now} : {message}\n";
+            }
+        }
+
+        /// <summary>
+        /// Updates the UI delegated
+        /// </summary>
+        /// <param name="message">Message to log</param>
+        /// <param name="isDebugging">Identifies if the message is a Debugging Message</param>
+        public static void UpdateUI(string message, bool isDebugging)
+        {
+            statusTextBox.Dispatcher.Invoke(
+                new UpdateTextCallback(LogToUI),
+                message,
+                isDebugging);
+        }
 
         /// <summary>
         /// Implement IDisposable.
@@ -201,7 +256,6 @@ namespace Dynamics365CustomizingDownloader
             // Background Worker
             this.worker.DoWork += this.Worker_DoWork;
             this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-            this.worker.ProgressChanged += new ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
             this.worker.WorkerReportsProgress = true;
             this.worker.RunWorkerAsync();
         }
@@ -215,6 +269,12 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
+                // Create Folder if it does not exists
+                if (!Directory.Exists(this.CRMConnection.LocalPath))
+                {
+                    Directory.CreateDirectory(this.CRMConnection.LocalPath);
+                }
+
                 foreach (Xrm.CrmSolution solution in this.CRMSolutions)
                 {
                     using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
@@ -226,32 +286,22 @@ namespace Dynamics365CustomizingDownloader
                         if (Directory.Exists(Path.Combine(this.selectedPath, solution.Name)))
                         {
                             Directory.Delete(Path.Combine(this.selectedPath, solution.Name), true);
-                            this.worker.ReportProgress(0, $"Delete {Path.Combine(this.selectedPath, solution.Name).ToString()}");
+                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name).ToString()}", true);
                         }
 
-                        string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.Name));
-                        this.worker.ReportProgress(0, log);
+                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.Name));
 
                         File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
-                        this.worker.ReportProgress(0, $"Delete {Path.Combine(this.selectedPath, solution.Name + ".zip").ToString()}");
+                        LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name + ".zip").ToString()}", true);
+
+                        this.downloadIndex--;
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // ToDo:
-                throw;
+                UpdateUI($"An Error occured: {ex.Message}", false);
             }
-        }
-
-        /// <summary>
-        /// This event handler updates the UI
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="ProgressChangedEventArgs"/> instance containing the event data.</param>
-        private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            tbx_status.Text = sender.ToString();
         }
 
         /// <summary>
@@ -263,7 +313,6 @@ namespace Dynamics365CustomizingDownloader
         {
             this.loadingPanel.IsLoading = false;
             MessageBox.Show("Finished download/extraction", "Process completed", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
         }
     }
 }

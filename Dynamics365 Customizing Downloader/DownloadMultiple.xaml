@@ -6,13 +6,13 @@
         xmlns:Controls="clr-namespace:Dynamics365CustomizingDownloader.Controls" x:Class="Dynamics365CustomizingDownloader.DownloadMultiple"
         mc:Ignorable="d"
         Title="DownloadMultiple" Height="547.632" Width="646.872">
-    <Grid>
-        <StackPanel HorizontalAlignment="Left" Margin="10,10,0,0" Width="616" Height="315" VerticalAlignment="Top">
-            <TextBox x:Name="tbx_status" Height="287" TextWrapping="Wrap"/>
-        </StackPanel>
-        <Button x:Name="Btn_close" Content="Close" HorizontalAlignment="Left" Height="37" Margin="556,330,0,0" VerticalAlignment="Top" Width="70" Click="Btn_close_Click"/>
-        <Button Content="Download" HorizontalAlignment="Left" Margin="426,330,0,0" VerticalAlignment="Top" Width="125" Height="37" Click="Button_Click"/>
-        <TextBox x:Name="tbx_download" HorizontalAlignment="Left" Height="37" Margin="10,330,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="411"/>
-        <Controls:LoadingPanel x:Name="loadingPanel" HorizontalAlignment="Left" Height="146" Margin="0,372,0,0" VerticalAlignment="Top" Width="640"/>
+    <Grid Margin="0,0,0,142">
+        <Grid>
+            <TextBox x:Name="tbx_status" TextWrapping="Wrap" Margin="0,10,0,78" HorizontalAlignment="Left" Width="639"/>
+            <Button x:Name="Btn_close" Content="Close" Margin="556,0,0,8" Click="Btn_close_Click" HorizontalAlignment="Left" Width="70" Height="37" VerticalAlignment="Bottom"/>
+            <Button Content="Download" Margin="426,0,0,8" Click="Button_Click" Height="37" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="125"/>
+            <TextBox x:Name="tbx_download" Height="37" Margin="10,0,0,8" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="411"/>
+        </Grid>
+        <Controls:LoadingPanel x:Name="loadingPanel" HorizontalAlignment="Left" Margin="0,380,-1,-146" Width="640"/>
     </Grid>
 </Window>

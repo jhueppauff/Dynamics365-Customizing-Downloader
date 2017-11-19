@@ -59,6 +59,8 @@ namespace Dynamics365CustomizingDownloader
         {
             this.InitializeComponent();
             this.cbx_connection.Items.Add("New");
+            Application.Current.Properties["Debugging.Enabled"] = false;
+
             try
             {
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
@@ -311,6 +313,23 @@ namespace Dynamics365CustomizingDownloader
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>
+        /// Enables Debugging
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Cbx_DebuggingEnabled_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cbx_DebuggingEnabled.IsChecked)
+            {
+                Application.Current.Properties["Debugging.Enabled"] = true;
+            }
+            else
+            {
+                Application.Current.Properties["Debugging.Enabled"] = false;
+            }
         }
     }
 }
