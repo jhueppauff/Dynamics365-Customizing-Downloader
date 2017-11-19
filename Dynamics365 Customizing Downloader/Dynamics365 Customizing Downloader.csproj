@@ -123,9 +123,6 @@
       <DependentUpon>LoadingPanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="Cryptography.cs" />
-    <Compile Include="DownloadDialog.xaml.cs">
-      <DependentUpon>DownloadDialog.xaml</DependentUpon>
-    </Compile>
     <Compile Include="DownloadMultiple.xaml.cs">
       <DependentUpon>DownloadMultiple.xaml</DependentUpon>
     </Compile>
@@ -145,10 +142,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoadingPanel.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="DownloadDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
