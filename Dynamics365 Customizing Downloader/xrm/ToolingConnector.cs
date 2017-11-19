@@ -13,12 +13,12 @@ namespace Dynamics365CustomizingDownloader.Xrm
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.InteropServices;
     using Microsoft.Crm.Sdk.Messages;
+    using Microsoft.Win32.SafeHandles;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Tooling.Connector;
-    using Microsoft.Win32.SafeHandles;
-    using System.Runtime.InteropServices;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
@@ -33,7 +33,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// <summary>
         /// Instantiate a SafeHandle instance.
         /// </summary>
-        SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+        private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
         /// <summary>
         /// Connect to CRM and get the CRM service client
@@ -83,7 +83,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
             {
                 if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
-                    if (solution["uniquename"].ToString() != "" && solution["friendlyname"].ToString() != "")
+                    if (solution["uniquename"].ToString() != string.Empty && solution["friendlyname"].ToString() != string.Empty)
                     {
                         solutionList.Add(
                         new CrmSolution()
@@ -127,7 +127,8 @@ namespace Dynamics365CustomizingDownloader.Xrm
         public void Dispose()
         {
             // Dispose of unmanaged resources.
-            Dispose(true);
+            this.Dispose(true);
+
             // Suppress finalization.
             GC.SuppressFinalize(this);
         }
@@ -135,22 +136,23 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// <summary>
         /// Protected implementation of Dispose pattern
         /// </summary>
-        /// <param name="disposing"></param>
+        /// <param name="disposing">Identifies if the class is disposing</param>
         protected virtual void Dispose(bool disposing)
         {
-            if (disposed)
+            if (this.disposed)
+            {
                 return;
+            }
 
             if (disposing)
             {
-                handle.Dispose();
+                this.handle.Dispose();
+
                 // Free any other managed objects here.
-                //
             }
 
             // Free any unmanaged objects here.
-            //
-            disposed = true;
+            this.disposed = true;
         }
     }
 }

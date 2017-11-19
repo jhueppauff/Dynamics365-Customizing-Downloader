@@ -10,25 +10,33 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using System;
     using System.Reflection;
     using System.Windows.Forms;
 
-    partial class About : Form
+    /// <summary>
+    /// About Form
+    /// </summary>
+    public partial class About : Form
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="About"/> class.
+        /// </summary>
         public About()
         {
-            InitializeComponent();
-            this.Text = String.Format("About {0}", AssemblyTitle);
-            this.labelProductName.Text = AssemblyProduct;
-            this.labelVersion.Text = String.Format("Version {0}", AssemblyVersion);
-            this.labelCopyright.Text = AssemblyCopyright;
-            this.labelCompanyName.Text = AssemblyCompany;
-            this.textBoxDescription.Text = AssemblyDescription;
+            this.InitializeComponent();
+            this.Text = string.Format("About {0}", this.AssemblyTitle);
+            this.labelProductName.Text = this.AssemblyProduct;
+            this.labelVersion.Text = string.Format("Version {0}", this.AssemblyVersion);
+            this.labelCopyright.Text = this.AssemblyCopyright;
+            this.labelCompanyName.Text = this.AssemblyCompany;
+            this.textBoxDescription.Text = this.AssemblyDescription;
         }
 
         #region Assembly Attribute Accessors
 
+        /// <summary>
+        /// Gets the Assembly Title
+        /// </summary>
         public string AssemblyTitle
         {
             get
@@ -37,15 +45,19 @@ namespace Dynamics365CustomizingDownloader
                 if (attributes.Length > 0)
                 {
                     AssemblyTitleAttribute titleAttribute = (AssemblyTitleAttribute)attributes[0];
-                    if (titleAttribute.Title != "")
+                    if (titleAttribute.Title != string.Empty)
                     {
                         return titleAttribute.Title;
                     }
                 }
+
                 return System.IO.Path.GetFileNameWithoutExtension(Assembly.GetExecutingAssembly().CodeBase);
             }
         }
 
+        /// <summary>
+        /// Gets the Version of the Assembly
+        /// </summary>
         public string AssemblyVersion
         {
             get
@@ -54,6 +66,9 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Gets the Description of the Assembly
+        /// </summary>
         public string AssemblyDescription
         {
             get
@@ -61,12 +76,16 @@ namespace Dynamics365CustomizingDownloader
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyDescriptionAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyDescriptionAttribute)attributes[0]).Description;
             }
         }
 
+        /// <summary>
+        /// Gets the Product Name of the Assembly
+        /// </summary>
         public string AssemblyProduct
         {
             get
@@ -74,12 +93,16 @@ namespace Dynamics365CustomizingDownloader
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyProductAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyProductAttribute)attributes[0]).Product;
             }
         }
 
+        /// <summary>
+        /// Gets the Copyright of the Assembly
+        /// </summary>
         public string AssemblyCopyright
         {
             get
@@ -87,12 +110,16 @@ namespace Dynamics365CustomizingDownloader
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCopyrightAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyCopyrightAttribute)attributes[0]).Copyright;
             }
         }
 
+        /// <summary>
+        /// Gets the Company of the Assembly
+        /// </summary>
         public string AssemblyCompany
         {
             get
@@ -100,12 +127,12 @@ namespace Dynamics365CustomizingDownloader
                 object[] attributes = Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(AssemblyCompanyAttribute), false);
                 if (attributes.Length == 0)
                 {
-                    return "";
+                    return string.Empty;
                 }
+
                 return ((AssemblyCompanyAttribute)attributes[0]).Company;
             }
         }
         #endregion
-
     }
 }

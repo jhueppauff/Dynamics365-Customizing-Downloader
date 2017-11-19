@@ -1,4 +1,14 @@
-﻿namespace Dynamics365CustomizingDownloader
+﻿//-----------------------------------------------------------------------
+// <copyright file="DownloadMultiple.xaml.cs" company="None">
+// Copyright 2017 Jhueppauff
+// MIT  
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace Dynamics365CustomizingDownloader
 {
     using System;
     using System.Collections.Generic;
@@ -8,7 +18,7 @@
     using System.Windows.Input;
 
     /// <summary>
-    /// Interaction logic for DownloadMultiple.xaml
+    /// Interaction logic for DownloadMultiple
     /// </summary>
     public partial class DownloadMultiple : Window
     {
@@ -32,14 +42,24 @@
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
 
-        public List<Xrm.CrmSolution> CRMSolutions;
-        public Xrm.CrmConnection CRMConnection;
+        /// <summary>
+        /// Identifies if all Downloads are done
+        /// </summary>
         private int downloadIndex = 0;
+
+        /// <summary>
+        /// Selected local Path
+        /// </summary>
         private string selectedPath;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadMultiple"/> class.
+        /// </summary>
+        /// <param name="crmConnection"><see cref="Xrm.CrmConnection"/> for the XRM Connector</param>
+        /// <param name="crmSolutions"><see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download</param>
         public DownloadMultiple(Xrm.CrmConnection crmConnection, List<Xrm.CrmSolution> crmSolutions)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.Btn_close.IsEnabled = false;
             this.CRMConnection = crmConnection;
             this.CRMSolutions = crmSolutions;
@@ -51,7 +71,17 @@
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        // <summary>
+        /// <summary>
+        /// Gets or sets a <see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download
+        /// </summary>
+        public List<Xrm.CrmSolution> CRMSolutions { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Xrm.CrmConnection"/> for the XRM Connector
+        /// </summary>
+        public Xrm.CrmConnection CRMConnection { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
         /// </summary>
         /// <value>
@@ -142,7 +172,7 @@
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_close_Click(object sender, RoutedEventArgs e)
         {
-            if (downloadIndex == 0)
+            if (this.downloadIndex == 0)
             {
                 this.Close();
             }
@@ -171,7 +201,7 @@
             // Background Worker
             this.worker.DoWork += this.Worker_DoWork;
             this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-            this.worker.ProgressChanged += new ProgressChangedEventHandler(BackgroundWorker_ProgressChanged);
+            this.worker.ProgressChanged += new ProgressChangedEventHandler(this.BackgroundWorker_ProgressChanged);
             this.worker.WorkerReportsProgress = true;
             this.worker.RunWorkerAsync();
         }
@@ -185,33 +215,31 @@
         {
             try
             {
-                foreach (Xrm.CrmSolution Solution in CRMSolutions)
-                { 
+                foreach (Xrm.CrmSolution solution in this.CRMSolutions)
+                {
                     using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
                     {
-                        toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), Solution.Name, this.selectedPath);
+                        toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.Name, this.selectedPath);
 
                         Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
 
-
-                        if (Directory.Exists(System.IO.Path.Combine(this.selectedPath, Solution.Name)))
+                        if (Directory.Exists(Path.Combine(this.selectedPath, solution.Name)))
                         {
-                            Directory.Delete(System.IO.Path.Combine(this.selectedPath, Solution.Name), true);
-                            worker.ReportProgress(0, $"Delete {System.IO.Path.Combine(this.selectedPath, Solution.Name).ToString()}");
+                            Directory.Delete(Path.Combine(this.selectedPath, solution.Name), true);
+                            this.worker.ReportProgress(0, $"Delete {Path.Combine(this.selectedPath, solution.Name).ToString()}");
                         }
-                        
-                        string log = crmSolutionPackager.ExtractCustomizing(System.IO.Path.Combine(this.selectedPath, Solution.Name + ".zip"), Path.Combine(this.selectedPath, Solution.Name));
-                        worker.ReportProgress(0, log);
 
-                        File.Delete(System.IO.Path.Combine(this.selectedPath, Solution.Name + ".zip"));
-                        worker.ReportProgress(0, $"Delete {System.IO.Path.Combine(this.selectedPath, Solution.Name + ".zip").ToString()}");
+                        string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.Name));
+                        this.worker.ReportProgress(0, log);
+
+                        File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
+                        this.worker.ReportProgress(0, $"Delete {Path.Combine(this.selectedPath, solution.Name + ".zip").ToString()}");
                     }
                 }
-               
             }
             catch (Exception)
             {
-
+                // ToDo:
                 throw;
             }
         }
@@ -219,8 +247,8 @@
         /// <summary>
         /// This event handler updates the UI
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="ProgressChangedEventArgs"/> instance containing the event data.</param>
         private void BackgroundWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             tbx_status.Text = sender.ToString();

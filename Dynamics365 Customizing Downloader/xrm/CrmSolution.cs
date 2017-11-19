@@ -50,7 +50,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
         public Guid PublisherId { get; set; }
 
         /// <summary>
-        /// Flag if Solution sh
+        /// Gets or sets a value indicating whether the Solution should be Downloaded
         /// </summary>
         public bool DownloadIsChecked { get; set; }
     }

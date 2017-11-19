@@ -223,7 +223,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception)
             {
-                CrmConnectionString = null;
+                this.CrmConnectionString = null;
                 throw;
             }
         }

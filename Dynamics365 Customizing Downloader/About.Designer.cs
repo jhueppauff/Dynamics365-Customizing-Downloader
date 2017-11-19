@@ -1,6 +1,19 @@
-﻿namespace Dynamics365CustomizingDownloader
+﻿//-----------------------------------------------------------------------
+// <copyright file="About.Designer.cs" company="None">
+// Copyright 2017 Jhueppauff
+// MIT  
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace Dynamics365CustomizingDownloader
 {
-    partial class About
+    /// <summary>
+    /// Designer for the About Form
+    /// </summary>
+    public partial class About
     {
         /// <summary>
         /// Required designer variable.
@@ -8,14 +21,56 @@
         private System.ComponentModel.IContainer components = null;
 
         /// <summary>
+        /// Form: Layout Panel
+        /// </summary>
+        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
+
+        /// <summary>
+        /// Form: Logo Picture Box
+        /// </summary>
+        private System.Windows.Forms.PictureBox logoPictureBox;
+
+        /// <summary>
+        /// Form: Label Product Name
+        /// </summary>
+        private System.Windows.Forms.Label labelProductName;
+
+        /// <summary>
+        /// Form: Label Product Version
+        /// </summary>
+        private System.Windows.Forms.Label labelVersion;
+
+        /// <summary>
+        /// Form: Label Copyright
+        /// </summary>
+        private System.Windows.Forms.Label labelCopyright;
+
+        /// <summary>
+        /// Form: Label Company Name
+        /// </summary>
+        private System.Windows.Forms.Label labelCompanyName;
+
+        /// <summary>
+        /// Form: Text Box Description
+        /// </summary>
+        private System.Windows.Forms.TextBox textBoxDescription;
+
+        /// <summary>
+        /// Form: OK Button
+        /// </summary>
+        private System.Windows.Forms.Button okButton;
+
+        /// <summary>
         /// Clean up any resources being used.
         /// </summary>
+        /// <param name="disposing">Identifies it class is disposing</param>
         protected override void Dispose(bool disposing)
         {
-            if (disposing && (components != null))
+            if (disposing && (this.components != null))
             {
-                components.Dispose();
+                this.components.Dispose();
             }
+
             base.Dispose(disposing);
         }
 
@@ -160,7 +215,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "About";
-            this.Padding = new System.Windows.Forms.Padding(9, 9, 9, 9);
+            this.Padding = new System.Windows.Forms.Padding(9);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
@@ -173,14 +228,5 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel;
-        private System.Windows.Forms.PictureBox logoPictureBox;
-        private System.Windows.Forms.Label labelProductName;
-        private System.Windows.Forms.Label labelVersion;
-        private System.Windows.Forms.Label labelCopyright;
-        private System.Windows.Forms.Label labelCompanyName;
-        private System.Windows.Forms.TextBox textBoxDescription;
-        private System.Windows.Forms.Button okButton;
     }
 }

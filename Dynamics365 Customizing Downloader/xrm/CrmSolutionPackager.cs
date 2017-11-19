@@ -23,9 +23,10 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// </summary>
         /// <param name="path">Path of the Solution</param>
         /// <param name="extractFolder">Path to the extraction Folder</param>
+        /// <returns>Returns the log Messages</returns>
         public string ExtractCustomizing(string path, string extractFolder)
         {
-            string log = "";
+            string log = string.Empty;
 
             if (!File.Exists(path))
             {
@@ -42,16 +43,12 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 Arguments = $"/action:Extract /zipfile:{path} /folder:{extractFolder} /packagetype:Unmanaged /allowWrite:yes /allowDelete:yes /clobber /nologo"
             };
 
-            
-            
-
             try
             {
                 // Start the process with the info we specified.
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
-                {
-               
+                {           
                     exeProcess.WaitForExit();
                     return log;
                 }
