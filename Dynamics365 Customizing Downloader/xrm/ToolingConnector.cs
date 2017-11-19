@@ -13,7 +13,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Runtime.InteropServices;
     using Microsoft.Crm.Sdk.Messages;
+    using Microsoft.Win32.SafeHandles;
     using Microsoft.Xrm.Sdk;
     using Microsoft.Xrm.Sdk.Query;
     using Microsoft.Xrm.Tooling.Connector;
@@ -21,8 +23,18 @@ namespace Dynamics365CustomizingDownloader.Xrm
     /// <summary>
     /// XRM/CRM Tooling Connector
     /// </summary>
-    public class ToolingConnector
+    public class ToolingConnector : IDisposable
     {
+        /// <summary>
+        /// Has Dispose already been called?
+        /// </summary>
+        private bool disposed = false;
+
+        /// <summary>
+        /// Instantiate a SafeHandle instance.
+        /// </summary>
+        private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+
         /// <summary>
         /// Connect to CRM and get the CRM service client
         /// </summary>
@@ -34,7 +46,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
             try
             {
                 crmServiceClient = new CrmServiceClient(connectionString);
-                 if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
                     return crmServiceClient;
                 }
@@ -71,7 +83,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
             {
                 if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
-                    solutionList.Add(
+                    if (solution["uniquename"].ToString() != string.Empty && solution["friendlyname"].ToString() != string.Empty)
+                    {
+                        solutionList.Add(
                         new CrmSolution()
                         {
                             Id = (Guid)solution["solutionid"],
@@ -79,6 +93,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                             PublisherId = ((EntityReference)solution["publisherid"]).Id,
                             UniqueName = solution["uniquename"].ToString()
                         });
+                    }
                 }
             }
 
@@ -104,6 +119,40 @@ namespace Dynamics365CustomizingDownloader.Xrm
             byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
             string filename = Path.Combine(filePath, crmSolutionName + ".zip");
             File.WriteAllBytes(filename, exportXml);
+        }
+
+        /// <summary>
+        /// Public implementation of Dispose pattern callable by consumers.
+        /// </summary>
+        public void Dispose()
+        {
+            // Dispose of unmanaged resources.
+            this.Dispose(true);
+
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Protected implementation of Dispose pattern
+        /// </summary>
+        /// <param name="disposing">Identifies if the class is disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            if (disposing)
+            {
+                this.handle.Dispose();
+
+                // Free any other managed objects here.
+            }
+
+            // Free any unmanaged objects here.
+            this.disposed = true;
         }
     }
 }

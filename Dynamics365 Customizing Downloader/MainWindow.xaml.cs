@@ -28,6 +28,11 @@ namespace Dynamics365CustomizingDownloader
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
+        /// Dispose bool
+        /// </summary>
+        private bool disposed = false;
+
+        /// <summary>
         /// Selected CRM Connection
         /// </summary>
         private string selectedCrmConnection;
@@ -54,6 +59,8 @@ namespace Dynamics365CustomizingDownloader
         {
             this.InitializeComponent();
             this.cbx_connection.Items.Add("New");
+            Application.Current.Properties["Debugging.Enabled"] = false;
+
             try
             {
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
@@ -65,7 +72,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (System.IO.FileNotFoundException)
             {
-                // Ignor File Not found
+                // Ignore File Not found
             }
         }
 
@@ -115,14 +122,37 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets the hide panel command.
         /// </summary>
-        public ICommand HidePanelCommand
+        public ICommand HidePanelCommand => new HelperClasses.DelegateCommand(() =>
+                                                          {
+                                                              this.PanelLoading = false;
+                                                          });
+
+        /// <summary>
+        /// Implement IDisposable.
+        /// </summary>
+        public void Dispose()
         {
-            get
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose class
+        /// </summary>
+        /// <param name="disposing">bool disposing</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposed)
             {
-                return new HelperClasses.DelegateCommand(() =>
+                if (disposing)
                 {
-                    this.PanelLoading = false;
-                });
+                    // Free other state (managed objects).
+                    this.worker.Dispose();
+                }
+
+                // Free your own state (unmanaged objects).
+                // Set large fields to null.
+                this.disposed = true;
             }
         }
 
@@ -144,6 +174,8 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
+                Dtg_Solutions.ItemsSource = null;
+
                 // Will cause an error when connections was flushed
                 if (this.cbx_connection.SelectedItem.ToString() == "New")
                 {
@@ -164,7 +196,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (NullReferenceException)
             {
-                // Ignor, reload will change the index and will trigger this without items
+                // Ignore, reload will change the index and will trigger this without items
             }
             catch (Exception ex)
             {
@@ -197,10 +229,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            foreach (Xrm.CrmSolution crmSolution in this.crmSolutions)
-            {
-                this.cbx_crmsolution.Items.Add(crmSolution.UniqueName);
-            }
+            this.Dtg_Solutions.ItemsSource = this.crmSolutions;
 
             this.loadingPanel.IsLoading = false;
         }
@@ -214,6 +243,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
                 this.cbx_connection.Items.Clear();
+                this.Dtg_Solutions.ItemsSource = null;
 
                 this.cbx_connection.Items.Add("New");
 
@@ -235,17 +265,94 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-            Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
-
-            DownloadDialog downloadDialog = new DownloadDialog(crmConnection.LocalPath)
+            if (cbx_connection.SelectedItem != null)
             {
-                CrmSolutionName = cbx_crmsolution.SelectedItem.ToString(),
-                CrmConnectionString = crmConnection.ConnectionString,
-                SelectedPath = crmConnection.LocalPath
-            };
+                int downloadCounter = 0;
+                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
-            downloadDialog.ShowDialog();
+                if (Dtg_Solutions.ItemsSource != null)
+                {
+                    List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
+                    foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+                    {
+                        if (crmSolution.DownloadIsChecked)
+                        {
+                            downloadCounter++;
+                            crmSolutions.Add(crmSolution);
+                        }
+                    }
+
+                    if (downloadCounter != 0)
+                    {
+                        DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
+                        downloadMultiple.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please connect to CRM and wait for the Background Job fetching the CRM Solutions", "Solutions are empty", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Menu Item Click Event, Info
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemAbout_Click(object sender, RoutedEventArgs e)
+        {
+            About about = new About();
+            about.ShowDialog();
+            about.Dispose();
+        }
+
+        /// <summary>
+        /// Menu Item Click Event, Update
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            // ToDo
+            NotImplementedException notImplementedException = new NotImplementedException();
+            MessageBox.Show(notImplementedException.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+
+        /// <summary>
+        /// Menu Item Click Event, Exit
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemExit_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// Enables Debugging
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Cbx_DebuggingEnabled_Click(object sender, RoutedEventArgs e)
+        {
+            if (Cbx_DebuggingEnabled.IsChecked)
+            {
+                Application.Current.Properties["Debugging.Enabled"] = true;
+            }
+            else
+            {
+                Application.Current.Properties["Debugging.Enabled"] = false;
+            }
         }
     }
 }

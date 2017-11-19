@@ -48,5 +48,10 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// The publisher id.
         /// </value>
         public Guid PublisherId { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Solution should be Downloaded
+        /// </summary>
+        public bool DownloadIsChecked { get; set; }
     }
 }
