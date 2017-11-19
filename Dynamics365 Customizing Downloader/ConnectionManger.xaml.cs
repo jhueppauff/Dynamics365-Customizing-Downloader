@@ -25,6 +25,16 @@ namespace Dynamics365CustomizingDownloader
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
+        /// CRM Service Client
+        /// </summary>
+        private Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient;
+
+        /// <summary>
+        /// CRM Connection
+        /// </summary>
+        private Xrm.CrmConnection crmConnection;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionManger"/> class.
         /// </summary>
         public ConnectionManger()
@@ -39,10 +49,32 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-            var crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
+            try
+            {
+                Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
+                var crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
 
-            if (crmServiceClient != null)
+                if (crmServiceClient != null)
+                {
+                    tbx_connectionName.IsReadOnly = false;
+                    tbx_connectionName.Text = this.crmConnection.Name;
+                    btn_save.IsEnabled = true;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Button Save click Event
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_save_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
                 try
                 {
@@ -50,36 +82,30 @@ namespace Dynamics365CustomizingDownloader
 
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        if (crmTempConnection.Name != crmServiceClient.ConnectedOrgFriendlyName)
+                        if (crmTempConnection.Name != this.tbx_connectionName.Text)
                         {
-                            Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+                            this.crmConnection = new Xrm.CrmConnection
                             {
-                                ConnectionString = tbx_connectionString.Text,
-                                Name = crmServiceClient.ConnectedOrgFriendlyName
+                                ConnectionString = this.tbx_connectionString.Text,
+                                Name = this.tbx_connectionName.Text
                             };
-                            StorageExtensions.Save(crmConnection);
-                            this.Close();
+
+                            StorageExtensions.Save(this.crmConnection);
                         }
                         else
                         {
-                            MessageBox.Show($"Connection {crmTempConnection.Name} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show($"Connection {this.tbx_connectionName.Text} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
                 }
                 catch (System.IO.FileNotFoundException)
                 {
-                    // Ignor
-                }
-                finally
-                {
-                    Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
-                    {
-                        ConnectionString = tbx_connectionString.Text,
-                        Name = crmServiceClient.ConnectedOrgFriendlyName
-                    };
-                    StorageExtensions.Save(crmConnection);
-                    this.Close();
-                }
+                    // Ignore, in a fresh installation there is no config File
+                }              
+            }
+            catch (System.Exception ex)
+            {
+                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }
