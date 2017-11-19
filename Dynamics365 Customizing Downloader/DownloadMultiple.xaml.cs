@@ -75,12 +75,12 @@ namespace Dynamics365CustomizingDownloader
 
             foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
             {
-                DownloadMultiple.LogToUI($"Added Solution: { crmSolution.Name}to Download List");
+                DownloadMultiple.LogToUI($"Added Solution: { crmSolution.Name} to Download List", true);
                 this.downloadIndex++;
             }
 
             this.tbx_download.Text = crmConnection.LocalPath;
-            DownloadMultiple.LogToUI($"Pulled Path form config: {crmConnection.LocalPath}");
+            DownloadMultiple.LogToUI($"Pulled Path form config: {crmConnection.LocalPath}", true);
         }
 
         /// <summary>
