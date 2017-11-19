@@ -9,7 +9,7 @@
     <Grid>
         <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Cbx_connection_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="309" Click="Button_Click"/>
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="309" Click="Button_Click" />
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
@@ -38,7 +38,7 @@
         </Menu>
         <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" ItemsSource="{Binding}" AutoGenerateColumns="False">
             <DataGrid.Columns>
-                <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header=""/>
+                <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}"  Header=""/>
                 <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True"></DataGridTextColumn>
 

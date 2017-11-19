@@ -265,20 +265,44 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-            Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
-
-            List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
-            foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+            if (cbx_connection.SelectedItem != null)
             {
-                if (crmSolution.DownloadIsChecked)
+                int downloadCounter = 0;
+                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+
+                if (Dtg_Solutions.ItemsSource != null)
                 {
-                    crmSolutions.Add(crmSolution);
+                    List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
+                    foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+                    {
+                        if (crmSolution.DownloadIsChecked)
+                        {
+                            downloadCounter++;
+                            crmSolutions.Add(crmSolution);
+                        }
+                    }
+
+
+                    if (downloadCounter != 0)
+                    {
+                        DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
+                        downloadMultiple.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Please connect to CRM and wait for the Background Job fetching the CRM Solutions", "Solutions are empty", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
-
-            DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
-            downloadMultiple.ShowDialog();
+            else
+            {
+                MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
