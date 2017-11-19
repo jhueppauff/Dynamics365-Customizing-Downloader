@@ -22,7 +22,6 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 - Select those you want to Download (must be unmanaged) and press "Download"
 
 - Within the new Dialog, choose a local Folder and click "Download".
-#### Possible Dataloss! Every Folder/File within your chosen Folder which will colide with the Solution Names will be deleted. 
-#### To avoid any issues choose a empty Folder for the extraction.
+#### Possible Dataloss! Every Folder/File within your chosen Folder which will colide with the Solution Names will be deleted. To avoid any issues choose a empty Folder for the extraction.
 
 -> Your Solutions should be Downloaded and Extracted now, any Error will be reported within the Status TextBox.
