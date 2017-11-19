@@ -8,19 +8,19 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 #### Usage
 
 ##### CRM Connection:
-- Open the App and choose "new" in the Connection DropBox.
+- Open the App and choose "new" in the connection DropBox.
 
-- Add your Connectionstring (See https://msdn.microsoft.com/en-us/library/mt608573.aspx) and press the Connect Button
+- Add your Connectionstring (See https://msdn.microsoft.com/en-us/library/mt608573.aspx) and press the "Connect" Button
 
-- Rename the Connection if you want to and press Save
+- Rename the Connection if you want to and press "Save"
 
 ##### Download Solutions
 - Back in the Main Dialog, choose your created Connection
 
 - After a short loading time you should see all your Solutions within the chosen CRM Organization
 
-- Select those you want to Download (must be unmanaged) and press Download
+- Select those you want to Download (must be unmanaged) and press "Download"
 
-- Within the new Dialog, choose a local Folder and click Download.
+- Within the new Dialog, choose a local Folder and click "Download".
 
 -> Your Solutions should be Downloaded and Extracted now, any Error will be reported within the Status TextBox.
