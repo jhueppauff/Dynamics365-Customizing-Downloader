@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dynamics365CustomizingDownloader"
         mc:Ignorable="d"
-        Title="ConnectionManger" Height="292.878" Width="300">
+        Title="ConnectionManger" Height="308.222" Width="307.339">
     <Grid>
         <Button Content="Connect" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
         <TextBox x:Name="tbx_connectionString" HorizontalAlignment="Left" Height="136" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>

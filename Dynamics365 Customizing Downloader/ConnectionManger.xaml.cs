@@ -52,10 +52,16 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-                var crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
+                this.crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
 
-                if (crmServiceClient != null)
+                if (this.crmServiceClient != null)
                 {
+                    this.crmConnection = new Xrm.CrmConnection
+                    {
+                        ConnectionString = this.tbx_connectionString.Text,
+                        Name = this.crmServiceClient.ConnectedOrgFriendlyName
+                    };
+
                     tbx_connectionName.IsReadOnly = false;
                     tbx_connectionName.Text = this.crmConnection.Name;
                     btn_save.IsEnabled = true;
@@ -78,30 +84,33 @@ namespace Dynamics365CustomizingDownloader
             {
                 try
                 {
+                    this.crmConnection.Name = this.tbx_connectionName.Text;
                     List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
 
+                    bool solutionExists = false;
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        if (crmTempConnection.Name != this.tbx_connectionName.Text)
+                        if (crmTempConnection.Name == this.tbx_connectionName.Text)
                         {
-                            this.crmConnection = new Xrm.CrmConnection
-                            {
-                                ConnectionString = this.tbx_connectionString.Text,
-                                Name = this.tbx_connectionName.Text
-                            };
-
-                            StorageExtensions.Save(this.crmConnection);
-                        }
-                        else
-                        {
+                            solutionExists = true;
                             MessageBox.Show($"Connection {this.tbx_connectionName.Text} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
+                    }
+
+                    if (!solutionExists)
+                    {
+                        StorageExtensions.Save(this.crmConnection);
+                        MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
                     }
                 }
                 catch (System.IO.FileNotFoundException)
                 {
-                    // Ignore, in a fresh installation there is no config File
-                }              
+                    // Ignore Error, in a fresh installation there is no config File
+                    StorageExtensions.Save(this.crmConnection);
+                    MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
             }
             catch (System.Exception ex)
             {
