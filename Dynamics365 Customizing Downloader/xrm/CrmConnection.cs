@@ -16,7 +16,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
     public class CrmConnection
     {
         /// <summary>
-        /// Gets or sets the name of the CRM Connection = Organisation Name
+        /// Gets or sets the name of the CRM Connection = Organization Name
         /// </summary>
         public string Name { get; set; }
 
