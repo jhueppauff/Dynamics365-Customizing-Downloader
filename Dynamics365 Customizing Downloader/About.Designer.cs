@@ -126,7 +126,6 @@
             this.labelCompanyName.TabIndex = 22;
             this.labelCompanyName.Text = "Company Name";
             this.labelCompanyName.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.labelCompanyName.Click += new System.EventHandler(this.labelCompanyName_Click);
             // 
             // textBoxDescription
             // 

@@ -1,14 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-
-namespace Dynamics365CustomizingDownloader
+﻿namespace Dynamics365CustomizingDownloader
 {
+    using System;
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Drawing;
+    using System.Linq;
+    using System.Reflection;
+    using System.Threading.Tasks;
+    using System.Windows.Forms;
+
     partial class About : Form
     {
         public About()
@@ -102,9 +102,5 @@ namespace Dynamics365CustomizingDownloader
         }
         #endregion
 
-        private void labelCompanyName_Click(object sender, EventArgs e)
-        {
-
-        }
     }
 }
