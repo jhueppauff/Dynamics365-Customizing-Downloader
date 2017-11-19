@@ -285,7 +285,7 @@ namespace Dynamics365CustomizingDownloader
                     using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
                     {
                         // Delete Solution File if it exists
-                        if (File.Exists(Path.Combine(this.selectedPath, solution.Name+".zip")))
+                        if (File.Exists(Path.Combine(this.selectedPath, solution.Name + ".zip")))
                         {
                             File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
                         }

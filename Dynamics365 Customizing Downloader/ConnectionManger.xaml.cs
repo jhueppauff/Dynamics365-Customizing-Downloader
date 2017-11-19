@@ -43,7 +43,7 @@ namespace Dynamics365CustomizingDownloader
         }
 
         /// <summary>
-        /// Button Click Action, Connect and add a CRM Organisation
+        /// Button Click Action, Connect and add a CRM Organization
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
