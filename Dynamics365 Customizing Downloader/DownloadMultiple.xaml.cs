@@ -162,10 +162,14 @@ namespace Dynamics365CustomizingDownloader
             {
                 // Debug Messages
                 statusTextBox.Text += $"{DateTime.Now} : Debug: {message}\n";
+                statusTextBox.CaretIndex = statusTextBox.Text.Length;
+                statusTextBox.ScrollToEnd();
             }
             else if (!isDebugging)
             {
                 statusTextBox.Text += $"{DateTime.Now} : {message}\n";
+                statusTextBox.CaretIndex = statusTextBox.Text.Length;
+                statusTextBox.ScrollToEnd();
             }
         }
 
@@ -249,6 +253,7 @@ namespace Dynamics365CustomizingDownloader
                 LocalPath = this.selectedPath,
                 Name = this.CRMConnection.Name
             };
+            this.CRMConnection = crmConnection;
 
             // Update Connection
             StorageExtensions.Update(crmConnection);
@@ -279,6 +284,12 @@ namespace Dynamics365CustomizingDownloader
                 {
                     using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
                     {
+                        // Delete Solution File if it exists
+                        if (File.Exists(Path.Combine(this.selectedPath, solution.Name+".zip")))
+                        {
+                            File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
+                        }
+
                         toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.Name, this.selectedPath);
 
                         Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
@@ -312,7 +323,9 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.loadingPanel.IsLoading = false;
-            MessageBox.Show("Finished download/extraction", "Process completed", MessageBoxButton.OK, MessageBoxImage.Information);
+            DownloadMultiple.LogToUI("---------------");
+            DownloadMultiple.LogToUI("Finished download/extraction");
+            DownloadMultiple.LogToUI("---------------");
         }
     }
 }
