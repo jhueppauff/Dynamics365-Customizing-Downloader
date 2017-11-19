@@ -283,7 +283,6 @@ namespace Dynamics365CustomizingDownloader
                         }
                     }
 
-
                     if (downloadCounter != 0)
                     {
                         DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
