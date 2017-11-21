@@ -323,6 +323,7 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.loadingPanel.IsLoading = false;
+            this.Btn_close.IsEnabled = true;
             DownloadMultiple.LogToUI("---------------");
             DownloadMultiple.LogToUI("Finished download/extraction");
             DownloadMultiple.LogToUI("---------------");
