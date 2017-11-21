@@ -300,7 +300,7 @@ namespace Dynamics365CustomizingDownloader
                             LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name).ToString()}", true);
                         }
 
-                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.Name));
+                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
 
                         File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
                         LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name + ".zip").ToString()}", true);
