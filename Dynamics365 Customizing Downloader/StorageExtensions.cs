@@ -35,12 +35,12 @@ namespace Dynamics365CustomizingDownloader
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             // Create if File does not exist
-            if (!File.Exists(storagePath))
+            if(!File.Exists(storagePath))
             {
                 File.Create(storagePath).Close();
 
                 // Encrypt Connection String
-                crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
+                crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, StorageExtensions.LoadEncryptionKey());
                 crmConnection.LocalPath = string.Empty;
                 crmConnections.Add(crmConnection);
                 string json = JsonConvert.SerializeObject(crmConnections);
@@ -64,7 +64,7 @@ namespace Dynamics365CustomizingDownloader
                     crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
 
                     // Encrypt Connection String
-                    crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
+                    crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, StorageExtensions.LoadEncryptionKey());
                     crmConnection.LocalPath = string.Empty;
                     crmConnections.Add(crmConnection);
 
@@ -105,7 +105,7 @@ namespace Dynamics365CustomizingDownloader
 
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
+                        crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, StorageExtensions.LoadEncryptionKey());
                     }
 
                     // Close File Stream
@@ -132,11 +132,30 @@ namespace Dynamics365CustomizingDownloader
 
             crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, "SharedSecret_547ä#Dyn354");
+            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, StorageExtensions.LoadEncryptionKey());
             crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
             File.WriteAllText(storagePath, jsonNew);
+        }
+
+        /// <summary>
+        /// Loads the Encryption Key from File
+        /// </summary>
+        /// <returns>Encryption Key</returns>
+        private static string LoadEncryptionKey()
+        {
+            string path = System.IO.Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "EncryptionKey.txt");
+            string encryptionKey = string.Empty;
+            File.Decrypt(path);
+
+            using (StreamReader streamReader = new StreamReader(path))
+            {
+                encryptionKey = streamReader.ReadLine();
+            }
+
+            File.Encrypt(path);
+            return encryptionKey;
         }
     }
 }

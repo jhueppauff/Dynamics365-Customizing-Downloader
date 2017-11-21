@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -22,6 +23,11 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Encryption Key for the CRM Connections
+        /// </summary>
+        public static string EncryptionKey;
+
         /// <summary>
         /// BackGround Worker
         /// </summary>
@@ -61,18 +67,35 @@ namespace Dynamics365CustomizingDownloader
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
 
-            try
+            if (MainWindow.EncryptionKey != null)
             {
-                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-
-                foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                try
                 {
-                    this.cbx_connection.Items.Add(crmConnection.Name);
+                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+
+                    foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                    {
+                        this.cbx_connection.Items.Add(crmConnection.Name);
+                    }
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    // Ignore File Not found
                 }
             }
-            catch (System.IO.FileNotFoundException)
+            else
             {
-                // Ignore File Not found
+                EncryptionKey encryptionKey = new EncryptionKey();
+                encryptionKey.ShowDialog();
+
+                if (EncryptionKey != string.Empty)
+                {
+                    ReloadConnections();
+                }
+                else
+                {
+                    this.Close();
+                }   
             }
         }
 
