@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:Controls="clr-namespace:Dynamics365CustomizingDownloader.Controls" x:Class="Dynamics365CustomizingDownloader.DownloadMultiple"
+        xmlns:Controls="clr-namespace:Dynamics365CustomizingDownloader.Controls" x:Name="DownloadWindow" x:Class="Dynamics365CustomizingDownloader.DownloadMultiple"
         mc:Ignorable="d"
-        Title="DownloadMultiple" Height="547.632" Width="658.872">
+        Title="DownloadMultiple" Height="547.632" Width="658.872" Closing="DownloadWindow_Closing">
     <Grid Margin="0,0,0,142">
         <Grid>
             <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="tbx_status" TextWrapping="Wrap" Margin="0,10,13,78"/>
