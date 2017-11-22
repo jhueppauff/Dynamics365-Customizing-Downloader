@@ -10,8 +10,11 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using Newtonsoft.Json;
     using System;
+    using System.Collections.Generic;
     using System.IO;
+    using System.Text;
     using System.Windows;
 
     /// <summary>
@@ -34,7 +37,69 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_SaveEncryptionKey_Click(object sender, RoutedEventArgs e)
         {
-            MainWindow.EncryptionKey = Tbx_EncryptionKey.Text;
+            if (Tbx_EncryptionKey.Password != string.Empty)
+            {
+                bool keyCorrect = false;
+                if (!File.Exists(StorageExtensions.storagePath))
+                {
+                    MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
+                    this.Close();
+                }
+                else
+                {
+                    MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
+                    // Connections are already created, need to check Encryption Key
+                    List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+                    using (FileStream fs = File.OpenRead(StorageExtensions.storagePath))
+                    {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        byte[] b = new byte[1024];
+                        UTF8Encoding temp = new UTF8Encoding(true);
+
+                        while (fs.Read(b, 0, b.Length) > 0)
+                        {
+                            stringBuilder.AppendLine(temp.GetString(b));
+                        }
+
+                        // Converts Json to List
+                        crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
+                        try
+                        {
+                            foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                            {
+                                crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                            }
+                            keyCorrect = true;
+                        }
+                        catch (Exception)
+                        {
+                            keyCorrect = false;
+                            MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
+
+                        // Close File Stream
+                        fs.Flush();
+                        fs.Close();
+
+                        if (keyCorrect)
+                        {
+                            this.Close();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please enter a Encryption Key", "No Key entered", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        private void Tbx_EncryptionKey_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                Btn_SaveEncryptionKey_Click(this, new RoutedEventArgs());
+            }
         }
     }
 }

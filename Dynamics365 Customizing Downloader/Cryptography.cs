@@ -34,14 +34,14 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="plainText">The text to encrypt.</param>
         /// <param name="sharedSecret">A password used to generate a key for encryption.</param>
         /// <returns>Returns a encrypted string</returns>
-        public static string EncryptStringAES(string plainText, string sharedSecret)
+        public static string EncryptStringAES(string plainText)
         {
             if (string.IsNullOrEmpty(plainText))
             {
                 throw new ArgumentNullException("plainText");
             }
 
-            if (string.IsNullOrEmpty(sharedSecret))
+            if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
                 throw new ArgumentNullException("sharedSecret");
             }
@@ -55,7 +55,7 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 // generate the key from the shared secret and the salt
-                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(sharedSecret, salt);
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(MainWindow.EncryptionKey, salt);
 
                 // Create a RijndaelManaged object
                 aesAlg = new RijndaelManaged();
@@ -101,16 +101,15 @@ namespace Dynamics365CustomizingDownloader
         /// EncryptStringAES(), using an identical sharedSecret.
         /// </summary>
         /// <param name="cipherText">The text to decrypt.</param>
-        /// <param name="sharedSecret">A password used to generate a key for decryption.</param>
         /// <returns>Returns a decrypted string</returns>
-        public static string DecryptStringAES(string cipherText, string sharedSecret)
+        public static string DecryptStringAES(string cipherText)
         {
             if (string.IsNullOrEmpty(cipherText))
             {
                 throw new ArgumentNullException("cipherText");
             }
 
-            if (string.IsNullOrEmpty(sharedSecret))
+            if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
                 throw new ArgumentNullException("sharedSecret");
             }
@@ -126,7 +125,7 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 // generate the key from the shared secret and the salt
-                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(sharedSecret, salt);
+                Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(MainWindow.EncryptionKey, salt);
 
                 // Create the streams used for decryption.                
                 byte[] bytes = Convert.FromBase64String(cipherText);

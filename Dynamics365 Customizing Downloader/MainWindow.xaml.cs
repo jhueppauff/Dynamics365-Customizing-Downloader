@@ -13,7 +13,6 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -67,7 +66,7 @@ namespace Dynamics365CustomizingDownloader
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
 
-            if (MainWindow.EncryptionKey != null)
+            if (MainWindow.EncryptionKey != null && MainWindow.EncryptionKey == string.Empty)
             {
                 try
                 {
@@ -88,7 +87,7 @@ namespace Dynamics365CustomizingDownloader
                 EncryptionKey encryptionKey = new EncryptionKey();
                 encryptionKey.ShowDialog();
 
-                if (EncryptionKey != string.Empty)
+                if (MainWindow.EncryptionKey != string.Empty && MainWindow.EncryptionKey != null)
                 {
                     ReloadConnections();
                 }

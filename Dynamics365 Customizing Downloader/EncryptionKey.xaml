@@ -3,14 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Dynamics365CustomizingDownloader"
         mc:Ignorable="d"
         Title="EncryptionKey" Height="305.966" Width="309.375">
     <Grid>
-        <TextBox x:Name="Tbx_EncryptionKey" HorizontalAlignment="Left" Height="22" Margin="10,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <Label x:Name="Lbl_PleaseChooseEncryptionKey" Content="Please choose an Encryption Key/Password &#xD;&#xA;for your CRM Connections :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="52"/>
         <Button x:Name="Btn_SaveEncryptionKey" Content="Save" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="272" Click="Btn_SaveEncryptionKey_Click"/>
-        <Label x:Name="Lbl_PleaseRemember" Content="Please remember this Key, as you need it &#xD;&#xA;every Time you start this Application" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Width="272" Height="75"/>
+        <Label x:Name="Lbl_PleaseRemember" Content="Please remember this Key, as you need it &#xA;every time you start this application" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Width="272" Height="75"/>
+        <PasswordBox x:Name="Tbx_EncryptionKey" TabIndex="0" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="272" KeyDown="Tbx_EncryptionKey_KeyDown"/>
 
     </Grid>
 </Window>

@@ -44,6 +44,11 @@ namespace Dynamics365CustomizingDownloader
         private bool panelLoading;
 
         /// <summary>
+        /// Indicates if an error occured
+        /// </summary>
+        private bool errorOccured;
+
+        /// <summary>
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
@@ -241,6 +246,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            errorOccured = false;
             this.loadingPanel.IsLoading = true;
             this.selectedPath = tbx_download.Text;
 
@@ -277,6 +283,7 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
+                downloadIndex = CRMSolutions.Count;
                 foreach (Xrm.CrmSolution solution in this.CRMSolutions)
                 {
                     if (!this.worker.CancellationPending)
@@ -315,6 +322,7 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
+                errorOccured = true;
                 UpdateUI($"An Error occured: {ex.Message}", false);
             }
         }
@@ -340,7 +348,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.downloadIndex == 0)
+            if (this.downloadIndex <= 0)
             {
                 this.Close();
             }
