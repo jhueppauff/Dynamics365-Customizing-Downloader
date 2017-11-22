@@ -25,7 +25,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Encryption Key for the CRM Connections
         /// </summary>
-        public static string EncryptionKey;
+        private static string encryptionKey;
 
         /// <summary>
         /// BackGround Worker
@@ -89,7 +89,7 @@ namespace Dynamics365CustomizingDownloader
 
                 if (MainWindow.EncryptionKey != string.Empty && MainWindow.EncryptionKey != null)
                 {
-                    ReloadConnections();
+                    this.ReloadConnections();
                 }
                 else
                 {
@@ -102,6 +102,22 @@ namespace Dynamics365CustomizingDownloader
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Gets or sets the Encryption Key
+        /// </summary>
+        public static string EncryptionKey
+        {
+            get
+            {
+                return encryptionKey;
+            }
+
+            set
+            {
+                encryptionKey = value;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].

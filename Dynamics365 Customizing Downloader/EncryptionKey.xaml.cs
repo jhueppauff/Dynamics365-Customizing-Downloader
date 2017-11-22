@@ -10,15 +10,15 @@
 
 namespace Dynamics365CustomizingDownloader
 {
-    using Newtonsoft.Json;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using System.Windows;
+    using Newtonsoft.Json;
 
     /// <summary>
-    /// Interaction logic for EncryptionKey.xaml
+    /// Interaction logic for EncryptionKey
     /// </summary>
     public partial class EncryptionKey : Window
     {
@@ -40,7 +40,7 @@ namespace Dynamics365CustomizingDownloader
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
                 bool keyCorrect = false;
-                if (!File.Exists(StorageExtensions.storagePath))
+                if (!File.Exists(StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
                     this.Close();
@@ -48,9 +48,10 @@ namespace Dynamics365CustomizingDownloader
                 else
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
+
                     // Connections are already created, need to check Encryption Key
                     List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-                    using (FileStream fs = File.OpenRead(StorageExtensions.storagePath))
+                    using (FileStream fs = File.OpenRead(StorageExtensions.StoragePath))
                     {
                         StringBuilder stringBuilder = new StringBuilder();
                         byte[] b = new byte[1024];
@@ -69,6 +70,7 @@ namespace Dynamics365CustomizingDownloader
                             {
                                 crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
                             }
+
                             keyCorrect = true;
                         }
                         catch (Exception)
@@ -94,11 +96,16 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Key Down Event, will invoke save on key down enter within the password box
+        /// </summary>
+        /// <param name="sender">Button sender object</param>
+        /// <param name="e">Button event args</param>
         private void Tbx_EncryptionKey_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
         {
             if (e.Key == System.Windows.Input.Key.Enter)
             {
-                Btn_SaveEncryptionKey_Click(this, new RoutedEventArgs());
+                this.Btn_SaveEncryptionKey_Click(this, new RoutedEventArgs());
             }
         }
     }

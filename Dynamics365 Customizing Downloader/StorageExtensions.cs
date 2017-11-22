@@ -24,7 +24,18 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Local Path of the JSON Storage File
         /// </summary>
-        public static string storagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dyn365_Configuration.json");
+        private static string storagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dyn365_Configuration.json");
+
+        /// <summary>
+        /// Gets the local path of the JSON Storage File
+        /// </summary>
+        public static string StoragePath
+        {
+            get
+            {
+                return storagePath;
+            }
+        }
 
         /// <summary>
         /// Saves the <see cref="Xrm.CrmConnection"/> to the local Configuration
@@ -35,9 +46,9 @@ namespace Dynamics365CustomizingDownloader
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             // Create if File does not exist
-            if(!File.Exists(storagePath))
+            if (!File.Exists(StoragePath))
             {
-                File.Create(storagePath).Close();
+                File.Create(StoragePath).Close();
 
                 // Encrypt Connection String
                 crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
@@ -45,11 +56,11 @@ namespace Dynamics365CustomizingDownloader
                 crmConnections.Add(crmConnection);
                 string json = JsonConvert.SerializeObject(crmConnections);
 
-                File.WriteAllText(storagePath, json);
+                File.WriteAllText(StoragePath, json);
             }
             else
             {
-                using (FileStream fs = File.Open(storagePath, FileMode.Open))
+                using (FileStream fs = File.Open(StoragePath, FileMode.Open))
                 {
                     StringBuilder stringBuilder = new StringBuilder();
                     byte[] b = new byte[1024];
@@ -75,7 +86,7 @@ namespace Dynamics365CustomizingDownloader
 
                 // Write to Configuration File
                 string json = JsonConvert.SerializeObject(crmConnections);
-                File.WriteAllText(storagePath, json);
+                File.WriteAllText(StoragePath, json);
             }
         }
 
@@ -87,9 +98,9 @@ namespace Dynamics365CustomizingDownloader
         {
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
-            if (File.Exists(storagePath))
+            if (File.Exists(StoragePath))
             {
-                using (FileStream fs = File.OpenRead(storagePath))
+                using (FileStream fs = File.OpenRead(StoragePath))
                 {
                     StringBuilder stringBuilder = new StringBuilder();
                     byte[] b = new byte[1024];
@@ -127,7 +138,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
         public static void Update(Xrm.CrmConnection crmConnection)
         {
-            string json = File.ReadAllText(storagePath);
+            string json = File.ReadAllText(StoragePath);
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
@@ -136,7 +147,7 @@ namespace Dynamics365CustomizingDownloader
             crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
-            File.WriteAllText(storagePath, jsonNew);
+            File.WriteAllText(StoragePath, jsonNew);
         }
     }
 }
