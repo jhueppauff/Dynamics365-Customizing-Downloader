@@ -23,6 +23,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
+        /// Encryption Key for the CRM Connections
+        /// </summary>
+        public static string EncryptionKey;
+
+        /// <summary>
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
@@ -61,18 +66,35 @@ namespace Dynamics365CustomizingDownloader
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
 
-            try
+            if (MainWindow.EncryptionKey != null && MainWindow.EncryptionKey == string.Empty)
             {
-                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-
-                foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                try
                 {
-                    this.cbx_connection.Items.Add(crmConnection.Name);
+                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+
+                    foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                    {
+                        this.cbx_connection.Items.Add(crmConnection.Name);
+                    }
+                }
+                catch (System.IO.FileNotFoundException)
+                {
+                    // Ignore File Not found
                 }
             }
-            catch (System.IO.FileNotFoundException)
+            else
             {
-                // Ignore File Not found
+                EncryptionKey encryptionKey = new EncryptionKey();
+                encryptionKey.ShowDialog();
+
+                if (MainWindow.EncryptionKey != string.Empty && MainWindow.EncryptionKey != null)
+                {
+                    ReloadConnections();
+                }
+                else
+                {
+                    this.Close();
+                }   
             }
         }
 

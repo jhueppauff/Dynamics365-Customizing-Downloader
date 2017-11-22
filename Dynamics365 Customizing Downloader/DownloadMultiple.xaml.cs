@@ -44,6 +44,11 @@ namespace Dynamics365CustomizingDownloader
         private bool panelLoading;
 
         /// <summary>
+        /// Indicates if an error occured
+        /// </summary>
+        private bool errorOccured;
+
+        /// <summary>
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
@@ -231,10 +236,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_close_Click(object sender, RoutedEventArgs e)
         {
-            if (this.downloadIndex == 0)
-            {
-                this.Close();
-            }
+            this.DownloadWindow_Closing(null, null);
         }
 
         /// <summary>
@@ -244,6 +246,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+            errorOccured = false;
             this.loadingPanel.IsLoading = true;
             this.selectedPath = tbx_download.Text;
 
@@ -280,37 +283,46 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
+                downloadIndex = CRMSolutions.Count;
                 foreach (Xrm.CrmSolution solution in this.CRMSolutions)
                 {
-                    using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                    if (!this.worker.CancellationPending)
                     {
-                        // Delete Solution File if it exists
-                        if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
+                        using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
                         {
+                            // Delete Solution File if it exists
+                            if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
+                            {
+                                File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                            }
+
+                            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
+
+                            Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
+
+                            if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                            {
+                                Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
+                                LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                            }
+
+                            crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+
+                            this.downloadIndex--;
                         }
-
-                        toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
-
-                        Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
-
-                        if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
-                        {
-                            Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
-                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
-                        }
-
-                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
-
-                        File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                        LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
-
-                        this.downloadIndex--;
+                    }
+                    else
+                    {
+                        e.Cancel = true;
                     }
                 }
             }
             catch (Exception ex)
             {
+                errorOccured = true;
                 UpdateUI($"An Error occured: {ex.Message}", false);
             }
         }
@@ -327,6 +339,28 @@ namespace Dynamics365CustomizingDownloader
             DownloadMultiple.LogToUI("---------------");
             DownloadMultiple.LogToUI("Finished download/extraction");
             DownloadMultiple.LogToUI("---------------");
+        }
+
+        /// <summary>
+        /// Form Closing Event
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
+        private void DownloadWindow_Closing(object sender, CancelEventArgs e)
+        {
+            if (this.downloadIndex <= 0)
+            {
+                this.Close();
+            }
+            else
+            {
+                MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    this.worker.CancelAsync();
+                }
+            }
         }
     }
 }
