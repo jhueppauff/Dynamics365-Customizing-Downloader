@@ -75,7 +75,7 @@ namespace Dynamics365CustomizingDownloader
 
             foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
             {
-                DownloadMultiple.LogToUI($"Added Solution: { crmSolution.Name} to Download List", true);
+                DownloadMultiple.LogToUI($"Added Solution: { crmSolution.UniqueName} to Download List", true);
                 this.downloadIndex++;
             }
 
@@ -285,25 +285,25 @@ namespace Dynamics365CustomizingDownloader
                     using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
                     {
                         // Delete Solution File if it exists
-                        if (File.Exists(Path.Combine(this.selectedPath, solution.Name + ".zip")))
+                        if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
                         {
-                            File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
+                            File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                         }
 
-                        toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.Name, this.selectedPath);
+                        toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
 
                         Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
 
-                        if (Directory.Exists(Path.Combine(this.selectedPath, solution.Name)))
+                        if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
                         {
-                            Directory.Delete(Path.Combine(this.selectedPath, solution.Name), true);
-                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name).ToString()}", true);
+                            Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
+                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
                         }
 
-                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.Name + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+                        crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
 
-                        File.Delete(Path.Combine(this.selectedPath, solution.Name + ".zip"));
-                        LogToUI($"Delete {Path.Combine(this.selectedPath, solution.Name + ".zip").ToString()}", true);
+                        File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                        LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
 
                         this.downloadIndex--;
                     }
