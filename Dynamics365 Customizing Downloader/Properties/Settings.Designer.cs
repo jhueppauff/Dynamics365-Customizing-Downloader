@@ -22,17 +22,5 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return defaultInstance;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string SecretKey {
-            get {
-                return ((string)(this["SecretKey"]));
-            }
-            set {
-                this["SecretKey"] = value;
-            }
-        }
     }
 }
