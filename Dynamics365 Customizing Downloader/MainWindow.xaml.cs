@@ -94,7 +94,7 @@ namespace Dynamics365CustomizingDownloader
                 else
                 {
                     this.Close();
-                }   
+                }
             }
         }
 
@@ -305,7 +305,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (cbx_connection.SelectedItem != null)
             {
-                 int downloadCounter = 0;
+                int downloadCounter = 0;
                 List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
                 Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 

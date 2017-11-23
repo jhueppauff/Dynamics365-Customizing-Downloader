@@ -13,7 +13,9 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Globalization;
     using System.IO;
+    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -71,6 +73,7 @@ namespace Dynamics365CustomizingDownloader
         public DownloadMultiple(Xrm.CrmConnection crmConnection, List<Xrm.CrmSolution> crmSolutions)
         {
             this.InitializeComponent();
+            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
             DownloadMultiple.statusTextBox = this.tbx_status;
             DownloadMultiple.LogToUI("Started Form");
             this.Btn_close.IsEnabled = false;
@@ -81,7 +84,6 @@ namespace Dynamics365CustomizingDownloader
             foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
             {
                 DownloadMultiple.LogToUI($"Added Solution: { crmSolution.UniqueName} to Download List", true);
-                this.downloadIndex++;
             }
 
             this.tbx_download.Text = crmConnection.LocalPath;
@@ -236,7 +238,27 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_close_Click(object sender, RoutedEventArgs e)
         {
-            this.DownloadWindow_Closing(null, null);
+            if (this.downloadIndex > 0 || this.errorOccured)
+            {
+                MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+
+                if (dialogResult == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        this.worker.CancelAsync();
+                        this.Close();
+                    }
+                    catch (Exception)
+                    {
+                        this.Close();
+                    }
+                }
+            }
+            else
+            {
+                this.Close();
+            }
         }
 
         /// <summary>
@@ -348,17 +370,23 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.downloadIndex <= 0 || this.errorOccured)
-            {
-                this.Close();
-            }
-            else
+            if (this.downloadIndex > 0 || this.errorOccured)
             {
                 MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
                 if (dialogResult == MessageBoxResult.Yes)
                 {
-                    this.worker.CancelAsync();
+                    try
+                    {
+                        this.worker.CancelAsync();
+                    }
+                    catch (Exception)
+                    {
+                    }
+                }
+                else
+                {
+                    e.Cancel = true;
                 }
             }
         }
