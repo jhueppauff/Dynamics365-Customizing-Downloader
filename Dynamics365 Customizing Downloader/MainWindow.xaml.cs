@@ -403,7 +403,7 @@ namespace Dynamics365CustomizingDownloader
             ConnectionOverview connectionOverview = new ConnectionOverview();
             connectionOverview.ShowDialog();
 
-            ReloadConnections();
+            this.ReloadConnections();
         }
     }
 }
