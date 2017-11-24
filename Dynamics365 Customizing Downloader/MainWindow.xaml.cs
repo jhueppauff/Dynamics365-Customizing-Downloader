@@ -392,5 +392,18 @@ namespace Dynamics365CustomizingDownloader
                 Application.Current.Properties["Debugging.Enabled"] = false;
             }
         }
+
+        /// <summary>
+        /// Button Click, Opens the Connection Overview Dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_OpenConnectionOverview_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionOverview connectionOverview = new ConnectionOverview();
+            connectionOverview.ShowDialog();
+
+            ReloadConnections();
+        }
     }
 }
