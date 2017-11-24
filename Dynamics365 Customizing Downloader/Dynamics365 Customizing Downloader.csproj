@@ -94,6 +94,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -131,6 +134,9 @@
     <Compile Include="ConnectionManger.xaml.cs">
       <DependentUpon>ConnectionManger.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ConnectionOverview.xaml.cs">
+      <DependentUpon>ConnectionOverview.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CircularProgressBar.xaml.cs">
       <DependentUpon>CircularProgressBar.xaml</DependentUpon>
     </Compile>
@@ -147,11 +153,17 @@
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="StorageExtensions.cs" />
+    <Compile Include="Update\Release.cs" />
+    <Compile Include="Update\UpdateChecker.cs" />
     <Compile Include="Xrm\CrmConnection.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />
     <Compile Include="Xrm\ToolingConnector.cs" />
     <Page Include="ConnectionManger.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ConnectionOverview.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
