@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System.Collections.Generic;
     using System.Windows;
 
     /// <summary>
@@ -18,11 +19,31 @@ namespace Dynamics365CustomizingDownloader
     public partial class ConnectionOverview : Window
     {
         /// <summary>
+        /// List of all CRM Connections <see cref="List{CRM Connections}"/>
+        /// </summary>
+        private List<Xrm.CrmConnection> crmConnections;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionOverview"/> class.
         /// </summary>
         public ConnectionOverview()
         {
             this.InitializeComponent();
+            LoadCRMConnections();
+        }
+        
+        /// <summary>
+        /// Loads every CRM Connection from Config
+        /// </summary>
+        private void LoadCRMConnections()
+        {
+            crmConnections = StorageExtensions.Load();
+            Cbx_CRMConnections.Items.Clear();
+
+            foreach (Xrm.CrmConnection crmConnection in crmConnections)
+            {
+                Cbx_CRMConnections.Items.Add(crmConnection.Name);
+            }
         }
     }
 }

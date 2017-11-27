@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="ConnectionOverview" Height="300" Width="300">
     <Grid>
-        <ComboBox Margin="10,41,10.333,0" VerticalAlignment="Top"/>
+        <ComboBox x:Name="Cbx_CRMConnections" Margin="10,41,10.333,0" VerticalAlignment="Top"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox Height="23" Margin="10,98,10.333,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <TextBox Height="23" Margin="9,157,11.333,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
