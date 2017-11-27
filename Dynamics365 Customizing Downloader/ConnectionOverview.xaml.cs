@@ -23,6 +23,8 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private List<Xrm.CrmConnection> crmConnections;
 
+        Xrm.CrmConnection crmConnection;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionOverview"/> class.
         /// </summary>
@@ -31,19 +33,61 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
             LoadCRMConnections();
         }
-        
+
         /// <summary>
         /// Loads every CRM Connection from Config
         /// </summary>
         private void LoadCRMConnections()
         {
-            crmConnections = StorageExtensions.Load();
+            this.crmConnections = StorageExtensions.Load();
             Cbx_CRMConnections.Items.Clear();
 
-            foreach (Xrm.CrmConnection crmConnection in crmConnections)
+            foreach (Xrm.CrmConnection connection in this.crmConnections)
             {
-                Cbx_CRMConnections.Items.Add(crmConnection.Name);
+                Cbx_CRMConnections.Items.Add(connection.Name);
             }
+        }
+
+        /// <summary>
+        /// Loads the selected Connection
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void Cbx_CRMConnections_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+            string connectionName = Cbx_CRMConnections.SelectedItem.ToString();
+
+            this.crmConnection = crmConnections.Find(x => x.Name == connectionName);
+
+            Tbx_ConnectionName.Text = crmConnection.Name;
+            Tbx_ConnectionString.Text = crmConnection.ConnectionString;
+        }
+
+        /// <summary>
+        /// Tests the Connection
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_TestConnection_Click(object sender, RoutedEventArgs e)
+        {
+            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
+
+            try
+            {
+                toolingConnector.GetCrmServiceClient(Tbx_ConnectionString.Text);
+
+                Btn_SaveConnection.IsEnabled = true;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
+        }
+
+        private void Btn_SaveConnection_Click(object sender, RoutedEventArgs e)
+        {
+            StorageExtensions.Update(crmConnection);
         }
     }
 }
