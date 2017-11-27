@@ -370,8 +370,13 @@ namespace Dynamics365CustomizingDownloader
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             // ToDo
-            NotImplementedException notImplementedException = new NotImplementedException();
-            MessageBox.Show(notImplementedException.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+            
+            if (updateChecker.IsUpdateAvailable())
+            {
+
+            }
+
         }
 
         /// <summary>

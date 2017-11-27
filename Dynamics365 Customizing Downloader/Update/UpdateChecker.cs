@@ -15,6 +15,7 @@ namespace Dynamics365CustomizingDownloader.Update
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
+    using Octokit;
 
     /// <summary>
     /// Update Check with the GitHub Release API
@@ -22,51 +23,17 @@ namespace Dynamics365CustomizingDownloader.Update
     public class UpdateChecker
     {
         /// <summary>
-        /// GitHub API, Release URL
-        /// </summary>
-        private const string GitHubReleasePath = "/repos/jhueppauff/Dynamics365-Customizing-Downloader/releases";
-
-        /// <summary>
-        /// GitHub Base URL
-        /// </summary>
-        private const string GitHubAPIRUL = "https://api.github.com";
-
-        /// <summary>
-        /// HTTP Client
-        /// </summary>
-        private static HttpClient httpClient = new HttpClient();
-
-        /// <summary>
         /// Checks if an Update is available
         /// </summary>
         /// <returns>Returns if an update is available</returns>
-        public bool IsUpdateAvailible()
+        public bool IsUpdateAvailable()
         {
-            // ToDo:
+            var github = new GitHubClient(new Octokit.ProductHeaderValue("Dynamics365 Customizing Downloader"));
+
+            var releases = github.Repository.Release.GetAll("jhueppauff", "Dynamics365-Customizing-Downloader",ApiOptions.None);
+           
+
             return false;
-        }
-
-        /// <summary>
-        /// Retrieves the Releases Async
-        /// </summary>
-        /// <returns>Returns a <see cref="List{Release}"/> with all Releases</returns>
-        private static async Task<List<Release>> RetriveReleasesAsync()
-        {
-            List<Release> releases = new List<Release>();
-            Release release = new Release();
-
-            httpClient.BaseAddress = new Uri(GitHubAPIRUL);
-            httpClient.DefaultRequestHeaders.Accept.Clear();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            HttpResponseMessage response = await httpClient.GetAsync(GitHubReleasePath);
-
-            if (response.IsSuccessStatusCode)
-            {
-                release = await response.Content.ReadAsAsync<Release>();
-            }
-
-            return releases;
         }
     }
 }
