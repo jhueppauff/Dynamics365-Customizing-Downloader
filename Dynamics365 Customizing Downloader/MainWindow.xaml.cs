@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -65,6 +66,11 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
+
+            if (!File.Exists(StorageExtensions.StoragePath))
+            {
+                Btn_OpenConnectionOverview.IsEnabled = false;
+            }
 
             if (MainWindow.EncryptionKey != null && MainWindow.EncryptionKey == string.Empty)
             {
@@ -289,10 +295,12 @@ namespace Dynamics365CustomizingDownloader
                 {
                     this.cbx_connection.Items.Add(crmConnection.Name);
                 }
+
+                Btn_OpenConnectionOverview.IsEnabled = true;
             }
             catch (System.IO.FileNotFoundException)
             {
-                // Ignor File Not found
+                // Ignore File Not found
             }
         }
 
