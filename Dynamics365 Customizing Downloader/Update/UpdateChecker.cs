@@ -27,10 +27,6 @@ namespace Dynamics365CustomizingDownloader.Update
         /// <returns>Returns if an update is available</returns>
         public bool IsUpdateAvailable()
         {
-
-           
-            
-
             return false;
         }
     }

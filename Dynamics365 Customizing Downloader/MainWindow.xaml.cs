@@ -379,10 +379,8 @@ namespace Dynamics365CustomizingDownloader
             Update.UpdateChecker updateChecker = new Update.UpdateChecker();
 
             if (updateChecker.IsUpdateAvailable())
-            {
-
+            { 
             }
-
         }
 
         /// <summary>

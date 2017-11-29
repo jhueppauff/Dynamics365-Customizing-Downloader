@@ -23,7 +23,10 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private List<Xrm.CrmConnection> crmConnections;
 
-        Xrm.CrmConnection crmConnection;
+        /// <summary>
+        /// CRM Connection
+        /// </summary>
+        private Xrm.CrmConnection crmConnection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionOverview"/> class.
@@ -31,7 +34,7 @@ namespace Dynamics365CustomizingDownloader
         public ConnectionOverview()
         {
             this.InitializeComponent();
-            LoadCRMConnections();
+            this.LoadCRMConnections();
         }
 
         /// <summary>
@@ -57,10 +60,10 @@ namespace Dynamics365CustomizingDownloader
         {
             string connectionName = Cbx_CRMConnections.SelectedItem.ToString();
 
-            this.crmConnection = crmConnections.Find(x => x.Name == connectionName);
+            this.crmConnection = this.crmConnections.Find(x => x.Name == connectionName);
 
-            Tbx_ConnectionName.Text = crmConnection.Name;
-            Tbx_ConnectionString.Text = crmConnection.ConnectionString;
+            Tbx_ConnectionName.Text = this.crmConnection.Name;
+            Tbx_ConnectionString.Text = this.crmConnection.ConnectionString;
         }
 
         /// <summary>
@@ -85,9 +88,14 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Button Action, Save Connection
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_SaveConnection_Click(object sender, RoutedEventArgs e)
         {
-            StorageExtensions.Update(crmConnection);
+            StorageExtensions.Update(this.crmConnection);
         }
     }
 }
