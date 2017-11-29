@@ -70,17 +70,17 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_TestConnection_Click(object sender, RoutedEventArgs e)
         {
-            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-
             try
             {
-                toolingConnector.GetCrmServiceClient(Tbx_ConnectionString.Text);
+                using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                {
+                    toolingConnector.GetCrmServiceClient(Tbx_ConnectionString.Text);
 
-                Btn_SaveConnection.IsEnabled = true;
+                    Btn_SaveConnection.IsEnabled = true;
+                }
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }

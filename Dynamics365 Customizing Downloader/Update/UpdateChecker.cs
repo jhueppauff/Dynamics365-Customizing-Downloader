@@ -15,7 +15,6 @@ namespace Dynamics365CustomizingDownloader.Update
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
-    using Octokit;
 
     /// <summary>
     /// Update Check with the GitHub Release API
@@ -28,10 +27,9 @@ namespace Dynamics365CustomizingDownloader.Update
         /// <returns>Returns if an update is available</returns>
         public bool IsUpdateAvailable()
         {
-            var github = new GitHubClient(new Octokit.ProductHeaderValue("Dynamics365 Customizing Downloader"));
 
-            var releases = github.Repository.Release.GetAll("jhueppauff", "Dynamics365-Customizing-Downloader",ApiOptions.None);
            
+            
 
             return false;
         }
