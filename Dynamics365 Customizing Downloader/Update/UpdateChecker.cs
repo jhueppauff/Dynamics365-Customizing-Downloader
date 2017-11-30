@@ -11,10 +11,12 @@
 namespace Dynamics365CustomizingDownloader.Update
 {
     using System;
-    using System.Collections.Generic;
+    using System.Net;
     using System.Net.Http;
     using System.Net.Http.Headers;
     using System.Threading.Tasks;
+    using Newtonsoft.Json;
+    using RestSharp;
 
     /// <summary>
     /// Update Check with the GitHub Release API
@@ -22,12 +24,38 @@ namespace Dynamics365CustomizingDownloader.Update
     public class UpdateChecker
     {
         /// <summary>
+        /// HTTP Client
+        /// </summary>
+        HttpClient httpClient = new HttpClient();
+
+        /// <summary>
         /// Checks if an Update is available
         /// </summary>
         /// <returns>Returns if an update is available</returns>
         public bool IsUpdateAvailable()
         {
-            return false;
+            try
+            {
+                var client = new RestClient(Properties.Settings.Default.GitHubAPIURL);
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                IRestResponse response = client.Execute(request);
+
+                var release = JsonConvert.DeserializeObject<Release>(response.Content);
+
+                DateTime published = (DateTime)release.published_at;
+
+                if (published > (DateTime)Properties.Settings.Default.Version)
+                {
+
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+
         }
     }
 }
