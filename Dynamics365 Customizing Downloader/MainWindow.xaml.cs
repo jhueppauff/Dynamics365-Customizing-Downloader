@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.IO;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -63,8 +64,14 @@ namespace Dynamics365CustomizingDownloader
         public MainWindow()
         {
             this.InitializeComponent();
+
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
+
+            if (!File.Exists(StorageExtensions.StoragePath))
+            {
+                Btn_OpenConnectionOverview.IsEnabled = false;
+            }
 
             if (MainWindow.EncryptionKey != null && MainWindow.EncryptionKey == string.Empty)
             {
@@ -96,6 +103,8 @@ namespace Dynamics365CustomizingDownloader
                     this.Close();
                 }
             }
+
+            CheckForUpdate();
         }
 
         /// <summary>
@@ -191,6 +200,8 @@ namespace Dynamics365CustomizingDownloader
                 // Free your own state (unmanaged objects).
                 // Set large fields to null.
                 this.disposed = true;
+                this.worker.Dispose();
+                this.crmSolutions = null;
             }
         }
 
@@ -250,14 +261,15 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
+            using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+            {
+                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
 
-            List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
-            Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
-
-            // Get Crm Solutions
-            this.crmSolutions.Clear();
-            this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+                // Get Crm Solutions
+                this.crmSolutions.Clear();
+                this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+            }
         }
 
         /// <summary>
@@ -289,10 +301,12 @@ namespace Dynamics365CustomizingDownloader
                 {
                     this.cbx_connection.Items.Add(crmConnection.Name);
                 }
+
+                Btn_OpenConnectionOverview.IsEnabled = true;
             }
             catch (System.IO.FileNotFoundException)
             {
-                // Ignor File Not found
+                // Ignore File Not found
             }
         }
 
@@ -362,8 +376,25 @@ namespace Dynamics365CustomizingDownloader
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
             // ToDo
-            NotImplementedException notImplementedException = new NotImplementedException();
-            MessageBox.Show(notImplementedException.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+
+            if (updateChecker.IsUpdateAvailable())
+            {
+                Uri uri = updateChecker.GetUpdateURL();
+
+                if (uri != null)
+                {
+                    System.Diagnostics.Process.Start(uri.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Failed to retrive Update URL", "Failed to get URL", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no Update available. Please visit Github if you are looking for a PreRelease", "No Update available", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
         /// <summary>
@@ -390,6 +421,41 @@ namespace Dynamics365CustomizingDownloader
             else
             {
                 Application.Current.Properties["Debugging.Enabled"] = false;
+            }
+        }
+
+        /// <summary>
+        /// Button Click, Opens the Connection Overview Dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_OpenConnectionOverview_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionOverview connectionOverview = new ConnectionOverview();
+            connectionOverview.ShowDialog();
+
+            this.ReloadConnections();
+        }
+
+        /// <summary>
+        /// Checks if an Update is available
+        /// </summary>
+        private void CheckForUpdate()
+        {
+            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+            if (updateChecker.IsUpdateAvailable())
+            {
+                Uri uri = updateChecker.GetUpdateURL();
+
+                if (uri != null)
+                {
+                    MessageBoxResult messageBoxResult = MessageBox.Show("There is an new Update available, would you like to Download it?", "Update available!", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (messageBoxResult == MessageBoxResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(uri.ToString());
+                    }
+                }
             }
         }
     }

@@ -22,5 +22,15 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.github.com/repos/jhueppauff/Dynamics365-Customizing-Downloader/releas" +
+            "es/latest")]
+        public string GitHubAPIURL {
+            get {
+                return ((string)(this["GitHubAPIURL"]));
+            }
+        }
     }
 }

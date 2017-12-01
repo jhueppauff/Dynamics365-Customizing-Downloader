@@ -17,7 +17,7 @@
                         ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,0,-0.333,-0.333" Foreground="#FF494949" Height="83" VerticalAlignment="Bottom" />
         <Menu Height="21" VerticalAlignment="Top" Margin="0,0,-0.333,0" IsMainMenu="True">
             <MenuItem Header="_File">
-
+                <MenuItem x:Name="Btn_OpenConnectionOverview" Header="Open Connection Overview" Click="Btn_OpenConnectionOverview_Click" Visibility="Collapsed"></MenuItem>
                 <MenuItem x:Name="Cbx_DebuggingEnabled" Header="Enable Debugging" IsCheckable="True" Click="Cbx_DebuggingEnabled_Click"  />
                 <Separator />
                 <MenuItem Header="_Exit" Click="MenuItemExit_Click" />

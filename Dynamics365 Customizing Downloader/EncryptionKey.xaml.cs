@@ -77,6 +77,7 @@ namespace Dynamics365CustomizingDownloader
                         {
                             keyCorrect = false;
                             MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MainWindow.EncryptionKey = null;
                         }
 
                         // Close File Stream
