@@ -12,7 +12,8 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 #### Usage
 
 ##### CRM Connection:
-- Open the App and choose "new" in the connection Drobox.
+- Open the App and choose a Password which is used for encrypting your Connection String.
+- After you entered a Password you can select "new" in the connection Drobox.
 
 - Add your Connection string (See https://msdn.microsoft.com/en-us/library/mt608573.aspx) and press the "Connect" Button
 
