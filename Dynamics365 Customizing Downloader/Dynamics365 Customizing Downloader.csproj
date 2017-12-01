@@ -153,8 +153,12 @@
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="StorageExtensions.cs" />
-    <Compile Include="Update\Release.cs" />
-    <Compile Include="Update\UpdateChecker.cs" />
+    <Compile Include="Update\Release.cs">
+      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+    </Compile>
+    <Compile Include="Update\UpdateChecker.cs">
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
+    </Compile>
     <Compile Include="Xrm\CrmConnection.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />

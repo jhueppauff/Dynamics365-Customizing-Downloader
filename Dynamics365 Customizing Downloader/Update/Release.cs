@@ -8,11 +8,11 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-using System;
-using System.Collections.Generic;
-
 namespace Dynamics365CustomizingDownloader.Update
 {
+    using System;
+    using System.Collections.Generic;
+
     public class Author
     {
         public string login { get; set; }

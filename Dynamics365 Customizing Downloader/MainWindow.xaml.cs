@@ -13,9 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Globalization;
     using System.IO;
-    using System.Threading;
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
@@ -66,7 +64,7 @@ namespace Dynamics365CustomizingDownloader
         public MainWindow()
         {
             this.InitializeComponent();
-            Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
+
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
 
@@ -105,6 +103,8 @@ namespace Dynamics365CustomizingDownloader
                     this.Close();
                 }
             }
+
+            CheckForUpdate();
         }
 
         /// <summary>
@@ -435,6 +435,28 @@ namespace Dynamics365CustomizingDownloader
             connectionOverview.ShowDialog();
 
             this.ReloadConnections();
+        }
+
+        /// <summary>
+        /// Checks if an Update is available
+        /// </summary>
+        private void CheckForUpdate()
+        {
+            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+            if (updateChecker.IsUpdateAvailable())
+            {
+                Uri uri = updateChecker.GetUpdateURL();
+
+                if (uri != null)
+                {
+                    MessageBoxResult messageBoxResult = MessageBox.Show("There is an new Update available, would you like to Download it?", "Update available!", MessageBoxButton.YesNo, MessageBoxImage.Question);
+
+                    if (messageBoxResult == MessageBoxResult.Yes)
+                    {
+                        System.Diagnostics.Process.Start(uri.ToString());
+                    }
+                }
+            }
         }
     }
 }

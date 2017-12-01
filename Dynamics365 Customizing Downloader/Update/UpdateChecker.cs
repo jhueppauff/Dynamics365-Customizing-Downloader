@@ -11,24 +11,15 @@
 namespace Dynamics365CustomizingDownloader.Update
 {
     using System;
-    using System.Net;
-    using System.Net.Http;
-    using System.Net.Http.Headers;
-    using System.Threading.Tasks;
+    using System.Diagnostics;
     using Newtonsoft.Json;
     using RestSharp;
-    using System.Diagnostics;
 
     /// <summary>
     /// Update Check with the GitHub Release API
     /// </summary>
     public class UpdateChecker
     {
-        /// <summary>
-        /// HTTP Client
-        /// </summary>
-        HttpClient httpClient = new HttpClient();
-
         /// <summary>
         /// Checks if an Update is available
         /// </summary>
@@ -69,6 +60,10 @@ namespace Dynamics365CustomizingDownloader.Update
             }
         }
 
+        /// <summary>
+        /// Gets the Update URL for the Release
+        /// </summary>
+        /// <returns>Returns the Update URL<see cref="Uri"/> of the latest Update</returns>
         public Uri GetUpdateURL()
         {
             try
@@ -80,7 +75,7 @@ namespace Dynamics365CustomizingDownloader.Update
 
                 var release = JsonConvert.DeserializeObject<Release>(response.Content);
 
-                return new Uri(release.url);
+                return new Uri(release.assets[0].browser_download_url);
             }
             catch (Exception)
             {

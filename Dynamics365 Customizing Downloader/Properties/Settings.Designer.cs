@@ -32,14 +32,5 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return ((string)(this["GitHubAPIURL"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("11/19/2017 12:35:00")]
-        public global::System.DateTime Version {
-            get {
-                return ((global::System.DateTime)(this["Version"]));
-            }
-        }
     }
 }
