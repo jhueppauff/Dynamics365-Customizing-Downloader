@@ -379,7 +379,21 @@ namespace Dynamics365CustomizingDownloader
             Update.UpdateChecker updateChecker = new Update.UpdateChecker();
 
             if (updateChecker.IsUpdateAvailable())
-            { 
+            {
+                Uri uri = updateChecker.GetUpdateURL();
+
+                if (uri != null)
+                {
+                    System.Diagnostics.Process.Start(uri.ToString());
+                }
+                else
+                {
+                    MessageBox.Show("Failed to retrive Update URL", "Failed to get URL", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("There is no Update available. Please visit Github if you are looking for a PreRelease", "No Update available", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
 

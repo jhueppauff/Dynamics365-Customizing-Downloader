@@ -17,6 +17,7 @@ namespace Dynamics365CustomizingDownloader.Update
     using System.Threading.Tasks;
     using Newtonsoft.Json;
     using RestSharp;
+    using System.Diagnostics;
 
     /// <summary>
     /// Update Check with the GitHub Release API
@@ -43,19 +44,48 @@ namespace Dynamics365CustomizingDownloader.Update
 
                 var release = JsonConvert.DeserializeObject<Release>(response.Content);
 
-                DateTime published = (DateTime)release.published_at;
+                // Get Verison
+                System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
+                FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+                var version = new Version(fvi.FileVersion);
 
-                if (published > (DateTime)Properties.Settings.Default.Version)
+                var versionGithub = new Version(release.name);
+
+                var result = version.CompareTo(versionGithub);
+
+                // Check if Version is newer than local version
+                if (result < 0)
                 {
-
+                    return true; 
                 }
-                return false;
+                else
+                {
+                    return false;
+                }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }
+        }
 
+        public Uri GetUpdateURL()
+        {
+            try
+            {
+                var client = new RestClient(Properties.Settings.Default.GitHubAPIURL);
+                var request = new RestRequest(Method.GET);
+                request.AddHeader("cache-control", "no-cache");
+                IRestResponse response = client.Execute(request);
+
+                var release = JsonConvert.DeserializeObject<Release>(response.Content);
+
+                return new Uri(release.url);
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
     }
 }
