@@ -3,12 +3,13 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:resx="clr-namespace:Dynamics365CustomizingDownloader.MultiLanguage"
         mc:Ignorable="d"
         Title="EncryptionKey" Height="305.966" Width="309.375">
     <Grid>
-        <Label x:Name="Lbl_PleaseChooseEncryptionKey" Content="Please choose an Encryption Key/Password &#xD;&#xA;for your CRM Connections :" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="52"/>
-        <Button x:Name="Btn_SaveEncryptionKey" Content="Save" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="272" Click="Btn_SaveEncryptionKey_Click"/>
-        <Label x:Name="Lbl_PleaseRemember" Content="Please remember this Key, as you need it &#xA;every time you start this application" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Width="272" Height="75"/>
+        <Label x:Name="Lbl_PleaseChooseEncryptionKey" Content="{x:Static resx:LocalizedLables.EncryptionKey_Lbl_PleaseChooseEncryptionKey}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="272" Height="52"/>
+        <Button x:Name="Btn_SaveEncryptionKey" Content="{x:Static resx:LocalizedLables.EncryptionKey_Btn_SaveEncryptionKey}" HorizontalAlignment="Left" Margin="10,239,0,0" VerticalAlignment="Top" Width="272" Click="Btn_SaveEncryptionKey_Click"/>
+        <Label x:Name="Lbl_PleaseRemember" Content="{x:Static resx:LocalizedLables.EncryptionKey_Lbl_PleaseRemember}" HorizontalAlignment="Left" Margin="10,132,0,0" VerticalAlignment="Top" Width="272" Height="75"/>
         <PasswordBox x:Name="Tbx_EncryptionKey" TabIndex="0" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top" Width="272" KeyDown="Tbx_EncryptionKey_KeyDown"/>
 
     </Grid>

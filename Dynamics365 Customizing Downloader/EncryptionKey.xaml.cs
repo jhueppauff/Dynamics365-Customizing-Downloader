@@ -16,6 +16,7 @@ namespace Dynamics365CustomizingDownloader
     using System.Text;
     using System.Windows;
     using Newtonsoft.Json;
+    using Dynamics365CustomizingDownloader.MultiLanguage;
 
     /// <summary>
     /// Interaction logic for EncryptionKey
@@ -27,7 +28,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         public EncryptionKey()
         {
-            this.InitializeComponent();
+            this.InitializeComponent();           
         }
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace Dynamics365CustomizingDownloader
                         catch (Exception)
                         {
                             keyCorrect = false;
-                            MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                            MessageBox.Show(LocalizedLables.EncryptionKey_MessageBox_KeyDoesNotMatch, MultiLanguage.LocalizedLables.EncryptionKey_MessageBox_KeyDoesNotMatchCaption, MessageBoxButton.OK, MessageBoxImage.Error);
                             MainWindow.EncryptionKey = null;
                         }
 
@@ -93,7 +94,7 @@ namespace Dynamics365CustomizingDownloader
             }
             else
             {
-                MessageBox.Show("Please enter a Encryption Key", "No Key entered", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(LocalizedLables.EncryptionKey_MessageBox_NoKeySpecified, LocalizedLables.EncryptionKey_MessageBox_NoKeySpecifiedCaption, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
