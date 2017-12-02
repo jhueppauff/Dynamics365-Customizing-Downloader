@@ -118,26 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="EncryptionKey_Btn_SaveEncryptionKey" xml:space="preserve">
-    <value>Save</value>
+    <value>Speichern</value>
   </data>
   <data name="EncryptionKey_Lbl_PleaseChooseEncryptionKey" xml:space="preserve">
-    <value>Please choose an Encryption Key/Password 
-for your CRM Connections :</value>
+    <value>Bitte wählen Sie ein Verschlüsselungsschlüssel 
+für Ihre CRM Verbindung :</value>
   </data>
   <data name="EncryptionKey_Lbl_PleaseRemember" xml:space="preserve">
-    <value>Please remember this Key, as you need it 
-every time you start this application</value>
+    <value>Bitte merken Sie sich diesen Schlüssel. Sie benötigen diesen jedes mal wenn Sie die Applikation starten.</value>
   </data>
   <data name="EncryptionKey_MessageBox_KeyDoesNotMatch" xml:space="preserve">
-    <value>Encryption Key does not match!</value>
+    <value>Verschlüsselungsschlüssel stimmt nicht überein!</value>
   </data>
   <data name="EncryptionKey_MessageBox_KeyDoesNotMatchCaption" xml:space="preserve">
-    <value>Wrong Encryption Key</value>
+    <value>Falscher Verschlüsselungsschlüssel</value>
   </data>
   <data name="EncryptionKey_MessageBox_NoKeySpecified" xml:space="preserve">
-    <value>Please enter a Encryption Key</value>
+    <value>Bitte geben Sie ein Verschlüsselungsschlüssel ein.</value>
   </data>
   <data name="EncryptionKey_MessageBox_NoKeySpecifiedCaption" xml:space="preserve">
-    <value>No Key entered</value>
+    <value>Kein Schlüssel angegeben!</value>
+  </data>
+  <data name="MainWindow_Dtg_Solutions_UniqueName" xml:space="preserve">
+    <value>Eindeutiger Name</value>
+  </data>
+  <data name="MainWindow_Lbl_Connection" xml:space="preserve">
+    <value>Verbindung:</value>
   </data>
 </root>

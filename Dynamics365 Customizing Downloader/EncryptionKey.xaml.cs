@@ -28,7 +28,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         public EncryptionKey()
         {
-            this.InitializeComponent();           
+            this.InitializeComponent();    
         }
 
         /// <summary>

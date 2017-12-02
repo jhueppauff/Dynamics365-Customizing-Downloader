@@ -158,15 +158,15 @@
     </Compile>
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
-    <Compile Include="MultiLanguage\LocalizedLables.de-DE1.Designer.cs">
-      <DependentUpon>LocalizedLables.de-DE.resx</DependentUpon>
+    <Compile Include="MultiLanguage\LocalizedLables.Designer.cs">
+      <DependentUpon>LocalizedLables.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="MultiLanguage\LocalizedLables.Designer.cs">
+    <Compile Include="MultiLanguage\LocalizedLables.de-de.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>LocalizedLables.resx</DependentUpon>
+      <DependentUpon>LocalizedLables.de-de.resx</DependentUpon>
     </Compile>
     <Compile Include="StorageExtensions.cs" />
     <Compile Include="Update\Release.cs">
@@ -233,13 +233,13 @@
     <EmbeddedResource Include="About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MultiLanguage\LocalizedLables.de-DE.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>LocalizedLables.de-DE1.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <EmbeddedResource Include="MultiLanguage\LocalizedLables.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>LocalizedLables.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MultiLanguage\LocalizedLables.de-de.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>LocalizedLables.de-de.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

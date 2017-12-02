@@ -61,7 +61,7 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Speichern.
+        ///   Looks up a localized string similar to Save.
         /// </summary>
         public static string EncryptionKey_Btn_SaveEncryptionKey {
             get {
@@ -70,8 +70,8 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitte wählen Sie ein Verschlüsselungsschlüssel/Password 
-        ///für Ihre CRM Verbindung :.
+        ///   Looks up a localized string similar to Please choose an Encryption Key/Password 
+        ///for your CRM Connections :.
         /// </summary>
         public static string EncryptionKey_Lbl_PleaseChooseEncryptionKey {
             get {
@@ -80,7 +80,8 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitte merken Sie sich diesen Schlüssel. Sie benötigen diesen jedes mal wenn Sie die Applikation starten..
+        ///   Looks up a localized string similar to Please remember this Key, as you need it 
+        ///every time you start this application.
         /// </summary>
         public static string EncryptionKey_Lbl_PleaseRemember {
             get {
@@ -89,7 +90,7 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Verschlüsselungsschlüssel stimmt nicht überein!.
+        ///   Looks up a localized string similar to Encryption Key does not match!.
         /// </summary>
         public static string EncryptionKey_MessageBox_KeyDoesNotMatch {
             get {
@@ -98,7 +99,7 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Falscher Verschlüsselungsschlüssel.
+        ///   Looks up a localized string similar to Wrong Encryption Key.
         /// </summary>
         public static string EncryptionKey_MessageBox_KeyDoesNotMatchCaption {
             get {
@@ -107,7 +108,7 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Bitte geben Sie ein Verschlüsselungsschlüssel ein..
+        ///   Looks up a localized string similar to Please enter a Encryption Key.
         /// </summary>
         public static string EncryptionKey_MessageBox_NoKeySpecified {
             get {
@@ -116,11 +117,29 @@ namespace Dynamics365CustomizingDownloader.MultiLanguage {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Kein Schlüssel angegeben!.
+        ///   Looks up a localized string similar to No Key entered.
         /// </summary>
         public static string EncryptionKey_MessageBox_NoKeySpecifiedCaption {
             get {
                 return ResourceManager.GetString("EncryptionKey_MessageBox_NoKeySpecifiedCaption", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unique Name.
+        /// </summary>
+        public static string MainWindow_Dtg_Solutions_UniqueName {
+            get {
+                return ResourceManager.GetString("MainWindow_Dtg_Solutions_UniqueName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection:.
+        /// </summary>
+        public static string MainWindow_Lbl_Connection {
+            get {
+                return ResourceManager.GetString("MainWindow_Lbl_Connection", resourceCulture);
             }
         }
     }

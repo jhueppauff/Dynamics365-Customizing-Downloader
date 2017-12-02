@@ -4,11 +4,12 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls"
+        xmlns:resx="clr-namespace:Dynamics365CustomizingDownloader.MultiLanguage"
         mc:Ignorable="d"
         Title="Dynamics Customizing Downloader" Height="350" Width="525">
     <Grid>
         <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Cbx_connection_SelectionChanged"/>
-        <Label Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="lbl_connection" Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="309" Click="Button_Click" />
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
