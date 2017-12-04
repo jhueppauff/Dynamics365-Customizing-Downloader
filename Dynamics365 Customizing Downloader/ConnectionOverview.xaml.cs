@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Collections.Generic;
     using System.Windows;
 
@@ -43,11 +44,16 @@ namespace Dynamics365CustomizingDownloader
         private void LoadCRMConnections()
         {
             this.crmConnections = StorageExtensions.Load();
-            Cbx_CRMConnections.Items.Clear();
+            this.Cbx_CRMConnections.Items.Clear();
 
             foreach (Xrm.CrmConnection connection in this.crmConnections)
             {
-                Cbx_CRMConnections.Items.Add(connection.Name);
+                if (connection.ConnectionID == Guid.Empty)
+                {
+                    connection.ConnectionID = StorageExtensions.UpdateConnectionWithID(connection.Name);
+                }
+
+                this.Cbx_CRMConnections.Items.Add(connection.Name);
             }
         }
 
@@ -58,7 +64,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void Cbx_CRMConnections_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            string connectionName = Cbx_CRMConnections.SelectedItem.ToString();
+            string connectionName = this.Cbx_CRMConnections.SelectedItem.ToString();
 
             this.crmConnection = this.crmConnections.Find(x => x.Name == connectionName);
 
@@ -95,7 +101,36 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_SaveConnection_Click(object sender, RoutedEventArgs e)
         {
-            StorageExtensions.Update(this.crmConnection);
+            if (this.Tbx_ConnectionString.Text != string.Empty && this.Tbx_ConnectionName.Text != string.Empty)
+            {
+                if (StorageExtensions.GetCountOfConnectionNamesByName(this.Tbx_ConnectionName.Text) <= 1)
+                {
+                    this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
+                    this.crmConnection.Name = this.Tbx_ConnectionName.Text;
+
+                    StorageExtensions.Update(this.crmConnection);
+
+                    MessageBox.Show("Updated CRM Connection successfully", "Updated CRM Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
+                else
+                {
+                    MessageBox.Show("CRM Connection name is not unique", "Name is not unique", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Crm Connection or Name is emtpy", "Value can not be null", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Text Change Event, will disable the button
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        private void Tbx_ConnectionString_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            Btn_SaveConnection.IsEnabled = false;
         }
     }
 }

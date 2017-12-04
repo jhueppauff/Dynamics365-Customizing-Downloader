@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows;
@@ -58,6 +59,7 @@ namespace Dynamics365CustomizingDownloader
                 {
                     this.crmConnection = new Xrm.CrmConnection
                     {
+                        ConnectionID = Guid.NewGuid(),
                         ConnectionString = this.tbx_connectionString.Text,
                         Name = this.crmServiceClient.ConnectedOrgFriendlyName
                     };
@@ -87,17 +89,17 @@ namespace Dynamics365CustomizingDownloader
                     this.crmConnection.Name = this.tbx_connectionName.Text;
                     List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
 
-                    bool solutionExists = false;
+                    bool connectionExists = false;
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
                         if (crmTempConnection.Name == this.tbx_connectionName.Text)
                         {
-                            solutionExists = true;
+                            connectionExists = true;
                             MessageBox.Show($"Connection {this.tbx_connectionName.Text} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
 
-                    if (!solutionExists)
+                    if (!connectionExists)
                     {
                         StorageExtensions.Save(this.crmConnection);
                         MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);

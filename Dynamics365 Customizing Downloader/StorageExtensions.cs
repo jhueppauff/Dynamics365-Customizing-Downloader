@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using Newtonsoft.Json;
 
@@ -143,11 +144,84 @@ namespace Dynamics365CustomizingDownloader
 
             crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
-            crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.LocalPath;
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).Name  = crmConnection.Name;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
             File.WriteAllText(StoragePath, jsonNew);
+        }
+
+        /// <summary>
+        /// Gets the Connection ID by the Connection Name
+        /// </summary>
+        /// <param name="connectionName"><see cref="string"/> Connection Name</param>
+        /// <returns>Returns the <see cref="Guid"/> of the connection.</returns>
+        public static Guid FindConnectionIDByName(string connectionName)
+        {
+            string json = File.ReadAllText(StoragePath);
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+
+            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+            // Add GUID if it does not exists
+            if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
+            {
+                Guid connectionID = Guid.NewGuid();
+                
+                crmConnections.Find(x => x.Name == connectionName).ConnectionID = connectionID;
+
+                string jsonNew = JsonConvert.SerializeObject(crmConnections);
+                File.WriteAllText(StoragePath, jsonNew);
+            }
+
+            return crmConnections.Find(x => x.Name == connectionName).ConnectionID;
+        }
+
+        /// <summary>
+        /// Adds a Guid to a Connection if no GUID exists
+        /// </summary>
+        /// <param name="connectionName">Name Connection</param>
+        /// <returns>Returns the <see cref="Guid"/>of the Updated Connection</returns>
+        public static Guid UpdateConnectionWithID(string connectionName)
+        {
+            Guid connectionID = Guid.NewGuid();
+            string json = File.ReadAllText(StoragePath);
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+
+            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+            if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
+            {
+                crmConnections.Find(x => x.Name == connectionName).ConnectionID = connectionID;
+
+                string jsonNew = JsonConvert.SerializeObject(crmConnections);
+                File.WriteAllText(StoragePath, jsonNew);
+
+                return connectionID;
+            }
+            else
+            {
+                return Guid.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Gets the count of all Connections with the specified connectionName
+        /// </summary>
+        /// <param name="connectionName">Name of the Connection</param>
+        /// <returns>Returns a count <see cref="int"/> of all found connections</returns>
+        public static int GetCountOfConnectionNamesByName(string connectionName)
+        {
+            string json = File.ReadAllText(StoragePath);
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+            int count = 0;
+
+            count = crmConnections.Where(x => x.Name == connectionName).Count();
+
+            return count;
         }
     }
 }

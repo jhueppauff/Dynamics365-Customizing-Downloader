@@ -104,7 +104,7 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
 
-            CheckForUpdate();
+            this.CheckForUpdate();
         }
 
         /// <summary>
