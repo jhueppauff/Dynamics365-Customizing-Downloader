@@ -143,11 +143,27 @@ namespace Dynamics365CustomizingDownloader
 
             crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.Name == crmConnection.Name).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
-            crmConnections.Find(x => x.Name == crmConnection.Name).LocalPath = crmConnection.LocalPath;
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.LocalPath;
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.Name;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
             File.WriteAllText(StoragePath, jsonNew);
+        }
+
+        /// <summary>
+        /// Gets the Connection ID by the Connectio Name
+        /// </summary>
+        /// <param name="connectionName"><see cref="string"/> Connection Name</param>
+        /// <returns>Returns the <see cref="Guid"/> of the connection.</returns>
+        public static Guid FindConnectionIDByName(string connectionName)
+        {
+            string json = File.ReadAllText(StoragePath);
+            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+
+            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+            return crmConnections.Find(x => x.Name == connectionName).ConnectionID;
         }
     }
 }
