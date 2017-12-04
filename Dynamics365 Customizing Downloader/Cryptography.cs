@@ -42,7 +42,7 @@ namespace Dynamics365CustomizingDownloader
 
             if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
-                throw new ArgumentNullException("sharedSecret");
+                throw new ArgumentNullException("MainWindow.EncryptionKey");
             }
 
             // Encrypted string to return

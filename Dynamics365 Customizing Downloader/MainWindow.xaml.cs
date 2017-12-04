@@ -24,11 +24,6 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
-        /// Encryption Key for the CRM Connections
-        /// </summary>
-        private static string encryptionKey;
-
-        /// <summary>
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
@@ -115,18 +110,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets or sets the Encryption Key
         /// </summary>
-        public static string EncryptionKey
-        {
-            get
-            {
-                return encryptionKey;
-            }
-
-            set
-            {
-                encryptionKey = value;
-            }
-        }
+        public static string EncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
@@ -194,7 +178,6 @@ namespace Dynamics365CustomizingDownloader
                 if (disposing)
                 {
                     // Free other state (managed objects).
-                    this.worker.Dispose();
                 }
 
                 // Free your own state (unmanaged objects).
