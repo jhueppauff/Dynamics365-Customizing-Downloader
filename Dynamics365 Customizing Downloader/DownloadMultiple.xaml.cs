@@ -274,6 +274,7 @@ namespace Dynamics365CustomizingDownloader
 
             Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
             {
+                ConnectionID = StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
                 ConnectionString = this.CRMConnection.ConnectionString,
                 LocalPath = this.selectedPath,
                 Name = this.CRMConnection.Name
