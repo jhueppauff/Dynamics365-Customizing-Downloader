@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader", "Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj", "{F13C631B-FFEF-4C60-AAE0-AC2BF7C013A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Patcher", "Patcher\Patcher.csproj", "{750C6221-4B62-438B-BCD3-61DA6F92867D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{750C6221-4B62-438B-BCD3-61DA6F92867D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{750C6221-4B62-438B-BCD3-61DA6F92867D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{750C6221-4B62-438B-BCD3-61DA6F92867D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{750C6221-4B62-438B-BCD3-61DA6F92867D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
