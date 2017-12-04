@@ -50,7 +50,7 @@ namespace Dynamics365CustomizingDownloader
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
 
                     // Connections are already created, need to check Encryption Key
-                    List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+                    List<Xrm.CrmConnection> crmConnections;
                     using (FileStream fs = File.OpenRead(StorageExtensions.StoragePath))
                     {
                         StringBuilder stringBuilder = new StringBuilder();
