@@ -95,6 +95,9 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_SaveConnection_Click(object sender, RoutedEventArgs e)
         {
+            this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
+            this.crmConnection.Name = this.Tbx_ConnectionName.Text;
+
             StorageExtensions.Update(this.crmConnection);
         }
     }
