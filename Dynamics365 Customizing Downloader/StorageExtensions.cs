@@ -212,7 +212,7 @@ namespace Dynamics365CustomizingDownloader
 
             int count = 0;
 
-            count = crmConnections.Where(x => x.Name == connectionName).Count();
+            count = crmConnections.Count(x => x.Name == connectionName);
 
             return count;
         }
