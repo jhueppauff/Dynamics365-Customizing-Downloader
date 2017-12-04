@@ -42,7 +42,7 @@ namespace Dynamics365CustomizingDownloader
 
             if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
-                throw new ArgumentNullException("MainWindow.EncryptionKey");
+                throw new ArgumentNullException("EncryptionKey");
             }
 
             // Encrypted string to return
@@ -313,13 +313,13 @@ namespace Dynamics365CustomizingDownloader
             byte[] rawLength = new byte[sizeof(int)];
             if (s.Read(rawLength, 0, rawLength.Length) != rawLength.Length)
             {
-                throw new SystemException("Stream did not contain properly formatted byte array");
+                throw new FormatException("Stream did not contain properly formatted byte array");
             }
 
             byte[] buffer = new byte[BitConverter.ToInt32(rawLength, 0)];
             if (s.Read(buffer, 0, buffer.Length) != buffer.Length)
             {
-                throw new SystemException("Did not read byte array properly");
+                throw new FormatException("Did not read byte array properly");
             }
 
             return buffer;
