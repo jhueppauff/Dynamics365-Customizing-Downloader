@@ -9,7 +9,9 @@
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Xrm
-{ 
+{
+    using System;
+
     /// <summary>
     /// CRM Connection
     /// </summary>
@@ -18,7 +20,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// <summary>
         /// Gets or sets the ID of the CRM Connection
         /// </summary>
-        public int ConnectionID { get; set; }
+        public Guid ConnectionID { get; set; }
 
         /// <summary>
         /// Gets or sets the name of the CRM Connection = Organization Name
