@@ -23,7 +23,6 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-
         /// <summary>
         /// BackGround Worker
         /// </summary>
