@@ -152,7 +152,7 @@ namespace Dynamics365CustomizingDownloader
         }
 
         /// <summary>
-        /// Gets the Connection ID by the Connectio Name
+        /// Gets the Connection ID by the Connection Name
         /// </summary>
         /// <param name="connectionName"><see cref="string"/> Connection Name</param>
         /// <returns>Returns the <see cref="Guid"/> of the connection.</returns>
