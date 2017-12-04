@@ -9,12 +9,11 @@
     <Grid>
         <ComboBox x:Name="Cbx_CRMConnections" Margin="10,41,10.333,0" VerticalAlignment="Top" SelectionChanged="Cbx_CRMConnections_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Tbx_ConnectionString" Height="79" Margin="10,98,11,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
+        <TextBox x:Name="Tbx_ConnectionString" Height="79" Margin="10,98,11,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="Tbx_ConnectionString_TextChanged"/>
         <TextBox x:Name="Tbx_ConnectionName"  Height="23" Margin="9,213,11,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
         <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Connection Name:" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Btn_SaveConnection" IsEnabled="False" Content="Save" HorizontalAlignment="Left" Margin="208,241,0,0" VerticalAlignment="Top" Width="75" Click="Btn_SaveConnection_Click"/>
         <Button x:Name="Btn_TestConnection" Content="Test Connection" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="107" Click="Btn_TestConnection_Click"/>
-
     </Grid>
 </Window>

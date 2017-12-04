@@ -95,10 +95,27 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_SaveConnection_Click(object sender, RoutedEventArgs e)
         {
-            this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
-            this.crmConnection.Name = this.Tbx_ConnectionName.Text;
+            if (this.Tbx_ConnectionString.Text != string.Empty && this.Tbx_ConnectionName.Text != string.Empty)
+            {
+                this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
+                this.crmConnection.Name = this.Tbx_ConnectionName.Text;
 
-            StorageExtensions.Update(this.crmConnection);
+                StorageExtensions.Update(this.crmConnection);
+            }
+            else
+            {
+                MessageBox.Show("Crm Connection or Name is emtpy", "Value can not be null", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Text Change Event, will disable the button
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        private void Tbx_ConnectionString_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+            Btn_SaveConnection.IsEnabled = false;
         }
     }
 }
