@@ -194,7 +194,6 @@ namespace Dynamics365CustomizingDownloader
                 if (disposing)
                 {
                     // Free other state (managed objects).
-                    this.worker.Dispose();
                 }
 
                 // Free your own state (unmanaged objects).
