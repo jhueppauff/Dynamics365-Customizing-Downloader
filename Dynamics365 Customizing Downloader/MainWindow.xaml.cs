@@ -26,7 +26,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// BackGround Worker
         /// </summary>
-        private readonly BackgroundWorker worker = new BackgroundWorker();
+        private BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
         /// Dispose bool
