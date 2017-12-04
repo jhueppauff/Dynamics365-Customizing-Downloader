@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows;
@@ -58,7 +59,7 @@ namespace Dynamics365CustomizingDownloader
                 {
                     this.crmConnection = new Xrm.CrmConnection
                     {
-                        ConnectionID = new System.Guid(),
+                        ConnectionID = Guid.NewGuid(),
                         ConnectionString = this.tbx_connectionString.Text,
                         Name = this.crmServiceClient.ConnectedOrgFriendlyName
                     };
