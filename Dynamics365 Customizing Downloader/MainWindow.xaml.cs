@@ -23,10 +23,6 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
-        /// <summary>
-        /// Encryption Key for the CRM Connections
-        /// </summary>
-        private static string encryptionKey;
 
         /// <summary>
         /// BackGround Worker
@@ -115,18 +111,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets or sets the Encryption Key
         /// </summary>
-        public static string EncryptionKey
-        {
-            get
-            {
-                return encryptionKey;
-            }
-
-            set
-            {
-                encryptionKey = value;
-            }
-        }
+        public static string EncryptionKey { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
