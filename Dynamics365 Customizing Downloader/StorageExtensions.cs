@@ -97,7 +97,7 @@ namespace Dynamics365CustomizingDownloader
         /// <returns>Returns <see cref="List{Xrm.CrmConnection}"/></returns>
         public static List<Xrm.CrmConnection> Load()
         {
-            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
+            List<Xrm.CrmConnection> crmConnections;
 
             if (File.Exists(StoragePath))
             {
@@ -140,9 +140,7 @@ namespace Dynamics365CustomizingDownloader
         public static void Update(Xrm.CrmConnection crmConnection)
         {
             string json = File.ReadAllText(StoragePath);
-            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-
-            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+            List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
             crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.LocalPath;
@@ -160,9 +158,7 @@ namespace Dynamics365CustomizingDownloader
         public static Guid FindConnectionIDByName(string connectionName)
         {
             string json = File.ReadAllText(StoragePath);
-            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-
-            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+            List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             // Add GUID if it does not exists
             if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
@@ -187,9 +183,7 @@ namespace Dynamics365CustomizingDownloader
         {
             Guid connectionID = Guid.NewGuid();
             string json = File.ReadAllText(StoragePath);
-            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-
-            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+            List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
             {
@@ -214,8 +208,7 @@ namespace Dynamics365CustomizingDownloader
         public static int GetCountOfConnectionNamesByName(string connectionName)
         {
             string json = File.ReadAllText(StoragePath);
-            List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-            crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+            List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             int count = 0;
 
