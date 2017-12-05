@@ -448,5 +448,16 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
+
+        /// <summary>
+        /// Button Click, Opens the Connection Overview Dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void MenuItemPatchNotes_Click(object sender, RoutedEventArgs e)
+        {
+            PatchNotes patchNotes = new PatchNotes();
+            patchNotes.Show();
+        }
     }
 }
