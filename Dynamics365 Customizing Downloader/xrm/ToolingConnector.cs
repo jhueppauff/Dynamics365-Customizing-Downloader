@@ -58,7 +58,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 else
                 {
                     // CRM Client is empty
-                    throw new ArgumentNullException("CRM Service Client is empty");
+                    throw new NullReferenceException("CRM Service Client is empty");
                 }
             }
             catch (Exception ex)
