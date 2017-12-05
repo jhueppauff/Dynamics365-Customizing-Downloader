@@ -19,6 +19,11 @@ namespace Dynamics365CustomizingDownloader.Xrm
     public class CrmSolutionPackager
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Extract the CRM Solution
         /// </summary>
         /// <param name="path">Path of the Solution</param>
@@ -30,6 +35,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
 
             if (!File.Exists(path))
             {
+                CrmSolutionPackager.Log.Error("Assumed solution file not found: " + path, new FileNotFoundException("Assumed solution file not found: " + path));
                 throw new FileNotFoundException("Assumed solution file not found: " + path);
             }
 
@@ -55,8 +61,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
                     return log;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                CrmSolutionPackager.Log.Error(ex.Message, ex);
                 throw;
             }
         }

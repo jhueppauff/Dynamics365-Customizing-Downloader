@@ -12,70 +12,113 @@ namespace Dynamics365CustomizingDownloader.Update
 {
     using System;
     using System.Collections.Generic;
+    using Newtonsoft.Json;
 
-    public class Person
-    {
-        public string login { get; set; }
-        public int id { get; set; }
-        public string avatar_url { get; set; }
-        public string gravatar_id { get; set; }
-        public string url { get; set; }
-        public string html_url { get; set; }
-        public string followers_url { get; set; }
-        public string following_url { get; set; }
-        public string gists_url { get; set; }
-        public string starred_url { get; set; }
-        public string subscriptions_url { get; set; }
-        public string organizations_url { get; set; }
-        public string repos_url { get; set; }
-        public string events_url { get; set; }
-        public string received_events_url { get; set; }
-        public string type { get; set; }
-        public bool site_admin { get; set; }
-    }
-
-    public class Author : Person
-    {
-    }
-
-    public class Uploader : Person
-    {
-    }
-
-    public class Asset
-    {
-        public string url { get; set; }
-        public int id { get; set; }
-        public string name { get; set; }
-        public object label { get; set; }
-        public Uploader uploader { get; set; }
-        public string content_type { get; set; }
-        public string state { get; set; }
-        public int size { get; set; }
-        public int download_count { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime updated_at { get; set; }
-        public string browser_download_url { get; set; }
-    }
-
+    /// <summary>
+    /// Release JSON Class for GitHub API
+    /// </summary>
     public class Release
     {
-        public string url { get; set; }
-        public string assets_url { get; set; }
-        public string upload_url { get; set; }
-        public string html_url { get; set; }
-        public int id { get; set; }
-        public string tag_name { get; set; }
-        public string target_commitish { get; set; }
-        public string name { get; set; }
-        public bool draft { get; set; }
-        public Author author { get; set; }
-        public bool prerelease { get; set; }
-        public DateTime created_at { get; set; }
-        public DateTime published_at { get; set; }
-        public List<Asset> assets { get; set; }
-        public string tarball_url { get; set; }
-        public string zipball_url { get; set; }
-        public string body { get; set; }
+        /// <summary>
+        /// Gets or sets the URL of the Release
+        /// </summary>
+        [JsonProperty("url")]
+        public string Url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Url of the Assets
+        /// </summary>
+        [JsonProperty("assets_url")]
+        public string Assets_url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Upload URL
+        /// </summary>
+        [JsonProperty("Upload_url")]
+        public string Upload_url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the HTML URL of the Release
+        /// </summary>
+        [JsonProperty("html_url")]
+        public string Html_url { get; set; }
+
+        /// <summary>
+        ///  Gets or sets the Release ID
+        /// </summary>
+        [JsonProperty("id")]
+        public int Id { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Name of the Release Tag
+        /// </summary>
+        [JsonProperty("tag_name")]
+        public string Tag_name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Target commit
+        /// </summary>
+        [JsonProperty("target_commitish")]
+        public string Target_commitish { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Name of the Release
+        /// </summary>
+        [JsonProperty("name")]
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Release is draft?
+        /// </summary>
+        [JsonProperty("draft")]
+        public bool Draft { get; set; }
+
+        /// <summary>
+        /// Gets or sets the <see cref="Author"/> Author of the Release
+        /// </summary>
+        [JsonProperty("author")]
+        public Author Author { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the Release is a PreRelease?
+        /// </summary>
+        [JsonProperty("prerelease")]
+        public bool Prerelease { get; set; }
+
+        /// <summary>
+        /// Gets or sets the when the release was created
+        /// </summary>
+        [JsonProperty("created_at")]
+        public DateTime Created_at { get; set; }
+
+        /// <summary>
+        /// Gets or sets the when the Release was published
+        /// </summary>
+        [JsonProperty("published_at")]
+        public DateTime Published_at { get; set; }
+
+        /// <summary>
+        /// Gets or sets a <see cref="List{Asset}"/> of all Assets of the Release
+        /// </summary>
+        [JsonProperty("assets")]
+        public List<Asset> Assets { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Tar ball URL
+        /// </summary>
+        [JsonProperty("tarball_url")]
+        public string Tarball_url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Zip ball URL
+        /// </summary>
+        [JsonProperty("zipball_url")]
+        public string Zipball_url { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Release Body
+        /// </summary>
+        [JsonProperty("body")]
+        public string Body { get; set; }
     }
 }

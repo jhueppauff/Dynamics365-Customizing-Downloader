@@ -26,14 +26,19 @@ namespace Dynamics365CustomizingDownloader.Xrm
     public class ToolingConnector : IDisposable
     {
         /// <summary>
-        /// Has Dispose already been called?
+        /// Log4Net Logger
         /// </summary>
-        private bool disposed = false;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Instantiate a SafeHandle instance.
         /// </summary>
         private readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+
+        /// <summary>
+        /// Has Dispose already been called?
+        /// </summary>
+        private bool disposed = false;
 
         /// <summary>
         /// Connect to CRM and get the CRM service client
@@ -56,8 +61,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
                     throw new ArgumentNullException("CRM Service Client is empty");
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                ToolingConnector.Log.Error(ex.Message, ex);
                 throw;
             }
         }
@@ -66,8 +72,9 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// Get all installed CRM Solutions
         /// </summary>
         /// <param name="crmServiceClient">CRM Service Client <see cref="CrmServiceClient"/></param>
+        /// <param name="onlyUnmanaged">Indicates if only Unmanaged Solutions should be returned</param>
         /// <returns>Returns <see cref="List{CrmSolution}"/></returns>
-        public List<CrmSolution> GetCrmSolutions(CrmServiceClient crmServiceClient)
+        public List<CrmSolution> GetCrmSolutions(CrmServiceClient crmServiceClient, bool onlyUnmanaged = true)
         {
             QueryExpression query = new QueryExpression()
             {
@@ -81,7 +88,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
 
             foreach (var solution in result.Entities)
             {
-                if (solution["uniquename"].ToString() != string.Empty && solution["friendlyname"].ToString() != string.Empty && solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
+                if (solution["uniquename"].ToString() != string.Empty && (bool)solution["ismanaged"] == false && solution["friendlyname"].ToString() != string.Empty && solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
                     solutionList.Add(
                     new CrmSolution()

@@ -23,6 +23,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class EncryptionKey : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EncryptionKey"/> class.
         /// </summary>
         public EncryptionKey()
@@ -78,6 +83,7 @@ namespace Dynamics365CustomizingDownloader
                             keyCorrect = false;
                             MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
                             MainWindow.EncryptionKey = null;
+                            EncryptionKey.Log.Error("Encryption Key does not match!");
                         }
 
                         // Close File Stream

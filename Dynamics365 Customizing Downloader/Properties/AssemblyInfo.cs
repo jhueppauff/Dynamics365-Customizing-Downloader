@@ -58,3 +58,6 @@ using System.Windows;
 // [assembly: AssemblyVersion("1.0.*")]
 [assembly: AssemblyVersion("2.0.0.17323")]
 [assembly: AssemblyFileVersion("2.0.0.17323")]
+
+// Log4Net
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]

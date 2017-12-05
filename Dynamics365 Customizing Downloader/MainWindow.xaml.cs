@@ -24,6 +24,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window, INotifyPropertyChanged
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// BackGround Worker
         /// </summary>
         private BackgroundWorker worker = new BackgroundWorker();
@@ -58,6 +63,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         public MainWindow()
         {
+            log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
 
             this.cbx_connection.Items.Add("New");
@@ -234,6 +240,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 MessageBox.Show("An error occured: " + ex.Message);
                 loadingPanel.IsLoading = false;
+                MainWindow.Log.Error(ex.Message, ex);
             }
         }
 

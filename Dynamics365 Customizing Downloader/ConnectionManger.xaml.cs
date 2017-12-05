@@ -21,6 +21,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class ConnectionManger : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
@@ -72,6 +77,7 @@ namespace Dynamics365CustomizingDownloader
             catch (System.Exception ex)
             {
                 MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
 
@@ -117,6 +123,7 @@ namespace Dynamics365CustomizingDownloader
             catch (System.Exception ex)
             {
                 MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
     }

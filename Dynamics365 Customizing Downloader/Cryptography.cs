@@ -21,6 +21,11 @@ namespace Dynamics365CustomizingDownloader
     public static class Cryptography
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// While an app specific salt is not the best practice for
         /// password based encryption, it's probably safe enough as long as
         /// it is truly uncommon. Also too much work to alter this answer otherwise.
@@ -37,11 +42,13 @@ namespace Dynamics365CustomizingDownloader
         {
             if (string.IsNullOrEmpty(plainText))
             {
+                Cryptography.Log.Error("Argument is null", new ArgumentNullException("plainText"));
                 throw new ArgumentNullException("plainText");
             }
 
             if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "EncryptionKey"));
                 throw new ArgumentNullException("EncryptionKey");
             }
 
@@ -49,7 +56,7 @@ namespace Dynamics365CustomizingDownloader
             string outStr = null;
 
             // RijndaelManaged object used to encrypt the data.
-            RijndaelManaged aesAlg = null;              
+            RijndaelManaged aesAlg = null;
 
             try
             {
@@ -106,11 +113,13 @@ namespace Dynamics365CustomizingDownloader
         {
             if (string.IsNullOrEmpty(plainText))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "plainText"));
                 throw new ArgumentNullException("plainText");
             }
 
             if (string.IsNullOrEmpty(sharedSecret))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "sharedSecret"));
                 throw new ArgumentNullException("sharedSecret");
             }
 
@@ -174,11 +183,13 @@ namespace Dynamics365CustomizingDownloader
         {
             if (string.IsNullOrEmpty(cipherText))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "cipherText"));
                 throw new ArgumentNullException("cipherText");
             }
 
             if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "sharedSecret"));
                 throw new ArgumentNullException("sharedSecret");
             }
 
@@ -244,11 +255,13 @@ namespace Dynamics365CustomizingDownloader
         {
             if (string.IsNullOrEmpty(cipherText))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "cipherText"));
                 throw new ArgumentNullException("cipherText");
             }
 
             if (string.IsNullOrEmpty(sharedSecret))
             {
+                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "sharedSecret"));
                 throw new ArgumentNullException("sharedSecret");
             }
 
