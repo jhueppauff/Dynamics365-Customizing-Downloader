@@ -268,27 +268,34 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.errorOccured = false;
-            this.loadingPanel.IsLoading = true;
-            this.selectedPath = tbx_download.Text;
-
-            Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+            if (this.tbx_download.Text != string.Empty)
             {
-                ConnectionID = StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
-                ConnectionString = this.CRMConnection.ConnectionString,
-                LocalPath = this.selectedPath,
-                Name = this.CRMConnection.Name
-            };
-            this.CRMConnection = crmConnection;
+                this.errorOccured = false;
+                this.loadingPanel.IsLoading = true;
+                this.selectedPath = tbx_download.Text;
 
-            // Update Connection
-            StorageExtensions.Update(crmConnection);
+                Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+                {
+                    ConnectionID = StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
+                    ConnectionString = this.CRMConnection.ConnectionString,
+                    LocalPath = this.selectedPath,
+                    Name = this.CRMConnection.Name
+                };
+                this.CRMConnection = crmConnection;
 
-            // Background Worker
-            this.worker.DoWork += this.Worker_DoWork;
-            this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-            this.worker.WorkerReportsProgress = true;
-            this.worker.RunWorkerAsync();
+                // Update Connection
+                StorageExtensions.Update(crmConnection);
+
+                // Background Worker
+                this.worker.DoWork += this.Worker_DoWork;
+                this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
+                this.worker.WorkerReportsProgress = true;
+                this.worker.RunWorkerAsync();
+            }
+            else
+            {
+                MessageBox.Show("Path can not be empty", "Path empty", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
