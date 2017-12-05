@@ -59,6 +59,5 @@ using System.Windows;
 [assembly: AssemblyVersion("2.5.17338.07")]
 [assembly: AssemblyFileVersion("2.5.17338.07")]
 
-
 // Log4Net
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]

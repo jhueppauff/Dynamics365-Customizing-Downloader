@@ -27,10 +27,10 @@ namespace Dynamics365CustomizingDownloader.Update
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// Gets the Release Informations from GitHub API
+        /// Gets the Release Information from GitHub API
         /// </summary>
-        /// <param name="releaseName"></param>
-        /// <returns></returns>
+        /// <param name="releaseName">Name of the Tag</param>
+        /// <returns>Returns a single Release <see cref="Update.Release"/></returns>
         public Release GetReleaseInfo(string releaseName)
         {
             try
@@ -40,7 +40,7 @@ namespace Dynamics365CustomizingDownloader.Update
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                string json = PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/tags/{releaseName}");
+                string json = this.PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/tags/{releaseName}");
                 var release = JsonConvert.DeserializeObject<Release>(json, serializerSettings);
 
                 return release;
@@ -65,7 +65,7 @@ namespace Dynamics365CustomizingDownloader.Update
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                var release = JsonConvert.DeserializeObject<Release>(PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"), serializerSettings);
+                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"), serializerSettings);
 
                 // Get Verison
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -101,7 +101,7 @@ namespace Dynamics365CustomizingDownloader.Update
         {
             try
             {
-                var release = JsonConvert.DeserializeObject<Release>(PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"));
+                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"));
 
                 return new Uri(release.Assets[0].Browser_download_url);
             }
