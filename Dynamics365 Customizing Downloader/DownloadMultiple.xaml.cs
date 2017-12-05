@@ -390,6 +390,7 @@ namespace Dynamics365CustomizingDownloader
                     }
                     catch (Exception)
                     {
+                        // ignore an issue, as the worker should be terminated on dialog close as well.
                     }
                 }
                 else

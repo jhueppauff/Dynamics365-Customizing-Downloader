@@ -33,7 +33,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// <summary>
         /// Instantiate a SafeHandle instance.
         /// </summary>
-        private SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
+        private readonly SafeHandle handle = new SafeFileHandle(IntPtr.Zero, true);
 
         /// <summary>
         /// Connect to CRM and get the CRM service client
@@ -53,7 +53,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 else
                 {
                     // CRM Client is empty
-                    throw new NullReferenceException("CRM Service Client is empty");
+                    throw new ArgumentNullException("CRM Service Client is empty");
                 }
             }
             catch (Exception)
@@ -81,19 +81,16 @@ namespace Dynamics365CustomizingDownloader.Xrm
 
             foreach (var solution in result.Entities)
             {
-                if (solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
+                if (solution["uniquename"].ToString() != string.Empty && solution["friendlyname"].ToString() != string.Empty && solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
-                    if (solution["uniquename"].ToString() != string.Empty && solution["friendlyname"].ToString() != string.Empty)
+                    solutionList.Add(
+                    new CrmSolution()
                     {
-                        solutionList.Add(
-                        new CrmSolution()
-                        {
-                            Id = (Guid)solution["solutionid"],
-                            Name = solution["friendlyname"].ToString(),
-                            PublisherId = ((EntityReference)solution["publisherid"]).Id,
-                            UniqueName = solution["uniquename"].ToString()
-                        });
-                    }
+                        Id = (Guid)solution["solutionid"],
+                        Name = solution["friendlyname"].ToString(),
+                        PublisherId = ((EntityReference)solution["publisherid"]).Id,
+                        UniqueName = solution["uniquename"].ToString()
+                    });
                 }
             }
 

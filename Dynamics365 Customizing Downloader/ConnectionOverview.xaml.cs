@@ -88,9 +88,9 @@ namespace Dynamics365CustomizingDownloader
                     Btn_SaveConnection.IsEnabled = true;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                MessageBox.Show("An exception occured while trying to test the CRM Connection : " + ex.Message, "An Exception occured", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
