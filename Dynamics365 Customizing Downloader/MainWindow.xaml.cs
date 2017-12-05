@@ -365,7 +365,6 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
-            // ToDo
             Update.UpdateChecker updateChecker = new Update.UpdateChecker();
 
             if (updateChecker.IsUpdateAvailable())
