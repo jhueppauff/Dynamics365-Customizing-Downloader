@@ -27,6 +27,32 @@ namespace Dynamics365CustomizingDownloader.Update
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
+        /// Gets the Release Informations from GitHub API
+        /// </summary>
+        /// <param name="releaseName"></param>
+        /// <returns></returns>
+        public Release GetReleaseInfo(string releaseName)
+        {
+            try
+            {
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+
+                string json = PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/tags/{releaseName}");
+                var release = JsonConvert.DeserializeObject<Release>(json, serializerSettings);
+
+                return release;
+            }
+            catch (Exception ex)
+            {
+                UpdateChecker.Log.Error(ex.Message, ex);
+                return null;
+            }
+        }
+
+        /// <summary>
         /// Checks if an Update is available
         /// </summary>
         /// <returns>Returns if an update is available</returns>
@@ -34,17 +60,12 @@ namespace Dynamics365CustomizingDownloader.Update
         {
             try
             {
-                var client = new RestClient(Properties.Settings.Default.GitHubAPIURL);
-                var request = new RestRequest(Method.GET);
-                request.AddHeader("cache-control", "no-cache");
-                IRestResponse response = client.Execute(request);
-
                 var serializerSettings = new JsonSerializerSettings
                 {
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                var release = JsonConvert.DeserializeObject<Release>(response.Content, serializerSettings);
+                var release = JsonConvert.DeserializeObject<Release>(PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"), serializerSettings);
 
                 // Get Verison
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -58,7 +79,7 @@ namespace Dynamics365CustomizingDownloader.Update
                 // Check if Version is newer than local version
                 if (result < 0)
                 {
-                    return true; 
+                    return true;
                 }
                 else
                 {
@@ -80,14 +101,32 @@ namespace Dynamics365CustomizingDownloader.Update
         {
             try
             {
-                var client = new RestClient(Properties.Settings.Default.GitHubAPIURL);
+                var release = JsonConvert.DeserializeObject<Release>(PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"));
+
+                return new Uri(release.Assets[0].Browser_download_url);
+            }
+            catch (Exception ex)
+            {
+                UpdateChecker.Log.Error(ex.Message, ex);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Performs the Call to the API
+        /// </summary>
+        /// <param name="apiURL">Get API to invoke</param>
+        /// <returns>Returns <see cref="string"/> Answer of the API</returns>
+        private string PerformAPICall(string apiURL)
+        {
+            try
+            {
+                var client = new RestClient(apiURL);
                 var request = new RestRequest(Method.GET);
                 request.AddHeader("cache-control", "no-cache");
                 IRestResponse response = client.Execute(request);
 
-                var release = JsonConvert.DeserializeObject<Release>(response.Content);
-
-                return new Uri(release.Assets[0].Browser_download_url);
+                return response.Content;
             }
             catch (Exception ex)
             {

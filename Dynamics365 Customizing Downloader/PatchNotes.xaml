@@ -1,0 +1,17 @@
+﻿<Window x:Class="Dynamics365CustomizingDownloader.PatchNotes"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="PatchNotes" Height="304.261" Width="519.034">
+    <Grid>
+        <Label Content="Version Number:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_VersionNumber" Content="1.0.0.0" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="Tbx_PatchNotes" Margin="10,67,10,10" TextWrapping="Wrap" Text="Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet."/>
+        <Label Content="Created at:" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="2017-03-01 17:30" HorizontalAlignment="Left" Margin="143,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="PreRelease:" HorizontalAlignment="Left" Margin="302,10,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_IsPreRelease" Content="False" HorizontalAlignment="Left" Margin="302,36,0,0" VerticalAlignment="Top"/>
+    </Grid>
+</Window>
