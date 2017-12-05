@@ -20,6 +20,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class ConnectionOverview : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// List of all CRM Connections <see cref="List{CRM Connections}"/>
         /// </summary>
         private List<Xrm.CrmConnection> crmConnections;
@@ -91,6 +96,7 @@ namespace Dynamics365CustomizingDownloader
             catch (System.Exception ex)
             {
                 MessageBox.Show("An exception occured while trying to test the CRM Connection : " + ex.Message, "An Exception occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                ConnectionOverview.Log.Error(ex.Message, ex);
             }
         }
 

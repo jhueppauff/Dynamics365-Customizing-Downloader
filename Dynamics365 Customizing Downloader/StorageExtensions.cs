@@ -23,6 +23,11 @@ namespace Dynamics365CustomizingDownloader
     public static class StorageExtensions
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Local Path of the JSON Storage File
         /// </summary>
         private static string storagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dyn365_Configuration.json");
@@ -127,7 +132,8 @@ namespace Dynamics365CustomizingDownloader
             }
             else
             {
-                throw new FileNotFoundException("File was not found");
+                StorageExtensions.Log.Error("File was not found", new FileNotFoundException("File was not found", StoragePath));
+                throw new FileNotFoundException("File was not found", StoragePath);
             }
 
             return crmConnections;

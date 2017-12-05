@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader.Update
     using System;
     using System.Diagnostics;
     using Newtonsoft.Json;
+    using Newtonsoft.Json.Serialization;
     using RestSharp;
 
     /// <summary>
@@ -20,6 +21,11 @@ namespace Dynamics365CustomizingDownloader.Update
     /// </summary>
     public class UpdateChecker
     {
+        /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         /// <summary>
         /// Checks if an Update is available
         /// </summary>
@@ -33,14 +39,19 @@ namespace Dynamics365CustomizingDownloader.Update
                 request.AddHeader("cache-control", "no-cache");
                 IRestResponse response = client.Execute(request);
 
-                var release = JsonConvert.DeserializeObject<Release>(response.Content);
+                var serializerSettings = new JsonSerializerSettings
+                {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+
+                var release = JsonConvert.DeserializeObject<Release>(response.Content, serializerSettings);
 
                 // Get Verison
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
                 FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
                 var version = new Version(fvi.FileVersion);
 
-                var versionGithub = new Version(release.name);
+                var versionGithub = new Version(release.Name);
 
                 var result = version.CompareTo(versionGithub);
 
@@ -54,8 +65,9 @@ namespace Dynamics365CustomizingDownloader.Update
                     return false;
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                UpdateChecker.Log.Error(ex.Message, ex);
                 return false;
             }
         }
@@ -75,10 +87,11 @@ namespace Dynamics365CustomizingDownloader.Update
 
                 var release = JsonConvert.DeserializeObject<Release>(response.Content);
 
-                return new Uri(release.assets[0].browser_download_url);
+                return new Uri(release.Assets[0].Browser_download_url);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                UpdateChecker.Log.Error(ex.Message, ex);
                 return null;
             }
         }

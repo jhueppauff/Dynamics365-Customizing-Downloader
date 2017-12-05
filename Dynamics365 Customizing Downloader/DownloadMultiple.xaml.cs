@@ -26,6 +26,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class DownloadMultiple : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
         /// </summary>
         private static TextBox statusTextBox;
@@ -354,6 +359,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 this.errorOccured = true;
                 UpdateUI($"An Error occured: {ex.Message}", false);
+                DownloadMultiple.Log.Error(ex.Message, ex);
             }
         }
 
