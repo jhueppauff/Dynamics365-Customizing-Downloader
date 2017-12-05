@@ -25,8 +25,7 @@ namespace Dynamics365CustomizingDownloader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://api.github.com/repos/jhueppauff/Dynamics365-Customizing-Downloader/releas" +
-            "es/latest")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://api.github.com/repos/jhueppauff/Dynamics365-Customizing-Downloader")]
         public string GitHubAPIURL {
             get {
                 return ((string)(this["GitHubAPIURL"]));
