@@ -26,11 +26,6 @@ namespace Dynamics365CustomizingDownloader
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// BackGround Worker
-        /// </summary>
-        private readonly BackgroundWorker worker = new BackgroundWorker();
-
-        /// <summary>
         /// CRM Service Client
         /// </summary>
         private Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient;
