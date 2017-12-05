@@ -30,3 +30,14 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 #### Possible Data loss! Every Folder/File within your chosen Folder which will collide with the Solution Names will be deleted. To avoid any issues, choose an empty Folder for the extraction.
 
 -> Your Solutions should be Downloaded and Extracted now, any Error will be reported within the Status Textbox.
+
+
+## Update CRM Connection
+
+- Within the Main Form, choose File -> Open Connection Overview
+
+- In the following Dialog, select the Conenction you want to Update in the DropDown Menu
+
+- After Updated the Connection press "Test Connection", this may take some secounds while the connection is validated
+
+- If the Connection was successfully tested, the save Button will be enabled.
