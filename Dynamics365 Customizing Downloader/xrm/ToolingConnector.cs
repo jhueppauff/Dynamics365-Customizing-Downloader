@@ -72,6 +72,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// Get all installed CRM Solutions
         /// </summary>
         /// <param name="crmServiceClient">CRM Service Client <see cref="CrmServiceClient"/></param>
+        /// <param name="onlyUnmanaged">Indicates if only Unmanaged Solutions should be returned</param>
         /// <returns>Returns <see cref="List{CrmSolution}"/></returns>
         public List<CrmSolution> GetCrmSolutions(CrmServiceClient crmServiceClient, bool onlyUnmanaged = true)
         {

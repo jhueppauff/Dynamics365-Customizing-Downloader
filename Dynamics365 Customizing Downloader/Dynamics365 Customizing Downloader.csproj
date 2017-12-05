@@ -163,12 +163,16 @@
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="StorageExtensions.cs" />
+    <Compile Include="Update\Asset.cs" />
+    <Compile Include="Update\Author.cs" />
+    <Compile Include="Update\Person.cs" />
     <Compile Include="Update\Release.cs">
-      <ExcludeFromStyleCop>True</ExcludeFromStyleCop>
+      <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
     <Compile Include="Update\UpdateChecker.cs">
       <ExcludeFromStyleCop>False</ExcludeFromStyleCop>
     </Compile>
+    <Compile Include="Update\Uploader.cs" />
     <Compile Include="Xrm\CrmConnection.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />
