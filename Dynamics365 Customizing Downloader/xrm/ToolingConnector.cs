@@ -88,7 +88,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
 
             foreach (var solution in result.Entities)
             {
-                if (solution["uniquename"].ToString() != string.Empty && (bool)solution["ismanaged"] == false && solution["friendlyname"].ToString() != string.Empty && solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
+                if (solution["uniquename"].ToString() != string.Empty && !(bool)solution["ismanaged"] && solution["friendlyname"].ToString() != string.Empty && solution["uniquename"].ToString() != "System" && solution["uniquename"].ToString() != "Active" && solution["uniquename"].ToString() != "Basic" && solution["uniquename"].ToString() != "ActivityFeedsCore")
                 {
                     solutionList.Add(
                     new CrmSolution()
