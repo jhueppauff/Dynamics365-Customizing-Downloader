@@ -9,7 +9,7 @@ The whole Application is built around the XRM SDK and the Solution Packager.
 
 See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 
-#### Usage
+## Basic Usage
 
 ##### CRM Connection:
 - Open the App and choose a Password which is used for encrypting your Connection String.
