@@ -50,6 +50,8 @@ namespace Dynamics365CustomizingDownloader
         {
             this.crmConnections = StorageExtensions.Load();
             this.Cbx_CRMConnections.Items.Clear();
+            this.Tbx_ConnectionName.Text = string.Empty;
+            this.Tbx_ConnectionString.Text = string.Empty;
 
             foreach (Xrm.CrmConnection connection in this.crmConnections)
             {
@@ -69,12 +71,16 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void Cbx_CRMConnections_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
         {
-            string connectionName = this.Cbx_CRMConnections.SelectedItem.ToString();
+            if (this.Cbx_CRMConnections.SelectedItem != null)
+            {
+                string connectionName = this.Cbx_CRMConnections.SelectedItem.ToString();
 
-            this.crmConnection = this.crmConnections.Find(x => x.Name == connectionName);
+                this.crmConnection = this.crmConnections.Find(x => x.Name == connectionName);
 
-            Tbx_ConnectionName.Text = this.crmConnection.Name;
-            Tbx_ConnectionString.Text = this.crmConnection.ConnectionString;
+                Tbx_ConnectionName.Text = this.crmConnection.Name;
+                Tbx_ConnectionString.Text = this.crmConnection.ConnectionString;
+                Btn_SaveConnection.IsEnabled = false;
+            }
         }
 
         /// <summary>
@@ -117,6 +123,7 @@ namespace Dynamics365CustomizingDownloader
                     StorageExtensions.Update(this.crmConnection);
 
                     MessageBox.Show("Updated CRM Connection successfully", "Updated CRM Connection", MessageBoxButton.OK, MessageBoxImage.Information);
+                    LoadCRMConnections();
                 }
                 else
                 {
