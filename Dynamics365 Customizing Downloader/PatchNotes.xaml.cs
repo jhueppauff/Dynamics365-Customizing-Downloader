@@ -20,16 +20,42 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class PatchNotes : Window
     {
+        public static readonly DependencyProperty HtmlProperty = DependencyProperty.RegisterAttached("Html", typeof(string), typeof(PatchNotes),new FrameworkPropertyMetadata(OnHtmlChanged));
+
+
         public PatchNotes()
         {
             System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion.ToString();
             // Issue with leading Zero
-            var version = new Version(fvi.FileVersion);
+            
 
             Update.UpdateChecker updateChecker = new Update.UpdateChecker();
-            updateChecker.GetReleaseInfo(version.ToString());
+            Update.Release release = updateChecker.GetReleaseInfo(version.ToString());
+
             InitializeComponent();
+            Tbx_PatchNotes.Text = release.Body; 
+            Lbl_IsPreRelease.Content = release.Prerelease.ToString();
+            Lbl_VersionNumber.Content = release.Name;
+            Lbl_ReleaseDate.Content = release.Published_at.ToString();
+        }
+
+        [AttachedPropertyBrowsableForType(typeof(WebBrowser))]
+        public static string GetHtml(WebBrowser d)
+        {
+            return (string)d.GetValue(HtmlProperty);
+        }
+
+        public static void SetHtml(WebBrowser d, string value)
+        {
+            d.SetValue(HtmlProperty, value);
+        }
+
+        static void OnHtmlChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            WebBrowser wb = d as WebBrowser;
+            if (wb != null)
+                wb.NavigateToString(e.NewValue as string);
         }
     }
 }
