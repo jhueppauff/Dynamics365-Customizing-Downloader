@@ -37,7 +37,7 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 - Select those you want to Download and press "Download"
 
 - Within the Download Dialog, choose a local Folder and click "Download".
-![Download Dialog](DownloadDialog.PNG)
+![Download Dialog](Media/DownloadDialog.PNG)
 
 #### Possible Data loss! Every Folder/File within your chosen Folder which will collide with the Solution Names will be deleted. To avoid any issues, choose an empty Folder for the extraction.
 
