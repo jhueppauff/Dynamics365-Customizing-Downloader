@@ -5,16 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls"
         mc:Ignorable="d"
-        Title="Dynamics Customizing Downloader" Height="350" Width="525">
+        Title="Dynamics Customizing Downloader" Height="552.813" Width="862.693">
     <Grid>
         <ComboBox x:Name="cbx_connection" HorizontalAlignment="Left" Margin="12,66,0,0" VerticalAlignment="Top" Width="179" SelectionChanged="Cbx_connection_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="12,40,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="196,67,0,0" VerticalAlignment="Top" Width="309" Click="Button_Click" />
+        <TextBox x:Name="Tbx_SolutionFilter" Text=""  HorizontalAlignment="Left" Margin="592.359,66,0,0" VerticalAlignment="Top" Width="250" Height="21.96"></TextBox>
         <ctr:LoadingPanel x:Name="loadingPanel"
                         IsLoading="{Binding PanelLoading}"
                         Message="{Binding PanelMainMessage}"
                         SubMessage="{Binding PanelSubMessage}" 
-                        ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,0,-0.333,-0.333" Foreground="#FF494949" Height="83" VerticalAlignment="Bottom" />
+                        ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,0,-0.333,-0.333" Foreground="#FF494949" Height="67.248" VerticalAlignment="Bottom" />
         <Menu Height="21" VerticalAlignment="Top" Margin="0,0,-0.333,0" IsMainMenu="True">
             <MenuItem Header="_File">
                 <MenuItem x:Name="Btn_OpenConnectionOverview" Header="Open Connection Overview" Click="Btn_OpenConnectionOverview_Click"></MenuItem>
@@ -37,14 +38,18 @@
                 <MenuItem Header="_Patch Notes" Click="MenuItemPatchNotes_Click"></MenuItem>
             </MenuItem>
         </Menu>
-        <DataGrid x:Name="Dtg_Solutions" Margin="10,101,13.667,87.667" ItemsSource="{Binding}" AutoGenerateColumns="False">
+        <DataGrid x:Name="Dtg_Solutions" Margin="0,121.752,13.667,66.915" ItemsSource="{Binding}" AutoGenerateColumns="False" HorizontalAlignment="Right" Width="546.846">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}"  Header=""/>
-                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="250"></DataGridTextColumn>
 
             </DataGrid.Columns>
         </DataGrid>
+        <Label Content="Filter:" HorizontalAlignment="Right" Margin="0,40,227.477,0" VerticalAlignment="Top"/>
+        <Grid HorizontalAlignment="Left" Margin="12,121.752,0,66.915" Width="278.513">
+            <Label Content="Local Repositories:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22"/>
+        </Grid>
 
     </Grid>
 
