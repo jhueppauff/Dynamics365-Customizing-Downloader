@@ -48,7 +48,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private void LoadCRMConnections()
         {
-            this.crmConnections = StorageExtensions.Load();
+            this.crmConnections = Data.StorageExtensions.Load();
             this.Cbx_CRMConnections.Items.Clear();
             this.Tbx_ConnectionName.Text = string.Empty;
             this.Tbx_ConnectionString.Text = string.Empty;
@@ -57,7 +57,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 if (connection.ConnectionID == Guid.Empty)
                 {
-                    connection.ConnectionID = StorageExtensions.UpdateConnectionWithID(connection.Name);
+                    connection.ConnectionID = Data.StorageExtensions.UpdateConnectionWithID(connection.Name);
                 }
 
                 this.Cbx_CRMConnections.Items.Add(connection.Name);
@@ -115,15 +115,15 @@ namespace Dynamics365CustomizingDownloader
         {
             if (this.Tbx_ConnectionString.Text != string.Empty && this.Tbx_ConnectionName.Text != string.Empty)
             {
-                if (StorageExtensions.GetCountOfConnectionNamesByName(this.Tbx_ConnectionName.Text) <= 1)
+                if (Data.StorageExtensions.GetCountOfConnectionNamesByName(this.Tbx_ConnectionName.Text) <= 1)
                 {
                     this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
                     this.crmConnection.Name = this.Tbx_ConnectionName.Text;
 
-                    StorageExtensions.Update(this.crmConnection);
+                    Data.StorageExtensions.Update(this.crmConnection);
 
                     MessageBox.Show("Updated CRM Connection successfully", "Updated CRM Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadCRMConnections();
+                    this.LoadCRMConnections();
                 }
                 else
                 {

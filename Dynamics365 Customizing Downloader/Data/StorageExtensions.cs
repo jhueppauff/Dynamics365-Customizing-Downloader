@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader
+namespace Dynamics365CustomizingDownloader.Data
 {
     using System;
     using System.Collections.Generic;
@@ -66,19 +66,12 @@ namespace Dynamics365CustomizingDownloader
             }
             else
             {
-                using (FileStream fs = File.Open(StoragePath, FileMode.Open))
+                using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    byte[] b = new byte[1024];
-                    UTF8Encoding temp = new UTF8Encoding(true);
-
-                    while (fs.Read(b, 0, b.Length) > 0)
-                    {
-                        stringBuilder.AppendLine(temp.GetString(b));
-                    }
+                    string localJSON = streamReader.ReadToEnd();
 
                     // Convert Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
+                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(localJSON);
 
                     // Encrypt Connection String
                     crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
@@ -86,8 +79,7 @@ namespace Dynamics365CustomizingDownloader
                     crmConnections.Add(crmConnection);
 
                     // Close File Stream
-                    fs.Flush();
-                    fs.Close();
+                    streamReader.Close();
                 }
 
                 // Write to Configuration File
@@ -106,19 +98,12 @@ namespace Dynamics365CustomizingDownloader
 
             if (File.Exists(StoragePath))
             {
-                using (FileStream fs = File.OpenRead(StoragePath))
+                using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
                 {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    byte[] b = new byte[1024];
-                    UTF8Encoding temp = new UTF8Encoding(true);
-
-                    while (fs.Read(b, 0, b.Length) > 0)
-                    {
-                        stringBuilder.AppendLine(temp.GetString(b));
-                    }
+                    string json = streamReader.ReadToEnd();
 
                     // Converts Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
+                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
@@ -126,8 +111,7 @@ namespace Dynamics365CustomizingDownloader
                     }
 
                     // Close File Stream
-                    fs.Flush();
-                    fs.Close();
+                    streamReader.Close();
                 }
             }
             else

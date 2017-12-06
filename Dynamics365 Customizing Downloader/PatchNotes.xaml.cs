@@ -10,8 +10,10 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Diagnostics;
     using System.Windows;
+    using Update;
 
     /// <summary>
     /// Interaction logic for PatchNotes
@@ -23,17 +25,37 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         public PatchNotes()
         {
-            System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
-            string version = FileVersionInfo.GetVersionInfo(assembly.Location).FileVersion.ToString();
-            
-            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
-            Update.Release release = updateChecker.GetReleaseInfo(version.ToString());
+            UpdateChecker updateChecker = new UpdateChecker();
+            Release release = updateChecker.GetReleaseInfo();
 
             this.InitializeComponent();
             this.Tbx_PatchNotes.Text = release.Body;
             this.Lbl_IsPreRelease.Content = release.Prerelease.ToString();
             this.Lbl_VersionNumber.Content = release.Name;
             this.Lbl_ReleaseDate.Content = release.Published_at.ToString();
+        }
+
+        /// <summary>
+        /// Close Form
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_Skip_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        /// <summary>
+        /// Download the Patch
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_Download_Click(object sender, RoutedEventArgs e)
+        {
+            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+            Uri uri = updateChecker.GetUpdateURL();
+
+            Process.Start(uri.ToString());
         }
     }
 }

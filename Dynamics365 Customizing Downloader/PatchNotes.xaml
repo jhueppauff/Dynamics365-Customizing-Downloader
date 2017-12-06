@@ -4,14 +4,21 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        Title="PatchNotes" Height="304.261" Width="519.034">
+        Title="Patch Notes" Height="398.479" Width="541.508">
     <Grid>
-        <Label Content="Version Number:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Lbl_VersionNumber" Content="1.0.0.0" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Tbx_PatchNotes" Margin="10,67,10,10" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"/>
-        <Label Content="Created at:" HorizontalAlignment="Left" Margin="143,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Lbl_ReleaseDate" Content="2017-03-01 17:30" HorizontalAlignment="Left" Margin="143,36,0,0" VerticalAlignment="Top"/>
-        <Label Content="PreRelease:" HorizontalAlignment="Left" Margin="302,10,0,0" VerticalAlignment="Top"/>
-        <Label x:Name="Lbl_IsPreRelease" Content="False" HorizontalAlignment="Left" Margin="302,36,0,0" VerticalAlignment="Top"/>
+        <Label Content="Version Number:" HorizontalAlignment="Left" Margin="11,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_VersionNumber" Content="1.0.0.0" HorizontalAlignment="Left" Margin="11,78,0,0" VerticalAlignment="Top"/>
+        <Label Content="Created at:" HorizontalAlignment="Left" Margin="144,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_ReleaseDate" Content="2017-03-01 17:30" HorizontalAlignment="Left" Margin="144,78,0,0" VerticalAlignment="Top"/>
+        <Label Content="PreRelease:" HorizontalAlignment="Left" Margin="303,52,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_IsPreRelease" Content="False" HorizontalAlignment="Left" Margin="303,78,0,0" VerticalAlignment="Top"/>
+        <Grid Margin="2,0,10,0" Height="44" VerticalAlignment="Bottom">
+            <Button x:Name="Btn_Skip" Content="Skip" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Btn_Skip_Click"/>
+            <Button x:Name="Btn_Download" Content="Awesome! Download new Version" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="432" Height="24" Click="Btn_Download_Click"/>
+        </Grid>
+        <Grid Margin="10,109,10,44">
+            <TextBox x:Name="Tbx_PatchNotes" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"/>
+        </Grid>
+        <Label Content="There is a new Version available. Do you want to get the latest Update?" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </Window>

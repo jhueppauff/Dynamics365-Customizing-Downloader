@@ -11,6 +11,7 @@
 namespace Dynamics365CustomizingDownloader.Xrm
 {
     using System;
+    using System.IO;
 
     /// <summary>
     /// CRM Solution
@@ -53,5 +54,15 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// Gets or sets a value indicating whether the Solution should be Downloaded
         /// </summary>
         public bool DownloadIsChecked { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Path of the Solution.XML
+        /// </summary>
+        public string SolutionXMLPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Solution Version
+        /// </summary>
+        public string Version { get; set; }
     }
 }

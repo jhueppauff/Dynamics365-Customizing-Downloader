@@ -88,7 +88,7 @@ namespace Dynamics365CustomizingDownloader
                 try
                 {
                     this.crmConnection.Name = this.tbx_connectionName.Text;
-                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
 
                     bool connectionExists = false;
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
@@ -102,7 +102,7 @@ namespace Dynamics365CustomizingDownloader
 
                     if (!connectionExists)
                     {
-                        StorageExtensions.Save(this.crmConnection);
+                        Data.StorageExtensions.Save(this.crmConnection);
                         MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
@@ -110,7 +110,7 @@ namespace Dynamics365CustomizingDownloader
                 catch (System.IO.FileNotFoundException)
                 {
                     // Ignore Error, in a fresh installation there is no config File
-                    StorageExtensions.Save(this.crmConnection);
+                    Data.StorageExtensions.Save(this.crmConnection);
                     MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
