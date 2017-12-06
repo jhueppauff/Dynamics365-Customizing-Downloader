@@ -65,8 +65,8 @@ namespace Dynamics365CustomizingDownloader
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-
-            this.cbx_connection.Items.Add("New");
+            
+            
             Application.Current.Properties["Debugging.Enabled"] = false;
 
             if (!File.Exists(Data.StorageExtensions.StoragePath))
@@ -79,11 +79,6 @@ namespace Dynamics365CustomizingDownloader
                 try
                 {
                     List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-
-                    foreach (Xrm.CrmConnection crmConnection in crmConnections)
-                    {
-                        this.cbx_connection.Items.Add(crmConnection.Name);
-                    }
                 }
                 catch (System.IO.FileNotFoundException)
                 {
@@ -204,47 +199,6 @@ namespace Dynamics365CustomizingDownloader
         }
 
         /// <summary>
-        /// Event Selection Changed
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
-        private void Cbx_connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            try
-            {
-                Dtg_Solutions.ItemsSource = null;
-
-                // Will cause an error when connections was flushed
-                if (this.cbx_connection.SelectedItem.ToString() == "New")
-                {
-                    ConnectionManger connectionManger = new ConnectionManger();
-                    connectionManger.ShowDialog();
-                    this.ReloadConnections();
-                }
-                else
-                {
-                    this.loadingPanel.IsLoading = true;
-
-                    this.worker.DoWork += this.Worker_DoWork;
-                    this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-                    this.worker.RunWorkerAsync();
-
-                    this.selectedCrmConnection = this.cbx_connection.SelectedItem.ToString();
-                }
-            }
-            catch (NullReferenceException)
-            {
-                // Ignore, reload will change the index and will trigger this without items
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show("An error occured: " + ex.Message);
-                loadingPanel.IsLoading = false;
-                MainWindow.Log.Error(ex.Message, ex);
-            }
-        }
-
-        /// <summary>
         /// Background Worker Event DoWork
         /// </summary>
         /// <param name="sender">The sender.</param>
@@ -270,7 +224,7 @@ namespace Dynamics365CustomizingDownloader
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
-
+            this.Lbx_Repos.IsEnabled = true;
             this.loadingPanel.IsLoading = false;
         }
 
@@ -282,14 +236,12 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-                this.cbx_connection.Items.Clear();
+                this.Lbx_Repos.Items.Clear();
                 this.Dtg_Solutions.ItemsSource = null;
-
-                this.cbx_connection.Items.Add("New");
 
                 foreach (Xrm.CrmConnection crmConnection in crmConnections)
                 {
-                    this.cbx_connection.Items.Add(crmConnection.Name);
+                    this.Lbx_Repos.Items.Add(crmConnection);
                 }
 
                 Btn_OpenConnectionOverview.IsEnabled = true;
@@ -307,11 +259,11 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (cbx_connection.SelectedItem != null)
+            if (Lbx_Repos.SelectedItem != null)
             {
                 int downloadCounter = 0;
                 List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
+                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
 
                 if (Dtg_Solutions.ItemsSource != null)
                 {
@@ -431,19 +383,13 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private void CheckForUpdate()
         {
-            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
-            if (updateChecker.IsUpdateAvailable())
+            if (Properties.Settings.Default.CheckForUpdates)
             {
-                Uri uri = updateChecker.GetUpdateURL();
-
-                if (uri != null)
+                Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+                if (updateChecker.IsUpdateAvailable())
                 {
-                    MessageBoxResult messageBoxResult = MessageBox.Show("There is an new Update available, would you like to Download it?", "Update available!", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-                    if (messageBoxResult == MessageBoxResult.Yes)
-                    {
-                        System.Diagnostics.Process.Start(uri.ToString());
-                    }
+                    PatchNotes patchNotes = new PatchNotes();
+                    patchNotes.ShowDialog();
                 }
             }
         }
@@ -457,6 +403,51 @@ namespace Dynamics365CustomizingDownloader
         {
             PatchNotes patchNotes = new PatchNotes();
             patchNotes.Show();
+        }
+
+        /// <summary>
+        /// Opens the Connection Create Dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_OpenCreateNewConnection_Click(object sender, RoutedEventArgs e)
+        {
+            ConnectionManger connectionManger = new ConnectionManger();
+            connectionManger.ShowDialog();
+            ReloadConnections();
+        }
+
+        /// <summary>
+        /// Connects to the selected CRM
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
+        private void Lbx_Repos_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                if (Lbx_Repos.SelectedItem != null)
+                {
+                    Lbx_Repos.IsEnabled = false;
+                    Xrm.CrmConnection crmConnection = (Xrm.CrmConnection)Lbx_Repos.SelectedItem;
+
+                    Dtg_Solutions.ItemsSource = null;
+                    this.loadingPanel.IsLoading = true;
+
+                    this.worker.DoWork += this.Worker_DoWork;
+                    this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
+                    this.worker.RunWorkerAsync();
+
+                    this.selectedCrmConnection = crmConnection.Name;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occured: " + ex.Message);
+                loadingPanel.IsLoading = false;
+                MainWindow.Log.Error(ex.Message, ex);
+                Lbx_Repos.IsEnabled = true;
+            }
         }
     }
 }

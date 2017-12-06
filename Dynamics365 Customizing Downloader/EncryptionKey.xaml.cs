@@ -45,7 +45,7 @@ namespace Dynamics365CustomizingDownloader
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
                 bool keyCorrect = false;
-                if (!File.Exists(StorageExtensions.StoragePath))
+                if (!File.Exists(Data.StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
                     this.Close();
@@ -56,24 +56,18 @@ namespace Dynamics365CustomizingDownloader
 
                     // Connections are already created, need to check Encryption Key
                     List<Xrm.CrmConnection> crmConnections;
-                    using (FileStream fs = File.OpenRead(StorageExtensions.StoragePath))
-                    {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        byte[] b = new byte[1024];
-                        UTF8Encoding temp = new UTF8Encoding(true);
 
-                        while (fs.Read(b, 0, b.Length) > 0)
-                        {
-                            stringBuilder.AppendLine(temp.GetString(b));
-                        }
+                    using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
+                    {
+                        string json = streamReader.ReadToEnd();
 
                         // Converts Json to List
-                        crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
+                        crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
                         try
                         {
                             foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                             {
-                                crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                                crmTempConnection.ConnectionString = Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
                             }
 
                             keyCorrect = true;
@@ -86,9 +80,7 @@ namespace Dynamics365CustomizingDownloader
                             EncryptionKey.Log.Error("Encryption Key does not match!");
                         }
 
-                        // Close File Stream
-                        fs.Flush();
-                        fs.Close();
+                        streamReader.Close();
 
                         if (keyCorrect)
                         {

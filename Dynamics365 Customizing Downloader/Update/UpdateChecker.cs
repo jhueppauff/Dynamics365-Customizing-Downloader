@@ -31,7 +31,7 @@ namespace Dynamics365CustomizingDownloader.Update
         /// </summary>
         /// <param name="releaseName">Name of the Tag</param>
         /// <returns>Returns a single Release <see cref="Update.Release"/></returns>
-        public Release GetReleaseInfo(string releaseName)
+        public Release GetReleaseInfo()
         {
             try
             {
@@ -40,7 +40,7 @@ namespace Dynamics365CustomizingDownloader.Update
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                string json = this.PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/tags/{releaseName}");
+                string json = this.PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
                 var release = JsonConvert.DeserializeObject<Release>(json, serializerSettings);
 
                 return release;

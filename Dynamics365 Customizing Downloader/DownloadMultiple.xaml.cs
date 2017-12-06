@@ -281,7 +281,7 @@ namespace Dynamics365CustomizingDownloader
 
                 Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
                 {
-                    ConnectionID = StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
+                    ConnectionID = Data.StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
                     ConnectionString = this.CRMConnection.ConnectionString,
                     LocalPath = this.selectedPath,
                     Name = this.CRMConnection.Name
@@ -289,7 +289,7 @@ namespace Dynamics365CustomizingDownloader
                 this.CRMConnection = crmConnection;
 
                 // Update Connection
-                StorageExtensions.Update(crmConnection);
+                Data.StorageExtensions.Update(crmConnection);
 
                 // Background Worker
                 this.worker.DoWork += this.Worker_DoWork;

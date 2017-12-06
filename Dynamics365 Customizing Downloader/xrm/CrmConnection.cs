@@ -11,6 +11,7 @@
 namespace Dynamics365CustomizingDownloader.Xrm
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// CRM Connection
@@ -36,5 +37,10 @@ namespace Dynamics365CustomizingDownloader.Xrm
         /// Gets or sets the local path
         /// </summary>
         public string LocalPath { get; set; }
+
+        /// <summary>
+        /// Gets or sets the CRM Solutions for this connection
+        /// </summary>
+        public List<CrmSolution> CRMSolutions { get; set; }
     }
 }
