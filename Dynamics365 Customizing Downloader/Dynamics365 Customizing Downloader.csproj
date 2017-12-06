@@ -156,7 +156,7 @@
     <Compile Include="Controls\LoadingPanel.xaml.cs">
       <DependentUpon>LoadingPanel.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Cryptography.cs" />
+    <Compile Include="Data\Cryptography.cs" />
     <Compile Include="DownloadMultiple.xaml.cs">
       <DependentUpon>DownloadMultiple.xaml</DependentUpon>
     </Compile>
@@ -168,7 +168,7 @@
     <Compile Include="PatchNotes.xaml.cs">
       <DependentUpon>PatchNotes.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StorageExtensions.cs" />
+    <Compile Include="Data\StorageExtensions.cs" />
     <Compile Include="Update\Asset.cs" />
     <Compile Include="Update\Author.cs" />
     <Compile Include="Update\Person.cs" />
@@ -273,6 +273,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Repository\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -47,7 +47,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Label Content="Filter:" HorizontalAlignment="Right" Margin="0,40,227.477,0" VerticalAlignment="Top"/>
-        <Grid HorizontalAlignment="Left" Margin="12,121.752,0,66.915" Width="278.513">
+        <Grid HorizontalAlignment="Left" Margin="12,122,0,67" Width="279">
             <Label Content="Local Repositories:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="22"/>
         </Grid>
 

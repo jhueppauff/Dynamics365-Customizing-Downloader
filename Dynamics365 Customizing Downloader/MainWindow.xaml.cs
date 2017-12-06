@@ -69,7 +69,7 @@ namespace Dynamics365CustomizingDownloader
             this.cbx_connection.Items.Add("New");
             Application.Current.Properties["Debugging.Enabled"] = false;
 
-            if (!File.Exists(StorageExtensions.StoragePath))
+            if (!File.Exists(Data.StorageExtensions.StoragePath))
             {
                 Btn_OpenConnectionOverview.IsEnabled = false;
             }
@@ -78,7 +78,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 try
                 {
-                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
 
                     foreach (Xrm.CrmConnection crmConnection in crmConnections)
                     {
@@ -253,7 +253,7 @@ namespace Dynamics365CustomizingDownloader
         {
             using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
             {
-                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
                 Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
 
                 // Get Crm Solutions
@@ -281,7 +281,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
                 this.cbx_connection.Items.Clear();
                 this.Dtg_Solutions.ItemsSource = null;
 
@@ -310,7 +310,7 @@ namespace Dynamics365CustomizingDownloader
             if (cbx_connection.SelectedItem != null)
             {
                 int downloadCounter = 0;
-                List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
                 Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == cbx_connection.SelectedItem.ToString());
 
                 if (Dtg_Solutions.ItemsSource != null)

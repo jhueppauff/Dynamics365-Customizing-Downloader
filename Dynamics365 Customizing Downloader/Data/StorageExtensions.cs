@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader
+namespace Dynamics365CustomizingDownloader.Data
 {
     using System;
     using System.Collections.Generic;
