@@ -1,4 +1,12 @@
-﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" x:Name="Btn_downloadMultiple" x:Class="Dynamics365CustomizingDownloader.MainWindow" mc:Ignorable="d" Title="Dynamics Customizing Downloader" Height="552.813" Width="862.693">
+﻿<Window xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" 
+        xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls" 
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
+        x:Name="Win_MainWindow" 
+        x:Class="Dynamics365CustomizingDownloader.MainWindow" 
+        mc:Ignorable="d" Title="Dynamics Customizing Downloader" 
+        Height="552.813"  Width="862.693" WindowStyle="SingleBorderWindow" >
     <Window.Resources>
         <!-- Data Template (applied to each bound task item in the task collection) -->
         <DataTemplate x:Key="myTaskTemplate">
