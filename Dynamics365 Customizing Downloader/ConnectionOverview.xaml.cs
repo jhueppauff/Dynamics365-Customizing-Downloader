@@ -123,7 +123,7 @@ namespace Dynamics365CustomizingDownloader
                     Data.StorageExtensions.Update(this.crmConnection);
 
                     MessageBox.Show("Updated CRM Connection successfully", "Updated CRM Connection", MessageBoxButton.OK, MessageBoxImage.Information);
-                    LoadCRMConnections();
+                    this.LoadCRMConnections();
                 }
                 else
                 {

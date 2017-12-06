@@ -29,7 +29,6 @@ namespace Dynamics365CustomizingDownloader.Update
         /// <summary>
         /// Gets the Release Information from GitHub API
         /// </summary>
-        /// <param name="releaseName">Name of the Tag</param>
         /// <returns>Returns a single Release <see cref="Update.Release"/></returns>
         public Release GetReleaseInfo()
         {

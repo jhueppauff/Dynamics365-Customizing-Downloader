@@ -65,8 +65,6 @@ namespace Dynamics365CustomizingDownloader
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            
-            
             Application.Current.Properties["Debugging.Enabled"] = false;
 
             if (!File.Exists(Data.StorageExtensions.StoragePath))
@@ -403,7 +401,7 @@ namespace Dynamics365CustomizingDownloader
         {
             ConnectionManger connectionManger = new ConnectionManger();
             connectionManger.ShowDialog();
-            ReloadConnections();
+            this.ReloadConnections();
         }
 
         /// <summary>

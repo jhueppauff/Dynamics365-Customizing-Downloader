@@ -44,7 +44,6 @@ namespace Dynamics365CustomizingDownloader
         {
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
-
                 if (!File.Exists(Data.StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
@@ -52,12 +51,11 @@ namespace Dynamics365CustomizingDownloader
                 }
                 else
                 {
-                    if (ValidateKey())
+                    if (this.ValidateKey())
                     {
                         this.Close();
                     }
                 }
-
             }
             else
             {
@@ -78,6 +76,10 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Validates the Encryption Key against the config store
+        /// </summary>
+        /// <returns>Returns <see cref="bool"/>true/false if the key is correct</returns>
         private bool ValidateKey()
         {
             MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
@@ -97,6 +99,7 @@ namespace Dynamics365CustomizingDownloader
                     {
                         crmTempConnection.ConnectionString = Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
                     }
+
                     streamReader.Close();
                     return true;
                 }
