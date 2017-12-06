@@ -38,7 +38,6 @@
             <MenuItem Header="_Info">
                 <MenuItem Header="_About" Click="MenuItemAbout_Click" />
                 <MenuItem Header="_Updates" Click="MenuItemUpdate_Click" />
-                <MenuItem Header="_Patch Notes" Click="MenuItemPatchNotes_Click" />
             </MenuItem>
         </Menu>
         <DataGrid x:Name="Dtg_Solutions" Margin="294,122,14,72" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
