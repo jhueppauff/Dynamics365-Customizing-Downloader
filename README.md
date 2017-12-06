@@ -49,7 +49,7 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 - Within the Main Form, choose File -> Open Connection Overview
 
 - In the following Dialog, select the Conenction you want to Update in the DropDown Menu
-![Connection Overview](ConnectionOverview.PNG)
+![Connection Overview](Media/ConnectionOverview.PNG)
 
 - After Updated the Connection press "Test Connection", this may take some secounds while the connection is validated
 
