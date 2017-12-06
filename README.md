@@ -22,6 +22,7 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 - Press the Create new Repository Button to create a new Connection.
 
 - Add your Connection string (See https://msdn.microsoft.com/en-us/library/mt608573.aspx, or Wiki Pages) and press the "Connect" Button
+
 ![ConnectionManager](Media/ConnectionManager.PNG)
 
 - Rename the Connection if you want to and press "Save"
