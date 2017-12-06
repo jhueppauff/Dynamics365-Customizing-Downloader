@@ -74,19 +74,8 @@ namespace Dynamics365CustomizingDownloader
                 Btn_OpenConnectionOverview.IsEnabled = false;
             }
 
-            if (MainWindow.EncryptionKey != null && MainWindow.EncryptionKey == string.Empty)
-            {
-                try
-                {
-                    List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-                }
-                catch (System.IO.FileNotFoundException)
-                {
-                    // Ignore File Not found
-                }
-            }
-            else
-            {
+            if (MainWindow.EncryptionKey == null || MainWindow.EncryptionKey == string.Empty)
+            { 
                 EncryptionKey encryptionKey = new EncryptionKey();
                 encryptionKey.ShowDialog();
 
