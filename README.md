@@ -13,11 +13,11 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 
 ##### CRM Connection:
 
-![EncryptionKey](Media/EncryptionKey.PNG)
 - Open the App and choose a Password which is used for encrypting your Connection String.
+![EncryptionKey](Media/EncryptionKey.PNG)
 
-![MainWindow](Media/MainWindow.PNG)
 - After you entered a Password you should see the MainWindow of the Application
+![MainWindow](Media/MainWindow.PNG)
 
 - Press the Create new Repository Button to create a new Connection.
 
