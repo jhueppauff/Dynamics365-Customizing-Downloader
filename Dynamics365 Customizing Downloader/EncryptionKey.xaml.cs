@@ -44,7 +44,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
-                bool keyCorrect = false;
+
                 if (!File.Exists(Data.StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
@@ -52,42 +52,12 @@ namespace Dynamics365CustomizingDownloader
                 }
                 else
                 {
-                    MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
-
-                    // Connections are already created, need to check Encryption Key
-                    List<Xrm.CrmConnection> crmConnections;
-
-                    using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
+                    if (ValidateKey())
                     {
-                        string json = streamReader.ReadToEnd();
-
-                        // Converts Json to List
-                        crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
-                        try
-                        {
-                            foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
-                            {
-                                crmTempConnection.ConnectionString = Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
-                            }
-
-                            keyCorrect = true;
-                        }
-                        catch (Exception)
-                        {
-                            keyCorrect = false;
-                            MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
-                            MainWindow.EncryptionKey = null;
-                            EncryptionKey.Log.Error("Encryption Key does not match!");
-                        }
-
-                        streamReader.Close();
-
-                        if (keyCorrect)
-                        {
-                            this.Close();
-                        }
+                        this.Close();
                     }
                 }
+
             }
             else
             {
@@ -105,6 +75,38 @@ namespace Dynamics365CustomizingDownloader
             if (e.Key == System.Windows.Input.Key.Enter)
             {
                 this.Btn_SaveEncryptionKey_Click(this, new RoutedEventArgs());
+            }
+        }
+
+        private bool ValidateKey()
+        {
+            MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
+
+            // Connections are already created, need to check Encryption Key
+            List<Xrm.CrmConnection> crmConnections;
+
+            using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
+            {
+                string json = streamReader.ReadToEnd();
+
+                // Converts Json to List
+                crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+                try
+                {
+                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                    {
+                        crmTempConnection.ConnectionString = Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                    }
+                    streamReader.Close();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MainWindow.EncryptionKey = null;
+                    EncryptionKey.Log.Error("Encryption Key does not match!");
+                    return false;
+                }
             }
         }
     }
