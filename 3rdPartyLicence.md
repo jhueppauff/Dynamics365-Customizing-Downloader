@@ -32,3 +32,12 @@ https://github.com/StyleCop/StyleCop
 https://download.microsoft.com/download/E/1/8/E18C0FAD-FEC8-44CD-9A16-98EDC4DAC7A2/LicenseTerms.docx
 Copyright (c) Microsoft Corporation
 
+
+#### Log4Net
+Apache License, Version 2.0
+http://logging.apache.org/log4net/license.html
+
+
+#### RestSharp
+Apache License, Version 2.0
+https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
