@@ -11,8 +11,8 @@ namespace UnitTest
         [TestMethod]
         public void TestCryptographyModule()
         {
-            string encryptedString = Dynamics365CustomizingDownloader.Cryptography.EncryptStringAES("Something", "secret");
-            if (Dynamics365CustomizingDownloader.Cryptography.DecryptStringAES(encryptedString, "secret") != "Something")
+            string encryptedString = Dynamics365CustomizingDownloader.Data.Cryptography.EncryptStringAES("Something", "secret");
+            if (Dynamics365CustomizingDownloader.Data.Cryptography.DecryptStringAES(encryptedString, "secret") != "Something")
             {
                 throw new Exception("String does not match");
             }
