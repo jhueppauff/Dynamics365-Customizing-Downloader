@@ -33,7 +33,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
         /// </summary>
-        private static TextBox statusTextBox;
+        private static TextBox statusTextBox = new TextBox();
 
         /// <summary>
         /// BackGround Worker
