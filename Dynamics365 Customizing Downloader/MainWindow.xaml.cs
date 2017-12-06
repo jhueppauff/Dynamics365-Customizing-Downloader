@@ -267,19 +267,19 @@ namespace Dynamics365CustomizingDownloader
 
                 if (Dtg_Solutions.ItemsSource != null)
                 {
-                    List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
+                    List<Xrm.CrmSolution> crmSolutionList = new List<Xrm.CrmSolution>();
                     foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
                     {
                         if (crmSolution.DownloadIsChecked)
                         {
                             downloadCounter++;
-                            crmSolutions.Add(crmSolution);
+                            crmSolutionList.Add(crmSolution);
                         }
                     }
 
                     if (downloadCounter != 0)
                     {
-                        DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutions);
+                        DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutionList);
                         downloadMultiple.ShowDialog();
                     }
                     else
