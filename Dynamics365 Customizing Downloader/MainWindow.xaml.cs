@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="MainWindow.xaml.cs" company="None">
+// <copyright file="MainWindow.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -44,6 +44,11 @@ namespace Dynamics365CustomizingDownloader
         private string selectedCrmConnection;
 
         /// <summary>
+        /// Local CRM Solution
+        /// </summary>
+        private List<Xrm.CrmSolution> localSolutions;
+
+        /// <summary>
         /// List of all CRM Solutions/>
         /// </summary>
         private List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
@@ -73,7 +78,7 @@ namespace Dynamics365CustomizingDownloader
             }
 
             if (MainWindow.EncryptionKey == null || MainWindow.EncryptionKey == string.Empty)
-            { 
+            {
                 EncryptionKey encryptionKey = new EncryptionKey();
                 encryptionKey.ShowDialog();
 
@@ -200,6 +205,14 @@ namespace Dynamics365CustomizingDownloader
                 // Get Crm Solutions
                 this.crmSolutions.Clear();
                 this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
+
+                if (true)
+                {
+                    foreach (Xrm.CrmSolution solution in this.localSolutions)
+                    {
+                        this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+                    }
+                }
             }
         }
 
@@ -268,6 +281,8 @@ namespace Dynamics365CustomizingDownloader
                     {
                         DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutionList);
                         downloadMultiple.ShowDialog();
+
+                        this.LoadVersionIntoGrid();
                     }
                     else
                     {
@@ -283,6 +298,23 @@ namespace Dynamics365CustomizingDownloader
             {
                 MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+        }
+
+        /// <summary>
+        /// Loads the Local Solution Version into the Grid
+        /// </summary>
+        private void LoadVersionIntoGrid()
+        {
+            this.Dtg_Solutions.ItemsSource = null;
+            Repository.Connector connector = new Repository.Connector();
+            List<Xrm.CrmSolution> localSolutions = connector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
+
+            foreach (Xrm.CrmSolution solution in localSolutions)
+            {
+                this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+            }
+
+            this.Dtg_Solutions.ItemsSource = this.crmSolutions;
         }
 
         /// <summary>
@@ -304,7 +336,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
-            CheckForUpdate();
+            this.CheckForUpdate();
         }
 
         /// <summary>
@@ -400,7 +432,10 @@ namespace Dynamics365CustomizingDownloader
                     Lbx_Repos.IsEnabled = false;
                     Xrm.CrmConnection crmConnection = (Xrm.CrmConnection)Lbx_Repos.SelectedItem;
 
-                    Dtg_Solutions.ItemsSource = null;
+                    Repository.Connector repositoryConnector = new Repository.Connector();
+                    this.localSolutions = repositoryConnector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
+
+                    this.Dtg_Solutions.ItemsSource = null;
                     this.loadingPanel.IsLoading = true;
 
                     this.worker.DoWork += this.Worker_DoWork;

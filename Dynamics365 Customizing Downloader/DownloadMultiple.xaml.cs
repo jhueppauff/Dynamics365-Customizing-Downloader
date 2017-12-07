@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="DownloadMultiple.xaml.cs" company="None">
+// <copyright file="DownloadMultiple.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -311,8 +311,6 @@ namespace Dynamics365CustomizingDownloader
 
                             crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
 
-
-
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
                         }
@@ -351,7 +349,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (worker.IsBusy)
+            if (this.worker.IsBusy)
             {
                 MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
