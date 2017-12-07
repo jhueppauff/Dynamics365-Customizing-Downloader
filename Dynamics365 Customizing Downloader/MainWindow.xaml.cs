@@ -206,12 +206,9 @@ namespace Dynamics365CustomizingDownloader
                 this.crmSolutions.Clear();
                 this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
 
-                if (true)
+                foreach (Xrm.CrmSolution solution in this.localSolutions)
                 {
-                    foreach (Xrm.CrmSolution solution in this.localSolutions)
-                    {
-                        this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
-                    }
+                    this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
                 }
             }
         }
@@ -307,9 +304,9 @@ namespace Dynamics365CustomizingDownloader
         {
             this.Dtg_Solutions.ItemsSource = null;
             Repository.Connector connector = new Repository.Connector();
-            List<Xrm.CrmSolution> localSolutions = connector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
+            List<Xrm.CrmSolution> localRepoSolutions = connector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
 
-            foreach (Xrm.CrmSolution solution in localSolutions)
+            foreach (Xrm.CrmSolution solution in localRepoSolutions)
             {
                 this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
             }
