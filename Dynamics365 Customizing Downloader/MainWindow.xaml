@@ -6,11 +6,11 @@
         x:Name="Win_MainWindow" 
         x:Class="Dynamics365CustomizingDownloader.MainWindow" 
         mc:Ignorable="d" Title="Dynamics Customizing Downloader" 
-        Height="552.813"  Width="862.693" WindowStyle="SingleBorderWindow" >
+        Height="552.813"  Width="975.693" WindowStyle="SingleBorderWindow" >
     <Window.Resources>
         <!-- Data Template (applied to each bound task item in the task collection) -->
         <DataTemplate x:Key="myTaskTemplate">
-            <Border Name="border" BorderBrush="DarkSlateBlue" BorderThickness="2" CornerRadius="2" Padding="5" Margin="5">
+            <Border Name="border" Padding="5" Margin="5">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition />
@@ -52,7 +52,9 @@
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header="" />
                 <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250" />
-                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="250" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="200" />
+                <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="80"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding LocalVersion}" Header="Local Version" IsReadOnly="True" Width="80"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
         <DockPanel HorizontalAlignment="Left" LastChildFill="False" Margin="10,83,0,72" Width="279">

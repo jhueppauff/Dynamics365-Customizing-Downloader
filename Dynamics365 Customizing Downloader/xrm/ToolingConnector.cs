@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ToolingConnector.cs" company="None">
+// <copyright file="ToolingConnector.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -96,7 +96,8 @@ namespace Dynamics365CustomizingDownloader.Xrm
                         Id = (Guid)solution["solutionid"],
                         Name = solution["friendlyname"].ToString(),
                         PublisherId = ((EntityReference)solution["publisherid"]).Id,
-                        UniqueName = solution["uniquename"].ToString()
+                        UniqueName = solution["uniquename"].ToString(),
+                        Version = solution["version"].ToString()
                     });
                 }
             }

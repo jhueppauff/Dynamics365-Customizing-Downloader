@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="DownloadMultiple.xaml.cs" company="None">
+// <copyright file="DownloadMultiple.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -51,19 +51,9 @@ namespace Dynamics365CustomizingDownloader
         private bool panelLoading;
 
         /// <summary>
-        /// Indicates if an error occurred
-        /// </summary>
-        private bool errorOccured = false;
-
-        /// <summary>
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
-
-        /// <summary>
-        /// Identifies if all Downloads are done
-        /// </summary>
-        private int downloadIndex = 0;
 
         /// <summary>
         /// Selected local Path
@@ -243,27 +233,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_close_Click(object sender, RoutedEventArgs e)
         {
-            if (this.downloadIndex > 0 || this.errorOccured)
-            {
-                MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-
-                if (dialogResult == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        this.worker.CancelAsync();
-                        this.Close();
-                    }
-                    catch (Exception)
-                    {
-                        this.Close();
-                    }
-                }
-            }
-            else
-            {
-                this.Close();
-            }
+            this.Close();
         }
 
         /// <summary>
@@ -275,7 +245,6 @@ namespace Dynamics365CustomizingDownloader
         {
             if (this.tbx_download.Text != string.Empty)
             {
-                this.errorOccured = false;
                 this.loadingPanel.IsLoading = true;
                 this.selectedPath = tbx_download.Text;
 
@@ -318,7 +287,6 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
-                this.downloadIndex = this.CRMSolutions.Count;
                 foreach (Xrm.CrmSolution solution in this.CRMSolutions)
                 {
                     if (!this.worker.CancellationPending)
@@ -345,8 +313,6 @@ namespace Dynamics365CustomizingDownloader
 
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
-
-                            this.downloadIndex--;
                         }
                     }
                     else
@@ -357,7 +323,6 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
-                this.errorOccured = true;
                 UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
             }
@@ -384,7 +349,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.downloadIndex > 0 || this.errorOccured)
+            if (this.worker.IsBusy)
             {
                 MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 

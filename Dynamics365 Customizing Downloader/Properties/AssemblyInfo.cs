@@ -18,7 +18,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Dynamics365 Customizing Downloader")]
 [assembly: AssemblyDescription("A Downloader and extractor for Dynamics365. See also https://github.com/jhueppauff/Dynamics365-Customizing-Downloader")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://github.com/jhueppauff/Dynamics365-Customizing-Downloader")]
 [assembly: AssemblyProduct("Dynamics365 Customizing Downloader")]
 [assembly: AssemblyCopyright("Copyright © Julian Hüppauff 2017")]
 [assembly: AssemblyTrademark("")]
