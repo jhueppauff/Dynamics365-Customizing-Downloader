@@ -206,12 +206,9 @@ namespace Dynamics365CustomizingDownloader
                 this.crmSolutions.Clear();
                 this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
 
-                if (true)
+                foreach (Xrm.CrmSolution solution in this.localSolutions)
                 {
-                    foreach (Xrm.CrmSolution solution in this.localSolutions)
-                    {
-                        this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
-                    }
+                    this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
                 }
             }
         }
