@@ -96,7 +96,8 @@ namespace Dynamics365CustomizingDownloader.Xrm
                         Id = (Guid)solution["solutionid"],
                         Name = solution["friendlyname"].ToString(),
                         PublisherId = ((EntityReference)solution["publisherid"]).Id,
-                        UniqueName = solution["uniquename"].ToString()
+                        UniqueName = solution["uniquename"].ToString(),
+                        Version = solution["version"].ToString()
                     });
                 }
             }

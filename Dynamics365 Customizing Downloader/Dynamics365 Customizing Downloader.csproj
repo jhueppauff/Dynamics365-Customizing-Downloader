@@ -56,9 +56,7 @@
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>StrongNameKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
@@ -67,6 +65,9 @@
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>logo.png.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
@@ -169,6 +170,7 @@
       <DependentUpon>PatchNotes.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\StorageExtensions.cs" />
+    <Compile Include="Repository\Connector.cs" />
     <Compile Include="Update\Asset.cs" />
     <Compile Include="Update\Author.cs" />
     <Compile Include="Update\Person.cs" />
