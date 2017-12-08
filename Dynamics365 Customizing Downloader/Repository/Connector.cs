@@ -44,18 +44,21 @@ namespace Dynamics365CustomizingDownloader.Repository
                 foreach (string solutionFolder in Directory.GetDirectories(repositoryPath))
                 {
                     string path = Path.Combine(solutionFolder, SolutionXMLPath);
-
-                    XDocument xdoc = XDocument.Load(path);
-                    string version = xdoc.Descendants("Version").First().Value;
-                    string uniqueName = xdoc.Descendants("UniqueName").First().Value;
-
-                    Xrm.CrmSolution solution = new Xrm.CrmSolution
+                    
+                    if (File.Exists(path))
                     {
-                        UniqueName = uniqueName,
-                        LocalVersion = version
-                    };
+                        XDocument xdoc = XDocument.Load(path);
+                        string version = xdoc.Descendants("Version").First().Value;
+                        string uniqueName = xdoc.Descendants("UniqueName").First().Value;
 
-                    solutions.Add(solution);
+                        Xrm.CrmSolution solution = new Xrm.CrmSolution
+                        {
+                            UniqueName = uniqueName,
+                            LocalVersion = version
+                        };
+
+                        solutions.Add(solution);
+                    }
                 }
             }
             else
