@@ -46,12 +46,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Local CRM Solution
         /// </summary>
-        private List<Xrm.CrmSolution> localSolutions;
+        private List<Core.Xrm.CrmSolution> localSolutions;
 
         /// <summary>
         /// List of all CRM Solutions/>
         /// </summary>
-        private List<Xrm.CrmSolution> crmSolutions = new List<Xrm.CrmSolution>();
+        private List<Core.Xrm.CrmSolution> crmSolutions = new List<Core.Xrm.CrmSolution>();
 
         /// <summary>
         /// Indicates if the panel is loading
@@ -72,7 +72,7 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
             Application.Current.Properties["Debugging.Enabled"] = false;
 
-            if (!File.Exists(Data.StorageExtensions.StoragePath))
+            if (!File.Exists(Core.Data.StorageExtensions.StoragePath))
             {
                 Btn_OpenConnectionOverview.IsEnabled = false;
             }
@@ -197,16 +197,16 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+            using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
             {
-                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
+                Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
 
                 // Get Crm Solutions
                 this.crmSolutions.Clear();
                 this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
 
-                foreach (Xrm.CrmSolution solution in this.localSolutions)
+                foreach (Core.Xrm.CrmSolution solution in this.localSolutions)
                 {
                     this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
                 }
@@ -232,11 +232,11 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
                 this.Lbx_Repos.Items.Clear();
                 this.Dtg_Solutions.ItemsSource = null;
 
-                foreach (Xrm.CrmConnection crmConnection in crmConnections)
+                foreach (Core.Xrm.CrmConnection crmConnection in crmConnections)
                 {
                     this.Lbx_Repos.Items.Add(crmConnection);
                 }
@@ -259,13 +259,13 @@ namespace Dynamics365CustomizingDownloader
             if (Lbx_Repos.SelectedItem != null)
             {
                 int downloadCounter = 0;
-                List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
-                Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
+                Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
 
                 if (Dtg_Solutions.ItemsSource != null)
                 {
-                    List<Xrm.CrmSolution> crmSolutionList = new List<Xrm.CrmSolution>();
-                    foreach (Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+                    List<Core.Xrm.CrmSolution> crmSolutionList = new List<Core.Xrm.CrmSolution>();
+                    foreach (Core.Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
                     {
                         if (crmSolution.DownloadIsChecked)
                         {
@@ -303,10 +303,10 @@ namespace Dynamics365CustomizingDownloader
         private void LoadVersionIntoGrid()
         {
             this.Dtg_Solutions.ItemsSource = null;
-            Repository.Connector connector = new Repository.Connector();
-            List<Xrm.CrmSolution> localRepoSolutions = connector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
+            Core.Repository.Connector connector = new Core.Repository.Connector();
+            List<Core.Xrm.CrmSolution> localRepoSolutions = connector.GetLocalCRMSolutions(((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
 
-            foreach (Xrm.CrmSolution solution in localRepoSolutions)
+            foreach (Core.Xrm.CrmSolution solution in localRepoSolutions)
             {
                 this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
             }
@@ -383,7 +383,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (Properties.Settings.Default.CheckForUpdates)
             {
-                Update.UpdateChecker updateChecker = new Update.UpdateChecker();
+                Core.Update.UpdateChecker updateChecker = new Core.Update.UpdateChecker();
                 if (updateChecker.IsUpdateAvailable())
                 {
                     PatchNotes patchNotes = new PatchNotes();
@@ -427,10 +427,10 @@ namespace Dynamics365CustomizingDownloader
                 if (Lbx_Repos.SelectedItem != null)
                 {
                     Lbx_Repos.IsEnabled = false;
-                    Xrm.CrmConnection crmConnection = (Xrm.CrmConnection)Lbx_Repos.SelectedItem;
+                    Core.Xrm.CrmConnection crmConnection = (Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem;
 
-                    Repository.Connector repositoryConnector = new Repository.Connector();
-                    this.localSolutions = repositoryConnector.GetLocalCRMSolutions(((Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
+                    Core.Repository.Connector repositoryConnector = new Core.Repository.Connector();
+                    this.localSolutions = repositoryConnector.GetLocalCRMSolutions(((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
 
                     this.Dtg_Solutions.ItemsSource = null;
                     this.loadingPanel.IsLoading = true;

@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Update
+namespace Dynamics365CustomizingDownloader.Core.Update
 {
     using System;
     using System.Diagnostics;

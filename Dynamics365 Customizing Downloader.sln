@@ -1,11 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader", "Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj", "{F13C631B-FFEF-4C60-AAE0-AC2BF7C013A9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Download CI Client", "Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj", "{127D25E2-C6A3-4362-93C5-E9B58EA913F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader Core", "Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj", "{4376E28A-8075-4E9B-9A03-5154865C9971}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +25,14 @@ Global
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{127D25E2-C6A3-4362-93C5-E9B58EA913F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{127D25E2-C6A3-4362-93C5-E9B58EA913F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{127D25E2-C6A3-4362-93C5-E9B58EA913F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{127D25E2-C6A3-4362-93C5-E9B58EA913F7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4376E28A-8075-4E9B-9A03-5154865C9971}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4376E28A-8075-4E9B-9A03-5154865C9971}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4376E28A-8075-4E9B-9A03-5154865C9971}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4376E28A-8075-4E9B-9A03-5154865C9971}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

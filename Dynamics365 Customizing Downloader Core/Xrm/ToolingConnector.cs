@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Xrm
+namespace Dynamics365CustomizingDownloader.Core.Xrm
 {
     using System;
     using System.Collections.Generic;
