@@ -206,5 +206,45 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
             return count;
         }
+
+        /// <summary>
+        /// Deletes an Item from the Configuration
+        /// </summary>
+        /// <param name="connectionName">Name of the Connection</param>
+        public static void Delete(string connectionName, bool wipeData = false)
+        {
+            if (File.Exists(StoragePath))
+            {
+                string json = File.ReadAllText(StoragePath);
+                List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+                try
+                {
+                    Xrm.CrmConnection crmConnection = crmConnections.Where(x => x.Name == connectionName).SingleOrDefault();
+                    crmConnections.Remove(crmConnection);
+
+                    if (wipeData)
+                    {
+                        Directory.Delete(crmConnection.LocalPath, true);
+                    }
+
+                    if (crmConnections.Count == 0)
+                    {
+                        // Delete File if there is no Connection left
+                        File.Delete(StoragePath);
+                    }
+                    else
+                    {
+                        string jsonNew = JsonConvert.SerializeObject(crmConnections);
+                        File.WriteAllText(StoragePath, jsonNew);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message, ex);
+                    throw;
+                }
+            }
+        }
     }
 }
