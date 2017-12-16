@@ -8,19 +8,68 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365_Customizing_Download_CI_Client
+namespace Dynamics365CustomizingDownload.CIClient
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     class Program
     {
+        /// <summary>
+        /// Runtime Parameters
+        /// </summary>
+        private static List<ConfigurationParameter> parameters = new List<ConfigurationParameter>(); 
+
         static void Main(string[] args)
         {
+            GetParameter(args);
+        }
 
+        private static void GetParameter(string[] args)
+        {
+            try
+            {
+                if (args.Length == 0)
+                {
+                    Console.WriteLine("Missing Parameter");
+                }
+
+                int counter = 0;
+                ConfigurationParameter parameter;
+                foreach (string arg in args)
+                {
+                    if (counter == 0 || (counter % 2) == 0)
+                    {
+                        parameter = new ConfigurationParameter();
+
+                        switch (arg.ToLowerInvariant())
+                        {
+                            case "--connection-string":
+                                parameter.Name = arg.Remove(0,2);
+                                parameter.Value = args[counter + 1];
+                                break;
+                            case "--solution-name":
+                                parameter.Name = arg.Remove(0, 2);
+                                parameter.Value = args[counter + 1];
+                                break;
+                            case "--local-path":
+                                parameter.Name = arg.Remove(0, 2);
+                                parameter.Value = args[counter + 1];
+                                break;
+                            default:
+                                Console.WriteLine("Unregonized parameter :" + arg);
+                                break;
+                        }
+                        parameters.Add(parameter);
+                    }
+                    counter++;
+                }
+            }
+            catch (System.Exception)
+            {
+
+                throw;
+            }
         }
     }
 }
