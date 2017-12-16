@@ -146,5 +146,36 @@ namespace Dynamics365CustomizingDownloader
         {
             Btn_SaveConnection.IsEnabled = false;
         }
+
+        private void Btn_DeleteRepository_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                if (MessageBox.Show("Do you also want to delete the local Folder? All Data within this Folder will be deleted", "Do you want to wipe the data?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text, true);
+                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
+                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
+        }
     }
 }
