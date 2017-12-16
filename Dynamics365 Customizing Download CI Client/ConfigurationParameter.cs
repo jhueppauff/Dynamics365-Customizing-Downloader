@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownload.CIClient
+namespace Dynamics365CustomizingDownloader.CIClient
 {
     public class ConfigurationParameter
     {

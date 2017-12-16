@@ -8,21 +8,40 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownload.CIClient
+namespace Dynamics365CustomizingDownloader.CIClient
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Linq;
+    using Microsoft.Xrm.Tooling.Connector;
 
     class Program
     {
         /// <summary>
         /// Runtime Parameters
         /// </summary>
-        private static List<ConfigurationParameter> parameters = new List<ConfigurationParameter>(); 
+        private static List<ConfigurationParameter> parameters = new List<ConfigurationParameter>();
 
         static void Main(string[] args)
         {
             GetParameter(args);
+
+            Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
+            using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.Where(x => x.Name == "connection-string").SingleOrDefault().Value))
+            {
+                if (client.IsReady)
+                {
+                    string solutionName = parameters.Where(x => x.Name == "solution-name").SingleOrDefault().Value;
+                    string localPath = parameters.Where(x => x.Name == "local-path").SingleOrDefault().Value;
+
+                    toolingConnector.DownloadSolution(client, solutionName, localPath);
+                    Core.Xrm.CrmSolutionPackager packager = new Core.Xrm.CrmSolutionPackager();
+                    string log = packager.ExtractCustomizing(Path.Combine(localPath, solutionName + ".zip").ToString(), localPath);
+
+                    Console.Write(log);
+                }
+            }
         }
 
         private static void GetParameter(string[] args)
@@ -45,15 +64,15 @@ namespace Dynamics365CustomizingDownload.CIClient
                         switch (arg.ToLowerInvariant())
                         {
                             case "--connection-string":
-                                parameter.Name = arg.Remove(0,2);
+                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 parameter.Value = args[counter + 1];
                                 break;
                             case "--solution-name":
-                                parameter.Name = arg.Remove(0, 2);
+                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 parameter.Value = args[counter + 1];
                                 break;
                             case "--local-path":
-                                parameter.Name = arg.Remove(0, 2);
+                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 parameter.Value = args[counter + 1];
                                 break;
                             default:
