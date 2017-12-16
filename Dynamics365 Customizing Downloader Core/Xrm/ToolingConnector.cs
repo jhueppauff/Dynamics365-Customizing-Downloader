@@ -40,6 +40,34 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         private bool disposed = false;
 
+        public bool TestCRMConnection(string connectionString)
+        {
+            CrmServiceClient crmServiceClient = null;
+
+            try
+            {
+                crmServiceClient = new CrmServiceClient(connectionString);
+
+                if (crmServiceClient.IsReady)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                ToolingConnector.Log.Error(ex.Message, ex);
+                return false;
+            }
+            finally
+            {
+                crmServiceClient.Dispose();
+            }
+        }
+
         /// <summary>
         /// Connect to CRM and get the CRM service client
         /// </summary>
@@ -47,18 +75,19 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <returns>Returns <see cref="CrmServiceClient"/></returns>
         public CrmServiceClient GetCrmServiceClient(string connectionString)
         {
-            CrmServiceClient crmServiceClient;
             try
             {
-                crmServiceClient = new CrmServiceClient(connectionString);
-                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                using (CrmServiceClient crmServiceClient = new CrmServiceClient(connectionString))
                 {
-                    return crmServiceClient;
-                }
-                else
-                {
-                    // CRM Client is empty
-                    throw new NullReferenceException("CRM Service Client is empty");
+                    if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                    {
+                        return crmServiceClient;
+                    }
+                    else
+                    {
+                        // CRM Client is empty
+                        throw new Exception(crmServiceClient.LastCrmError);
+                    }
                 }
             }
             catch (Exception ex)

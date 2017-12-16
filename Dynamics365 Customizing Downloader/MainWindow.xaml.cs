@@ -199,7 +199,7 @@ namespace Dynamics365CustomizingDownloader
         {
             using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
             {
-                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
                 Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
 
                 // Get Crm Solutions
@@ -232,7 +232,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
                 this.Lbx_Repos.Items.Clear();
                 this.Dtg_Solutions.ItemsSource = null;
 
@@ -259,7 +259,7 @@ namespace Dynamics365CustomizingDownloader
             if (Lbx_Repos.SelectedItem != null)
             {
                 int downloadCounter = 0;
-                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load();
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
                 Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
 
                 if (Dtg_Solutions.ItemsSource != null)
@@ -384,7 +384,7 @@ namespace Dynamics365CustomizingDownloader
             if (Properties.Settings.Default.CheckForUpdates)
             {
                 Core.Update.UpdateChecker updateChecker = new Core.Update.UpdateChecker();
-                if (updateChecker.IsUpdateAvailable())
+                if (updateChecker.IsUpdateAvailable($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest"))
                 {
                     PatchNotes patchNotes = new PatchNotes();
                     patchNotes.ShowDialog();
@@ -410,9 +410,11 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_OpenCreateNewConnection_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionManger connectionManger = new ConnectionManger();
-            connectionManger.ShowDialog();
-            this.ReloadConnections();
+            using (ConnectionManger connectionManger = new ConnectionManger())
+            {
+                connectionManger.ShowDialog();
+                this.ReloadConnections();
+            }
         }
 
         /// <summary>

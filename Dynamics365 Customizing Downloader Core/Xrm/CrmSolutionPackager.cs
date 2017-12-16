@@ -56,7 +56,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
                 {
-                    DownloadMultiple.UpdateUI(exeProcess.StandardOutput.ReadToEnd(), false);
+                    log = exeProcess.StandardOutput.ReadToEnd();
                     exeProcess.WaitForExit();
                     return log;
                 }

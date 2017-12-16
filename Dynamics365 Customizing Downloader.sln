@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader", "Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj", "{F13C631B-FFEF-4C60-AAE0-AC2BF7C013A9}"
 EndProject
