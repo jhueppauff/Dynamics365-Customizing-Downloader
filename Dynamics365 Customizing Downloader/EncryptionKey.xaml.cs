@@ -97,7 +97,7 @@ namespace Dynamics365CustomizingDownloader
                 {
                     foreach (Core.Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        crmTempConnection.ConnectionString = Core.Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                        crmTempConnection.ConnectionString = Core.Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, MainWindow.EncryptionKey);
                     }
 
                     streamReader.Close();
