@@ -40,14 +40,5 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return ((bool)(this["CheckForUpdates"]));
             }
         }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool IncludePreReleases {
-            get {
-                return ((bool)(this["IncludePreReleases"]));
-            }
-        }
     }
 }
