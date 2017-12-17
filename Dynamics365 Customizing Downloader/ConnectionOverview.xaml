@@ -3,9 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Dynamics365CustomizingDownloader"
         mc:Ignorable="d"
-        Title="ConnectionOverview" ResizeMode="CanMinimize"  Height="398.119" Width="309.375">
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="ConnectionOverview" ResizeMode="CanMinimize"  Height="433.522" Width="309.375">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Margin="0,0,0,-7">
         <ComboBox x:Name="Cbx_CRMConnections" Margin="10,41,10.333,0" VerticalAlignment="Top" SelectionChanged="Cbx_CRMConnections_SelectionChanged"/>
         <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
@@ -14,18 +29,10 @@
         <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
         <Label Content="Connection Name:" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top"/>
         <Button x:Name="Btn_SaveConnection" IsEnabled="False" Content="Save" HorizontalAlignment="Left" Margin="208,241,0,0" VerticalAlignment="Top" Width="75" Click="Btn_SaveConnection_Click"/>
-        <Button x:Name="Btn_TestConnection" Content="Test Connection" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="107" Click="Btn_TestConnection_Click"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Width="304" Height="97" VerticalAlignment="Bottom">
-            <Label Content="Danger Zone!">
-                <Label.Effect>
-                    <DropShadowEffect/>
-                </Label.Effect>
-            </Label>
+        <Button x:Name="Btn_TestConnection" Content="Test Connection" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="142" Click="Btn_TestConnection_Click"/>
+        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Width="304" Height="120" VerticalAlignment="Bottom" Margin="0,0,-1,0">
+            <Label Content="Danger Zone!" Margin="0,-1,0,0"/>
         </Border>
-        <Button x:Name="Btn_DeleteRepository" Content="Delete Repository" HorizontalAlignment="Left" Margin="10,0,0,30" Width="284" Height="20" VerticalAlignment="Bottom" Click="Btn_DeleteRepository_Click">
-            <Button.Effect>
-                <DropShadowEffect/>
-            </Button.Effect>
-        </Button>
+        <Button x:Name="Btn_DeleteRepository" Content="Delete Repository" HorizontalAlignment="Left" Margin="10,0,0,30" Width="284" Height="34" VerticalAlignment="Bottom" Click="Btn_DeleteRepository_Click"/>
     </Grid>
 </Window>
