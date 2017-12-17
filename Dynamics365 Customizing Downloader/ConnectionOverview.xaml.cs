@@ -177,7 +177,9 @@ namespace Dynamics365CustomizingDownloader
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Log.Error(ex.Message, ex);
+                        Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                        errorReport.Show();
                     }
                 }
             }

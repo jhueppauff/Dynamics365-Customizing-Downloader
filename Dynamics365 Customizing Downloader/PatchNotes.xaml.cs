@@ -21,18 +21,35 @@ namespace Dynamics365CustomizingDownloader
     public partial class PatchNotes : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="PatchNotes"/> class.
         /// </summary>
         public PatchNotes()
         {
-            UpdateChecker updateChecker = new UpdateChecker();
-            Release release = updateChecker.GetReleaseInfo($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
+            try
+            {
+                UpdateChecker updateChecker = new UpdateChecker();
+                Release release = updateChecker.GetReleaseInfo($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
 
-            this.InitializeComponent();
-            this.Tbx_PatchNotes.Text = release.Body;
-            this.Lbl_IsPreRelease.Content = release.Prerelease.ToString();
-            this.Lbl_VersionNumber.Content = release.Name;
-            this.Lbl_ReleaseDate.Content = release.Published_at.ToString();
+                this.InitializeComponent();
+                this.Tbx_PatchNotes.Text = release.Body;
+                this.Lbl_IsPreRelease.Content = release.Prerelease.ToString();
+                this.Lbl_VersionNumber.Content = release.Name;
+                this.Lbl_ReleaseDate.Content = release.Published_at.ToString();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
+            }
         }
 
         /// <summary>

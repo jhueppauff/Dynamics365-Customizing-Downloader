@@ -101,7 +101,11 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
@@ -147,7 +151,11 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }

@@ -489,8 +489,11 @@ namespace Dynamics365CustomizingDownloader
             catch (Exception ex)
             {
                 Log.Error(ex.Message, ex);
-                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
-                errorReport.Show();
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
 
                 loadingPanel.IsLoading = false;
                 MainWindow.Log.Error(ex.Message, ex);

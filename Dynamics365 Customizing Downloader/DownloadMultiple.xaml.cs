@@ -335,6 +335,14 @@ namespace Dynamics365CustomizingDownloader
                 
                 UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
+
+                // Open Error Report Dialog
+                Log.Error(ex.Message, ex);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
             }
         }
 
