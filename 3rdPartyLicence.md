@@ -1,6 +1,6 @@
 # 3rd Party Licence
 
-#### Loading Controls:
+#### Loading Controls (will be removed in 2.6):
 
 This source code is made available under the terms of the Microsoft Public License (Ms-PL)
 http://www.opensource.org/licenses/ms-pl.html
@@ -46,3 +46,6 @@ https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
 The MIT License (MIT)
 https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/blob/master/LICENSE
 
+#### Displaying-XAML
+GNU General Public License v3.0
+https://github.com/wongjiahau/Displaying-XAML/blob/master/LICENSE
