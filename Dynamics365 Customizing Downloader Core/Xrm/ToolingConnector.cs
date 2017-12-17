@@ -40,6 +40,11 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         private bool disposed = false;
 
+        /// <summary>
+        /// Tests the CRM Connection
+        /// </summary>
+        /// <param name="connectionString">CRM Connection String</param>
+        /// <returns>Returns <see cref="bool"/> if the connection succeeded.</returns>
         public bool TestCRMConnection(string connectionString)
         {
             CrmServiceClient crmServiceClient = null;

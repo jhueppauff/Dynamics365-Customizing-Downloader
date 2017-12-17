@@ -226,8 +226,10 @@ namespace Dynamics365CustomizingDownloader
                 {
                     crmServiceClient.Dispose();
                 }
-                MessageBox.Show($"An error occured in the Backgroud Thread : {ex.Message}", "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+
                 Log.Error(ex.Message, ex);
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex, "An error occured in the Backgroud Thread");
+                errorReport.Show();
             }
         }
 
@@ -442,6 +444,28 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void Lbx_Repos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            this.Btn_Reload.IsEnabled = false;
+            this.LoadSolutions();
+            this.Btn_Reload.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Reloads the CRM Solutions
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_Reload_Click(object sender, RoutedEventArgs e)
+        {
+            this.Btn_Reload.IsEnabled = false;
+            this.LoadSolutions();
+            this.Btn_Reload.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Loads the CRM Solution for the selected Repo into the grid
+        /// </summary>
+        private void LoadSolutions()
+        {
             try
             {
                 if (Lbx_Repos.SelectedItem != null)
@@ -464,10 +488,17 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
-                MessageBox.Show("An error occured: " + ex.Message);
+                Log.Error(ex.Message, ex);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
+
                 loadingPanel.IsLoading = false;
                 MainWindow.Log.Error(ex.Message, ex);
                 Lbx_Repos.IsEnabled = true;
+                Btn_Reload.IsEnabled = true;
             }
         }
     }

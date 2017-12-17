@@ -10,6 +10,9 @@
 
 namespace Dynamics365CustomizingDownloader.CIClient
 {
+    /// <summary>
+    /// Class to hold the Parameters needed in <see cref="Program"/>
+    /// </summary>
     public class ConfigurationParameter
     {
         /// <summary>

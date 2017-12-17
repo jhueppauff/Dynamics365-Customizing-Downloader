@@ -147,6 +147,11 @@ namespace Dynamics365CustomizingDownloader
             Btn_SaveConnection.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Will delete the connection and the local repository if selected in the dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_DeleteRepository_Click(object sender, RoutedEventArgs e)
         {
             if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
@@ -172,7 +177,9 @@ namespace Dynamics365CustomizingDownloader
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        Log.Error(ex.Message, ex);
+                        Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                        errorReport.Show();
                     }
                 }
             }

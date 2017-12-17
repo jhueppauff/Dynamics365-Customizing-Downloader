@@ -37,6 +37,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// DecryptStringAES().  The sharedSecret parameters must match.
         /// </summary>
         /// <param name="plainText">The text to encrypt.</param>
+        /// <param name="encryptionKey">The encryption key to encrypt the Data</param>
         /// <returns>Returns a encrypted string</returns>
         public static string EncryptStringAES(string plainText, string encryptionKey)
         {
@@ -63,7 +64,6 @@ namespace Dynamics365CustomizingDownloader.Core.Data
                 // generate the key from the shared secret and the salt
                 using (Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(encryptionKey, salt))
                 {
-
                     // Create a RijndaelManaged object
                     aesAlg = new RijndaelManaged();
                     aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
@@ -110,6 +110,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// EncryptStringAES(), using an identical sharedSecret.
         /// </summary>
         /// <param name="cipherText">The text to decrypt.</param>
+        /// <param name="encryptionKey">The encryption key to decrypt the data</param>
         /// <returns>Returns a decrypted string</returns>
         public static string DecryptStringAES(string cipherText, string encryptionKey)
         {
@@ -138,7 +139,6 @@ namespace Dynamics365CustomizingDownloader.Core.Data
                 // generate the key from the shared secret and the salt
                 using (Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(encryptionKey, salt))
                 {
-
                     // Create the streams used for decryption.                
                     byte[] bytes = Convert.FromBase64String(cipherText);
                     using (MemoryStream msDecrypt = new MemoryStream(bytes))

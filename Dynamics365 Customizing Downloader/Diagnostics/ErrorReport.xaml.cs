@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="UnitTest.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// <copyright file="ErrorReport.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -8,28 +8,45 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace UnitTest
+namespace Dynamics365CustomizingDownloader.Diagnostics
 {
     using System;
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System.Windows;
 
     /// <summary>
-    /// Unit Test
+    /// Interaction logic for ErrorReport
     /// </summary>
-    [TestClass]
-    public class UnitTest
+    public partial class ErrorReport : Window
     {
         /// <summary>
-        /// Tests the Cryptography Module if the Data could be Encrypted and Decrypted without losing any Data
+        /// Initializes a new instance of the <see cref="ErrorReport"/> class.
         /// </summary>
-        [TestMethod]
-        public void TestCryptographyModule()
+        /// <param name="ex">The <see cref="System.Exception"/> for the Error Report</param>
+        /// <param name="customMessage">If this is set, the Custom Message will be displayed before the <see cref="Exception.Message"/> in the Error Dialog.</param>
+        public ErrorReport(Exception ex, string customMessage = "")
         {
-            string encryptedString = Dynamics365CustomizingDownloader.Core.Data.Cryptography.EncryptStringAES("Something", "secret");
-            if (Dynamics365CustomizingDownloader.Core.Data.Cryptography.DecryptStringAES(encryptedString, "secret") != "Something")
+            this.InitializeComponent();
+
+            if (customMessage != string.Empty)
             {
-                throw new Exception("String does not match");
+                this.Tbx_ErrorMessage.Text = $"{customMessage} : {ex.Message}";
             }
+            else
+            {
+                this.Tbx_ErrorMessage.Text = ex.Message;
+            }
+            
+            this.Tbx_StackTrace.Text = ex.StackTrace;
+        }
+
+        /// <summary>
+        /// Button Click Close Window
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_close_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

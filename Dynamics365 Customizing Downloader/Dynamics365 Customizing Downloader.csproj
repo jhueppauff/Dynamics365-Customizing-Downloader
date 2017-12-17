@@ -157,6 +157,9 @@
     <Compile Include="Controls\LoadingPanel.xaml.cs">
       <DependentUpon>LoadingPanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Diagnostics\ErrorReport.xaml.cs">
+      <DependentUpon>ErrorReport.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DownloadMultiple.xaml.cs">
       <DependentUpon>DownloadMultiple.xaml</DependentUpon>
     </Compile>
@@ -181,6 +184,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\LoadingPanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Diagnostics\ErrorReport.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

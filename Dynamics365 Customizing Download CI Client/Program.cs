@@ -16,7 +16,10 @@ namespace Dynamics365CustomizingDownloader.CIClient
     using System.Linq;
     using Microsoft.Xrm.Tooling.Connector;
 
-    class Program : IDisposable
+    /// <summary>
+    /// Command Line Main Class
+    /// </summary>
+    public class Program : IDisposable
     {
         /// <summary>
         /// Runtime Parameters
@@ -28,7 +31,11 @@ namespace Dynamics365CustomizingDownloader.CIClient
         /// </summary>
         private bool disposedValue = false;
 
-        static void Main(string[] args)
+        /// <summary>
+        /// Main logic for the command line
+        /// </summary>
+        /// <param name="args">Command Line Args</param>
+        public static void Main(string[] args)
         {
             GetParameter(args);
             Core.Xrm.ToolingConnector toolingConnector = null;
@@ -75,6 +82,37 @@ namespace Dynamics365CustomizingDownloader.CIClient
             }
         }
 
+        /// <summary>
+        ///  This code added to correctly implement the disposable pattern.
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose logic
+        /// </summary>
+        /// <param name="disposing">if dispose is already triggered</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    parameters = null;
+                }
+
+                this.disposedValue = true;
+            }
+        }
+
+        /// <summary>
+        /// Extracts the Parameter from the command line
+        /// </summary>
+        /// <param name="args">Command Line Parameters</param>
         private static void GetParameter(string[] args)
         {
             try
@@ -94,7 +132,6 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     {
                         parameter = new ConfigurationParameter();
 
-                        #region Extract Parameters
                         switch (arg.ToLowerInvariant())
                         {
                             case "--connection-string":
@@ -109,6 +146,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 {
                                     parameter.Value = args[counter + 1];
                                 }
+
                                 break;
                             case "--solution-name":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
@@ -122,6 +160,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 {
                                     parameter.Value = args[counter + 1];
                                 }
+
                                 break;
                             case "--local-path":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
@@ -135,6 +174,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 {
                                     parameter.Value = args[counter + 1];
                                 }
+
                                 break;
                             case "--action":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
@@ -146,19 +186,20 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 {
                                     parameter.Value = args[counter + 1];
                                 }
+
                                 break;
                             default:
                                 Console.ForegroundColor = ConsoleColor.Yellow;
                                 Console.WriteLine("Ignoring :" + arg);
                                 break;
                         }
-                        #endregion
 
-                        if (parameter.Value != null && parameter.Value != "")
+                        if (parameter.Value != null && parameter.Value != string.Empty)
                         {
                             parameters.Add(parameter);
                         }
                     }
+
                     counter++;
                 }
             }
@@ -167,30 +208,5 @@ namespace Dynamics365CustomizingDownloader.CIClient
                 throw;
             }
         }
-
-
-        #region IDisposable Support
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    parameters = null;
-                }
-
-                disposedValue = true;
-            }
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }
