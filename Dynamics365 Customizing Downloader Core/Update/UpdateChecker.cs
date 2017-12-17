@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Update
+namespace Dynamics365CustomizingDownloader.Core.Update
 {
     using System;
     using System.Diagnostics;
@@ -30,7 +30,7 @@ namespace Dynamics365CustomizingDownloader.Update
         /// Gets the Release Information from GitHub API
         /// </summary>
         /// <returns>Returns a single Release <see cref="Update.Release"/></returns>
-        public Release GetReleaseInfo()
+        public Release GetReleaseInfo(string apiURL)
         {
             try
             {
@@ -39,7 +39,7 @@ namespace Dynamics365CustomizingDownloader.Update
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                string json = this.PerformAPICall($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
+                string json = this.PerformAPICall(apiURL);
                 var release = JsonConvert.DeserializeObject<Release>(json, serializerSettings);
 
                 return release;
@@ -55,7 +55,7 @@ namespace Dynamics365CustomizingDownloader.Update
         /// Checks if an Update is available
         /// </summary>
         /// <returns>Returns if an update is available</returns>
-        public bool IsUpdateAvailable()
+        public bool IsUpdateAvailable(string apiURL)
         {
             try
             {
@@ -64,7 +64,7 @@ namespace Dynamics365CustomizingDownloader.Update
                     ContractResolver = new CamelCasePropertyNamesContractResolver()
                 };
 
-                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"), serializerSettings);
+                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(apiURL), serializerSettings);
 
                 // Get Verison
                 System.Reflection.Assembly assembly = System.Reflection.Assembly.GetExecutingAssembly();
@@ -96,11 +96,11 @@ namespace Dynamics365CustomizingDownloader.Update
         /// Gets the Update URL for the Release
         /// </summary>
         /// <returns>Returns the Update URL<see cref="Uri"/> of the latest Update</returns>
-        public Uri GetUpdateURL()
+        public Uri GetUpdateURL(string apiURL)
         {
             try
             {
-                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(Properties.Settings.Default.GitHubAPIURL + "/releases/latest"));
+                var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(apiURL));
 
                 return new Uri(release.Assets[0].Browser_download_url);
             }

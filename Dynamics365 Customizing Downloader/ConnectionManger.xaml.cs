@@ -18,7 +18,7 @@ namespace Dynamics365CustomizingDownloader
     /// <summary>
     /// Interaction logic for ConnectionManger
     /// </summary>
-    public partial class ConnectionManger : Window
+    public partial class ConnectionManger : Window, IDisposable
     {
         /// <summary>
         /// Log4Net Logger
@@ -26,14 +26,14 @@ namespace Dynamics365CustomizingDownloader
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// CRM Service Client
-        /// </summary>
-        private Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient;
-
-        /// <summary>
         /// CRM Connection
         /// </summary>
-        private Xrm.CrmConnection crmConnection;
+        private Core.Xrm.CrmConnection crmConnection;
+
+        /// <summary>
+        /// To detect redundant calls
+        /// </summary>
+        private bool disposedValue = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionManger"/> class.
@@ -41,6 +41,16 @@ namespace Dynamics365CustomizingDownloader
         public ConnectionManger()
         {
             this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// implement the disposable pattern
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -52,21 +62,25 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-                this.crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
-
-                if (this.crmServiceClient != null)
+                using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    this.crmConnection = new Xrm.CrmConnection
+                    using (Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text))
                     {
-                        ConnectionID = Guid.NewGuid(),
-                        ConnectionString = this.tbx_connectionString.Text,
-                        Name = this.crmServiceClient.ConnectedOrgFriendlyName
-                    };
 
-                    tbx_connectionName.IsReadOnly = false;
-                    tbx_connectionName.Text = this.crmConnection.Name;
-                    btn_save.IsEnabled = true;
+                        if (crmServiceClient != null)
+                        {
+                            this.crmConnection = new Core.Xrm.CrmConnection
+                            {
+                                ConnectionID = Guid.NewGuid(),
+                                ConnectionString = this.tbx_connectionString.Text,
+                                Name = crmServiceClient.ConnectedOrgFriendlyName
+                            };
+
+                            tbx_connectionName.IsReadOnly = false;
+                            tbx_connectionName.Text = this.crmConnection.Name;
+                            btn_save.IsEnabled = true;
+                        }
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -88,10 +102,10 @@ namespace Dynamics365CustomizingDownloader
                 try
                 {
                     this.crmConnection.Name = this.tbx_connectionName.Text;
-                    List<Xrm.CrmConnection> crmConnections = Data.StorageExtensions.Load();
+                    List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
 
                     bool connectionExists = false;
-                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                    foreach (Core.Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
                         if (crmTempConnection.Name == this.tbx_connectionName.Text)
                         {
@@ -102,7 +116,7 @@ namespace Dynamics365CustomizingDownloader
 
                     if (!connectionExists)
                     {
-                        Data.StorageExtensions.Save(this.crmConnection);
+                        Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
                         MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
@@ -110,7 +124,7 @@ namespace Dynamics365CustomizingDownloader
                 catch (System.IO.FileNotFoundException)
                 {
                     // Ignore Error, in a fresh installation there is no config File
-                    Data.StorageExtensions.Save(this.crmConnection);
+                    Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
                     MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
@@ -121,5 +135,25 @@ namespace Dynamics365CustomizingDownloader
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
+
+        #region IDisposable Support
+
+        /// <summary>
+        /// implement the disposable pattern
+        /// </summary>
+        /// <param name="disposing"></param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+                    // Nothing to dispose
+                }
+
+                disposedValue = true;
+            }
+        }
+        #endregion
     }
 }

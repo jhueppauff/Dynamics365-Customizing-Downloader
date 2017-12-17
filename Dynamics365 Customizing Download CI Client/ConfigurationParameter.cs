@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Uploader.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// <copyright file="ConfigurationParameter.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -8,12 +8,18 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Update
+namespace Dynamics365CustomizingDownloader.CIClient
 {
-    /// <summary>
-    /// Uploader JSON Class for GitHub API
-    /// </summary>
-    public class Uploader : Person
+    public class ConfigurationParameter
     {
+        /// <summary>
+        /// Gets or sets the Parameter Name
+        /// </summary>
+        public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the value of the parameter
+        /// </summary>
+        public string Value { get; set; }
     }
 }

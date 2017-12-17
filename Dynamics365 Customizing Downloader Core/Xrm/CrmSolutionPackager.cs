@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Xrm
+namespace Dynamics365CustomizingDownloader.Core.Xrm
 {
     using System.Diagnostics;
     using System.IO;
@@ -56,7 +56,7 @@ namespace Dynamics365CustomizingDownloader.Xrm
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
                 {
-                    DownloadMultiple.UpdateUI(exeProcess.StandardOutput.ReadToEnd(), false);
+                    log = exeProcess.StandardOutput.ReadToEnd();
                     exeProcess.WaitForExit();
                     return log;
                 }

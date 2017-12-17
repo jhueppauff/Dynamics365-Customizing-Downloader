@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Repository
+namespace Dynamics365CustomizingDownloader.Core.Repository
 {
     using System.Collections.Generic;
     using System.IO;

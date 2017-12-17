@@ -8,7 +8,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Data
+namespace Dynamics365CustomizingDownloader.Core.Data
 {
     using System;
     using System.Collections.Generic;
@@ -47,7 +47,7 @@ namespace Dynamics365CustomizingDownloader.Data
         /// Saves the <see cref="Xrm.CrmConnection"/> to the local Configuration
         /// </summary>
         /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
-        public static void Save(Xrm.CrmConnection crmConnection)
+        public static void Save(Xrm.CrmConnection crmConnection, string encryptionKey)
         {
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
@@ -57,7 +57,7 @@ namespace Dynamics365CustomizingDownloader.Data
                 File.Create(StoragePath).Close();
 
                 // Encrypt Connection String
-                crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
+                crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
                 crmConnection.LocalPath = string.Empty;
                 crmConnections.Add(crmConnection);
                 string json = JsonConvert.SerializeObject(crmConnections);
@@ -74,7 +74,7 @@ namespace Dynamics365CustomizingDownloader.Data
                     crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(localJSON);
 
                     // Encrypt Connection String
-                    crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
+                    crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
                     crmConnection.LocalPath = string.Empty;
                     crmConnections.Add(crmConnection);
 
@@ -92,7 +92,7 @@ namespace Dynamics365CustomizingDownloader.Data
         /// Loads the current configuration
         /// </summary>
         /// <returns>Returns <see cref="List{Xrm.CrmConnection}"/></returns>
-        public static List<Xrm.CrmConnection> Load()
+        public static List<Xrm.CrmConnection> Load(string encryptionKey)
         {
             List<Xrm.CrmConnection> crmConnections;
 
@@ -107,7 +107,7 @@ namespace Dynamics365CustomizingDownloader.Data
 
                     foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                        crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, encryptionKey);
                     }
 
                     // Close File Stream
@@ -127,12 +127,12 @@ namespace Dynamics365CustomizingDownloader.Data
         /// Updates an existing CRM Connection
         /// </summary>
         /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
-        public static void Update(Xrm.CrmConnection crmConnection)
+        public static void Update(Xrm.CrmConnection crmConnection, string encryptionKey)
         {
             string json = File.ReadAllText(StoragePath);
             List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString);
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
             crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.LocalPath;
             crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).Name  = crmConnection.Name;
 
@@ -205,6 +205,46 @@ namespace Dynamics365CustomizingDownloader.Data
             count = crmConnections.Count(x => x.Name == connectionName);
 
             return count;
+        }
+
+        /// <summary>
+        /// Deletes an Item from the Configuration
+        /// </summary>
+        /// <param name="connectionName">Name of the Connection</param>
+        public static void Delete(string connectionName, bool wipeData = false)
+        {
+            if (File.Exists(StoragePath))
+            {
+                string json = File.ReadAllText(StoragePath);
+                List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+
+                try
+                {
+                    Xrm.CrmConnection crmConnection = crmConnections.Where(x => x.Name == connectionName).SingleOrDefault();
+                    crmConnections.Remove(crmConnection);
+
+                    if (wipeData)
+                    {
+                        Directory.Delete(crmConnection.LocalPath, true);
+                    }
+
+                    if (crmConnections.Count == 0)
+                    {
+                        // Delete File if there is no Connection left
+                        File.Delete(StoragePath);
+                    }
+                    else
+                    {
+                        string jsonNew = JsonConvert.SerializeObject(crmConnections);
+                        File.WriteAllText(StoragePath, jsonNew);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message, ex);
+                    throw;
+                }
+            }
         }
     }
 }

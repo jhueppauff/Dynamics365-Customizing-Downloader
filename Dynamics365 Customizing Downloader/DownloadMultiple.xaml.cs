@@ -65,7 +65,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         /// <param name="crmConnection"><see cref="Xrm.CrmConnection"/> for the XRM Connector</param>
         /// <param name="crmSolutions"><see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download</param>
-        public DownloadMultiple(Xrm.CrmConnection crmConnection, List<Xrm.CrmSolution> crmSolutions)
+        public DownloadMultiple(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions)
         {
             this.InitializeComponent();
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
@@ -76,7 +76,7 @@ namespace Dynamics365CustomizingDownloader
             DownloadMultiple.LogToUI($"CRM Connection: {this.CRMConnection.Name}", true);
             this.CRMSolutions = crmSolutions;
 
-            foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
+            foreach (Core.Xrm.CrmSolution crmSolution in this.CRMSolutions)
             {
                 DownloadMultiple.LogToUI($"Added Solution: { crmSolution.UniqueName} to Download List", true);
             }
@@ -100,12 +100,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets or sets a <see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download
         /// </summary>
-        public List<Xrm.CrmSolution> CRMSolutions { get; set; }
+        public List<Core.Xrm.CrmSolution> CRMSolutions { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Xrm.CrmConnection"/> for the XRM Connector
         /// </summary>
-        public Xrm.CrmConnection CRMConnection { get; set; }
+        public Core.Xrm.CrmConnection CRMConnection { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
@@ -248,9 +248,9 @@ namespace Dynamics365CustomizingDownloader
                 this.loadingPanel.IsLoading = true;
                 this.selectedPath = tbx_download.Text;
 
-                Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+                Core.Xrm.CrmConnection crmConnection = new Core.Xrm.CrmConnection
                 {
-                    ConnectionID = Data.StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
+                    ConnectionID = Core.Data.StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
                     ConnectionString = this.CRMConnection.ConnectionString,
                     LocalPath = this.selectedPath,
                     Name = this.CRMConnection.Name
@@ -258,7 +258,7 @@ namespace Dynamics365CustomizingDownloader
                 this.CRMConnection = crmConnection;
 
                 // Update Connection
-                Data.StorageExtensions.Update(crmConnection);
+                Core.Data.StorageExtensions.Update(crmConnection, MainWindow.EncryptionKey);
 
                 // Background Worker
                 this.worker.DoWork += this.Worker_DoWork;
@@ -279,6 +279,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = null;
             try
             {
                 // Create Folder if it does not exists
@@ -287,11 +288,11 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
-                foreach (Xrm.CrmSolution solution in this.CRMSolutions)
+                foreach (Core.Xrm.CrmSolution solution in this.CRMSolutions)
                 {
                     if (!this.worker.CancellationPending)
                     {
-                        using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                        using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                         {
                             // Delete Solution File if it exists
                             if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
@@ -299,9 +300,12 @@ namespace Dynamics365CustomizingDownloader
                                 File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             }
 
-                            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
+                            crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
 
-                            Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
+                            toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
+
+
+                            Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
 
                             if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
                             {
@@ -313,6 +317,7 @@ namespace Dynamics365CustomizingDownloader
 
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                            
                         }
                     }
                     else
@@ -320,9 +325,15 @@ namespace Dynamics365CustomizingDownloader
                         e.Cancel = true;
                     }
                 }
+                crmServiceClient.Dispose();
             }
             catch (Exception ex)
             {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
+                
                 UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
             }

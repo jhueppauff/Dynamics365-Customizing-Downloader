@@ -13,7 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Diagnostics;
     using System.Windows;
-    using Update;
+    using Core.Update;
 
     /// <summary>
     /// Interaction logic for PatchNotes
@@ -26,7 +26,7 @@ namespace Dynamics365CustomizingDownloader
         public PatchNotes()
         {
             UpdateChecker updateChecker = new UpdateChecker();
-            Release release = updateChecker.GetReleaseInfo();
+            Release release = updateChecker.GetReleaseInfo($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
 
             this.InitializeComponent();
             this.Tbx_PatchNotes.Text = release.Body;
@@ -52,10 +52,14 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Download_Click(object sender, RoutedEventArgs e)
         {
-            Update.UpdateChecker updateChecker = new Update.UpdateChecker();
-            Uri uri = updateChecker.GetUpdateURL();
+            Core.Update.UpdateChecker updateChecker = new Core.Update.UpdateChecker();
+            Uri uri = updateChecker.GetUpdateURL($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest");
 
-            Process.Start(uri.ToString());
+            // Use using to dispose object
+            using (var process = Process.Start(uri.ToString()))
+            {
+
+            } 
         }
     }
 }

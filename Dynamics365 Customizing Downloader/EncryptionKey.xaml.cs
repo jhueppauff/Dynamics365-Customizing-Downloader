@@ -44,7 +44,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
-                if (!File.Exists(Data.StorageExtensions.StoragePath))
+                if (!File.Exists(Core.Data.StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
                     this.Close();
@@ -85,19 +85,19 @@ namespace Dynamics365CustomizingDownloader
             MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
 
             // Connections are already created, need to check Encryption Key
-            List<Xrm.CrmConnection> crmConnections;
+            List<Core.Xrm.CrmConnection> crmConnections;
 
-            using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
+            using (StreamReader streamReader = new StreamReader(Core.Data.StorageExtensions.StoragePath))
             {
                 string json = streamReader.ReadToEnd();
 
                 // Converts Json to List
-                crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+                crmConnections = JsonConvert.DeserializeObject<List<Core.Xrm.CrmConnection>>(json);
                 try
                 {
-                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                    foreach (Core.Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
-                        crmTempConnection.ConnectionString = Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
+                        crmTempConnection.ConnectionString = Core.Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, MainWindow.EncryptionKey);
                     }
 
                     streamReader.Close();

@@ -27,12 +27,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// List of all CRM Connections <see cref="List{CRM Connections}"/>
         /// </summary>
-        private List<Xrm.CrmConnection> crmConnections;
+        private List<Core.Xrm.CrmConnection> crmConnections;
 
         /// <summary>
         /// CRM Connection
         /// </summary>
-        private Xrm.CrmConnection crmConnection;
+        private Core.Xrm.CrmConnection crmConnection;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionOverview"/> class.
@@ -48,16 +48,16 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private void LoadCRMConnections()
         {
-            this.crmConnections = Data.StorageExtensions.Load();
+            this.crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
             this.Cbx_CRMConnections.Items.Clear();
             this.Tbx_ConnectionName.Text = string.Empty;
             this.Tbx_ConnectionString.Text = string.Empty;
 
-            foreach (Xrm.CrmConnection connection in this.crmConnections)
+            foreach (Core.Xrm.CrmConnection connection in this.crmConnections)
             {
                 if (connection.ConnectionID == Guid.Empty)
                 {
-                    connection.ConnectionID = Data.StorageExtensions.UpdateConnectionWithID(connection.Name);
+                    connection.ConnectionID = Core.Data.StorageExtensions.UpdateConnectionWithID(connection.Name);
                 }
 
                 this.Cbx_CRMConnections.Items.Add(connection.Name);
@@ -92,11 +92,12 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    toolingConnector.GetCrmServiceClient(Tbx_ConnectionString.Text);
-
-                    Btn_SaveConnection.IsEnabled = true;
+                    if (toolingConnector.TestCRMConnection(Tbx_ConnectionString.Text))
+                    {
+                        Btn_SaveConnection.IsEnabled = true;
+                    }
                 }
             }
             catch (System.Exception ex)
@@ -115,12 +116,12 @@ namespace Dynamics365CustomizingDownloader
         {
             if (this.Tbx_ConnectionString.Text != string.Empty && this.Tbx_ConnectionName.Text != string.Empty)
             {
-                if (Data.StorageExtensions.GetCountOfConnectionNamesByName(this.Tbx_ConnectionName.Text) <= 1)
+                if (Core.Data.StorageExtensions.GetCountOfConnectionNamesByName(this.Tbx_ConnectionName.Text) <= 1)
                 {
                     this.crmConnection.ConnectionString = this.Tbx_ConnectionString.Text;
                     this.crmConnection.Name = this.Tbx_ConnectionName.Text;
 
-                    Data.StorageExtensions.Update(this.crmConnection);
+                    Core.Data.StorageExtensions.Update(this.crmConnection, MainWindow.EncryptionKey);
 
                     MessageBox.Show("Updated CRM Connection successfully", "Updated CRM Connection", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.LoadCRMConnections();
@@ -144,6 +145,37 @@ namespace Dynamics365CustomizingDownloader
         private void Tbx_ConnectionString_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
         {
             Btn_SaveConnection.IsEnabled = false;
+        }
+
+        private void Btn_DeleteRepository_Click(object sender, RoutedEventArgs e)
+        {
+            if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
+            {
+                if (MessageBox.Show("Do you also want to delete the local Folder? All Data within this Folder will be deleted", "Do you want to wipe the data?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                {
+                    try
+                    {
+                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text, true);
+                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
+                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
+            }
         }
     }
 }
