@@ -23,27 +23,56 @@ namespace Dynamics365CustomizingDownloader.CIClient
         /// </summary>
         private static List<ConfigurationParameter> parameters = new List<ConfigurationParameter>();
 
+        /// <summary>
+        /// To detect redundant dispose calls
+        /// </summary>
+        private bool disposedValue = false;
+
         static void Main(string[] args)
         {
             GetParameter(args);
-
-            Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
-            using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.Where(x => x.Name == "connection-string").SingleOrDefault().Value))
+            Core.Xrm.ToolingConnector toolingConnector = null;
+            try
             {
-                if (client.IsReady)
+                toolingConnector = new Core.Xrm.ToolingConnector();
+                using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.Where(x => x.Name == "connection-string").SingleOrDefault().Value))
                 {
-                    string solutionName = parameters.Where(x => x.Name == "solution-name").SingleOrDefault().Value;
-                    string localPath = parameters.Where(x => x.Name == "local-path").SingleOrDefault().Value;
+                    if (client.IsReady)
+                    {
+                        string solutionName = parameters.Where(x => x.Name == "solution-name").SingleOrDefault().Value;
+                        string localPath = parameters.Where(x => x.Name == "local-path").SingleOrDefault().Value;
 
-                    toolingConnector.DownloadSolution(client, solutionName, localPath);
-                    Core.Xrm.CrmSolutionPackager packager = new Core.Xrm.CrmSolutionPackager();
-                    string log = packager.ExtractCustomizing(Path.Combine(localPath, solutionName + ".zip").ToString(), localPath);
+                        toolingConnector.DownloadSolution(client, solutionName, localPath);
+                        Console.WriteLine("Download completed: " + Path.Combine(localPath, solutionName + ".zip").ToString());
 
-                    Console.Write(log);
+                        if (Convert.ToBoolean(parameters.Where(x => x.Name == "action").SingleOrDefault().Value))
+                        {
+                            // Extract Solution
+                            Core.Xrm.CrmSolutionPackager packager = new Core.Xrm.CrmSolutionPackager();
+                            string log = packager.ExtractCustomizing(Path.Combine(localPath, solutionName + ".zip").ToString(), localPath);
+
+                            Console.Write(log);
+                        }
+                    }
+                }
+
+                toolingConnector.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(ex.Message);
+                Console.Write(ex.StackTrace);
+                Console.ResetColor();
+                Console.ReadLine();
+            }
+            finally
+            {
+                if (toolingConnector != null)
+                {
+                    ((IDisposable)toolingConnector).Dispose();
                 }
             }
-
-            toolingConnector.Dispose();
         }
 
         private static void GetParameter(string[] args)
@@ -52,7 +81,9 @@ namespace Dynamics365CustomizingDownloader.CIClient
             {
                 if (args.Length == 0)
                 {
-                    Console.WriteLine("Missing Parameter");
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    Console.WriteLine("Missing Parameters");
+                    Console.ResetColor();
                 }
 
                 int counter = 0;
@@ -63,38 +94,82 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     {
                         parameter = new ConfigurationParameter();
 
+                        #region Extract Parameters
                         switch (arg.ToLowerInvariant())
                         {
                             case "--connection-string":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                parameter.Value = args[counter + 1];
+                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Missing Parameter Value : " + arg);
+                                    Console.ResetColor();
+                                }
+                                else
+                                {
+                                    parameter.Value = args[counter + 1];
+                                }
                                 break;
                             case "--solution-name":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                parameter.Value = args[counter + 1];
+                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Missing Parameter Value : " + arg);
+                                    Console.ResetColor();
+                                }
+                                else
+                                {
+                                    parameter.Value = args[counter + 1];
+                                }
                                 break;
                             case "--local-path":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                parameter.Value = args[counter + 1];
+                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
+                                {
+                                    Console.ForegroundColor = ConsoleColor.Red;
+                                    Console.WriteLine("Missing Parameter Value : " + arg);
+                                    Console.ResetColor();
+                                }
+                                else
+                                {
+                                    parameter.Value = args[counter + 1];
+                                }
+                                break;
+                            case "--action":
+                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
+                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
+                                {
+                                    parameter.Value = "false";
+                                }
+                                else
+                                {
+                                    parameter.Value = args[counter + 1];
+                                }
                                 break;
                             default:
-                                Console.WriteLine("Unregonized parameter :" + arg);
+                                Console.ForegroundColor = ConsoleColor.Yellow;
+                                Console.WriteLine("Ignoring :" + arg);
                                 break;
                         }
-                        parameters.Add(parameter);
+                        #endregion
+
+                        if (parameter.Value != null && parameter.Value != "")
+                        {
+                            parameters.Add(parameter);
+                        }
                     }
                     counter++;
                 }
             }
             catch (System.Exception)
             {
-
                 throw;
             }
         }
 
+
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -105,26 +180,16 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     parameters = null;
                 }
 
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
-
                 disposedValue = true;
             }
         }
-
-        // TODO: override a finalizer only if Dispose(bool disposing) above has code to free unmanaged resources.
-        // ~Program() {
-        //   // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-        //   Dispose(false);
-        // }
 
         // This code added to correctly implement the disposable pattern.
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             Dispose(true);
-            // TODO: uncomment the following line if the finalizer is overridden above.
-            // GC.SuppressFinalize(this);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }
