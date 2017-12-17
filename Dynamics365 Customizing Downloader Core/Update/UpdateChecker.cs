@@ -29,6 +29,7 @@ namespace Dynamics365CustomizingDownloader.Core.Update
         /// <summary>
         /// Gets the Release Information from GitHub API
         /// </summary>
+        /// <param name="apiURL">The GitHub API Url from config</param>
         /// <returns>Returns a single Release <see cref="Update.Release"/></returns>
         public Release GetReleaseInfo(string apiURL)
         {
@@ -54,6 +55,7 @@ namespace Dynamics365CustomizingDownloader.Core.Update
         /// <summary>
         /// Checks if an Update is available
         /// </summary>
+        /// <param name="apiURL">GitHub API Url from config</param>
         /// <returns>Returns if an update is available</returns>
         public bool IsUpdateAvailable(string apiURL)
         {
@@ -95,6 +97,7 @@ namespace Dynamics365CustomizingDownloader.Core.Update
         /// <summary>
         /// Gets the Update URL for the Release
         /// </summary>
+        /// <param name="apiURL">GitHub API url form config</param>
         /// <returns>Returns the Update URL<see cref="Uri"/> of the latest Update</returns>
         public Uri GetUpdateURL(string apiURL)
         {

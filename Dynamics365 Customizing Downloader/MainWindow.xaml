@@ -62,6 +62,7 @@
             <ListBox x:Name="Lbx_Repos" ItemsSource="{Binding}" ItemTemplate="{StaticResource myTaskTemplate}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,-5,5,0" Width="267" SelectionChanged="Lbx_Repos_SelectionChanged" />
         </DockPanel>
         <Button x:Name="Btn_OpenCreateNewConnection" Content="Create new Repository" HorizontalAlignment="Left" Margin="15,66,0,0" VerticalAlignment="Top" Width="149" Height="22" Click="Btn_OpenCreateNewConnection_Click"/>
+        <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="846,66,0,0" VerticalAlignment="Top" Width="109" Height="22" Click="Btn_Reload_Click"/>
     </Grid>
 </Window>
 

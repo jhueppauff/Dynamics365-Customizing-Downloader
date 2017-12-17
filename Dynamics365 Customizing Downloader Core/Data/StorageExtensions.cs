@@ -47,6 +47,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// Saves the <see cref="Xrm.CrmConnection"/> to the local Configuration
         /// </summary>
         /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
+        /// <param name="encryptionKey">The Encryption key used in <see cref="Core.Data.Cryptography"/></param>
         public static void Save(Xrm.CrmConnection crmConnection, string encryptionKey)
         {
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
@@ -91,6 +92,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <summary>
         /// Loads the current configuration
         /// </summary>
+        /// <param name="encryptionKey">The Encryption key used in <see cref="Core.Data.Cryptography"/></param>
         /// <returns>Returns <see cref="List{Xrm.CrmConnection}"/></returns>
         public static List<Xrm.CrmConnection> Load(string encryptionKey)
         {
@@ -127,6 +129,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// Updates an existing CRM Connection
         /// </summary>
         /// <param name="crmConnection">CRM Connection <see cref="Xrm.CrmConnection"/></param>
+        /// <param name="encryptionKey">The Encryption key used in <see cref="Core.Data.Cryptography"/></param>
         public static void Update(Xrm.CrmConnection crmConnection, string encryptionKey)
         {
             string json = File.ReadAllText(StoragePath);
@@ -211,6 +214,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// Deletes an Item from the Configuration
         /// </summary>
         /// <param name="connectionName">Name of the Connection</param>
+        /// <param name="wipeData">if this is set, all data within the local folder will be wiped out!</param>
         public static void Delete(string connectionName, bool wipeData = false)
         {
             if (File.Exists(StoragePath))

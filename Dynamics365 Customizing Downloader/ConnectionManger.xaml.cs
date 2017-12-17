@@ -49,8 +49,25 @@ namespace Dynamics365CustomizingDownloader
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// implement the disposable pattern
+        /// </summary>
+        /// <param name="disposing">If dispose is already triggered</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    // Nothing to dispose
+                }
+
+                this.disposedValue = true;
+            }
         }
 
         /// <summary>
@@ -66,7 +83,6 @@ namespace Dynamics365CustomizingDownloader
                 {
                     using (Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text))
                     {
-
                         if (crmServiceClient != null)
                         {
                             this.crmConnection = new Core.Xrm.CrmConnection
@@ -135,25 +151,5 @@ namespace Dynamics365CustomizingDownloader
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
-
-        #region IDisposable Support
-
-        /// <summary>
-        /// implement the disposable pattern
-        /// </summary>
-        /// <param name="disposing"></param>
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    // Nothing to dispose
-                }
-
-                disposedValue = true;
-            }
-        }
-        #endregion
     }
 }

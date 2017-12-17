@@ -304,7 +304,6 @@ namespace Dynamics365CustomizingDownloader
 
                             toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
 
-
                             Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
 
                             if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
@@ -317,7 +316,6 @@ namespace Dynamics365CustomizingDownloader
 
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
-                            
                         }
                     }
                     else
@@ -325,6 +323,7 @@ namespace Dynamics365CustomizingDownloader
                         e.Cancel = true;
                     }
                 }
+
                 crmServiceClient.Dispose();
             }
             catch (Exception ex)
