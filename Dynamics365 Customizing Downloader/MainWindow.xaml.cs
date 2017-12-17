@@ -197,19 +197,37 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
+            Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = null;
+
+            try
             {
-                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
-                Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
-
-                // Get Crm Solutions
-                this.crmSolutions.Clear();
-                this.crmSolutions = toolingConnector.GetCrmSolutions(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString));
-
-                foreach (Core.Xrm.CrmSolution solution in this.localSolutions)
+                using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+                    List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
+                    Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
+
+                    crmServiceClient = toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString);
+
+                    // Get Crm Solutions
+                    this.crmSolutions.Clear();
+                    this.crmSolutions = toolingConnector.GetCrmSolutions(crmServiceClient);
+
+                    foreach (Core.Xrm.CrmSolution solution in this.localSolutions)
+                    {
+                        this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+                    }
+
+                    crmServiceClient.Dispose();
                 }
+            }
+            catch (Exception ex)
+            {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
+                MessageBox.Show($"An error occured in the Backgroud Thread : {ex.Message}", "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                Log.Error(ex.Message, ex);
             }
         }
 

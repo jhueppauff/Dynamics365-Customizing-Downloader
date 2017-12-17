@@ -279,6 +279,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = null;
             try
             {
                 // Create Folder if it does not exists
@@ -299,7 +300,9 @@ namespace Dynamics365CustomizingDownloader
                                 File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             }
 
-                            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
+                            crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
+
+                            toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
 
 
                             Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
@@ -322,9 +325,15 @@ namespace Dynamics365CustomizingDownloader
                         e.Cancel = true;
                     }
                 }
+                crmServiceClient.Dispose();
             }
             catch (Exception ex)
             {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
+                
                 UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
             }
