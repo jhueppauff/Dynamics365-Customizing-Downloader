@@ -323,16 +323,9 @@ namespace Dynamics365CustomizingDownloader
                         e.Cancel = true;
                     }
                 }
-
-                crmServiceClient.Dispose();
             }
             catch (Exception ex)
-            {
-                if (crmServiceClient != null)
-                {
-                    crmServiceClient.Dispose();
-                }
-                
+            {                
                 UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
 
@@ -342,6 +335,13 @@ namespace Dynamics365CustomizingDownloader
                 {
                     Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
                     errorReport.Show();
+                }
+            }
+            finally
+            {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
                 }
             }
         }
