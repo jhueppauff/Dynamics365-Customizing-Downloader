@@ -29,12 +29,12 @@
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="294,19,0,0" VerticalAlignment="Top" Width="547" Click="Button_Click" Height="31" />
 
         <ctr:LoadingPanel x:Name="loadingPanel" IsLoading="{Binding PanelLoading}" Message="{Binding PanelMainMessage}" SubMessage="{Binding PanelSubMessage}" ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,0,0,0.333" Foreground="#FF494949" Height="68" VerticalAlignment="Bottom" />
-        <DataGrid x:Name="Dtg_Solutions" Margin="294,84,14,73.333" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+        <DataGrid x:Name="Dtg_Solutions" Margin="294,84,0,73" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header="" />
                 <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="200" />
-                <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="80"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding LocalVersion}" Header="Local Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>

@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -11,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ConnectionOverview" ResizeMode="CanMinimize"  Height="433.522" Width="309.375">
+        Title="ConnectionOverview" ResizeMode="CanMinimize"  Height="390.124" Width="309.375">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,18 +22,22 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <Grid Margin="0,0,0,-7">
-        <ComboBox x:Name="Cbx_CRMConnections" Margin="10,41,10.333,0" VerticalAlignment="Top" SelectionChanged="Cbx_CRMConnections_SelectionChanged"/>
-        <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="Tbx_ConnectionString" Height="79" Margin="10,98,11,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="Tbx_ConnectionString_TextChanged"/>
-        <TextBox x:Name="Tbx_ConnectionName"  Height="23" Margin="9,213,11,0" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,67,0,0" VerticalAlignment="Top"/>
-        <Label Content="Connection Name:" HorizontalAlignment="Left" Margin="10,182,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="Btn_SaveConnection" IsEnabled="False" Content="Save" HorizontalAlignment="Left" Margin="208,241,0,0" VerticalAlignment="Top" Width="75" Click="Btn_SaveConnection_Click"/>
-        <Button x:Name="Btn_TestConnection" Content="Test Connection" HorizontalAlignment="Left" Margin="10,241,0,0" VerticalAlignment="Top" Width="142" Click="Btn_TestConnection_Click"/>
-        <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Width="304" Height="120" VerticalAlignment="Bottom" Margin="0,0,-1,0">
-            <Label Content="Danger Zone!" Margin="0,-1,0,0"/>
-        </Border>
-        <Button x:Name="Btn_DeleteRepository" Content="Delete Repository" HorizontalAlignment="Left" Margin="10,0,0,30" Width="284" Height="34" VerticalAlignment="Bottom" Click="Btn_DeleteRepository_Click"/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <ComboBox x:Name="Cbx_CRMConnections" Margin="10,40.733,10,0" VerticalAlignment="Top" SelectionChanged="Cbx_CRMConnections_SelectionChanged" Grid.Row="1"/>
+        <Label Content="Connection:" HorizontalAlignment="Left" Margin="10,9.733,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <TextBox x:Name="Tbx_ConnectionString" Height="79" Margin="10,97.733,11,0" TextWrapping="Wrap" VerticalAlignment="Top" TextChanged="Tbx_ConnectionString_TextChanged" Grid.Row="1"/>
+        <TextBox x:Name="Tbx_ConnectionName"  Height="23" Margin="9,212.733,11,0" TextWrapping="Wrap" VerticalAlignment="Top" Grid.Row="1"/>
+        <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,66.733,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <Label Content="Connection Name:" HorizontalAlignment="Left" Margin="10,181.733,0,0" VerticalAlignment="Top" Grid.Row="1"/>
+        <Button x:Name="Btn_SaveConnection" IsEnabled="False" Content="Save" HorizontalAlignment="Left" Margin="208,240.733,0,0" VerticalAlignment="Top" Width="75" Click="Btn_SaveConnection_Click" Grid.Row="1"/>
+        <Button x:Name="Btn_TestConnection" Content="Test Connection" HorizontalAlignment="Left" Margin="10,240.733,0,0" VerticalAlignment="Top" Width="142" Click="Btn_TestConnection_Click" Grid.Row="1"/>
+        <materialDesign:Badged
+	        Badge="DANGER"
+	        BadgeColorZoneMode="Inverted" Margin="275, 315, 0, 0" Panel.ZIndex="2" VerticalAlignment="Bottom"/>
+        <Button x:Name="Btn_DeleteRepository" Content="Delete Repository" Panel.ZIndex="1"   HorizontalAlignment="Left" Margin="10,0,0,10" Width="283" Height="34" VerticalAlignment="Bottom" Click="Btn_DeleteRepository_Click" Grid.Row="1"/>
     </Grid>
 </Window>

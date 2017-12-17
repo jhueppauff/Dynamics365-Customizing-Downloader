@@ -70,6 +70,9 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CodeDisplayer, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\XamlDisplayerPackage.1.0.6\lib\net45\CodeDisplayer.dll</HintPath>
+    </Reference>
     <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
     </Reference>
@@ -174,6 +177,7 @@
     </Compile>
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
+    <Compile Include="Pages\MenuItem.cs" />
     <Compile Include="Pages\SolutionSelector.xaml.cs">
       <DependentUpon>SolutionSelector.xaml</DependentUpon>
     </Compile>

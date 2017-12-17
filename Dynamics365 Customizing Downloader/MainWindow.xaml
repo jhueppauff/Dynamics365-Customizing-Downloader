@@ -3,6 +3,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:codedisplayer="clr-namespace:CodeDisplayer;assembly=CodeDisplayer"
         x:Name="Win_MainWindow" 
         x:Class="Dynamics365CustomizingDownloader.MainWindow" 
         mc:Ignorable="d" Title="Dynamics Customizing Downloader" 
@@ -13,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Height="552.813"  Width="975.693" WindowStyle="SingleBorderWindow" >
+        Height="605.313"  Width="1163.193" WindowStyle="SingleBorderWindow" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -21,12 +22,28 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Shadows.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml" />
             </ResourceDictionary.MergedDictionaries>
+            <DataTemplate x:Key="MenuItems">
+                <Border Name="border" Padding="5" Margin="5">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition></RowDefinition>
+                            <RowDefinition></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=Name}" FontSize="18"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding Path=Description}"></TextBlock>
+                    </Grid>
+                </Border>
+            </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
     <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="212">
+                    <ListBox x:Name="Lbx_Menu" ItemsSource="{Binding}" ItemTemplate="{StaticResource MenuItems}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,67,5,0" Width="267" SelectionChanged="Lbx_Menu_SelectionChanged" />
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <DockPanel>
@@ -53,6 +70,11 @@
                         <RowDefinition Height="Auto" />
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
+                    <ScrollViewer Grid.Row="1" 
+                                  HorizontalScrollBarVisibility="Auto"
+                                  VerticalScrollBarVisibility="Auto" >
+                        <codedisplayer:XamlDisplayerHost Content="{Binding ElementName=Lbx_Menu, Path=SelectedItem.Content}" />
+                    </ScrollViewer>
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

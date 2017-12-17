@@ -60,9 +60,33 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
 
+            this.Lbx_Menu.ItemsSource = this.GetMenu();
             this.CheckForUpdate();
         }
 
+        private List<Pages.MenuItem> GetMenu ()
+        {
+            List<Pages.MenuItem> menuItems = new List<Pages.MenuItem>();
+            Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
+            solutionSelector.ReloadConnections();
+            Pages.MenuItem menuItem = new Pages.MenuItem
+            {
+                Name = "Customizing Downloader",
+                Description = "Downloads and Extracts CRM Solutions",
+                Content = solutionSelector
+            };
+
+            menuItems.Add(menuItem);
+
+            menuItem = new Pages.MenuItem()
+            {
+                Name = "Solution Downloader",
+                Description = "Downloads a Solution without extraction"
+            };
+
+            menuItems.Add(menuItem);
+            return menuItems;
+        }
 
 
         /// <summary>
@@ -187,6 +211,11 @@ namespace Dynamics365CustomizingDownloader
         {
             PatchNotes patchNotes = new PatchNotes();
             patchNotes.Show();
+        }
+
+        private void Lbx_Menu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

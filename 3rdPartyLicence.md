@@ -41,3 +41,8 @@ http://logging.apache.org/log4net/license.html
 #### RestSharp
 Apache License, Version 2.0
 https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
+
+#### Material Design XAML Toolkit
+The MIT License (MIT)
+https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/blob/master/LICENSE
+
