@@ -12,8 +12,8 @@ namespace Dynamics365CustomizingDownloader
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Windows;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// Interaction logic for ConnectionManger
@@ -41,6 +41,8 @@ namespace Dynamics365CustomizingDownloader
         public ConnectionManger()
         {
             this.InitializeComponent();
+            this.tbx_connectionName.Visibility = Visibility.Hidden;
+            this.Lbl_ConnectionName.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -81,9 +83,8 @@ namespace Dynamics365CustomizingDownloader
             {
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    using (Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text))
-                    {
-                        if (crmServiceClient != null)
+                    CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
+                        if (crmServiceClient != null && crmServiceClient.IsReady)
                         {
                             this.crmConnection = new Core.Xrm.CrmConnection
                             {
@@ -94,10 +95,16 @@ namespace Dynamics365CustomizingDownloader
 
                             tbx_connectionName.IsReadOnly = false;
                             tbx_connectionName.Text = this.crmConnection.Name;
+                            this.tbx_connectionName.Text = crmConnection.Name;
+                            this.Lbl_ConnectionName.Visibility = Visibility.Visible;
+                            this.tbx_connectionName.Visibility = Visibility.Visible;
                             btn_save.IsEnabled = true;
                         }
+                        else
+                        {
+                            MessageBox.Show("Unable to open CRM Connection :" + crmServiceClient.LastCrmError, "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                }
             }
             catch (System.Exception ex)
             {

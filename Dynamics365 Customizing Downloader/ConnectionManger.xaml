@@ -26,7 +26,7 @@
         <TextBox x:Name="tbx_connectionString" HorizontalAlignment="Left" Height="136" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbx_connectionName" HorizontalAlignment="Left" Height="23" Margin="10,208,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
-        <Label Content="Connection Name:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="Lbl_ConnectionName" Content="Connection Name:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_save" Content="Save" HorizontalAlignment="Left" Margin="207,236,0,0" IsEnabled="False" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.22,0.527" Click="Btn_save_Click"/>
 
     </Grid>

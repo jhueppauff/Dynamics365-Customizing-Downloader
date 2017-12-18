@@ -10,7 +10,6 @@
 
 namespace Dynamics365CustomizingDownloader.Pages
 {
-    using Dynamics365CustomizingDownloader.Controls;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;

@@ -56,8 +56,6 @@
                             <StackPanel>
                                 <Button Content="Updates" Click="MenuItemUpdate_Click"/>
                                 <Button Content="About" Click="MenuItemAbout_Click"/>
-
-                                <CheckBox Content="Debugging Enabled" IsChecked="False" Name="Cbx_DebuggingEnabled" Click="Cbx_DebuggingEnabled_Click"></CheckBox>
                                 <Button Content="Connection Overview" Name="Btn_OpenConnectionOverview" Click="Btn_OpenConnectionOverview_Click"></Button>
                                 <Separator/>
                                 <Button Content="Exit" Click="MenuItemExit_Click"/>

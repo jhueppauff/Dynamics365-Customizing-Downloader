@@ -37,7 +37,15 @@ namespace Dynamics365CustomizingDownloader
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            Application.Current.Properties["Debugging.Enabled"] = false;
+
+            if (Properties.Settings.Default.DebuggingEnabled)
+            {
+                Application.Current.Properties["Debugging.Enabled"] = true;
+            }
+            else
+            {
+                Application.Current.Properties["Debugging.Enabled"] = false;
+            }
 
             if (!File.Exists(Core.Data.StorageExtensions.StoragePath))
             {
@@ -154,23 +162,6 @@ namespace Dynamics365CustomizingDownloader
         private void MenuItemExit_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
-        }
-
-        /// <summary>
-        /// Enables Debugging
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void Cbx_DebuggingEnabled_Click(object sender, RoutedEventArgs e)
-        {
-            if ((bool)Cbx_DebuggingEnabled.IsChecked)
-            {
-                Application.Current.Properties["Debugging.Enabled"] = true;
-            }
-            else
-            {
-                Application.Current.Properties["Debugging.Enabled"] = false;
-            }
         }
 
         /// <summary>

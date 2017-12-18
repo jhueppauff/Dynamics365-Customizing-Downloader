@@ -49,5 +49,14 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return ((bool)(this["DisableErrorReports"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool DebuggingEnabled {
+            get {
+                return ((bool)(this["DebuggingEnabled"]));
+            }
+        }
     }
 }
