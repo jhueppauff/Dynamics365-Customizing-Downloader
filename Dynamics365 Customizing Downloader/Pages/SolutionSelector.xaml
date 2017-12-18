@@ -4,7 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls" 
-             mc:Ignorable="d" Width="984" Height="465">
+             mc:Ignorable="d" >
     <UserControl.Resources>
         <!-- Data Template (applied to each bound task item in the task collection) -->
         <DataTemplate x:Key="myTaskTemplate">
@@ -45,4 +45,5 @@
         <Button x:Name="Btn_OpenCreateNewConnection" Content="Create new Repository" HorizontalAlignment="Left" Margin="15,19,0,0" VerticalAlignment="Top" Width="190" Height="31" Click="Btn_OpenCreateNewConnection_Click"/>
         <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="846,19,0,0" VerticalAlignment="Top" Width="109" Height="31" Click="Btn_Reload_Click"/>
     </Grid>
+    
 </UserControl>

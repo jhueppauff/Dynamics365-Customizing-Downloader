@@ -23,7 +23,7 @@
     </Window.Resources>
     <Grid>
         <Button Content="Connect" HorizontalAlignment="Left" Margin="10,236,0,0" VerticalAlignment="Top" Width="107" Click="Button_Click"/>
-        <TextBox x:Name="tbx_connectionString" HorizontalAlignment="Left" Height="136" Margin="10,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
+        <TextBox x:Name="tbx_connectionString" HorizontalAlignment="Left" Margin="10,36,0,0" TextWrapping="Wrap" Width="272" Height="136" VerticalAlignment="Top"/>
         <Label Content="Connection String:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="tbx_connectionName" HorizontalAlignment="Left" Height="23" Margin="10,208,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <Label x:Name="Lbl_ConnectionName" Content="Connection Name:" HorizontalAlignment="Left" Margin="10,177,0,0" VerticalAlignment="Top"/>

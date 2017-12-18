@@ -82,17 +82,15 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         {
             try
             {
-                using (CrmServiceClient crmServiceClient = new CrmServiceClient(connectionString))
+                CrmServiceClient crmServiceClient = new CrmServiceClient(connectionString);
+                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
-                    if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
-                    {
-                        return crmServiceClient;
-                    }
-                    else
-                    {
-                        // CRM Client is empty
-                        throw new Exception(crmServiceClient.LastCrmError);
-                    }
+                    return crmServiceClient;
+                }
+                else
+                {
+                    // CRM Client is empty
+                    throw new Exception(crmServiceClient.LastCrmError);
                 }
             }
             catch (Exception ex)

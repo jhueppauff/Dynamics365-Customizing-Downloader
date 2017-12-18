@@ -144,7 +144,6 @@ namespace Dynamics365CustomizingDownloader
                     if (!connectionExists)
                     {
                         Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
-                        MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -152,7 +151,6 @@ namespace Dynamics365CustomizingDownloader
                 {
                     // Ignore Error, in a fresh installation there is no config File
                     Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
-                    MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }

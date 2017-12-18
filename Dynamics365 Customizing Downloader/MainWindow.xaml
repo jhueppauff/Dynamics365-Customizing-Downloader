@@ -14,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Height="605.313"  Width="1163.193" WindowStyle="SingleBorderWindow" >
+        WindowStyle="SingleBorderWindow" >
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -39,7 +39,7 @@
             </DataTemplate>
         </ResourceDictionary>
     </Window.Resources>
-    <materialDesign:DialogHost Identifier="RootDialog" SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+    <materialDesign:DialogHost Identifier="RootDialog">
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="212">
@@ -65,15 +65,7 @@
                     </DockPanel>
                 </materialDesign:ColorZone>
                 <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <ScrollViewer Grid.Row="1" 
-                                  HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Auto" >
-                        <codedisplayer:XamlDisplayerHost VerticalAlignment="Top" HorizontalAlignment="Left" Content="{Binding ElementName=Lbx_Menu, Path=SelectedItem.Content}" />
-                    </ScrollViewer>
+                    <ContentControl VerticalAlignment="Top" Margin="10" Content="{Binding ElementName=Lbx_Menu, Path=SelectedItem.Content}"></ContentControl>
                 </Grid>
             </DockPanel>
         </materialDesign:DrawerHost>

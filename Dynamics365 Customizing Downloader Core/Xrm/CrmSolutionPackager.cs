@@ -56,10 +56,10 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 // Call WaitForExit and then the using statement will close.
                 using (Process exeProcess = Process.Start(startInfo))
                 {
-                    log = exeProcess.StandardOutput.ReadToEnd();
+                    log += exeProcess.StandardOutput.ReadToEnd();
                     exeProcess.WaitForExit();
-                    return log;
                 }
+                return log;
             }
             catch (System.Exception ex)
             {

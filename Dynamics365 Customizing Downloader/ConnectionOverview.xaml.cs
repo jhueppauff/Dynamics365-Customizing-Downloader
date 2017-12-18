@@ -173,19 +173,31 @@ namespace Dynamics365CustomizingDownloader
                     }
                     else
                     {
-                        try
-                        {
-                            Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
-                            MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.Error(ex.Message, ex);
-                            Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
-                            errorReport.Show();
-                        }
+                        this.DeleteConnectionWithoutFolder();
                     }
                 }
+                else
+                {
+                    this.DeleteConnectionWithoutFolder();
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Connection from Configuration
+        /// </summary>
+        private void DeleteConnectionWithoutFolder()
+        {
+            try
+            {
+                Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
+                MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                errorReport.Show();
             }
         }
     }

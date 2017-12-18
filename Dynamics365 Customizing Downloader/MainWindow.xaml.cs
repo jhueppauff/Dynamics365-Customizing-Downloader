@@ -31,6 +31,11 @@ namespace Dynamics365CustomizingDownloader
         private bool disposed = false;
 
         /// <summary>
+        /// Menu Items
+        /// </summary>
+        private List<Pages.MenuItem> menuItems;
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
@@ -68,7 +73,8 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
 
-            this.Lbx_Menu.ItemsSource = this.GetMenu();
+            menuItems = this.GetMenu();
+            this.Lbx_Menu.ItemsSource = menuItems;
             this.CheckForUpdate();
         }
 
@@ -89,7 +95,7 @@ namespace Dynamics365CustomizingDownloader
             menuItem = new Pages.MenuItem()
             {
                 Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction"
+                Description = "Downloads a Solution without extraction \nFuture Release"
             };
 
             menuItems.Add(menuItem);
@@ -171,10 +177,18 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_OpenConnectionOverview_Click(object sender, RoutedEventArgs e)
         {
-            ConnectionOverview connectionOverview = new ConnectionOverview();
-            connectionOverview.ShowDialog();
+            try
+            {
+                ConnectionOverview connectionOverview = new ConnectionOverview();
+                connectionOverview.ShowDialog();
 
-            //Pages.SolutionSelector.ReloadConnections();
+                ((Pages.SolutionSelector)menuItems[0].Content).ReloadConnections();
+            }
+            catch (Exception ex)
+            {
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                errorReport.Show();
+            }
         }
 
         /// <summary>
