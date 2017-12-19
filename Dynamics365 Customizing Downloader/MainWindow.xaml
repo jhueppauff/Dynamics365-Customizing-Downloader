@@ -42,7 +42,7 @@
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="212">
-                    <ListBox x:Name="Lbx_Menu" ItemsSource="{Binding}" ItemTemplate="{StaticResource MenuItems}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,67,5,0" Width="267" SelectionChanged="Lbx_Menu_SelectionChanged" />
+                    <ListBox x:Name="Lbx_Menu" ItemsSource="{Binding}" ItemTemplate="{StaticResource MenuItems}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,67,5,0" Width="267" />
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <DockPanel>
