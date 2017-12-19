@@ -39,10 +39,11 @@ https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
 The MIT License (MIT)
 https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/blob/master/LICENSE
 
+#### WPF Toolkit
+Microsoft Public License
+https://github.com/xceedsoftware/wpftoolkit/blob/master/license.md
 
-## Used no longer
-
-#### Loading Controls (removed in 2.6):
+#### Loading Controls:
 
 This source code is made available under the terms of the Microsoft Public License (Ms-PL)
 http://www.opensource.org/licenses/ms-pl.html

@@ -48,73 +48,12 @@ namespace Dynamics365CustomizingDownloader.Pages
         private List<Core.Xrm.CrmSolution> crmSolutions = new List<Core.Xrm.CrmSolution>();
 
         /// <summary>
-        /// Indicates if the panel is loading
-        /// </summary>
-        private bool panelLoading;
-
-        /// <summary>
-        /// Panel Message
-        /// </summary>
-        private string panelMainMessage = "Please wait, connecting to Crm and retriving the Solutions";
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="SolutionSelector"/> class.
         /// </summary>
         public SolutionSelector()
         {
             this.InitializeComponent();
         }
-
-        /// <summary>
-        /// Occurs when a property value changes.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        /// <summary>
-        /// Gets or sets a value indicating whether [panel loading].
-        /// </summary>
-        /// <value>
-        /// <c>true</c> if [panel loading]; otherwise, <c>false</c>.
-        /// </value>
-        public bool PanelLoading
-        {
-            get
-            {
-                return this.panelLoading;
-            }
-
-            set
-            {
-                this.panelLoading = value;
-                this.RaisePropertyChanged("PanelLoading");
-            }
-        }
-
-        /// <summary>
-        /// Gets or sets the panel main message.
-        /// </summary>
-        /// <value>The panel main message.</value>
-        public string PanelMainMessage
-        {
-            get
-            {
-                return this.panelMainMessage;
-            }
-
-            set
-            {
-                this.panelMainMessage = value;
-                this.RaisePropertyChanged("PanelMainMessage");
-            }
-        }
-
-        /// <summary>
-        /// Gets the hide panel command.
-        /// </summary>
-        public ICommand HidePanelCommand => new HelperClasses.DelegateCommand(() =>
-        {
-            this.PanelLoading = false;
-        });
 
         /// <summary>
         /// Reloads the Connection Drop down after a connection was created
@@ -136,15 +75,6 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 // Ignore File Not found
             }
-        }
-
-        /// <summary>
-        /// Raises the property changed.
-        /// </summary>
-        /// <param name="propertyName">Name of the property.</param>
-        protected void RaisePropertyChanged(string propertyName)
-        {
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         /// <summary>
@@ -199,7 +129,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         {
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
             this.Lbx_Repos.IsEnabled = true;
-            this.loadingPanel.IsLoading = false;
+            MainWindow.SetProgress(false);
         }
 
         /// <summary>
@@ -317,7 +247,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                     this.localSolutions = repositoryConnector.GetLocalCRMSolutions(((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
 
                     this.Dtg_Solutions.ItemsSource = null;
-                    this.loadingPanel.IsLoading = true;
+                    MainWindow.SetProgress(true);
 
                     this.worker.DoWork += this.Worker_DoWork;
                     this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
@@ -336,7 +266,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                     errorReport.Show();
                 }
 
-                loadingPanel.IsLoading = false;
+                MainWindow.SetProgress(false);
                 SolutionSelector.Log.Error(ex.Message, ex);
                 Lbx_Repos.IsEnabled = true;
                 Btn_Reload.IsEnabled = true;

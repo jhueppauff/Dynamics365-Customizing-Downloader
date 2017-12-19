@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls" 
+             xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
              mc:Ignorable="d" >
     <UserControl.Resources>
         <!-- Data Template (applied to each bound task item in the task collection) -->
@@ -27,8 +28,6 @@
     </UserControl.Resources>
     <Grid>
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="294,19,0,0" VerticalAlignment="Top" Width="547" Click="Button_Click" Height="31" />
-
-        <ctr:LoadingPanel x:Name="loadingPanel" IsLoading="{Binding PanelLoading}" Message="{Binding PanelMainMessage}" SubMessage="{Binding PanelSubMessage}" ClosePanelCommand="{Binding PanelCloseCommand}" Margin="0,0,0,0.333" Foreground="#FF494949" Height="68" VerticalAlignment="Bottom" />
         <DataGrid x:Name="Dtg_Solutions" Margin="294,84,0,73" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header="" />
@@ -44,6 +43,6 @@
         </DockPanel>
         <Button x:Name="Btn_OpenCreateNewConnection" Content="Create new Repository" HorizontalAlignment="Left" Margin="15,19,0,0" VerticalAlignment="Top" Width="190" Height="31" Click="Btn_OpenCreateNewConnection_Click"/>
         <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="846,19,0,0" VerticalAlignment="Top" Width="109" Height="31" Click="Btn_Reload_Click"/>
+        
     </Grid>
-    
 </UserControl>

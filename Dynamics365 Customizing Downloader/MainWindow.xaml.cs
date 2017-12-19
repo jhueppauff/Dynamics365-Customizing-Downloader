@@ -31,12 +31,19 @@ namespace Dynamics365CustomizingDownloader
         private List<Pages.MenuItem> menuItems;
 
         /// <summary>
+        /// Busy Indicator
+        /// </summary>
+        private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
+            busyIndicator = prg_progress;
+            MainWindow.SetProgress(false);
 
             if (Properties.Settings.Default.DebuggingEnabled)
             {
@@ -85,6 +92,15 @@ namespace Dynamics365CustomizingDownloader
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Sets the Progress Indicator to the specific state
+        /// </summary>
+        /// <param name="state">IsBusy State <see cref="bool"/></param>
+        public static void SetProgress(bool state)
+        {
+            MainWindow.busyIndicator.IsBusy = state;
         }
 
         /// <summary>
