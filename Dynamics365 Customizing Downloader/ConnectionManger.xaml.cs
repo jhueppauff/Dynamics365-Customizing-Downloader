@@ -12,8 +12,8 @@ namespace Dynamics365CustomizingDownloader
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Windows;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// Interaction logic for ConnectionManger
@@ -41,6 +41,8 @@ namespace Dynamics365CustomizingDownloader
         public ConnectionManger()
         {
             this.InitializeComponent();
+            this.tbx_connectionName.Visibility = Visibility.Hidden;
+            this.Lbl_ConnectionName.Visibility = Visibility.Hidden;
         }
 
         /// <summary>
@@ -81,21 +83,26 @@ namespace Dynamics365CustomizingDownloader
             {
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    using (Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text))
+                    CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
+                    if (crmServiceClient != null && crmServiceClient.IsReady)
                     {
-                        if (crmServiceClient != null)
+                        this.crmConnection = new Core.Xrm.CrmConnection
                         {
-                            this.crmConnection = new Core.Xrm.CrmConnection
-                            {
-                                ConnectionID = Guid.NewGuid(),
-                                ConnectionString = this.tbx_connectionString.Text,
-                                Name = crmServiceClient.ConnectedOrgFriendlyName
-                            };
+                            ConnectionID = Guid.NewGuid(),
+                            ConnectionString = this.tbx_connectionString.Text,
+                            Name = crmServiceClient.ConnectedOrgFriendlyName
+                        };
 
-                            tbx_connectionName.IsReadOnly = false;
-                            tbx_connectionName.Text = this.crmConnection.Name;
-                            btn_save.IsEnabled = true;
-                        }
+                        this.tbx_connectionName.IsReadOnly = false;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.Lbl_ConnectionName.Visibility = Visibility.Visible;
+                        this.tbx_connectionName.Visibility = Visibility.Visible;
+                        btn_save.IsEnabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to open CRM Connection", "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }
@@ -106,6 +113,7 @@ namespace Dynamics365CustomizingDownloader
                     Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
                     errorReport.Show();
                 }
+
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
@@ -137,7 +145,6 @@ namespace Dynamics365CustomizingDownloader
                     if (!connectionExists)
                     {
                         Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
-                        MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -145,7 +152,6 @@ namespace Dynamics365CustomizingDownloader
                 {
                     // Ignore Error, in a fresh installation there is no config File
                     Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
-                    MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }
@@ -156,6 +162,7 @@ namespace Dynamics365CustomizingDownloader
                     Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
                     errorReport.Show();
                 }
+
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }

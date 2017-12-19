@@ -12,6 +12,7 @@ namespace Dynamics365CustomizingDownloader
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Windows;
 
     /// <summary>
@@ -156,32 +157,47 @@ namespace Dynamics365CustomizingDownloader
         {
             if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                if (MessageBox.Show("Do you also want to delete the local Folder? All Data within this Folder will be deleted", "Do you want to wipe the data?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
+                if (Directory.Exists(this.crmConnection.LocalPath))
                 {
-                    try
+                    if (MessageBox.Show("Do you also want to delete the local Folder? All Data within this Folder will be deleted", "Do you want to wipe the data?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {
-                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text, true);
-                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        try
+                        {
+                            Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text, true);
+                            MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show(ex.Message, "An error occured!", MessageBoxButton.OK, MessageBoxImage.Error);
+                        this.DeleteConnectionWithoutFolder();
                     }
                 }
                 else
                 {
-                    try
-                    {
-                        Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
-                        MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    catch (Exception ex)
-                    {
-                        Log.Error(ex.Message, ex);
-                        Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
-                        errorReport.Show();
-                    }
+                    this.DeleteConnectionWithoutFolder();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Deletes the Connection from Configuration
+        /// </summary>
+        private void DeleteConnectionWithoutFolder()
+        {
+            try
+            {
+                Core.Data.StorageExtensions.Delete(Tbx_ConnectionName.Text);
+                MessageBox.Show("Deleted Connection.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                errorReport.Show();
             }
         }
     }

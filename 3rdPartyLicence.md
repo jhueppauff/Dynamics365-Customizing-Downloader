@@ -1,12 +1,5 @@
 # 3rd Party Licence
 
-#### Loading Controls:
-
-This source code is made available under the terms of the Microsoft Public License (Ms-PL)
-http://www.opensource.org/licenses/ms-pl.html
-
-http://huydinhpham.blogspot.de/2011/07/wpf-loading-panel.html
-
 #### Newtonsoft.Json
 The MIT License (MIT)
 Copyright (c) 2007 James Newton-King
@@ -41,3 +34,18 @@ http://logging.apache.org/log4net/license.html
 #### RestSharp
 Apache License, Version 2.0
 https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
+
+#### Material Design XAML Toolkit
+The MIT License (MIT)
+https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/blob/master/LICENSE
+
+#### WPF Toolkit
+Microsoft Public License
+https://github.com/xceedsoftware/wpftoolkit/blob/master/license.md
+
+#### Loading Controls:
+
+This source code is made available under the terms of the Microsoft Public License (Ms-PL)
+http://www.opensource.org/licenses/ms-pl.html
+
+http://huydinhpham.blogspot.de/2011/07/wpf-loading-panel.html

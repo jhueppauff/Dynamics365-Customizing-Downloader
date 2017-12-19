@@ -224,7 +224,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
                 try
                 {
-                    Xrm.CrmConnection crmConnection = crmConnections.Where(x => x.Name == connectionName).SingleOrDefault();
+                    Xrm.CrmConnection crmConnection = crmConnections.SingleOrDefault(x => x.Name == connectionName);
                     crmConnections.Remove(crmConnection);
 
                     if (wipeData)

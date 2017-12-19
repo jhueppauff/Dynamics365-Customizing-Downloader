@@ -69,7 +69,10 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
             }
             finally
             {
-                crmServiceClient.Dispose();
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
             }
         }
 
@@ -77,21 +80,26 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// Connect to CRM and get the CRM service client
         /// </summary>
         /// <param name="connectionString">XRM Connection String</param>
-        /// <returns>Returns <see cref="CrmServiceClient"/></returns>
-        public CrmServiceClient GetCrmServiceClient(string connectionString)
+        /// <returns>Returns <see cref="CrmServiceClient"/>Returns the <see cref="Microsoft.Xrm.Tooling.Connector.CrmServiceClient"/></returns>
+        public Microsoft.Xrm.Tooling.Connector.CrmServiceClient GetCrmServiceClient(string connectionString)
         {
             try
             {
-                using (CrmServiceClient crmServiceClient = new CrmServiceClient(connectionString))
+                CrmServiceClient crmServiceClient = new CrmServiceClient(connectionString);
+                if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
                 {
-                    if (crmServiceClient.ConnectedOrgFriendlyName != string.Empty && crmServiceClient.ConnectedOrgFriendlyName != null)
+                    return crmServiceClient;
+                }
+                else
+                {
+                    // CRM Client is empty
+                    if (crmServiceClient.LastCrmException != null)
                     {
-                        return crmServiceClient;
+                        throw new CRMConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException);
                     }
                     else
                     {
-                        // CRM Client is empty
-                        throw new Exception(crmServiceClient.LastCrmError);
+                        throw new CRMConnectionException(crmServiceClient.LastCrmError);
                     }
                 }
             }

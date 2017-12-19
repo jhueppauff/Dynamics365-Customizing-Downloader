@@ -309,13 +309,14 @@ namespace Dynamics365CustomizingDownloader
                             if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
                             {
                                 Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
-                                LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                                DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
                             }
 
-                            crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+                            string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+                            DownloadMultiple.UpdateUI(log, false);
 
                             File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                            DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
                         }
                     }
                     else
@@ -323,25 +324,24 @@ namespace Dynamics365CustomizingDownloader
                         e.Cancel = true;
                     }
                 }
-
-                crmServiceClient.Dispose();
             }
             catch (Exception ex)
-            {
-                if (crmServiceClient != null)
-                {
-                    crmServiceClient.Dispose();
-                }
-                
-                UpdateUI($"An Error occured: {ex.Message}", false);
+            {                
+                DownloadMultiple.UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
 
                 // Open Error Report Dialog
                 Log.Error(ex.Message, ex);
                 if (!Properties.Settings.Default.DisableErrorReports)
                 {
-                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
-                    errorReport.Show();
+                    throw;
+                }
+            }
+            finally
+            {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
                 }
             }
         }
@@ -353,6 +353,12 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occured while downloading or extracting the solution");
+                errorReport.Show();
+            }
+
             this.loadingPanel.IsLoading = false;
             this.Btn_close.IsEnabled = true;
             DownloadMultiple.LogToUI("---------------");
@@ -385,6 +391,24 @@ namespace Dynamics365CustomizingDownloader
                 else
                 {
                     e.Cancel = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Opens the select Folder dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_SelectFolder_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    tbx_download.Text = dialog.SelectedPath.ToString();
                 }
             }
         }

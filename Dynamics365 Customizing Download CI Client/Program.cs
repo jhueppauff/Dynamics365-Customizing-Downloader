@@ -42,17 +42,17 @@ namespace Dynamics365CustomizingDownloader.CIClient
             try
             {
                 toolingConnector = new Core.Xrm.ToolingConnector();
-                using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.Where(x => x.Name == "connection-string").SingleOrDefault().Value))
+                using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.SingleOrDefault(x => x.Name == "connection-string").Value))
                 {
                     if (client.IsReady)
                     {
-                        string solutionName = parameters.Where(x => x.Name == "solution-name").SingleOrDefault().Value;
-                        string localPath = parameters.Where(x => x.Name == "local-path").SingleOrDefault().Value;
+                        string solutionName = parameters.SingleOrDefault(x => x.Name == "solution-name").Value;
+                        string localPath = parameters.SingleOrDefault(x => x.Name == "local-path").Value;
 
                         toolingConnector.DownloadSolution(client, solutionName, localPath);
                         Console.WriteLine("Download completed: " + Path.Combine(localPath, solutionName + ".zip").ToString());
 
-                        if (Convert.ToBoolean(parameters.Where(x => x.Name == "action").SingleOrDefault().Value))
+                        if (Convert.ToBoolean(parameters.SingleOrDefault(x => x.Name == "action").Value))
                         {
                             // Extract Solution
                             Core.Xrm.CrmSolutionPackager packager = new Core.Xrm.CrmSolutionPackager();
@@ -102,7 +102,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
             {
                 if (disposing)
                 {
-                    parameters = null;
+                    // Noting to dispose yet
                 }
 
                 this.disposedValue = true;
@@ -138,9 +138,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
                                 {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Missing Parameter Value : " + arg);
-                                    Console.ResetColor();
+                                    LogError("Missing Parameter Value : " + arg);
                                 }
                                 else
                                 {
@@ -152,9 +150,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
                                 {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Missing Parameter Value : " + arg);
-                                    Console.ResetColor();
+                                    LogError("Missing Parameter Value : " + arg);
                                 }
                                 else
                                 {
@@ -166,9 +162,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
                                 if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
                                 {
-                                    Console.ForegroundColor = ConsoleColor.Red;
-                                    Console.WriteLine("Missing Parameter Value : " + arg);
-                                    Console.ResetColor();
+                                    LogError("Missing Parameter Value : " + arg);
                                 }
                                 else
                                 {
@@ -203,10 +197,22 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     counter++;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                throw;
+                LogError(ex.Message);
+                LogError(ex.StackTrace);
             }
+        }
+
+        /// <summary>
+        /// Logs an error to console
+        /// </summary>
+        /// <param name="message">Error Message to show</param>
+        private static void LogError(string message)
+        {
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write(message);
+            Console.ResetColor();
         }
     }
 }
