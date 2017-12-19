@@ -21,11 +21,6 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// Log4Net Logger
-        /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        /// <summary>
         /// Dispose bool
         /// </summary>
         private bool disposed = false;
@@ -117,7 +112,7 @@ namespace Dynamics365CustomizingDownloader
         /// <returns>Returns a <see cref="List{Pages.MenuItem}"/></returns>
         private List<Pages.MenuItem> GetMenu()
         {
-            List<Pages.MenuItem> menuItems = new List<Pages.MenuItem>();
+            List<Pages.MenuItem> listMenuItems = new List<Pages.MenuItem>();
             Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
             solutionSelector.ReloadConnections();
             Pages.MenuItem menuItem = new Pages.MenuItem
@@ -127,7 +122,7 @@ namespace Dynamics365CustomizingDownloader
                 Content = solutionSelector
             };
 
-            menuItems.Add(menuItem);
+            listMenuItems.Add(menuItem);
 
             menuItem = new Pages.MenuItem()
             {
@@ -135,8 +130,8 @@ namespace Dynamics365CustomizingDownloader
                 Description = "Downloads a Solution without extraction \nFuture Release"
             };
 
-            menuItems.Add(menuItem);
-            return menuItems;
+            listMenuItems.Add(menuItem);
+            return listMenuItems;
         }
 
         /// <summary>

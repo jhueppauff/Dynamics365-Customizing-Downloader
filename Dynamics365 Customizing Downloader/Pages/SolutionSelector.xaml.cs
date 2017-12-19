@@ -173,20 +173,20 @@ namespace Dynamics365CustomizingDownloader.Pages
                     {
                         this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
                     }
-
-                    crmServiceClient.Dispose();
                 }
             }
             catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex, "An error occured in the Backgroud Thread");
+                errorReport.Show();
+            }
+            finally
             {
                 if (crmServiceClient != null)
                 {
                     crmServiceClient.Dispose();
                 }
-
-                Log.Error(ex.Message, ex);
-                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex, "An error occured in the Backgroud Thread");
-                errorReport.Show();
             }
         }
 
@@ -225,43 +225,42 @@ namespace Dynamics365CustomizingDownloader.Pages
         {
             if (Lbx_Repos.SelectedItem != null)
             {
-                int downloadCounter = 0;
-                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
-                Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
+                MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
-                if (Dtg_Solutions.ItemsSource != null)
+            int downloadCounter = 0;
+            List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
+            Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == ((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).Name);
+
+            if (Dtg_Solutions.ItemsSource == null)
+            {
+                MessageBox.Show("Please connect to CRM and wait for the Background Job fetching the CRM Solutions", "Solutions are empty", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            List<Core.Xrm.CrmSolution> crmSolutionList = new List<Core.Xrm.CrmSolution>();
+            foreach (Core.Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+            {
+                if (crmSolution.DownloadIsChecked)
                 {
-                    List<Core.Xrm.CrmSolution> crmSolutionList = new List<Core.Xrm.CrmSolution>();
-                    foreach (Core.Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
-                    {
-                        if (crmSolution.DownloadIsChecked)
-                        {
-                            downloadCounter++;
-                            crmSolutionList.Add(crmSolution);
-                        }
-                    }
-
-                    if (downloadCounter != 0)
-                    {
-                        DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutionList);
-                        downloadMultiple.ShowDialog();
-
-                        this.LoadVersionIntoGrid();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
+                    downloadCounter++;
+                    crmSolutionList.Add(crmSolution);
                 }
-                else
-                {
-                    MessageBox.Show("Please connect to CRM and wait for the Background Job fetching the CRM Solutions", "Solutions are empty", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+            }
+
+            if (downloadCounter != 0)
+            {
+                DownloadMultiple downloadMultiple = new DownloadMultiple(crmConnection, crmSolutionList);
+                downloadMultiple.ShowDialog();
+
+                this.LoadVersionIntoGrid();
             }
             else
             {
-                MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         /// <summary>
@@ -288,9 +287,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void Lbx_Repos_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.Btn_Reload.IsEnabled = false;
             this.LoadSolutions();
-            this.Btn_Reload.IsEnabled = true;
         }
 
         /// <summary>
@@ -300,9 +297,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Reload_Click(object sender, RoutedEventArgs e)
         {
-            this.Btn_Reload.IsEnabled = false;
             this.LoadSolutions();
-            this.Btn_Reload.IsEnabled = true;
         }
 
         /// <summary>
@@ -310,6 +305,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// </summary>
         private void LoadSolutions()
         {
+            this.Btn_Reload.IsEnabled = false;
             try
             {
                 if (Lbx_Repos.SelectedItem != null)
@@ -328,6 +324,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                     this.worker.RunWorkerAsync();
 
                     this.selectedCrmConnection = crmConnection.Name;
+                    this.Btn_Reload.IsEnabled = true;
                 }
             }
             catch (Exception ex)

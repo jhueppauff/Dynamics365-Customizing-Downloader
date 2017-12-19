@@ -59,6 +59,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                     log += exeProcess.StandardOutput.ReadToEnd();
                     exeProcess.WaitForExit();
                 }
+
                 return log;
             }
             catch (System.Exception ex)

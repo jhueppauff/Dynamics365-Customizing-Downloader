@@ -1,0 +1,14 @@
+{
+  "ServerUri": "https://sonarcloud.io/",
+  "Organization": {
+    "Key": "jhueppauff-github",
+    "Name": "Julian Hüpppauff"
+  },
+  "ProjectKey": "Dynamics365CustomizingDownloader",
+  "Profiles": {
+    "CSharp": {
+      "ProfileKey": "AV4VkVdM_3TVqy6JD6Rs",
+      "ProfileTimestamp": "2017-11-14T07:59:59+01:00"
+    }
+  }
+}

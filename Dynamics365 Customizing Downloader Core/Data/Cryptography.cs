@@ -43,13 +43,15 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         {
             if (string.IsNullOrEmpty(plainText))
             {
-                Cryptography.Log.Error("Argument is null", new ArgumentNullException("plainText"));
+                var ex = new ArgumentNullException("plainText");
+                Cryptography.Log.Error(ex.Message, ex);
                 throw new ArgumentNullException("plainText");
             }
 
             if (string.IsNullOrEmpty(encryptionKey))
             {
-                Cryptography.Log.Error(new ArgumentNullException("Argument is null", new ArgumentNullException("encryptionKey")));
+                var ex = new ArgumentNullException("encryptionKey");
+                Cryptography.Log.Error(ex.Message, ex);
                 throw new ArgumentNullException("encryptionKey");
             }
 
@@ -116,13 +118,15 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         {
             if (string.IsNullOrEmpty(cipherText))
             {
-                Cryptography.Log.Error(new ArgumentNullException("Argument is null", "cipherText"));
+                var ex = new ArgumentNullException("cipherText");
+                Cryptography.Log.Error(ex.Message, ex);
                 throw new ArgumentNullException("cipherText");
             }
 
             if (string.IsNullOrEmpty(encryptionKey))
             {
-                Cryptography.Log.Error(new ArgumentNullException("Argument is null", new ArgumentNullException("encryptionKey")));
+                var ex = new ArgumentNullException("encryptionKey");
+                Cryptography.Log.Error(ex.Message, ex);
                 throw new ArgumentNullException("encryptionKey");
             }
 

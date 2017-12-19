@@ -93,7 +93,14 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 else
                 {
                     // CRM Client is empty
-                    throw new Exception(crmServiceClient.LastCrmError);
+                    if (crmServiceClient.LastCrmException != null)
+                    {
+                        throw new CRMConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException);
+                    }
+                    else
+                    {
+                        throw new CRMConnectionException(crmServiceClient.LastCrmError);
+                    }
                 }
             }
             catch (Exception ex)

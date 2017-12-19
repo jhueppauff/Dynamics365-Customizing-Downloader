@@ -334,7 +334,7 @@ namespace Dynamics365CustomizingDownloader
                 Log.Error(ex.Message, ex);
                 if (!Properties.Settings.Default.DisableErrorReports)
                 {
-                    throw ex;
+                    throw;
                 }
             }
             finally
@@ -406,7 +406,10 @@ namespace Dynamics365CustomizingDownloader
             {
                 System.Windows.Forms.DialogResult result = dialog.ShowDialog();
 
-                tbx_download.Text = dialog.SelectedPath.ToString();
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    tbx_download.Text = dialog.SelectedPath.ToString();
+                }
             }
         }
     }
