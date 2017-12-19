@@ -153,7 +153,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">Button event args</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (Lbx_Repos.SelectedItem != null)
+            if (Lbx_Repos.SelectedItem == null)
             {
                 MessageBox.Show("Please connect to CRM first", "No CRM Connection", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
