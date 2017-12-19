@@ -394,5 +394,20 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
+
+        /// <summary>
+        /// Opens the select Folder dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_SelectFolder_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                tbx_download.Text = dialog.SelectedPath.ToString();
+            }
+        }
     }
 }

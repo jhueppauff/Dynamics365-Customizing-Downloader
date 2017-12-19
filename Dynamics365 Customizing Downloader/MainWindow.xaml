@@ -3,7 +3,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:codedisplayer="clr-namespace:CodeDisplayer;assembly=CodeDisplayer"
         x:Name="Win_MainWindow" 
         x:Class="Dynamics365CustomizingDownloader.MainWindow" 
         mc:Ignorable="d" Title="Dynamics Customizing Downloader" 
@@ -54,8 +53,7 @@
                                         x:Name="MenuToggleButton"/>
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <StackPanel>
-                                <Button Content="Updates" Click="MenuItemUpdate_Click"/>
-                                <Button Content="About" Click="MenuItemAbout_Click"/>
+                                <Button Content="Updates" Click="MenuItemUpdate_Click"></Button>
                                 <Button Content="Connection Overview" Name="Btn_OpenConnectionOverview" Click="Btn_OpenConnectionOverview_Click"></Button>
                                 <Separator/>
                                 <Button Content="Exit" Click="MenuItemExit_Click"/>

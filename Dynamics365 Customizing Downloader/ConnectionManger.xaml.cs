@@ -84,27 +84,27 @@ namespace Dynamics365CustomizingDownloader
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
                     CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
-                        if (crmServiceClient != null && crmServiceClient.IsReady)
+                    if (crmServiceClient != null && crmServiceClient.IsReady)
+                    {
+                        this.crmConnection = new Core.Xrm.CrmConnection
                         {
-                            this.crmConnection = new Core.Xrm.CrmConnection
-                            {
-                                ConnectionID = Guid.NewGuid(),
-                                ConnectionString = this.tbx_connectionString.Text,
-                                Name = crmServiceClient.ConnectedOrgFriendlyName
-                            };
+                            ConnectionID = Guid.NewGuid(),
+                            ConnectionString = this.tbx_connectionString.Text,
+                            Name = crmServiceClient.ConnectedOrgFriendlyName
+                        };
 
-                            tbx_connectionName.IsReadOnly = false;
-                            tbx_connectionName.Text = this.crmConnection.Name;
-                            this.tbx_connectionName.Text = crmConnection.Name;
-                            this.Lbl_ConnectionName.Visibility = Visibility.Visible;
-                            this.tbx_connectionName.Visibility = Visibility.Visible;
-                            btn_save.IsEnabled = true;
-                        }
-                        else
-                        {
-                            MessageBox.Show("Unable to open CRM Connection :" + crmServiceClient.LastCrmError, "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
-                        }
+                        this.tbx_connectionName.IsReadOnly = false;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.Lbl_ConnectionName.Visibility = Visibility.Visible;
+                        this.tbx_connectionName.Visibility = Visibility.Visible;
+                        btn_save.IsEnabled = true;
                     }
+                    else
+                    {
+                        MessageBox.Show("Unable to open CRM Connection :" + crmServiceClient.LastCrmError, "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                }
             }
             catch (System.Exception ex)
             {
@@ -113,6 +113,7 @@ namespace Dynamics365CustomizingDownloader
                     Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
                     errorReport.Show();
                 }
+
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
@@ -161,6 +162,7 @@ namespace Dynamics365CustomizingDownloader
                     Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
                     errorReport.Show();
                 }
+
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }

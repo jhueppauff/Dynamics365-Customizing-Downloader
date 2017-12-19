@@ -157,7 +157,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
-                if (Directory.Exists(crmConnection.LocalPath))
+                if (Directory.Exists(this.crmConnection.LocalPath))
                 {
                     if (MessageBox.Show("Do you also want to delete the local Folder? All Data within this Folder will be deleted", "Do you want to wipe the data?", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No) == MessageBoxResult.Yes)
                     {

@@ -39,13 +39,6 @@ https://github.com/restsharp/RestSharp/blob/master/LICENSE.txt
 The MIT License (MIT)
 https://github.com/ButchersBoy/MaterialDesignInXamlToolkit/blob/master/LICENSE
 
-#### Displaying-XAML
-GNU General Public License v3.0
-https://github.com/wongjiahau/Displaying-XAML/blob/master/LICENSE
-
-#### MahApps.Metro
-The MIT License (MIT)
-https://github.com/MahApps/MahApps.Metro/blob/master/LICENSE
 
 ## Used no longer
 

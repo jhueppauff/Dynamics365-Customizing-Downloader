@@ -69,7 +69,10 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
             }
             finally
             {
-                crmServiceClient.Dispose();
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
             }
         }
 

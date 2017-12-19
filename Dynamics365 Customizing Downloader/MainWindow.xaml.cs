@@ -73,42 +73,15 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
 
-            menuItems = this.GetMenu();
-            this.Lbx_Menu.ItemsSource = menuItems;
+            this.menuItems = this.GetMenu();
+            this.Lbx_Menu.ItemsSource = this.menuItems;
             this.CheckForUpdate();
         }
-
-        private List<Pages.MenuItem> GetMenu ()
-        {
-            List<Pages.MenuItem> menuItems = new List<Pages.MenuItem>();
-            Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
-            solutionSelector.ReloadConnections();
-            Pages.MenuItem menuItem = new Pages.MenuItem
-            {
-                Name = "Customizing Downloader",
-                Description = "Downloads and Extracts CRM Solutions",
-                Content = solutionSelector
-            };
-
-            menuItems.Add(menuItem);
-
-            menuItem = new Pages.MenuItem()
-            {
-                Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction \nFuture Release"
-            };
-
-            menuItems.Add(menuItem);
-            return menuItems;
-        }
-
 
         /// <summary>
         /// Gets or sets the Encryption Key
         /// </summary>
         public static string EncryptionKey { get; set; }
-
-
 
         /// <summary>
         /// Implement IDisposable.
@@ -139,15 +112,31 @@ namespace Dynamics365CustomizingDownloader
         }
 
         /// <summary>
-        /// Menu Item Click Event, Info
+        /// Generates the Side Menu Bar
         /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void MenuItemAbout_Click(object sender, RoutedEventArgs e)
+        /// <returns>Returns a <see cref="List{Pages.MenuItem}"/></returns>
+        private List<Pages.MenuItem> GetMenu()
         {
-            About about = new About();
-            about.ShowDialog();
-            about.Dispose();
+            List<Pages.MenuItem> menuItems = new List<Pages.MenuItem>();
+            Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
+            solutionSelector.ReloadConnections();
+            Pages.MenuItem menuItem = new Pages.MenuItem
+            {
+                Name = "Customizing Downloader",
+                Description = "Downloads and Extracts CRM Solutions",
+                Content = solutionSelector
+            };
+
+            menuItems.Add(menuItem);
+
+            menuItem = new Pages.MenuItem()
+            {
+                Name = "Solution Downloader",
+                Description = "Downloads a Solution without extraction \nFuture Release"
+            };
+
+            menuItems.Add(menuItem);
+            return menuItems;
         }
 
         /// <summary>
@@ -182,7 +171,7 @@ namespace Dynamics365CustomizingDownloader
                 ConnectionOverview connectionOverview = new ConnectionOverview();
                 connectionOverview.ShowDialog();
 
-                ((Pages.SolutionSelector)menuItems[0].Content).ReloadConnections();
+                ((Pages.SolutionSelector)this.menuItems[0].Content).ReloadConnections();
             }
             catch (Exception ex)
             {
@@ -216,11 +205,6 @@ namespace Dynamics365CustomizingDownloader
         {
             PatchNotes patchNotes = new PatchNotes();
             patchNotes.Show();
-        }
-
-        private void Lbx_Menu_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-        {
-
         }
     }
 }

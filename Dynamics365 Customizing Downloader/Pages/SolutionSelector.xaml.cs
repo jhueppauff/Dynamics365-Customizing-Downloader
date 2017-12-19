@@ -18,7 +18,7 @@ namespace Dynamics365CustomizingDownloader.Pages
     using System.Windows.Input;
 
     /// <summary>
-    /// Interaction logic for SolutionSelector.xaml
+    /// Interaction logic for SolutionSelector
     /// </summary>
     public partial class SolutionSelector : UserControl
     {
@@ -56,6 +56,14 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, connecting to Crm and retriving the Solutions";
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SolutionSelector"/> class.
+        /// </summary>
+        public SolutionSelector()
+        {
+            this.InitializeComponent();
+        }
 
         /// <summary>
         /// Occurs when a property value changes.
@@ -107,11 +115,6 @@ namespace Dynamics365CustomizingDownloader.Pages
         {
             this.PanelLoading = false;
         });
-
-        public SolutionSelector()
-        {
-            InitializeComponent();
-        }
 
         /// <summary>
         /// Reloads the Connection Drop down after a connection was created
@@ -186,8 +189,6 @@ namespace Dynamics365CustomizingDownloader.Pages
                 errorReport.Show();
             }
         }
-
-
 
         /// <summary>
         /// Background Worker Event RunWorkerCompleted
