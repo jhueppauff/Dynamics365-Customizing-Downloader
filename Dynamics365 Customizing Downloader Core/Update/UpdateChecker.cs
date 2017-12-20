@@ -12,6 +12,7 @@ namespace Dynamics365CustomizingDownloader.Core.Update
 {
     using System;
     using System.Diagnostics;
+    using System.Linq;
     using Newtonsoft.Json;
     using Newtonsoft.Json.Serialization;
     using RestSharp;
@@ -105,7 +106,7 @@ namespace Dynamics365CustomizingDownloader.Core.Update
             {
                 var release = JsonConvert.DeserializeObject<Release>(this.PerformAPICall(apiURL));
 
-                return new Uri(release.Assets[0].Browser_download_url);
+                return new Uri(release.Assets.SingleOrDefault(x => x.Name == "Dynamics365CustomizingDownloader.zip").Browser_download_url);
             }
             catch (Exception ex)
             {
