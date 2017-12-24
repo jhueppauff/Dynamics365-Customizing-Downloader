@@ -155,6 +155,12 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_DeleteRepository_Click(object sender, RoutedEventArgs e)
         {
+            if (Cbx_CRMConnections.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a CRM Connection first", "Missing Repository", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             if (MessageBox.Show("Are you sure to delete the Repository?", "Are you sure?", MessageBoxButton.YesNo, MessageBoxImage.Stop, MessageBoxResult.No) == MessageBoxResult.Yes)
             {
                 if (Directory.Exists(this.crmConnection.LocalPath))
