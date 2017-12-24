@@ -48,5 +48,10 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
         {
             this.Close();
         }
+
+        private void Btn_Report_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
