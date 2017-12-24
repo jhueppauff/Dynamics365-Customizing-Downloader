@@ -108,8 +108,11 @@ namespace Dynamics365CustomizingDownloader.Pages
             catch (Exception ex)
             {
                 Log.Error(ex.Message, ex);
-                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex, "An error occured in the Backgroud Thread");
-                errorReport.Show();
+
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    throw;
+                }
             }
             finally
             {
@@ -127,6 +130,12 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occured while retriving the CRM Solutions");
+                errorReport.Show();
+            }
+
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
             this.Lbx_Repos.IsEnabled = true;
             MainWindow.SetProgress(false);
