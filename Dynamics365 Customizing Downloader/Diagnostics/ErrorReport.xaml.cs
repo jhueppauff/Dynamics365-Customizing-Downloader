@@ -48,5 +48,15 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
         {
             this.Close();
         }
+
+        /// <summary>
+        /// Button Click Report Issue
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_Report_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException("Sorry, this is not availible yet");   
+        }
     }
 }

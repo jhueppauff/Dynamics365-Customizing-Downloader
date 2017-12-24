@@ -33,6 +33,7 @@ namespace Dynamics365CustomizingDownloader
         public EncryptionKey()
         {
             this.InitializeComponent();
+            Tbx_EncryptionKey.Focus();
         }
 
         /// <summary>

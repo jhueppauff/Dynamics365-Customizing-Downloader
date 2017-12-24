@@ -302,21 +302,39 @@ namespace Dynamics365CustomizingDownloader
 
                             crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
 
-                            toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
-
-                            Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
-
-                            if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                            try
                             {
-                                Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
-                                DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                                toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
+
+                                Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
+
+                                if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                                {
+                                    Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
+                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                                }
+
+                                string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+                                DownloadMultiple.UpdateUI(log, false);
+
+                                
                             }
-
-                            string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
-                            DownloadMultiple.UpdateUI(log, false);
-
-                            File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                            DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex.Message, ex);
+                                if (!Properties.Settings.Default.DisableErrorReports)
+                                {
+                                    throw;
+                                }
+                            }
+                            finally
+                            {
+                                if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()))
+                                {
+                                    File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                                }
+                            }
                         }
                     }
                     else
@@ -326,12 +344,11 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
             catch (Exception ex)
-            {                
+            {
                 DownloadMultiple.UpdateUI($"An Error occured: {ex.Message}", false);
                 DownloadMultiple.Log.Error(ex.Message, ex);
 
-                // Open Error Report Dialog
-                Log.Error(ex.Message, ex);
+                // Open Error Report 
                 if (!Properties.Settings.Default.DisableErrorReports)
                 {
                     throw;

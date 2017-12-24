@@ -59,25 +59,24 @@ namespace Dynamics365CustomizingDownloader
                 Btn_OpenConnectionOverview.IsEnabled = false;
             }
 
-            if (MainWindow.EncryptionKey == null || MainWindow.EncryptionKey == string.Empty)
+            if (string.IsNullOrEmpty(MainWindow.EncryptionKey))
             {
                 EncryptionKey encryptionKey = new EncryptionKey();
                 encryptionKey.ShowDialog();
 
-                if (MainWindow.EncryptionKey != string.Empty && MainWindow.EncryptionKey != null)
+                if (!string.IsNullOrEmpty(MainWindow.EncryptionKey))
                 {
                     Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
                     solutionSelector.ReloadConnections();
+                    this.menuItems = this.GetMenu();
+                    this.Lbx_Menu.ItemsSource = this.menuItems;
+                    this.CheckForUpdate();
                 }
                 else
                 {
                     this.Close();
                 }
             }
-
-            this.menuItems = this.GetMenu();
-            this.Lbx_Menu.ItemsSource = this.menuItems;
-            this.CheckForUpdate();
         }
 
         /// <summary>

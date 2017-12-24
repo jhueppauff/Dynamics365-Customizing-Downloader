@@ -59,13 +59,14 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 }
                 else
                 {
-                    return false;
+                    CRMConnectionException connectionException = new CRMConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException.InnerException);
+                    throw connectionException;
                 }
             }
             catch (Exception ex)
             {
                 ToolingConnector.Log.Error(ex.Message, ex);
-                return false;
+                throw;
             }
             finally
             {
