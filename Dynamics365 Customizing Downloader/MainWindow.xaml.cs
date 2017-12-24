@@ -143,7 +143,7 @@ namespace Dynamics365CustomizingDownloader
             menuItem = new Pages.MenuItem()
             {
                 Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction \nFuture Release",
+                Description = "Downloads a Solution without extraction",
                 Content = solutionDownloader
             };
 
