@@ -205,6 +205,9 @@
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="Pages\MenuItem.cs" />
+    <Compile Include="Pages\SolutionDownloader.xaml.cs">
+      <DependentUpon>SolutionDownloader.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SolutionSelector.xaml.cs">
       <DependentUpon>SolutionSelector.xaml</DependentUpon>
     </Compile>
@@ -251,6 +254,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Pages\SolutionDownloader.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\SolutionSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
