@@ -139,10 +139,12 @@ namespace Dynamics365CustomizingDownloader
 
             listMenuItems.Add(menuItem);
 
+            Pages.SolutionDownloader solutionDownloader = new Pages.SolutionDownloader();
             menuItem = new Pages.MenuItem()
             {
                 Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction \nFuture Release"
+                Description = "Downloads a Solution without extraction \nFuture Release",
+                Content = solutionDownloader
             };
 
             listMenuItems.Add(menuItem);
