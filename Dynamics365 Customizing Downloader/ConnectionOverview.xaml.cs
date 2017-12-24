@@ -99,6 +99,10 @@ namespace Dynamics365CustomizingDownloader
                     {
                         Btn_SaveConnection.IsEnabled = true;
                     }
+                    else
+                    {
+                        MessageBox.Show("Unable to connect to CRM", "Connection Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (System.Exception ex)
