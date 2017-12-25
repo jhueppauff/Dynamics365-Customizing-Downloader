@@ -7,19 +7,19 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       d:DesignHeight="300" d:DesignWidth="850">
 
     <Grid>
-        <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="Managed" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="128"/>
-        <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" Width="128"/>
+        <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="Managed" HorizontalAlignment="Left" Margin="10,84.35,0,0" VerticalAlignment="Top" Width="128"/>
+        <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,107.35,0,0" VerticalAlignment="Top" Width="128" d:LayoutOverrides="VerticalAlignment"/>
 
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="547" Click="btn_download_Click" Height="31" />
-        <DataGrid x:Name="Dtg_Solutions" Margin="143,110,0,47" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
+        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="203,37.96,0,0" VerticalAlignment="Top" Width="449.849" Click="btn_download_Click" Height="31" />
+        <DataGrid x:Name="Dtg_Solutions" Margin="143,81.05,0,75.95" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header="" />
                 <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="200" />
                 <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
-                </DataGrid.Columns>
+            </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="562,74,0,0" VerticalAlignment="Top" Width="287" Height="31" Click="Btn_Reload_Click"/>
+        <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="661.846,37.96,0,0" VerticalAlignment="Top" Width="178.154" Height="31" Click="Btn_Reload_Click"/>
         <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188" SelectionChanged="Cbx_Connection_SelectionChanged"/>
         <Label Content="Connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
     </Grid>

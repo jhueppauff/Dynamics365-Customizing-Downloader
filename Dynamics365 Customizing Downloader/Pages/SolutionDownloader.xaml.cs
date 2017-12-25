@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
 
@@ -55,8 +56,7 @@
             {
                 if (Cbx_Connection.SelectedItem != null)
                 {
-                    Cbx_Connection.IsEnabled = false;
-                    Core.Xrm.CrmConnection crmConnection = (Core.Xrm.CrmConnection)Cbx_Connection.SelectedItem;
+                    Core.Xrm.CrmConnection crmConnection = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey).SingleOrDefault(x => x.Name == connectionNane);
 
                     this.Dtg_Solutions.ItemsSource = null;
                     MainWindow.SetProgress(true);
@@ -164,6 +164,10 @@
             {
                 // Ignore File Not found
             }
+            catch (Exception ex)
+            {
+                SolutionDownloader.Log.Error(ex.Message, ex);
+            }
         }
 
         private void btn_download_Click(object sender, RoutedEventArgs e)
@@ -173,7 +177,7 @@
 
         private void Btn_Reload_Click(object sender, RoutedEventArgs e)
         {
-
+            this.LoadSolutions(this.Cbx_Connection.SelectedItem.ToString());
         }
 
         private void Cbx_Connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
