@@ -17,11 +17,10 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250" />
                 <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="200" />
                 <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding LocalVersion}" Header="Local Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
-            </DataGrid.Columns>
+                </DataGrid.Columns>
         </DataGrid>
         <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="562,74,0,0" VerticalAlignment="Top" Width="287" Height="31" Click="Btn_Reload_Click"/>
-        <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188"/>
+        <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188" SelectionChanged="Cbx_Connection_SelectionChanged"/>
         <Label Content="Connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
