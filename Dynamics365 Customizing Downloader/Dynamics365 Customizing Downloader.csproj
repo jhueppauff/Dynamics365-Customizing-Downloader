@@ -204,10 +204,10 @@
     </Compile>
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
-    <Compile Include="Pages\MenuItem.cs" />
     <Compile Include="Pages\SolutionDownloader.xaml.cs">
       <DependentUpon>SolutionDownloader.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\MenuItem.cs" />
     <Compile Include="Pages\SolutionSelector.xaml.cs">
       <DependentUpon>SolutionSelector.xaml</DependentUpon>
     </Compile>

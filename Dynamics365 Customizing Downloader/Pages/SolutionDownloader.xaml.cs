@@ -4,9 +4,9 @@
     using System.Windows.Controls;
 
     /// <summary>
-    /// Interaction logic for SolutionDownloader.xaml
+    /// Interaction logic for SolutionDownloader
     /// </summary>
-    public partial class SolutionDownloader : Page
+    public partial class SolutionDownloader : UserControl
     {
         /// <summary>
         /// Log4Net Logger
