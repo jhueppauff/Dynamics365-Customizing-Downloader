@@ -7,8 +7,8 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       d:DesignHeight="300" d:DesignWidth="850">
 
     <Grid>
-        <CheckBox x:Name="Cbx_IsManaged" Content="Managed" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="128"/>
-        <CheckBox x:Name="Cbx_IsUnmanaged" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" Width="128"/>
+        <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="Managed" HorizontalAlignment="Left" Margin="10,110,0,0" VerticalAlignment="Top" Width="128"/>
+        <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,133,0,0" VerticalAlignment="Top" Width="128"/>
 
         <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" Width="547" Click="btn_download_Click" Height="31" />
         <DataGrid x:Name="Dtg_Solutions" Margin="143,110,0,47" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
