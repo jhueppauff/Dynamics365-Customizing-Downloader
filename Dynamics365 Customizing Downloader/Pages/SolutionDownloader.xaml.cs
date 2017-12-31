@@ -25,7 +25,7 @@
         /// <summary>
         /// Selected CRM Connection
         /// </summary>
-        private string selectedCrmConnection;
+        private Core.Xrm.CrmConnection selectedCrmConnection;
 
         /// <summary>
         /// List of all CRM Solutions/>
@@ -65,7 +65,7 @@
                     this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
                     this.worker.RunWorkerAsync();
 
-                    this.selectedCrmConnection = crmConnection.Name;
+                    this.selectedCrmConnection = crmConnection;
                     this.Btn_Reload.IsEnabled = true;
                 }
             }
@@ -98,8 +98,7 @@
             {
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
-                    Core.Xrm.CrmConnection crmConnection = crmConnections.Find(x => x.Name == this.selectedCrmConnection);
+                    Core.Xrm.CrmConnection crmConnection = selectedCrmConnection;
 
                     crmServiceClient = toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString);
 
@@ -170,9 +169,41 @@
             }
         }
 
-        private void btn_download_Click(object sender, RoutedEventArgs e)
+        private void Btn_download_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (Cbx_IsManaged.IsChecked == false && Cbx_IsUnmanaged.IsChecked == false)
+            {
+                MessageBox.Show("Please select at least one Solution Type", "Missing Solution Type", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            if (Dtg_Solutions.ItemsSource == null)
+            {
+                MessageBox.Show("Please connect to CRM and wait for the Background Job fetching the CRM Solutions", "Solutions are empty", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            List<Core.Xrm.CrmSolution> crmSolutionList = new List<Core.Xrm.CrmSolution>();
+            int downloadCounter = 0;
+
+            foreach (Core.Xrm.CrmSolution crmSolution in Dtg_Solutions.ItemsSource)
+            {
+                if (crmSolution.DownloadIsChecked)
+                {
+                    downloadCounter++;
+                    crmSolutionList.Add(crmSolution);
+                }
+            }
+
+            if (downloadCounter != 0)
+            {
+                Controls.DownloadDialog downloadDialog = new Controls.DownloadDialog(selectedCrmConnection, crmSolutionList);
+                
+            }
+            else
+            {
+                MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Btn_Reload_Click(object sender, RoutedEventArgs e)

@@ -11,6 +11,7 @@
 namespace Dynamics365CustomizingDownloader.Controls
 {
     using System;
+    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Windows.Controls;
 
@@ -29,11 +30,21 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
+        /// <summary>
+        /// Crm Connection
+        /// </summary>
         private Core.Xrm.CrmConnection crmConnection;
 
-        public DownloadDialog()
+        /// <summary>
+        /// List of all CRM Soltuions to Download
+        /// </summary>
+        private List<Core.Xrm.CrmSolution> crmSolutions;
+
+        public DownloadDialog(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions)
         {
             InitializeComponent();
+            this.crmConnection = crmConnection;
+            this.crmSolutions = crmSolutions;
         }
 
         public DownloadDialog(string solutionName, Core.Xrm.CrmConnection connection)
