@@ -121,6 +121,7 @@
     <Compile Include="Xrm\CRMConnectionException.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />
+    <Compile Include="Xrm\ICrmConnectionException.cs" />
     <Compile Include="Xrm\ToolingConnector.cs" />
   </ItemGroup>
   <ItemGroup>
