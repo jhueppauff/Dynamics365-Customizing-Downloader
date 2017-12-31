@@ -56,7 +56,15 @@ namespace Dynamics365CustomizingDownloader.Controls
 
         private void DownloadSolution(string solutionName)
         {
+            try
+            {
 
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw;
+            }
         }
 
         #region IDisposable Support
@@ -70,9 +78,6 @@ namespace Dynamics365CustomizingDownloader.Controls
                 {
                     worker.Dispose();
                 }
-
-                // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
-                // TODO: set large fields to null.
 
                 disposedValue = true;
             }
