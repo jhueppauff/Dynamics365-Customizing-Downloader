@@ -8,9 +8,6 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       d:DesignHeight="300" d:DesignWidth="850">
 
     <Grid>
-        <Popup>
-            <ctr:DownloadDialog></ctr:DownloadDialog>
-        </Popup>
         <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="Managed" HorizontalAlignment="Left" Margin="10,84.35,0,0" VerticalAlignment="Top" Width="128"/>
         <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,107.35,0,0" VerticalAlignment="Top" Width="128" d:LayoutOverrides="VerticalAlignment"/>
 
