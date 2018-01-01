@@ -197,7 +197,7 @@
 
             if (downloadCounter != 0)
             {
-                DownloadSolution downloadSolution = new DownloadSolution(selectedCrmConnection, crmSolutionList);
+                DownloadSolution downloadSolution = new DownloadSolution(selectedCrmConnection, crmSolutionList, (bool)Cbx_IsManaged.IsChecked, (bool)Cbx_IsUnmanaged.IsChecked);
                 downloadSolution.ShowDialog();
             }
             else

@@ -154,18 +154,28 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <param name="crmServiceClient">CRM Service Client</param>
         /// <param name="crmSolutionName">CRM Solution Name</param>
         /// <param name="filePath">File Path</param>
-        public void DownloadSolution(CrmServiceClient crmServiceClient, string crmSolutionName, string filePath)
+        public void DownloadSolution(CrmServiceClient crmServiceClient, string crmSolutionName, string filePath, bool isManaged = false)
         {
             ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
             {
-                Managed = false,
+                Managed = isManaged,
                 SolutionName = crmSolutionName
             };
 
             ExportSolutionResponse exportSolutionResponse = (ExportSolutionResponse)crmServiceClient.Execute(exportSolutionRequest);
 
             byte[] exportXml = exportSolutionResponse.ExportSolutionFile;
-            string filename = Path.Combine(filePath, crmSolutionName + ".zip");
+
+            string filename;
+            if (isManaged)
+            {
+                filename = Path.Combine(filePath, crmSolutionName + "_managed.zip");
+            }
+            else
+            {
+                filename = Path.Combine(filePath, crmSolutionName + ".zip");
+            }
+            
             File.WriteAllBytes(filename, exportXml);
         }
 

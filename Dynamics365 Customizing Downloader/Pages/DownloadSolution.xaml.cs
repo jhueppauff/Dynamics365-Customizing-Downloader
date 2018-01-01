@@ -41,15 +41,38 @@ namespace Dynamics365CustomizingDownloader.Pages
         private Core.Xrm.CrmConnection crmConnection;
 
         /// <summary>
+        /// Local Path
+        /// </summary>
+        private string localPath;
+
+        /// <summary>
+        /// Sum Progress
+        /// </summary>
+        private decimal progress;
+
+        /// <summary>
+        /// Progress Step
+        /// </summary>
+        private decimal progressStep;
+
+        /// <summary>
         /// List of all CRM Soltuions to Download
         /// </summary>
         private List<Core.Xrm.CrmSolution> crmSolutions;
 
-        public DownloadSolution(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions)
+        private bool managed;
+        private bool unmanaged;
+
+        public DownloadSolution(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions, bool managed, bool unmanaged)
         {
             InitializeComponent();
             this.crmConnection = crmConnection;
             this.crmSolutions = crmSolutions;
+            this.managed = managed;
+            this.unmanaged = unmanaged;
+            this.progress = 0;
+            this.progressStep = 100 / crmSolutions.Count;
+            Pgb_downloadProgress.Value = 0;
 
             this.DownloadSolutions();
         }
@@ -58,13 +81,21 @@ namespace Dynamics365CustomizingDownloader.Pages
         {
             try
             {
-                Pgb_downloadProgress.Value = 0;
+                using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+                {
+                    System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                    if (result == System.Windows.Forms.DialogResult.OK)
+                    {
+                        localPath = dialog.SelectedPath.ToString();
+                    }
+                }
 
                 // Background Worker
                 this.worker.DoWork += this.Worker_DoWork;
                 this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-                this.worker.ReportProgress += this.Worker_ReportProgress;
                 this.worker.WorkerReportsProgress = true;
+                this.worker.ProgressChanged += this.Worker_ReportProgress;
                 this.worker.RunWorkerAsync();
             }
             catch (Exception ex)
@@ -81,17 +112,42 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            if (localPath == null)
+            {
+                return;
+            }
 
+            if (crmSolutions == null)
+            {
+                return;
+            }
+
+            if (crmConnection == null)
+            {
+                return;
+            }
+
+            foreach (Core.Xrm.CrmSolution crmSolution in crmSolutions)
+            {
+                if (managed)
+                {
+
+                }
+                Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
+                toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath);
+                progress = progress + progressStep;
+                worker.ReportProgress(Convert.ToInt16(this.progress));
+            }
         }
 
         /// <summary>
         /// Background Worker Event Report Progress
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
-        private void Worker_ReportProgress(object sender, DoWorkEventArgs e)
+        /// <param name="e">The <see cref="ProgressChangedEventArgs"/> instance containing the event data.</param>
+        private void Worker_ReportProgress(object sender, ProgressChangedEventArgs e)
         {
-
+            Pgb_downloadProgress.Value = e.ProgressPercentage;
         }
 
         /// <summary>
@@ -106,6 +162,8 @@ namespace Dynamics365CustomizingDownloader.Pages
                 Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occured while downloading or extracting the solution");
                 errorReport.Show();
             }
+
+            this.Close();
         }
 
         #region IDisposable Support
