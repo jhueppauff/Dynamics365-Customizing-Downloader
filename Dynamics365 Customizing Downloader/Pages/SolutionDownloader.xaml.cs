@@ -197,8 +197,9 @@
 
             if (downloadCounter != 0)
             {
-                Controls.DownloadDialog downloadDialog = new Controls.DownloadDialog(selectedCrmConnection, crmSolutionList);
-                
+                dia_download = new Controls.DownloadDialog(selectedCrmConnection, crmSolutionList);
+                popup.Visibility = Visibility.Visible;
+                popup.IsOpen = true;
             }
             else
             {

@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
+    using System.Threading;
     using System.Windows.Controls;
 
     /// <summary>
@@ -47,18 +48,16 @@ namespace Dynamics365CustomizingDownloader.Controls
             this.crmSolutions = crmSolutions;
         }
 
-        public DownloadDialog(string solutionName, Core.Xrm.CrmConnection connection)
+        public DownloadDialog()
         {
             InitializeComponent();
-            this.crmConnection = connection;
-            DownloadSolution(solutionName);
         }
 
-        private void DownloadSolution(string solutionName)
+        public void DownloadSolution()
         {
             try
             {
-
+                Thread.Sleep(1000);
             }
             catch (Exception ex)
             {

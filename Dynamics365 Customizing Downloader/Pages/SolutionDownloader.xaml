@@ -23,5 +23,8 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="661.846,37.96,0,0" VerticalAlignment="Top" Width="178.154" Height="31" Click="Btn_Reload_Click"/>
         <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188" SelectionChanged="Cbx_Connection_SelectionChanged"/>
         <Label Content="Connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Popup Name="popup" Height="100" Margin="10,94,10,0" VerticalAlignment="Top">
+        <ctr:DownloadDialog x:Name="dia_download" Height="100" Margin="10,94,10,0" VerticalAlignment="Top"/>
+        </Popup>
     </Grid>
 </UserControl>
