@@ -11,11 +11,13 @@
 namespace Dynamics365CustomizingDownloader.Core.Xrm
 {
     using System;
+    using System.Collections;
+    using System.Runtime.Serialization;
 
     /// <summary>
     /// CRM Connection Exception
     /// </summary>
-    public class CRMConnectionException : Exception
+    public class CRMConnectionException : Exception, ICrmConnectionException
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CRMConnectionException"/> class.
@@ -37,8 +39,25 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         /// <param name="message">Exception Message</param>
         /// <param name="inner">Inner Exception Details</param>
-        public CRMConnectionException(string message, Exception inner) : base(message, inner)
+        public CRMConnectionException(string message, Exception innerException) : base(message, innerException)
         {
+        }
+
+        public CRMConnectionException(string helpLink, string source) : this(helpLink)
+        {
+            Source = source;
+        }
+
+        protected CRMConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
+        {
+        }
+
+        public override string HelpLink { get => base.HelpLink; set => base.HelpLink = value; }
+        public override string Source { get => base.Source; set => base.Source = value; }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            base.GetObjectData(info, context);
         }
     }
 }

@@ -139,10 +139,13 @@ namespace Dynamics365CustomizingDownloader
 
             listMenuItems.Add(menuItem);
 
+            Pages.SolutionDownloader solutionDownloader = new Pages.SolutionDownloader();
+
             menuItem = new Pages.MenuItem()
             {
                 Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction \nFuture Release"
+                Description = "Downloads a Solution without extraction",
+                Content = solutionDownloader
             };
 
             listMenuItems.Add(menuItem);
@@ -156,7 +159,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void MenuItemUpdate_Click(object sender, RoutedEventArgs e)
         {
-            this.CheckForUpdate();
+            this.CheckForUpdate(true);
         }
 
         /// <summary>
@@ -193,28 +196,23 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Checks if an Update is available
         /// </summary>
-        private void CheckForUpdate()
+        /// <param name="interactive">Determs if the Check was initialized by a User</param>
+        private void CheckForUpdate(bool interactive = false)
         {
             if (Properties.Settings.Default.CheckForUpdates)
             {
                 Core.Update.UpdateChecker updateChecker = new Core.Update.UpdateChecker();
+
                 if (updateChecker.IsUpdateAvailable($"{Properties.Settings.Default.GitHubAPIURL}/releases/latest"))
                 {
                     PatchNotes patchNotes = new PatchNotes();
                     patchNotes.ShowDialog();
                 }
+                else if (interactive)
+                {
+                    MessageBox.Show("You are running the latest Version", "Already updated", MessageBoxButton.OK, MessageBoxImage.Information);
+                }
             }
-        }
-
-        /// <summary>
-        /// Button Click, Opens the Connection Overview Dialog
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
-        private void MenuItemPatchNotes_Click(object sender, RoutedEventArgs e)
-        {
-            PatchNotes patchNotes = new PatchNotes();
-            patchNotes.Show();
         }
     }
 }
