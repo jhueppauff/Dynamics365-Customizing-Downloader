@@ -131,10 +131,16 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 if (managed)
                 {
-
+                    Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
+                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath, true);
                 }
-                Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
-                toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath);
+
+                if (unmanaged)
+                {
+                    Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
+                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath);
+                }
+
                 progress = progress + progressStep;
                 worker.ReportProgress(Convert.ToInt16(this.progress));
             }
