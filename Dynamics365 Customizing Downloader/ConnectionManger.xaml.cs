@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="ConnectionManger.xaml.cs" company="None">
+// <copyright file="ConnectionManger.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -10,29 +10,30 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Collections.Generic;
-    using System.ComponentModel;
     using System.Windows;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// Interaction logic for ConnectionManger
     /// </summary>
-    public partial class ConnectionManger : Window
+    public partial class ConnectionManger : Window, IDisposable
     {
         /// <summary>
-        /// BackGround Worker
+        /// Log4Net Logger
         /// </summary>
-        private readonly BackgroundWorker worker = new BackgroundWorker();
-
-        /// <summary>
-        /// CRM Service Client
-        /// </summary>
-        private Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient;
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// CRM Connection
         /// </summary>
-        private Xrm.CrmConnection crmConnection;
+        private Core.Xrm.CrmConnection crmConnection;
+
+        /// <summary>
+        /// To detect redundant calls
+        /// </summary>
+        private bool disposedValue = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ConnectionManger"/> class.
@@ -40,6 +41,35 @@ namespace Dynamics365CustomizingDownloader
         public ConnectionManger()
         {
             this.InitializeComponent();
+            this.tbx_connectionName.Visibility = Visibility.Hidden;
+            this.Lbl_ConnectionName.Visibility = Visibility.Hidden;
+        }
+
+        /// <summary>
+        /// implement the disposable pattern
+        /// </summary>
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// implement the disposable pattern
+        /// </summary>
+        /// <param name="disposing">If dispose is already triggered</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    // Nothing to dispose
+                }
+
+                this.disposedValue = true;
+            }
         }
 
         /// <summary>
@@ -51,25 +81,40 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector();
-                this.crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
-
-                if (this.crmServiceClient != null)
+                using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    this.crmConnection = new Xrm.CrmConnection
+                    CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
+                    if (crmServiceClient != null && crmServiceClient.IsReady)
                     {
-                        ConnectionString = this.tbx_connectionString.Text,
-                        Name = this.crmServiceClient.ConnectedOrgFriendlyName
-                    };
+                        this.crmConnection = new Core.Xrm.CrmConnection
+                        {
+                            ConnectionID = Guid.NewGuid(),
+                            ConnectionString = this.tbx_connectionString.Text,
+                            Name = crmServiceClient.ConnectedOrgFriendlyName
+                        };
 
-                    tbx_connectionName.IsReadOnly = false;
-                    tbx_connectionName.Text = this.crmConnection.Name;
-                    btn_save.IsEnabled = true;
+                        this.tbx_connectionName.IsReadOnly = false;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.tbx_connectionName.Text = this.crmConnection.Name;
+                        this.Lbl_ConnectionName.Visibility = Visibility.Visible;
+                        this.tbx_connectionName.Visibility = Visibility.Visible;
+                        btn_save.IsEnabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Unable to open CRM Connection", "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
                 }
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
+
+                ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
 
@@ -85,36 +130,40 @@ namespace Dynamics365CustomizingDownloader
                 try
                 {
                     this.crmConnection.Name = this.tbx_connectionName.Text;
-                    List<Xrm.CrmConnection> crmConnections = StorageExtensions.Load();
+                    List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
 
-                    bool solutionExists = false;
-                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                    bool connectionExists = false;
+                    foreach (Core.Xrm.CrmConnection crmTempConnection in crmConnections)
                     {
                         if (crmTempConnection.Name == this.tbx_connectionName.Text)
                         {
-                            solutionExists = true;
+                            connectionExists = true;
                             MessageBox.Show($"Connection {this.tbx_connectionName.Text} does already exist!", "Connection already exists", MessageBoxButton.OK, MessageBoxImage.Error);
                         }
                     }
 
-                    if (!solutionExists)
+                    if (!connectionExists)
                     {
-                        StorageExtensions.Save(this.crmConnection);
-                        MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
+                        Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
                         this.Close();
                     }
                 }
                 catch (System.IO.FileNotFoundException)
                 {
                     // Ignore Error, in a fresh installation there is no config File
-                    StorageExtensions.Save(this.crmConnection);
-                    MessageBox.Show("Added Connection successfully", "Sucess", MessageBoxButton.OK, MessageBoxImage.Information);
+                    Core.Data.StorageExtensions.Save(this.crmConnection, MainWindow.EncryptionKey);
                     this.Close();
                 }
             }
             catch (System.Exception ex)
             {
-                MessageBox.Show($"An Error occured: {ex.Message}", "An Error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(ex);
+                    errorReport.Show();
+                }
+
+                ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
     }

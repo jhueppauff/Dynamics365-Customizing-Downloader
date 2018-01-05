@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" company="None">
+// <copyright file="AssemblyInfo.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -18,7 +18,7 @@ using System.Windows;
 [assembly: AssemblyTitle("Dynamics365 Customizing Downloader")]
 [assembly: AssemblyDescription("A Downloader and extractor for Dynamics365. See also https://github.com/jhueppauff/Dynamics365-Customizing-Downloader")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("https://github.com/jhueppauff/Dynamics365-Customizing-Downloader")]
 [assembly: AssemblyProduct("Dynamics365 Customizing Downloader")]
 [assembly: AssemblyCopyright("Copyright © Julian Hüppauff 2017")]
 [assembly: AssemblyTrademark("")]
@@ -56,5 +56,8 @@ using System.Windows;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2.0.0.17323")]
-[assembly: AssemblyFileVersion("2.0.0.17323")]
+[assembly: AssemblyVersion("2.6.17350.0")]
+[assembly: AssemblyFileVersion("2.6.17350.0")]
+
+// Log4Net
+[assembly: log4net.Config.XmlConfigurator(Watch = true)]

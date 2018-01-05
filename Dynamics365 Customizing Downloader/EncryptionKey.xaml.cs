@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="EncryptionKey.xaml.cs" company="None">
+// <copyright file="EncryptionKey.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -16,7 +16,6 @@ namespace Dynamics365CustomizingDownloader
     using System.Text;
     using System.Windows;
     using Newtonsoft.Json;
-    using Dynamics365CustomizingDownloader.MultiLanguage;
 
     /// <summary>
     /// Interaction logic for EncryptionKey
@@ -24,11 +23,17 @@ namespace Dynamics365CustomizingDownloader
     public partial class EncryptionKey : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="EncryptionKey"/> class.
         /// </summary>
         public EncryptionKey()
         {
-            this.InitializeComponent();    
+            this.InitializeComponent();
+            Tbx_EncryptionKey.Focus();
         }
 
         /// <summary>
@@ -40,61 +45,22 @@ namespace Dynamics365CustomizingDownloader
         {
             if (Tbx_EncryptionKey.Password != string.Empty)
             {
-                bool keyCorrect = false;
-                if (!File.Exists(StorageExtensions.StoragePath))
+                if (!File.Exists(Core.Data.StorageExtensions.StoragePath))
                 {
                     MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
                     this.Close();
                 }
                 else
                 {
-                    MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
-
-                    // Connections are already created, need to check Encryption Key
-                    List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
-                    using (FileStream fs = File.OpenRead(StorageExtensions.StoragePath))
+                    if (this.ValidateKey())
                     {
-                        StringBuilder stringBuilder = new StringBuilder();
-                        byte[] b = new byte[1024];
-                        UTF8Encoding temp = new UTF8Encoding(true);
-
-                        while (fs.Read(b, 0, b.Length) > 0)
-                        {
-                            stringBuilder.AppendLine(temp.GetString(b));
-                        }
-
-                        // Converts Json to List
-                        crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(stringBuilder.ToString());
-                        try
-                        {
-                            foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
-                            {
-                                crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString);
-                            }
-
-                            keyCorrect = true;
-                        }
-                        catch (Exception)
-                        {
-                            keyCorrect = false;
-                            MessageBox.Show(LocalizedLables.EncryptionKey_MessageBox_KeyDoesNotMatch, MultiLanguage.LocalizedLables.EncryptionKey_MessageBox_KeyDoesNotMatchCaption, MessageBoxButton.OK, MessageBoxImage.Error);
-                            MainWindow.EncryptionKey = null;
-                        }
-
-                        // Close File Stream
-                        fs.Flush();
-                        fs.Close();
-
-                        if (keyCorrect)
-                        {
-                            this.Close();
-                        }
+                        this.Close();
                     }
                 }
             }
             else
             {
-                MessageBox.Show(LocalizedLables.EncryptionKey_MessageBox_NoKeySpecified, LocalizedLables.EncryptionKey_MessageBox_NoKeySpecifiedCaption, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please enter a Encryption Key", "No Key entered", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
 
@@ -108,6 +74,43 @@ namespace Dynamics365CustomizingDownloader
             if (e.Key == System.Windows.Input.Key.Enter)
             {
                 this.Btn_SaveEncryptionKey_Click(this, new RoutedEventArgs());
+            }
+        }
+
+        /// <summary>
+        /// Validates the Encryption Key against the config store
+        /// </summary>
+        /// <returns>Returns <see cref="bool"/>true/false if the key is correct</returns>
+        private bool ValidateKey()
+        {
+            MainWindow.EncryptionKey = Tbx_EncryptionKey.Password;
+
+            // Connections are already created, need to check Encryption Key
+            List<Core.Xrm.CrmConnection> crmConnections;
+
+            using (StreamReader streamReader = new StreamReader(Core.Data.StorageExtensions.StoragePath))
+            {
+                string json = streamReader.ReadToEnd();
+
+                // Converts Json to List
+                crmConnections = JsonConvert.DeserializeObject<List<Core.Xrm.CrmConnection>>(json);
+                try
+                {
+                    foreach (Core.Xrm.CrmConnection crmTempConnection in crmConnections)
+                    {
+                        crmTempConnection.ConnectionString = Core.Data.Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, MainWindow.EncryptionKey);
+                    }
+
+                    streamReader.Close();
+                    return true;
+                }
+                catch (Exception)
+                {
+                    MessageBox.Show("Encryption Key does not match!", "Wrong Encryption Key", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MainWindow.EncryptionKey = null;
+                    EncryptionKey.Log.Error("Encryption Key does not match!");
+                    return false;
+                }
             }
         }
     }

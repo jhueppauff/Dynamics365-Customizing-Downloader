@@ -3,15 +3,12 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ctr="clr-namespace:Dynamics365CustomizingDownloader.Controls" 
              xmlns:classicTheme="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Classic">
-
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="bool2visibility" />
-
         <LinearGradientBrush x:Key="panelBackground" EndPoint="0.5,1" StartPoint="0.5,0">
-            <GradientStop Color="Black" Offset="1" />
+            <GradientStop Color="#FF343461" Offset="1" />
             <GradientStop Color="#FF1B1B1B" />
         </LinearGradientBrush>
-
         <Style x:Key="basicButton" TargetType="{x:Type Button}">
             <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" />
             <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
@@ -47,7 +44,6 @@
                 </Setter.Value>
             </Setter>
         </Style>
-
         <Style x:Key="closeButton" BasedOn="{StaticResource basicButton}" TargetType="Button">
             <Setter Property="VerticalAlignment" Value="Top" />
             <Setter Property="FontFamily" Value="Verdana" />
@@ -58,7 +54,6 @@
             <Setter Property="Margin" Value="15,7" />
             <Setter Property="Background" Value="{x:Null}" />
         </Style>
-
         <Style x:Key="panelMessageText" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Margin" Value="0,11,0,0" />
@@ -69,7 +64,6 @@
             <Setter Property="FontFamily" Value="Arial" />
             <Setter Property="SnapsToDevicePixels" Value="True" />
         </Style>
-
         <Style x:Key="panelSubMessageText" TargetType="{x:Type TextBlock}">
             <Setter Property="HorizontalAlignment" Value="Left" />
             <Setter Property="Margin" Value="0,5" />
@@ -80,25 +74,21 @@
             <Setter Property="SnapsToDevicePixels" Value="True" />
         </Style>
     </UserControl.Resources>
-
     <DockPanel Background="{StaticResource panelBackground}" 
              Visibility="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=IsLoading, Mode=OneWay, Converter={StaticResource bool2visibility}}">
         <Path Data="M0,44.956 L312.00641,44.956" Height="1" Margin="0,0.25,0,0" Stretch="Fill" DockPanel.Dock="Top" Stroke="Black" />
         <Path Data="M0,44.956 L312.00641,44.956" Height="1" Margin="0,0.25,0,0" Stretch="Fill" DockPanel.Dock="Top" Stroke="#FF2F2F2F" />
-
         <ctr:CircularProgressBar x:Name="progressBar"
                              DockPanel.Dock="Left"
                              HorizontalAlignment="Left"
                              VerticalAlignment="Top"
                              Height="45"
                              Margin="18,10" />
-
         <StackPanel VerticalAlignment="Top">
             <TextBlock x:Name="txtMessage"
                  Style="{StaticResource panelMessageText}" 
                  Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=Message}" 
-                 Foreground="#FFA1C3D2" />
-
+                 Foreground="#FFA1C3D2" ></TextBlock>
             <TextBlock x:Name="txtSubMessage"
                  Style="{StaticResource panelSubMessageText}" 
                  Text="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}, Path=SubMessage}" 

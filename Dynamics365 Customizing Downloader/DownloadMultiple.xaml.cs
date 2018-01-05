@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="DownloadMultiple.xaml.cs" company="None">
+// <copyright file="DownloadMultiple.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
 // Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
@@ -26,9 +26,14 @@ namespace Dynamics365CustomizingDownloader
     public partial class DownloadMultiple : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
         /// </summary>
-        private static TextBox statusTextBox;
+        private static TextBox statusTextBox = new TextBox();
 
         /// <summary>
         /// BackGround Worker
@@ -46,19 +51,9 @@ namespace Dynamics365CustomizingDownloader
         private bool panelLoading;
 
         /// <summary>
-        /// Indicates if an error occurred
-        /// </summary>
-        private bool errorOccured = false;
-
-        /// <summary>
         /// Panel Message
         /// </summary>
         private string panelMainMessage = "Please wait, downloading and extracting Solution";
-
-        /// <summary>
-        /// Identifies if all Downloads are done
-        /// </summary>
-        private int downloadIndex = 0;
 
         /// <summary>
         /// Selected local Path
@@ -70,7 +65,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         /// <param name="crmConnection"><see cref="Xrm.CrmConnection"/> for the XRM Connector</param>
         /// <param name="crmSolutions"><see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download</param>
-        public DownloadMultiple(Xrm.CrmConnection crmConnection, List<Xrm.CrmSolution> crmSolutions)
+        public DownloadMultiple(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions)
         {
             this.InitializeComponent();
             Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-us");
@@ -81,7 +76,7 @@ namespace Dynamics365CustomizingDownloader
             DownloadMultiple.LogToUI($"CRM Connection: {this.CRMConnection.Name}", true);
             this.CRMSolutions = crmSolutions;
 
-            foreach (Xrm.CrmSolution crmSolution in this.CRMSolutions)
+            foreach (Core.Xrm.CrmSolution crmSolution in this.CRMSolutions)
             {
                 DownloadMultiple.LogToUI($"Added Solution: { crmSolution.UniqueName} to Download List", true);
             }
@@ -105,12 +100,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Gets or sets a <see cref="List{Xrm.CrmSolution}"/> of all Solutions to Download
         /// </summary>
-        public List<Xrm.CrmSolution> CRMSolutions { get; set; }
+        public List<Core.Xrm.CrmSolution> CRMSolutions { get; set; }
 
         /// <summary>
         /// Gets or sets the <see cref="Xrm.CrmConnection"/> for the XRM Connector
         /// </summary>
-        public Xrm.CrmConnection CRMConnection { get; set; }
+        public Core.Xrm.CrmConnection CRMConnection { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether [panel loading].
@@ -238,27 +233,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_close_Click(object sender, RoutedEventArgs e)
         {
-            if (this.downloadIndex > 0 || this.errorOccured)
-            {
-                MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-
-                if (dialogResult == MessageBoxResult.Yes)
-                {
-                    try
-                    {
-                        this.worker.CancelAsync();
-                        this.Close();
-                    }
-                    catch (Exception)
-                    {
-                        this.Close();
-                    }
-                }
-            }
-            else
-            {
-                this.Close();
-            }
+            this.Close();
         }
 
         /// <summary>
@@ -268,26 +243,33 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.errorOccured = false;
-            this.loadingPanel.IsLoading = true;
-            this.selectedPath = tbx_download.Text;
-
-            Xrm.CrmConnection crmConnection = new Xrm.CrmConnection
+            if (this.tbx_download.Text != string.Empty)
             {
-                ConnectionString = this.CRMConnection.ConnectionString,
-                LocalPath = this.selectedPath,
-                Name = this.CRMConnection.Name
-            };
-            this.CRMConnection = crmConnection;
+                this.loadingPanel.IsLoading = true;
+                this.selectedPath = tbx_download.Text;
 
-            // Update Connection
-            StorageExtensions.Update(crmConnection);
+                Core.Xrm.CrmConnection crmConnection = new Core.Xrm.CrmConnection
+                {
+                    ConnectionID = Core.Data.StorageExtensions.FindConnectionIDByName(this.CRMConnection.Name),
+                    ConnectionString = this.CRMConnection.ConnectionString,
+                    LocalPath = this.selectedPath,
+                    Name = this.CRMConnection.Name
+                };
+                this.CRMConnection = crmConnection;
 
-            // Background Worker
-            this.worker.DoWork += this.Worker_DoWork;
-            this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
-            this.worker.WorkerReportsProgress = true;
-            this.worker.RunWorkerAsync();
+                // Update Connection
+                Core.Data.StorageExtensions.Update(crmConnection, MainWindow.EncryptionKey);
+
+                // Background Worker
+                this.worker.DoWork += this.Worker_DoWork;
+                this.worker.RunWorkerCompleted += this.Worker_RunWorkerCompleted;
+                this.worker.WorkerReportsProgress = true;
+                this.worker.RunWorkerAsync();
+            }
+            else
+            {
+                MessageBox.Show("Path can not be empty", "Path empty", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         /// <summary>
@@ -297,6 +279,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
+            Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = null;
             try
             {
                 // Create Folder if it does not exists
@@ -305,12 +288,11 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
-                this.downloadIndex = this.CRMSolutions.Count;
-                foreach (Xrm.CrmSolution solution in this.CRMSolutions)
+                foreach (Core.Xrm.CrmSolution solution in this.CRMSolutions)
                 {
                     if (!this.worker.CancellationPending)
                     {
-                        using (Xrm.ToolingConnector toolingConnector = new Xrm.ToolingConnector())
+                        using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                         {
                             // Delete Solution File if it exists
                             if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
@@ -318,22 +300,41 @@ namespace Dynamics365CustomizingDownloader
                                 File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                             }
 
-                            toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString), solution.UniqueName, this.selectedPath);
+                            crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
 
-                            Xrm.CrmSolutionPackager crmSolutionPackager = new Xrm.CrmSolutionPackager();
-
-                            if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                            try
                             {
-                                Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
-                                LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                                toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
+
+                                Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
+
+                                if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                                {
+                                    Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
+                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                                }
+
+                                string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
+                                DownloadMultiple.UpdateUI(log, false);
+
+                                
                             }
-
-                            crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
-
-                            File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                            LogToUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
-
-                            this.downloadIndex--;
+                            catch (Exception ex)
+                            {
+                                Log.Error(ex.Message, ex);
+                                if (!Properties.Settings.Default.DisableErrorReports)
+                                {
+                                    throw;
+                                }
+                            }
+                            finally
+                            {
+                                if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()))
+                                {
+                                    File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                                }
+                            }
                         }
                     }
                     else
@@ -344,8 +345,21 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
-                this.errorOccured = true;
-                UpdateUI($"An Error occured: {ex.Message}", false);
+                DownloadMultiple.UpdateUI($"An Error occured: {ex.Message}", false);
+                DownloadMultiple.Log.Error(ex.Message, ex);
+
+                // Open Error Report 
+                if (!Properties.Settings.Default.DisableErrorReports)
+                {
+                    throw;
+                }
+            }
+            finally
+            {
+                if (crmServiceClient != null)
+                {
+                    crmServiceClient.Dispose();
+                }
             }
         }
 
@@ -356,6 +370,12 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Error != null)
+            {
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occured while downloading or extracting the solution");
+                errorReport.Show();
+            }
+
             this.loadingPanel.IsLoading = false;
             this.Btn_close.IsEnabled = true;
             DownloadMultiple.LogToUI("---------------");
@@ -370,7 +390,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadWindow_Closing(object sender, CancelEventArgs e)
         {
-            if (this.downloadIndex > 0 || this.errorOccured)
+            if (this.worker.IsBusy)
             {
                 MessageBoxResult dialogResult = MessageBox.Show("Download is still running, are you sure to abort the process?", "Background thread is still active!", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
 
@@ -382,11 +402,30 @@ namespace Dynamics365CustomizingDownloader
                     }
                     catch (Exception)
                     {
+                        // ignore an issue, as the worker should be terminated on dialog close as well.
                     }
                 }
                 else
                 {
                     e.Cancel = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Opens the select Folder dialog
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_SelectFolder_Click(object sender, RoutedEventArgs e)
+        {
+            using (var dialog = new System.Windows.Forms.FolderBrowserDialog())
+            {
+                System.Windows.Forms.DialogResult result = dialog.ShowDialog();
+
+                if (result == System.Windows.Forms.DialogResult.OK)
+                {
+                    tbx_download.Text = dialog.SelectedPath.ToString();
                 }
             }
         }
