@@ -140,6 +140,9 @@ every time you start this application</value>
   <data name="EncryptionKey_MessageBox_NoKeySpecifiedCaption" xml:space="preserve">
     <value>No Key entered</value>
   </data>
+  <data name="ErrorReport_ErrorReportHeader" xml:space="preserve">
+    <value>Oh no, an error occured!</value>
+  </data>
   <data name="MainWindow_Dtg_Solutions_UniqueName" xml:space="preserve">
     <value>Unique Name</value>
   </data>

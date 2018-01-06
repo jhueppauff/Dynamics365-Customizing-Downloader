@@ -9,8 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.MultiLanguage {
-    using System;
-    
     
     /// <summary>
     ///   A strongly-typed resource class, for looking up localized strings, etc.

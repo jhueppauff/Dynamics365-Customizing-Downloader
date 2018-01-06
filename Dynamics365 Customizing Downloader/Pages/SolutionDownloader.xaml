@@ -7,20 +7,20 @@ xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       mc:Ignorable="d"
       d:DesignHeight="300" d:DesignWidth="850">
     <Grid>
-        <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="Managed" HorizontalAlignment="Left" Margin="10,84.35,0,0" VerticalAlignment="Top" Width="128"/>
-        <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="Unmanaged" HorizontalAlignment="Left" Margin="10,107.35,0,0" VerticalAlignment="Top" Width="128" d:LayoutOverrides="VerticalAlignment"/>
-        <Button x:Name="btn_download" Content="Download" HorizontalAlignment="Left" Margin="203,37.96,0,0" VerticalAlignment="Top" Width="449.849" Click="Btn_download_Click" Height="31" />
+        <CheckBox x:Name="Cbx_IsManaged" Foreground="White" Content="{StaticResource SolutionDownloader_Cbx_IsManaged}" HorizontalAlignment="Left" Margin="10,84.35,0,0" VerticalAlignment="Top" Width="128"/>
+        <CheckBox x:Name="Cbx_IsUnmanaged" Foreground="White" Content="{StaticResource SolutionDownloader_Cbx_IsUnManaged}" HorizontalAlignment="Left" Margin="10,107.35,0,0" VerticalAlignment="Top" Width="128" d:LayoutOverrides="VerticalAlignment"/>
+        <Button x:Name="btn_download" Content="{StaticResource SolutionDownloader_btn_download}" HorizontalAlignment="Left" Margin="203,37.96,0,0" VerticalAlignment="Top" Width="449.849" Click="Btn_download_Click" Height="31" />
         <DataGrid x:Name="Dtg_Solutions" Margin="143,81.05,0,75.95" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding DownloadIsChecked}" Header="" />
-                <DataGridTextColumn Binding="{Binding UniqueName}" Header="Unique Name" IsReadOnly="True" Width="250" />
-                <DataGridTextColumn Binding="{Binding Name}" Header="Solution Name" IsReadOnly="True" Width="200" />
-                <DataGridTextColumn Binding="{Binding Version}" Header="CRM Version" IsReadOnly="True" Width="100"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding UniqueName}" Header="{StaticResource SolutionDownloader_Grid_Unique_Name}" IsReadOnly="True" Width="250" />
+                <DataGridTextColumn Binding="{Binding Name}" Header="{StaticResource SolutionDownloader_Grid_Solution_Name}" IsReadOnly="True" Width="200" />
+                <DataGridTextColumn Binding="{Binding Version}" Header="{StaticResource SolutionDownloader_Grid_CRM_Version}" IsReadOnly="True" Width="100"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button x:Name="Btn_Reload" Content="Reload" IsEnabled="False" HorizontalAlignment="Left" Margin="661.846,37.96,0,0" VerticalAlignment="Top" Width="178.154" Height="31" Click="Btn_Reload_Click"/>
+        <Button x:Name="Btn_Reload" Content="{StaticResource SolutionDownloader_Btn_Reload}" IsEnabled="False" HorizontalAlignment="Left" Margin="661.846,37.96,0,0" VerticalAlignment="Top" Width="178.154" Height="31" Click="Btn_Reload_Click"/>
         <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188" SelectionChanged="Cbx_Connection_SelectionChanged"/>
-        <Label Content="Connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="{StaticResource SolutionDownloader_Lbl_connection}" x:Name="Lbl_connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
         <Popup Name="popup" IsOpen="False" Margin="10,94,10,106">
             <ctr:DownloadDialog x:Name="dia_download" Height="100" Visibility="Visible" VerticalAlignment="Top"/>
         </Popup>

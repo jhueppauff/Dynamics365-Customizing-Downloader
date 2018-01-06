@@ -1,0 +1,49 @@
+﻿<ResourceDictionary 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:system="clr-namespace:System;assembly=mscorlib">
+    <system:String x:Key="lang">en-US</system:String>
+    <!-- Encryption Key -->
+    <system:String x:Key="EncryptionKey_Lbl_PleaseChooseEncryptionKey" xml:space="preserve">Please choose an Encryption Key/Password&#13; for your CRM Connections :</system:String>
+    <system:String x:Key="EncryptionKey_Btn_SaveEncryptionKey">Save</system:String>
+    <system:String x:Key="EncryptionKey_Lbl_PleaseRemember" xml:space="preserve">Please remember this Key, as you need it&#13;every time you start this application</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatch">Encryption Key does not match!</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatchCaption">Wrong Encryption Key!</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecified">Please enter a Encryption Key</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecifiedCaption">No Key entered</system:String>
+    <!-- Error Report -->
+    <system:String x:Key="ErrorReport_ErrorReportHeader">Oh no, an error occured!</system:String>
+    <system:String x:Key="ErrorReport_Lbl_errorMessage">Error Message:</system:String>
+    <system:String x:Key="ErrorReport_Lbl_stackTrace">Stack Trace:</system:String>
+    <system:String x:Key="ErrorReport_Btn_close">Close</system:String>
+    <system:String x:Key="ErrorReport_Btn_Report">Report Error</system:String>
+    <system:String x:Key="ErrorReport">Error Report</system:String>
+    <!-- Main Window -->
+    <system:String x:Key="MainWindow_Lbl_Connection">Connection:</system:String>
+    <system:String x:Key="MainWindow_Btn_MenuItem_CheckUpdate">Updates</system:String>
+    <system:String x:Key="MainWindow_Btn_OpenConnectionOverview">Connection Overview</system:String>
+    <system:String x:Key="MainWindow_Btn_Exit">Exit</system:String>
+    <!-- Solution Downloader/Selector -->
+    <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Unique Name</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_CRM_Version">CRM Version</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_Local_Version">Local Version</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_Download">Download</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_OpenCreateNewConnection">Create new Repository</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_Reload">Reload</system:String>
+    <system:String x:Key="SolutionDownloader_Cbx_IsManaged">Managed</system:String>
+    <system:String x:Key="SolutionDownloader_Cbx_IsUnManaged">Unmanaged</system:String>
+    <system:String x:Key="SolutionDownloader_btn_download">Download</system:String>
+    <system:String x:Key="SolutionDownloader_Lbl_connection">Connection</system:String>
+    <!-- Download Solution -->
+    <system:String x:Key="DownloadSolution">Download Solution</system:String>
+    <system:String x:Key="DownloadSolution_btn_cancel">Cancel</system:String>
+    <system:String x:Key="DownloadSolution_lbl_download">Download :</system:String>
+    <!-- Connection Manager -->
+    <system:String x:Key="ConnectionManger">Connection Manger</system:String>
+    <!-- Patch Notes -->
+    <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Version Number:</system:String>
+    <system:String x:Key="PatchNotes_Lbl_CreatedAt">Created at:</system:String>
+    <!-- Shared -->
+    <system:String x:Key="Loading">Please wait ...</system:String>
+</ResourceDictionary>
