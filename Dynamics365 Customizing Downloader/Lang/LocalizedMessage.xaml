@@ -40,10 +40,36 @@
     <system:String x:Key="DownloadSolution_btn_cancel">Cancel</system:String>
     <system:String x:Key="DownloadSolution_lbl_download">Download :</system:String>
     <!-- Connection Manager -->
-    <system:String x:Key="ConnectionManger">Connection Manger</system:String>
+    <system:String x:Key="ConnectionManager">Connection Manger</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_ConnectionString">Connection String:</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_ConnectionName">Connection Name:</system:String>
+    <system:String x:Key="ConnectionManager_btn_save">Save</system:String>
+    <system:String x:Key="ConnectionManager_Btn_Connect">Connect</system:String>
     <!-- Patch Notes -->
     <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Version Number:</system:String>
     <system:String x:Key="PatchNotes_Lbl_CreatedAt">Created at:</system:String>
+    <system:String x:Key="PatchNotes_Lbl_prerelease">PreRelease:</system:String>
+    <system:String x:Key="PatchNotes_Code_IsPreReleaseTrue">True</system:String>
+    <system:String x:Key="PatchNotes_Code_IsPreReleaseFalse">False</system:String>
+    <system:String x:Key="PatchNotes_Btn_Skip">False</system:String>
+    <system:String x:Key="PatchNotes_Btn_Download">Awesome! Download new Version</system:String>
+    <system:String x:Key="PatchNotes_Lbl_PatchNotesHeader">There is a new Version available. Do you want to get the latest Update?</system:String>
+    <!-- Download Multiple -->
+    <system:String x:Key="DownloadMultiple">Download Multiple</system:String>
+    <system:String x:Key="DownloadMultiple_Lbl_FolderPath">Folder Path:</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_Download">Download</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_close">Close</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_SelectFolder" xml:space="preserve">Select&#xD;&#xA;Folder</system:String>
+    <!-- Connection Overview -->
+    <system:String x:Key="ConnectionOverview_Btn_DeleteRepository">Delete Repository</system:String>
+    <system:String x:Key="ConnectionOverview_Btn_TestConnection">Test Connection</system:String>
+    <system:String x:Key="ConnectionOverview_Btn_SaveConnection">Save</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_ConnectionName">Connection Name:</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Connection String:</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_Connection">Connection:</system:String>
+    <system:String x:Key="ConnectionOverview">Connection Overview</system:String>
     <!-- Shared -->
     <system:String x:Key="Loading">Please wait ...</system:String>
+    <system:String x:Key="True">True</system:String>
+    <system:String x:Key="False">False</system:String>
 </ResourceDictionary>

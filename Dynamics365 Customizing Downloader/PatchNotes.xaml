@@ -26,15 +26,15 @@
         <Label x:Name="Lbl_VersionNumber" Content="1.0.0.0" HorizontalAlignment="Left" Margin="11,78,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Lbl_CreatedAt" Content="{StaticResource PatchNotes_Lbl_CreatedAt}" HorizontalAlignment="Left" Margin="144,52,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Lbl_ReleaseDate" Content="2017-03-01 17:30" HorizontalAlignment="Left" Margin="144,78,0,0" VerticalAlignment="Top"/>
-        <Label Content="PreRelease:" HorizontalAlignment="Left" Margin="303,52,0,0" VerticalAlignment="Top"/>
+        <Label Content="{StaticResource PatchNotes_Lbl_prerelease}" x:Name="Lbl_prerelease" HorizontalAlignment="Left" Margin="303,52,0,0" VerticalAlignment="Top"/>
         <Label x:Name="Lbl_IsPreRelease" Content="False" HorizontalAlignment="Left" Margin="303,78,0,0" VerticalAlignment="Top"/>
         <Grid Margin="2,0,10,0" Height="44" VerticalAlignment="Bottom">
-            <Button x:Name="Btn_Skip" Content="Skip" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Btn_Skip_Click"/>
-            <Button x:Name="Btn_Download" Content="Awesome! Download new Version" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="432" Height="24" Click="Btn_Download_Click"/>
+            <Button x:Name="Btn_Skip" Content="{StaticResource PatchNotes_Btn_Skip}" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" Height="24" Click="Btn_Skip_Click"/>
+            <Button x:Name="Btn_Download" Content="{StaticResource PatchNotes_Btn_Download}" HorizontalAlignment="Left" Margin="90,10,0,0" VerticalAlignment="Top" Width="432" Height="24" Click="Btn_Download_Click"/>
         </Grid>
         <Grid Margin="10,109,10,44">
             <TextBox x:Name="Tbx_PatchNotes" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Hidden"/>
         </Grid>
-        <Label x:Name="Lbl_PatchNotesHeader" Content="There is a new Version available. Do you want to get the latest Update?" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" FontSize="14"/>
+        <Label x:Name="Lbl_PatchNotesHeader" Content="{StaticResource PatchNotes_Lbl_PatchNotesHeader}" HorizontalAlignment="Left" Margin="11,10,0,0" VerticalAlignment="Top" FontSize="14"/>
     </Grid>
 </Window>
