@@ -62,5 +62,5 @@ using System.Windows;
 
 // Log4Net
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
-[assembly: NeutralResourcesLanguage("en-US")]
+[assembly: NeutralResourcesLanguage("")]
 
