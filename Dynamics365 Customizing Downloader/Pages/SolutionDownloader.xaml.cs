@@ -1,4 +1,14 @@
-﻿namespace Dynamics365CustomizingDownloader.Pages
+﻿//-----------------------------------------------------------------------
+// <copyright file="SolutionDownloader.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// Copyright 2017 Jhueppauff
+// MIT  
+// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
+// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+// </copyright>
+//-----------------------------------------------------------------------
+
+namespace Dynamics365CustomizingDownloader.Pages
 {
     using System;
     using System.Collections.Generic;
@@ -32,12 +42,15 @@
         /// </summary>
         private List<Core.Xrm.CrmSolution> crmSolutions = new List<Core.Xrm.CrmSolution>();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SolutionDownloader"/> class.
+        /// </summary>
         public SolutionDownloader()
         {
             try
             {
-                InitializeComponent();
-                LoadConnections();
+                this.InitializeComponent();
+                this.LoadConnections();
             }
             catch (System.Exception ex)
             {
@@ -50,6 +63,7 @@
         /// <summary>
         /// Loads every Solution into Grid
         /// </summary>
+        /// <param name="connectionNane">CRM Connection</param>
         private void LoadSolutions(string connectionNane)
         {
             try
@@ -98,7 +112,7 @@
             {
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
-                    Core.Xrm.CrmConnection crmConnection = selectedCrmConnection;
+                    Core.Xrm.CrmConnection crmConnection = this.selectedCrmConnection;
 
                     crmServiceClient = toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString);
 
@@ -169,6 +183,11 @@
             }
         }
 
+        /// <summary>
+        /// Starts the Download
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_download_Click(object sender, RoutedEventArgs e)
         {
             if (Cbx_IsManaged.IsChecked == false && Cbx_IsUnmanaged.IsChecked == false)
@@ -197,7 +216,7 @@
 
             if (downloadCounter != 0)
             {
-                DownloadSolution downloadSolution = new DownloadSolution(selectedCrmConnection, crmSolutionList, (bool)Cbx_IsManaged.IsChecked, (bool)Cbx_IsUnmanaged.IsChecked);
+                DownloadSolution downloadSolution = new DownloadSolution(this.selectedCrmConnection, crmSolutionList, (bool)this.Cbx_IsManaged.IsChecked, (bool)this.Cbx_IsUnmanaged.IsChecked);
                 downloadSolution.ShowDialog();
             }
             else
@@ -206,11 +225,21 @@
             }
         }
 
+        /// <summary>
+        /// Reloads the Solutions for the selected Connection
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Reload_Click(object sender, RoutedEventArgs e)
         {
             this.LoadSolutions(this.Cbx_Connection.SelectedItem.ToString());
         }
 
+        /// <summary>
+        /// Loads the Solution if the Connection Section Changes
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Cbx_Connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.LoadSolutions(this.Cbx_Connection.SelectedItem.ToString());

@@ -21,6 +21,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// Busy Indicator
+        /// </summary>
+        private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
+
+        /// <summary>
         /// Dispose bool
         /// </summary>
         private bool disposed = false;
@@ -31,18 +36,13 @@ namespace Dynamics365CustomizingDownloader
         private List<Pages.MenuItem> menuItems;
 
         /// <summary>
-        /// Busy Indicator
-        /// </summary>
-        private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
-
-        /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         public MainWindow()
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            busyIndicator = prg_progress;
+            busyIndicator = this.prg_progress;
             MainWindow.SetProgress(false);
 
             if (Properties.Settings.Default.DebuggingEnabled)
@@ -85,21 +85,21 @@ namespace Dynamics365CustomizingDownloader
         public static string EncryptionKey { get; set; }
 
         /// <summary>
-        /// Implement IDisposable.
-        /// </summary>
-        public void Dispose()
-        {
-            this.Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        /// <summary>
         /// Sets the Progress Indicator to the specific state
         /// </summary>
         /// <param name="state">IsBusy State <see cref="bool"/></param>
         public static void SetProgress(bool state)
         {
             MainWindow.busyIndicator.IsBusy = state;
+        }
+
+        /// <summary>
+        /// Implement IDisposable.
+        /// </summary>
+        public void Dispose()
+        {
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -132,8 +132,8 @@ namespace Dynamics365CustomizingDownloader
             solutionSelector.ReloadConnections();
             Pages.MenuItem menuItem = new Pages.MenuItem
             {
-                Name = "Customizing Downloader",
-                Description = "Downloads and Extracts CRM Solutions",
+                Name = (string)Application.Current.FindResource("MainWindow_Code_Customizing_Downloader"),
+                Description = (string)Application.Current.FindResource("MainWindow_Code_Customizing_Downloader_Description"),
                 Content = solutionSelector
             };
 
@@ -143,8 +143,8 @@ namespace Dynamics365CustomizingDownloader
 
             menuItem = new Pages.MenuItem()
             {
-                Name = "Solution Downloader",
-                Description = "Downloads a Solution without extraction",
+                Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader"),
+                Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader_Description"),
                 Content = solutionDownloader
             };
 
@@ -196,7 +196,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Checks if an Update is available
         /// </summary>
-        /// <param name="interactive">Determs if the Check was initialized by a User</param>
+        /// <param name="interactive">Determines if the Check was initialized by a User</param>
         private void CheckForUpdate(bool interactive = false)
         {
             if (Properties.Settings.Default.CheckForUpdates)
@@ -210,7 +210,7 @@ namespace Dynamics365CustomizingDownloader
                 }
                 else if (interactive)
                 {
-                    MessageBox.Show("You are running the latest Version", "Already updated", MessageBoxButton.OK, MessageBoxImage.Information);
+                    MessageBox.Show((string)Application.Current.FindResource("MainWindow_Code_RunningLatestVersion"), (string)Application.Current.FindResource("MainWindow_Code_RunningLatestVersion_Caption"), MessageBoxButton.OK, MessageBoxImage.Information);
                 }
             }
         }

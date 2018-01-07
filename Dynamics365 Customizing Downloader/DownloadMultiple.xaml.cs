@@ -316,8 +316,6 @@ namespace Dynamics365CustomizingDownloader
 
                                 string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName));
                                 DownloadMultiple.UpdateUI(log, false);
-
-                                
                             }
                             catch (Exception ex)
                             {

@@ -59,7 +59,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 }
                 else
                 {
-                    CRMConnectionException connectionException = new CRMConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException.InnerException);
+                    CrmConnectionException connectionException = new CrmConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException.InnerException);
                     throw connectionException;
                 }
             }
@@ -96,11 +96,11 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                     // CRM Client is empty
                     if (crmServiceClient.LastCrmException != null)
                     {
-                        throw new CRMConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException);
+                        throw new CrmConnectionException(crmServiceClient.LastCrmError, crmServiceClient.LastCrmException);
                     }
                     else
                     {
-                        throw new CRMConnectionException(crmServiceClient.LastCrmError);
+                        throw new CrmConnectionException(crmServiceClient.LastCrmError);
                     }
                 }
             }

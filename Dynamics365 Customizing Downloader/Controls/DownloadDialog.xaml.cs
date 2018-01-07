@@ -32,64 +32,65 @@ namespace Dynamics365CustomizingDownloader.Controls
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
-        /// Crm Connection
+        /// CRM Connection
         /// </summary>
         private Core.Xrm.CrmConnection crmConnection;
 
         /// <summary>
-        /// List of all CRM Soltuions to Download
+        /// List of all CRM Solutions to Download
         /// </summary>
         private List<Core.Xrm.CrmSolution> crmSolutions;
 
+        /// <summary>
+        /// detects redundant calls
+        /// </summary>
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadDialog"/> class.
+        /// </summary>
+        /// <param name="crmConnection">CRM Connection for the Download</param>
+        /// <param name="crmSolutions">CRM Solutions to Download</param>
         public DownloadDialog(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.crmConnection = crmConnection;
             this.crmSolutions = crmSolutions;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadDialog"/> class.
+        /// </summary>
         public DownloadDialog()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        public void DownloadSolution()
-        {
-            try
-            {
-                Thread.Sleep(1000);
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex.Message, ex);
-                throw;
-            }
-        }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    worker.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-
-        // This code added to correctly implement the disposable pattern.
+        /// <summary>
+        /// This code added to correctly implement the disposable pattern.
+        /// </summary>
         void IDisposable.Dispose()
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-        #endregion
+
+        /// <summary>
+        /// Dispose objects
+        /// </summary>
+        /// <param name="disposing">Determines if objects should be disposed</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.worker.Dispose();
+                }
+
+                this.disposedValue = true;
+            }
+        }
     }
 }
