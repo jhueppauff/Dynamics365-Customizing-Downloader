@@ -43,21 +43,24 @@
         <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
             <materialDesign:DrawerHost.LeftDrawerContent>
                 <DockPanel MinWidth="212">
-                    <ListBox x:Name="Lbx_Menu" ItemsSource="{Binding}" ItemTemplate="{StaticResource MenuItems}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,67,5,0" Width="267" />
+                    <ListBox x:Name="Lbx_Menu" ItemsSource="{Binding}" ItemTemplate="{DynamicResource MenuItems}" HorizontalContentAlignment="Stretch" IsSynchronizedWithCurrentItem="True" Margin="5,67,5,0" Width="267" />
                 </DockPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <DockPanel>
                 <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                             Mode="PrimaryMid" DockPanel.Dock="Top">
                     <DockPanel>
-                        <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
+                        <ToggleButton Style="{DynamicResource MaterialDesignHamburgerToggleButton}" IsChecked="False"
                                         x:Name="MenuToggleButton"/>
                         <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                             <StackPanel>
-                                <Button Content="Updates" Click="MenuItemUpdate_Click"></Button>
-                                <Button Content="Connection Overview" Name="Btn_OpenConnectionOverview" Click="Btn_OpenConnectionOverview_Click"></Button>
+                                <Button Content="{DynamicResource MainWindow_Btn_MenuItem_CheckUpdate}" x:Name="Btn_MenuItem_CheckUpdate" Click="MenuItemUpdate_Click"></Button>
+                                <Button Content="{DynamicResource MainWindow_Btn_OpenConnectionOverview}" Name="Btn_OpenConnectionOverview" Click="Btn_OpenConnectionOverview_Click"></Button>
                                 <Separator/>
-                                <Button Content="Exit" Click="MenuItemExit_Click"/>
+                                <Button Content="{DynamicResource MainWindow_Btn_ChangeLanaguageGerman}" x:Name="Btn_ChangeLanguageGerman" Click="Btn_ChangeLanguageGerman_Click"></Button>
+                                <Button Content="{DynamicResource MainWindow_Btn_ChangeLanaguageEnglish}" x:Name="Btn_ChangeLanguageEnglish" Click="Btn_ChangeLanguageEnglish_Click"></Button>
+                                <Separator></Separator>
+                                <Button Content="{DynamicResource MainWindow_Btn_Exit}" x:Name="Btn_Exit" Click="MenuItemExit_Click"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Dynamics365CustomizingDownloader</TextBlock>
@@ -69,7 +72,7 @@
                         <xctk:BusyIndicator.BusyContentTemplate>
                             <DataTemplate>
                                 <StackPanel Margin="4">
-                                    <TextBlock Text="Please wait ..." FontWeight="DemiBold" Foreground="Black" HorizontalAlignment="Center"></TextBlock>
+                                    <TextBlock Text="{DynamicResource Loading}" FontWeight="DemiBold" Foreground="Black" HorizontalAlignment="Center"></TextBlock>
                                 </StackPanel>
                             </DataTemplate>
                         </xctk:BusyIndicator.BusyContentTemplate>

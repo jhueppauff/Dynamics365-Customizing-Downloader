@@ -58,5 +58,14 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return ((bool)(this["DebuggingEnabled"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("de-de")]
+        public string Culture {
+            get {
+                return ((string)(this["Culture"]));
+            }
+        }
     }
 }

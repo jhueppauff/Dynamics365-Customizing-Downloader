@@ -17,38 +17,38 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
     /// <summary>
     /// CRM Connection Exception
     /// </summary>
-    public class CRMConnectionException : Exception, ICrmConnectionException
+    public class CrmConnectionException : Exception, ICrmConnectionException
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CRMConnectionException"/> class.
+        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class.
         /// </summary>
-        public CRMConnectionException()
+        public CrmConnectionException()
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CRMConnectionException"/> class with a specified error message.
+        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class with a specified error message.
         /// </summary>
         /// <param name="message">Exception Message</param>
-        public CRMConnectionException(string message) : base(message)
+        public CrmConnectionException(string message) : base(message)
         {
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CRMConnectionException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
+        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">Exception Message</param>
         /// <param name="inner">Inner Exception Details</param>
-        public CRMConnectionException(string message, Exception innerException) : base(message, innerException)
+        public CrmConnectionException(string message, Exception innerException) : base(message, innerException)
         {
         }
 
-        public CRMConnectionException(string helpLink, string source) : this(helpLink)
+        public CrmConnectionException(string helpLink, string source) : this(helpLink)
         {
             Source = source;
         }
 
-        protected CRMConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected CrmConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
 

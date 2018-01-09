@@ -12,7 +12,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="DownloadMultiple" Height="547.632" Width="658.872" Closing="DownloadWindow_Closing">
+        Title="{DynamicResource DownloadMultiple}" Height="547.632" Width="658.872" Closing="DownloadWindow_Closing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -25,11 +25,11 @@
     <Grid Margin="0,0,0,68">
         <Grid>
             <TextBox ScrollViewer.HorizontalScrollBarVisibility="Disabled" IsReadOnly="True" ScrollViewer.VerticalScrollBarVisibility="Auto" x:Name="tbx_status" TextWrapping="Wrap" Margin="10,10,13,78"/>
-            <Button x:Name="Btn_close" Content="Close" Margin="568,0,0,8" Click="Btn_close_Click" HorizontalAlignment="Left" Width="70" Height="45" VerticalAlignment="Bottom"/>
-            <Button Content="Download" Margin="438,0,0,8" Click="Button_Click" Height="45" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="125"/>
-            <TextBox x:Name="tbx_download" Height="45" Margin="10,0,0,8" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="321"/>
-            <Label Content="Folder Path:" HorizontalAlignment="Left" Margin="10,0,0,52" Width="127" Height="26" VerticalAlignment="Bottom"/>
-            <Button x:Name="Btn_SelectFolder" Content="Select&#xD;&#xA;Folder" HorizontalAlignment="Left" Margin="336,0,0,8" Width="97" Height="45" Click="Btn_SelectFolder_Click" VerticalAlignment="Bottom"/>
+            <Button x:Name="Btn_close" Content="{DynamicResource DownloadMultiple_Btn_close}" Margin="540,0,0,8" Click="Btn_close_Click" HorizontalAlignment="Left" Width="98" Height="45" VerticalAlignment="Bottom"/>
+            <Button Content="{DynamicResource DownloadMultiple_Btn_Download}" x:Name="Btn_Download" Margin="410,0,0,8" Click="Button_Click" Height="45" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="125"/>
+            <TextBox x:Name="tbx_download" Height="45" Margin="10,0,0,8" TextWrapping="Wrap" VerticalAlignment="Bottom" HorizontalAlignment="Left" Width="290"/>
+            <Label Content="{DynamicResource DownloadMultiple_Lbl_FolderPath}" x:Name="Lbl_FolderPath" HorizontalAlignment="Left" Margin="10,0,0,52" Width="auto" Height="auto" VerticalAlignment="Bottom"/>
+            <Button x:Name="Btn_SelectFolder" Content="{DynamicResource DownloadMultiple_Btn_SelectFolder}" HorizontalAlignment="Left" Margin="305,0,0,8" Width="100" Height="45" Click="Btn_SelectFolder_Click" VerticalAlignment="Bottom"/>
         </Grid>
         <Controls:LoadingPanel x:Name="loadingPanel" Margin="0,449,0,-72" Height="72" VerticalAlignment="Top"/>
     </Grid>

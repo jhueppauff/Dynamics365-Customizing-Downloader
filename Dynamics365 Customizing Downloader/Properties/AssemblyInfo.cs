@@ -1,4 +1,5 @@
-﻿//-----------------------------------------------------------------------
+﻿using System.Resources;
+//-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2017 Jhueppauff
 // MIT  
@@ -61,3 +62,5 @@ using System.Windows;
 
 // Log4Net
 [assembly: log4net.Config.XmlConfigurator(Watch = true)]
+[assembly: NeutralResourcesLanguage("")]
+

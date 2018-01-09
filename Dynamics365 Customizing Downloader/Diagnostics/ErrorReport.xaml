@@ -11,7 +11,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="ErrorReport" ResizeMode="CanMinimize" Height="385.931" Width="562.357">
+        Title="{StaticResource ErrorReport}" ResizeMode="CanMinimize" Height="385.931" Width="562.357">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -23,15 +23,15 @@
     </Window.Resources>
     <Grid>
         <Grid Margin="0,0,0,61">
-            <Label Content="Oh no, an error occured!" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="221" FontSize="18"/>
+            <Label Content="{StaticResource ErrorReport_ErrorReportHeader}" Name="ErrorReportHeader" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="221" FontSize="18"/>
             <TextBox x:Name="Tbx_ErrorMessage" Foreground="Red" Height="52" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Margin="10,82,10,0" IsReadOnly="True" TextWrapping="Wrap" Text="No Errror Info" VerticalAlignment="Top" FontStyle="Italic"/>
-            <Label Content="Error Message:" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+            <Label Content="{StaticResource ErrorReport_Lbl_errorMessage}" x:Name="Lbl_errorMessage" HorizontalAlignment="Left" Margin="10,51,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
             <TextBox x:Name="Tbx_StackTrace" Foreground="Red" Margin="10,171,10,10" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"  TextWrapping="Wrap" Text="No Stack Trace"/>
-            <Label Content="Stack Trace:" HorizontalAlignment="Left" Margin="10,139,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
+            <Label Content="{StaticResource ErrorReport_Lbl_stackTrace}" x:Name="Lbl_stackTrace" HorizontalAlignment="Left" Margin="10,139,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold"/>
         </Grid>
         <Grid Margin="0,294,0,0">
-            <Button x:Name="Btn_close" Content="Close" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="31" Click="Btn_close_Click" Margin="10,10,0,0"/>
-            <Button x:Name="Btn_Report" Visibility="Visible" Content="Report Error" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Height="31" Margin="396,10,0,0" Click="Btn_Report_Click"/>
+            <Button x:Name="Btn_close" Content="{StaticResource ErrorReport_Btn_close}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="31" Click="Btn_close_Click" Margin="10,10,0,0"/>
+            <Button x:Name="Btn_Report" Visibility="Visible" Content="{StaticResource ErrorReport_Btn_Report}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Height="31" Margin="396,10,0,0" Click="Btn_Report_Click"/>
         </Grid>
     </Grid>
 </Window>

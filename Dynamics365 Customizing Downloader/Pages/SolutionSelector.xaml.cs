@@ -198,7 +198,6 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 MessageBox.Show("Please select at least one Solution", "No Solution Selected", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         /// <summary>

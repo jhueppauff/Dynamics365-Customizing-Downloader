@@ -102,7 +102,7 @@ namespace Dynamics365CustomizingDownloader
                     }
                     else
                     {
-                        MessageBox.Show("Unable to open CRM Connection", "An error occured", MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show((string)Application.Current.FindResource("ConnectionManager_Code_UnableToOpenCRM"), (string)Application.Current.FindResource("ConnectionManager_Code_UnableToOpenCRM_Caption"), MessageBoxButton.OK, MessageBoxImage.Error);
                     }
                 }
             }

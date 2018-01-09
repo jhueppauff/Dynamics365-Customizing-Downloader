@@ -13,18 +13,13 @@ namespace Dynamics365CustomizingDownloader.Pages
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Threading;
     using System.Windows;
 
     /// <summary>
-    /// Interaction logic for DownloadSolution.xaml
+    /// Interaction logic for DownloadSolution
     /// </summary>
     public partial class DownloadSolution : Window, IDisposable
     {
-        public DownloadSolution()
-        {
-            InitializeComponent();
-        }
         /// <summary>
         /// Log4Net Logger
         /// </summary>
@@ -36,7 +31,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         private readonly BackgroundWorker worker = new BackgroundWorker();
 
         /// <summary>
-        /// Crm Connection
+        /// CRM Connection
         /// </summary>
         private Core.Xrm.CrmConnection crmConnection;
 
@@ -56,27 +51,57 @@ namespace Dynamics365CustomizingDownloader.Pages
         private decimal progressStep;
 
         /// <summary>
-        /// List of all CRM Soltuions to Download
+        /// List of all CRM Solutions to Download
         /// </summary>
         private List<Core.Xrm.CrmSolution> crmSolutions;
 
+        /// <summary>
+        /// Detects redundant calls
+        /// </summary>
+        private bool disposedValue = false;
+
+        /// <summary>
+        /// Determines if Solutions should be Downloaded managed
+        /// </summary>
         private bool managed;
+
+        /// <summary>
+        /// Determines if Solutions should be Downloaded unmanaged
+        /// </summary>
         private bool unmanaged;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadSolution"/> class.
+        /// </summary>
+        public DownloadSolution()
+        {
+            this.InitializeComponent();
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadSolution"/> class.
+        /// </summary>
+        /// <param name="crmConnection">CRM Connection</param>
+        /// <param name="crmSolutions">CRM Solutions to Download</param>
+        /// <param name="managed">Determines if the Solution should be Downloaded managed</param>
+        /// <param name="unmanaged">Determines if the Solution should be Downloaded unmanaged</param>
         public DownloadSolution(Core.Xrm.CrmConnection crmConnection, List<Core.Xrm.CrmSolution> crmSolutions, bool managed, bool unmanaged)
         {
-            InitializeComponent();
+            this.InitializeComponent();
             this.crmConnection = crmConnection;
             this.crmSolutions = crmSolutions;
             this.managed = managed;
             this.unmanaged = unmanaged;
             this.progress = 0;
             this.progressStep = 100 / crmSolutions.Count;
-            Pgb_downloadProgress.Value = 0;
+            this.Pgb_downloadProgress.Value = 0;
 
             this.DownloadSolutions();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="DownloadSolution"/> class.
+        /// </summary>
         public void DownloadSolutions()
         {
             try
@@ -87,7 +112,7 @@ namespace Dynamics365CustomizingDownloader.Pages
 
                     if (result == System.Windows.Forms.DialogResult.OK)
                     {
-                        localPath = dialog.SelectedPath.ToString();
+                        this.localPath = dialog.SelectedPath.ToString();
                     }
                 }
 
@@ -106,43 +131,70 @@ namespace Dynamics365CustomizingDownloader.Pages
         }
 
         /// <summary>
+        /// This code added to correctly implement the disposable pattern.
+        /// </summary>
+        void IDisposable.Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            this.Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        /// <summary>
+        /// Dispose objects
+        /// </summary>
+        /// <param name="disposing">Determines if object should be disposed</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!this.disposedValue)
+            {
+                if (disposing)
+                {
+                    this.worker.Dispose();
+                }
+
+                this.disposedValue = true;
+            }
+        }
+
+        /// <summary>
         /// Background Worker Event DoWork
         /// </summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            if (localPath == null)
+            if (this.localPath == null)
             {
                 return;
             }
 
-            if (crmSolutions == null)
+            if (this.crmSolutions == null)
             {
                 return;
             }
 
-            if (crmConnection == null)
+            if (this.crmConnection == null)
             {
                 return;
             }
 
-            foreach (Core.Xrm.CrmSolution crmSolution in crmSolutions)
+            foreach (Core.Xrm.CrmSolution crmSolution in this.crmSolutions)
             {
-                if (managed)
+                if (this.managed)
                 {
                     Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
-                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath, true);
+                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString), crmSolution.UniqueName, this.localPath, true);
                 }
 
-                if (unmanaged)
+                if (this.unmanaged)
                 {
                     Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector();
-                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(crmConnection.ConnectionString), crmSolution.UniqueName, localPath);
+                    toolingConnector.DownloadSolution(toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString), crmSolution.UniqueName, this.localPath);
                 }
 
-                progress = progress + progressStep;
-                worker.ReportProgress(Convert.ToInt16(this.progress));
+                this.progress = this.progress + this.progressStep;
+                this.worker.ReportProgress(Convert.ToInt16(this.progress));
             }
         }
 
@@ -171,31 +223,5 @@ namespace Dynamics365CustomizingDownloader.Pages
 
             this.Close();
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
-                    worker.Dispose();
-                }
-
-                disposedValue = true;
-            }
-        }
-
-
-        // This code added to correctly implement the disposable pattern.
-        void IDisposable.Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }
