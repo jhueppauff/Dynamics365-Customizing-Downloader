@@ -13,6 +13,7 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.IO;
+    using System.Linq;
     using System.Windows;
 
     /// <summary>
@@ -42,6 +43,10 @@ namespace Dynamics365CustomizingDownloader
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
+
+            // Load Language
+            LoadLanguage(Properties.Settings.Default.Culture);
+
             busyIndicator = this.prg_progress;
             MainWindow.SetProgress(false);
 
@@ -119,6 +124,22 @@ namespace Dynamics365CustomizingDownloader
                 // Set large fields to null.
                 this.disposed = true;
             }
+        }
+
+        private void LoadLanguage(string locale)
+        {
+            var resources = new ResourceDictionary();
+
+            resources.Source = new Uri($"Lang/localizedMessage-{locale}.xaml", UriKind.Relative);
+
+            var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(m => m.Source.OriginalString.EndsWith($"{locale}.xaml"));
+
+            if (current != null)
+            {
+                Application.Current.Resources.MergedDictionaries.Remove(current);
+            }
+
+            Application.Current.Resources.MergedDictionaries.Add(resources);
         }
 
         /// <summary>

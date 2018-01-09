@@ -11,10 +11,10 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        Title="{StaticResource DownloadSolution}" Height="163.279" Width="300">
+        Title="{DynamicResource DownloadSolution}" Height="163.279" Width="300">
     <Grid>
         <Button Content="Cancel" x:Name="btn_cancel" Background="DarkRed" Margin="0,76,10,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="98"/>
         <ProgressBar x:Name="Pgb_downloadProgress" Height="30" Minimum="0" Maximum="100" Value="0" Margin="10,41,10,0" VerticalAlignment="Top"/>
-        <Label Content="{StaticResource DownloadSolution_lbl_download}" x:Name="lbl_download" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
+        <Label Content="{DynamicResource DownloadSolution_lbl_download}" x:Name="lbl_download" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>
     </Grid>
 </Window>

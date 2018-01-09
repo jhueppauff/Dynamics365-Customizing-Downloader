@@ -2,82 +2,88 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:system="clr-namespace:System;assembly=mscorlib">
-    <system:String x:Key="lang">en-US</system:String>
+    <system:String x:Key="lang">Loc-de-de</system:String>
     <!-- Encryption Key -->
-    <system:String x:Key="EncryptionKey_Lbl_PleaseChooseEncryptionKey" xml:lang="en-us" xml:space="preserve">Bitte gebe ein Verschlüsselungsschlüssel&#13; für die CRM Verbindungen ein:</system:String>
+    <system:String x:Key="EncryptionKey_Lbl_PleaseChooseEncryptionKey" xml:lang="en-us" xml:space="preserve">Bitte gebe ein Verschlüsselungsschlüssel
+für die CRM Verbindungen ein:</system:String>
     <system:String x:Key="EncryptionKey_Btn_SaveEncryptionKey">Speichern</system:String>
-    <system:String x:Key="EncryptionKey_Lbl_PleaseRemember" xml:space="preserve">Bitte bewahre diesen Schlüssel auf&#13;jedes mal wenn die Applikation gestartet wird ist dieser erforderlich</system:String>
-    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatch">Encryption Key does not match!</system:String>
-    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatchCaption">Wrong Encryption Key!</system:String>
-    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecified">Please enter a Encryption Key</system:String>
-    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecifiedCaption">No Key entered</system:String>
+    <system:String x:Key="EncryptionKey_Lbl_PleaseRemember" xml:space="preserve">Bitte bewahre diesen Schlüssel auf, 
+jedes mal wenn die Applikation gestartet wird 
+ist dieser erforderlich</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatch">Schlüssel stimmt nicht überein!</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_KeyDoesNotMatchCaption">Fehlerhafter Schlüssel!</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecified">Bitte gebe ein Schlüssel ein</system:String>
+    <system:String x:Key="EncryptionKey_MessageBox_NoKeySpecifiedCaption">Kein Schlüssel angegeben</system:String>
     <!-- Error Report -->
-    <system:String x:Key="ErrorReport_ErrorReportHeader">Oh no, an error occured!</system:String>
-    <system:String x:Key="ErrorReport_Lbl_errorMessage">Error Message:</system:String>
+    <system:String x:Key="ErrorReport_ErrorReportHeader">Ahhh! Ein Fehler ist aufgetreten.</system:String>
+    <system:String x:Key="ErrorReport_Lbl_errorMessage">Fehlernachricht:</system:String>
     <system:String x:Key="ErrorReport_Lbl_stackTrace">Stack Trace:</system:String>
-    <system:String x:Key="ErrorReport_Btn_close">Close</system:String>
-    <system:String x:Key="ErrorReport_Btn_Report">Report Error</system:String>
-    <system:String x:Key="ErrorReport">Error Report</system:String>
+    <system:String x:Key="ErrorReport_Btn_close">Schließen</system:String>
+    <system:String x:Key="ErrorReport_Btn_Report">melde Fehler</system:String>
+    <system:String x:Key="ErrorReport">Fehler Bericht</system:String>
     <!-- Main Window -->
-    <system:String x:Key="MainWindow_Lbl_Connection">Connection:</system:String>
+    <system:String x:Key="MainWindow_Lbl_Connection">Verbindungen:</system:String>
     <system:String x:Key="MainWindow_Btn_MenuItem_CheckUpdate">Updates</system:String>
-    <system:String x:Key="MainWindow_Btn_OpenConnectionOverview">Connection Overview</system:String>
+    <system:String x:Key="MainWindow_Btn_OpenConnectionOverview">Verbindungsübersicht</system:String>
     <system:String x:Key="MainWindow_Btn_Exit">Exit</system:String>
     <system:String x:Key="MainWindow_Code_Customizing_Downloader">Customizing Downloader</system:String>
-    <system:String x:Key="MainWindow_Code_Customizing_Downloader_Description">Downloads and Extracts CRM Solutions</system:String>
+    <system:String x:Key="MainWindow_Code_Customizing_Downloader_Description">Lädt und extrahiert eine Solution</system:String>
     <system:String x:Key="MainWindow_Code_Solution_Downloader">Solution Downloader</system:String>
-    <system:String x:Key="MainWindow_Code_Solution_Downloader_Description">Downloads a Solution without extraction</system:String>
-    <system:String x:Key="MainWindow_Code_RunningLatestVersion">You are running the latest Version</system:String>
-    <system:String x:Key="MainWindow_Code_RunningLatestVersion_Caption">Already updated</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Downloader_Description">Lädt eine CRM Solution herunter</system:String>
+    <system:String x:Key="MainWindow_Code_RunningLatestVersion">Sie führen bereits die letze Version aus</system:String>
+    <system:String x:Key="MainWindow_Code_RunningLatestVersion_Caption">Alles aktuell</system:String>
+    <system:String x:Key="MainWindow_Code_List_LocalFolder">Lokaler Ordner</system:String>
     <!-- Solution Downloader/Selector -->
-    <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Unique Name</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Eindeutiger Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_CRM_Version">CRM Version</system:String>
-    <system:String x:Key="SolutionDownloader_Grid_Local_Version">Local Version</system:String>
-    <system:String x:Key="SolutionDownloader_Btn_Download">Download</system:String>
-    <system:String x:Key="SolutionDownloader_Btn_OpenCreateNewConnection">Create new Repository</system:String>
-    <system:String x:Key="SolutionDownloader_Btn_Reload">Reload</system:String>
-    <system:String x:Key="SolutionDownloader_Cbx_IsManaged">Managed</system:String>
-    <system:String x:Key="SolutionDownloader_Cbx_IsUnManaged">Unmanaged</system:String>
-    <system:String x:Key="SolutionDownloader_btn_download">Download</system:String>
-    <system:String x:Key="SolutionDownloader_Lbl_connection">Connection</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_Local_Version">Lokale Version</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_Download">Herunterladen</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_OpenCreateNewConnection">Erstelle neues Repository</system:String>
+    <system:String x:Key="SolutionDownloader_Btn_Reload">Neu laden</system:String>
+    <system:String x:Key="SolutionDownloader_Cbx_IsManaged">Verwaltet</system:String>
+    <system:String x:Key="SolutionDownloader_Cbx_IsUnManaged">Nicht verwaltet</system:String>
+    <system:String x:Key="SolutionDownloader_btn_download">Herunterladen</system:String>
+    <system:String x:Key="SolutionDownloader_Lbl_connection">Verbindung</system:String>
+    <system:String x:Key="SolutionDownloader_Lbl_localRepositories">Lokale Repositories:</system:String>
     <!-- Download Solution -->
     <system:String x:Key="DownloadSolution">Download Solution</system:String>
-    <system:String x:Key="DownloadSolution_btn_cancel">Cancel</system:String>
-    <system:String x:Key="DownloadSolution_lbl_download">Download :</system:String>
+    <system:String x:Key="DownloadSolution_btn_cancel">Abbrechen</system:String>
+    <system:String x:Key="DownloadSolution_lbl_download">Herunterladen :</system:String>
     <!-- Connection Manager -->
-    <system:String x:Key="ConnectionManager">Connection Manger</system:String>
-    <system:String x:Key="ConnectionManager_Lbl_ConnectionString">Connection String:</system:String>
-    <system:String x:Key="ConnectionManager_Lbl_ConnectionName">Connection Name:</system:String>
-    <system:String x:Key="ConnectionManager_btn_save">Save</system:String>
-    <system:String x:Key="ConnectionManager_Btn_Connect">Connect</system:String>
-    <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Unable to open CRM Connection</system:String>
-    <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">An error occured</system:String>
+    <system:String x:Key="ConnectionManager">Verbindungsmanger</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_ConnectionString">Verbindungszeichenkette:</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_ConnectionName">Verbindungsname:</system:String>
+    <system:String x:Key="ConnectionManager_btn_save">Speichern</system:String>
+    <system:String x:Key="ConnectionManager_Btn_Connect">Verbinden</system:String>
+    <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Fehler bei der CRM Verbindung</system:String>
+    <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">Ein Fehler ist aufgetreten</system:String>
     <!-- Patch Notes -->
-    <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Version Number:</system:String>
-    <system:String x:Key="PatchNotes_Lbl_CreatedAt">Created at:</system:String>
+    <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Versions Nummer:</system:String>
+    <system:String x:Key="PatchNotes_Lbl_CreatedAt">Erstellt am:</system:String>
     <system:String x:Key="PatchNotes_Lbl_prerelease">PreRelease:</system:String>
-    <system:String x:Key="PatchNotes_Code_IsPreReleaseTrue">True</system:String>
-    <system:String x:Key="PatchNotes_Code_IsPreReleaseFalse">False</system:String>
-    <system:String x:Key="PatchNotes_Btn_Skip">False</system:String>
-    <system:String x:Key="PatchNotes_Btn_Download">Awesome! Download new Version</system:String>
-    <system:String x:Key="PatchNotes_Lbl_PatchNotesHeader">There is a new Version available. Do you want to get the latest Update?</system:String>
+    <system:String x:Key="PatchNotes_Code_IsPreReleaseTrue">Wahr</system:String>
+    <system:String x:Key="PatchNotes_Code_IsPreReleaseFalse">Falsch</system:String>
+    <system:String x:Key="PatchNotes_Btn_Skip">Überspringen</system:String>
+    <system:String x:Key="PatchNotes_Btn_Download">Lade neue Version herunter!</system:String>
+    <system:String x:Key="PatchNotes_Lbl_PatchNotesHeader">Eine neue Version ist verfügbar. Möchten Sie das letzte Update herunterladen?</system:String>
     <!-- Download Multiple -->
-    <system:String x:Key="DownloadMultiple">Download Multiple</system:String>
-    <system:String x:Key="DownloadMultiple_Lbl_FolderPath">Folder Path:</system:String>
-    <system:String x:Key="DownloadMultiple_Btn_Download">Download</system:String>
-    <system:String x:Key="DownloadMultiple_Btn_close">Close</system:String>
-    <system:String x:Key="DownloadMultiple_Btn_SelectFolder" xml:space="preserve">Select&#xD;&#xA;Folder</system:String>
+    <system:String x:Key="DownloadMultiple">Multi-Download</system:String>
+    <system:String x:Key="DownloadMultiple_Lbl_FolderPath">Ordner Pfad:</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_Download">Herunterladen</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_close">Schließen</system:String>
+    <system:String x:Key="DownloadMultiple_Btn_SelectFolder" xml:space="preserve">Ordner
+auswählen</system:String>
     <!-- Connection Overview -->
-    <system:String x:Key="ConnectionOverview_Btn_DeleteRepository">Delete Repository</system:String>
-    <system:String x:Key="ConnectionOverview_Btn_TestConnection">Test Connection</system:String>
-    <system:String x:Key="ConnectionOverview_Btn_SaveConnection">Save</system:String>
-    <system:String x:Key="ConnectionOverview_Lbl_ConnectionName">Connection Name:</system:String>
-    <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Connection String:</system:String>
-    <system:String x:Key="ConnectionOverview_Lbl_Connection">Connection:</system:String>
-    <system:String x:Key="ConnectionOverview">Connection Overview</system:String>
+    <system:String x:Key="ConnectionOverview_Btn_DeleteRepository">Lösche Repository</system:String>
+    <system:String x:Key="ConnectionOverview_Btn_TestConnection">Verbindung testen</system:String>
+    <system:String x:Key="ConnectionOverview_Btn_SaveConnection">Speichern</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_ConnectionName">Verbindungsname:</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Verbindungszeichenkette:</system:String>
+    <system:String x:Key="ConnectionOverview_Lbl_Connection">Verbindung:</system:String>
+    <system:String x:Key="ConnectionOverview">Verbindungsübersicht</system:String>
     <!-- Shared -->
-    <system:String x:Key="Loading">Please wait ...</system:String>
-    <system:String x:Key="True">True</system:String>
-    <system:String x:Key="False">False</system:String>
+    <system:String x:Key="Loading">Bitte warten ...</system:String>
+    <system:String x:Key="True">Wahr</system:String>
+    <system:String x:Key="False">Falsch</system:String>
 </ResourceDictionary>
