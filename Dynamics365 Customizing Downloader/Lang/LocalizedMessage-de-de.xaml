@@ -32,7 +32,9 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="MainWindow_Code_Solution_Downloader_Description">Lädt eine CRM Solution herunter</system:String>
     <system:String x:Key="MainWindow_Code_RunningLatestVersion">Sie führen bereits die letze Version aus</system:String>
     <system:String x:Key="MainWindow_Code_RunningLatestVersion_Caption">Alles aktuell</system:String>
-    <system:String x:Key="MainWindow_Code_List_LocalFolder">Lokaler Ordner</system:String>
+    <system:String x:Key="MainWindow_List_LocalFolder">Lokaler Ordner</system:String>
+    <system:String x:Key="MainWindow_Btn_ChangeLanaguageGerman">Deutsch</system:String>
+    <system:String x:Key="MainWindow_Btn_ChangeLanaguageEnglish">Englisch</system:String>
     <!-- Solution Downloader/Selector -->
     <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Eindeutiger Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>

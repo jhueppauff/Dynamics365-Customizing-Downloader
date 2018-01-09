@@ -235,5 +235,29 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
+
+        /// <summary>
+        /// Button Click, Change Language => German
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_ChangeLanguageGerman_Click(object sender, RoutedEventArgs e)
+        {
+            LoadLanguage("de-de");
+            Btn_ChangeLanguageGerman.IsEnabled = false;
+            Btn_ChangeLanguageEnglish.IsEnabled = true;
+        }
+
+        /// <summary>
+        /// Button Click, Change Language => English
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_ChangeLanguageEnglish_Click(object sender, RoutedEventArgs e)
+        {
+            LoadLanguage("en-us");
+            Btn_ChangeLanguageGerman.IsEnabled = true;
+            Btn_ChangeLanguageEnglish.IsEnabled = false;
+        }
     }
 }

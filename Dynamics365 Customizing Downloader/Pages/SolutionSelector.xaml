@@ -18,7 +18,7 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
                     <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Path=Name}" />
-                    <TextBlock Grid.Row="1" Grid.Column="0" Padding="0,0,5,0" Text="{DynamicResource MainWindow_Code_List_LocalFolder}" />
+                    <TextBlock Grid.Row="1" Grid.Column="0" Padding="0,0,5,0" Text="{DynamicResource MainWindow_List_LocalFolder}" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Text="{Binding Path=LocalPath}" />
                 </Grid>
             </Border>

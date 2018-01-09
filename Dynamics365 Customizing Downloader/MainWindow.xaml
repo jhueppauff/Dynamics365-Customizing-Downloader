@@ -57,6 +57,9 @@
                                 <Button Content="{DynamicResource MainWindow_Btn_MenuItem_CheckUpdate}" x:Name="Btn_MenuItem_CheckUpdate" Click="MenuItemUpdate_Click"></Button>
                                 <Button Content="{DynamicResource MainWindow_Btn_OpenConnectionOverview}" Name="Btn_OpenConnectionOverview" Click="Btn_OpenConnectionOverview_Click"></Button>
                                 <Separator/>
+                                <Button Content="{DynamicResource MainWindow_Btn_ChangeLanaguageGerman}" x:Name="Btn_ChangeLanguageGerman" Click="Btn_ChangeLanguageGerman_Click"></Button>
+                                <Button Content="{DynamicResource MainWindow_Btn_ChangeLanaguageEnglish}" x:Name="Btn_ChangeLanguageEnglish" Click="Btn_ChangeLanguageEnglish_Click"></Button>
+                                <Separator></Separator>
                                 <Button Content="{DynamicResource MainWindow_Btn_Exit}" x:Name="Btn_Exit" Click="MenuItemExit_Click"/>
                             </StackPanel>
                         </materialDesign:PopupBox>
