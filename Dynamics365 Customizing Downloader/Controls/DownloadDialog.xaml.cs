@@ -22,11 +22,6 @@ namespace Dynamics365CustomizingDownloader.Controls
     public partial class DownloadDialog : UserControl, IDisposable
     {
         /// <summary>
-        /// Log4Net Logger
-        /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
-
-        /// <summary>
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();

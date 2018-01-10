@@ -45,7 +45,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
 
         public CrmConnectionException(string helpLink, string source) : this(helpLink)
         {
-            Source = source;
+            this.Source = source;
         }
 
         protected CrmConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)

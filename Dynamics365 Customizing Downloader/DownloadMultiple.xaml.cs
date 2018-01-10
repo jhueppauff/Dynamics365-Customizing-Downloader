@@ -61,7 +61,7 @@ namespace Dynamics365CustomizingDownloader
         private string selectedPath;
 
         /// <summary>
-        /// Specifies if Solution Strings should be exported into resx File
+        /// Specifies if Solution Strings should be exported into Resource File
         /// </summary>
         private bool localizeSupport;
 
@@ -264,11 +264,11 @@ namespace Dynamics365CustomizingDownloader
 
                 if ((bool)Cbx_ExportLables.IsChecked)
                 {
-                    localizeSupport = true;
+                    this.localizeSupport = true;
                 }
                 else
                 {
-                    localizeSupport = false;
+                    this.localizeSupport = false;
                 }
 
                 // Update Connection
@@ -328,7 +328,7 @@ namespace Dynamics365CustomizingDownloader
                                     DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
                                 }
 
-                                string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName), Properties.Settings.Default.SolutionPackagerLogPath, localizeSupport);
+                                string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName), Properties.Settings.Default.SolutionPackagerLogPath, this.localizeSupport);
                                 DownloadMultiple.UpdateUI(log, false);
                             }
                             catch (Exception ex)
