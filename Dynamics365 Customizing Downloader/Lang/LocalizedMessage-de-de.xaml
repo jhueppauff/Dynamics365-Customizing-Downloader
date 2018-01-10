@@ -76,6 +76,7 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="DownloadMultiple_Btn_close">Schließen</system:String>
     <system:String x:Key="DownloadMultiple_Btn_SelectFolder" xml:space="preserve">Ordner
 auswählen</system:String>
+    <system:String x:Key="DownloadMultiple_Cbx_ExportLables">Extrahier alle Zeichenketten in eine Resourcen Datei</system:String>
     <!-- Connection Overview -->
     <system:String x:Key="ConnectionOverview_Btn_DeleteRepository">Lösche Repository</system:String>
     <system:String x:Key="ConnectionOverview_Btn_TestConnection">Verbindung testen</system:String>

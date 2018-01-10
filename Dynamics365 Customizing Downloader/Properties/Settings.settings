@@ -15,7 +15,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="Culture" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">de-de</Value>
+      <Value Profile="(Default)">en-us</Value>
+    </Setting>
+    <Setting Name="SolutionPackagerLogPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

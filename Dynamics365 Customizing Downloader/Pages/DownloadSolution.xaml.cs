@@ -93,7 +93,7 @@ namespace Dynamics365CustomizingDownloader.Pages
             this.managed = managed;
             this.unmanaged = unmanaged;
             this.progress = 0;
-            this.progressStep = 100 / crmSolutions.Count;
+            this.progressStep = 100 / (decimal)crmSolutions.Count;
             this.Pgb_downloadProgress.Value = 0;
 
             this.DownloadSolutions();

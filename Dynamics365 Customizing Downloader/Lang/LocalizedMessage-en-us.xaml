@@ -75,6 +75,7 @@ every time you start this application</system:String>
     <system:String x:Key="DownloadMultiple_Btn_close">Close</system:String>
     <system:String x:Key="DownloadMultiple_Btn_SelectFolder" xml:space="preserve">Select
 Folder</system:String>
+    <system:String x:Key="DownloadMultiple_Cbx_ExportLables">Extract all strings into resource file</system:String>
     <!-- Connection Overview -->
     <system:String x:Key="ConnectionOverview_Btn_DeleteRepository">Delete Repository</system:String>
     <system:String x:Key="ConnectionOverview_Btn_TestConnection">Test Connection</system:String>

@@ -218,6 +218,7 @@
     <Compile Include="PatchNotes.xaml.cs">
       <DependentUpon>PatchNotes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Page Include="ConnectionManger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -308,6 +309,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="app.manifest" />
+    <None Include="App.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Dynamics365 Customizing Downloader.ruleset" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">

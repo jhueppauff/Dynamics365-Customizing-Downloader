@@ -45,7 +45,7 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
 
             // Load Language
-            LoadLanguage(Properties.Settings.Default.Culture);
+            this.LoadLanguage(Properties.Settings.Default.Culture);
 
             busyIndicator = this.prg_progress;
             MainWindow.SetProgress(false);
@@ -126,11 +126,16 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Load the specified language
+        /// </summary>
+        /// <param name="locale">Language Code</param>
         private void LoadLanguage(string locale)
         {
-            var resources = new ResourceDictionary();
-
-            resources.Source = new Uri($"Lang/localizedMessage-{locale}.xaml", UriKind.Relative);
+            var resources = new ResourceDictionary
+            {
+                Source = new Uri($"Lang/localizedMessage-{locale}.xaml", UriKind.Relative)
+            };
 
             var current = Application.Current.Resources.MergedDictionaries.FirstOrDefault(m => m.Source.OriginalString.EndsWith($"{locale}.xaml"));
 
@@ -243,7 +248,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_ChangeLanguageGerman_Click(object sender, RoutedEventArgs e)
         {
-            LoadLanguage("de-de");
+            this.LoadLanguage("de-de");
             Btn_ChangeLanguageGerman.IsEnabled = false;
             Btn_ChangeLanguageEnglish.IsEnabled = true;
         }
@@ -255,7 +260,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_ChangeLanguageEnglish_Click(object sender, RoutedEventArgs e)
         {
-            LoadLanguage("en-us");
+            this.LoadLanguage("en-us");
             Btn_ChangeLanguageGerman.IsEnabled = true;
             Btn_ChangeLanguageEnglish.IsEnabled = false;
         }
