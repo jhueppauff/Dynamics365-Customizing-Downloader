@@ -218,6 +218,7 @@
     <Compile Include="PatchNotes.xaml.cs">
       <DependentUpon>PatchNotes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.cs" />
     <Page Include="ConnectionManger.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

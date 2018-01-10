@@ -61,10 +61,19 @@ namespace Dynamics365CustomizingDownloader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("de-de")]
+        [global::System.Configuration.DefaultSettingValueAttribute("en-us")]
         public string Culture {
             get {
                 return ((string)(this["Culture"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string SolutionPackagerLogPath {
+            get {
+                return ((string)(this["SolutionPackagerLogPath"]));
             }
         }
     }

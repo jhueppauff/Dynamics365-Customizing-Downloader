@@ -29,7 +29,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <param name="path">Path of the Solution</param>
         /// <param name="extractFolder">Path to the extraction Folder</param>
         /// <returns>Returns the log Messages</returns>
-        public string ExtractCustomizing(string path, string extractFolder)
+        public string ExtractCustomizing(string path, string extractFolder, string logPath = null, bool localize = false)
         {
             string log = string.Empty;
 
@@ -49,6 +49,17 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 WindowStyle = ProcessWindowStyle.Normal,
                 Arguments = $"/action:Extract /zipfile:{path} /folder:{extractFolder} /packagetype:Unmanaged /allowWrite:yes /allowDelete:yes /clobber /nologo"
             };
+
+            // Optional Parameters
+            if (!string.IsNullOrEmpty(logPath))
+            {
+                startInfo.Arguments = startInfo.Arguments + " /log: " + logPath;
+            }
+
+            if (localize)
+            {
+                startInfo.Arguments = startInfo.Arguments + " /sourceLoc:auto /localize";
+            }
 
             try
             {
