@@ -211,7 +211,10 @@ namespace Dynamics365CustomizingDownloader.Pages
 
             foreach (Core.Xrm.CrmSolution solution in localRepoSolutions)
             {
-                this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+                if (this.crmSolutions.Exists(x => x.UniqueName == solution.UniqueName))
+                {
+                    this.crmSolutions.Find(x => x.UniqueName == solution.UniqueName).LocalVersion = solution.LocalVersion;
+                }
             }
 
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
