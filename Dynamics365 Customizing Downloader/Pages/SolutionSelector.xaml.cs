@@ -205,6 +205,8 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// </summary>
         private void LoadVersionIntoGrid()
         {
+            try
+            {
             this.Dtg_Solutions.ItemsSource = null;
             Core.Repository.Connector connector = new Core.Repository.Connector();
             List<Core.Xrm.CrmSolution> localRepoSolutions = connector.GetLocalCRMSolutions(((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
@@ -218,6 +220,11 @@ namespace Dynamics365CustomizingDownloader.Pages
             }
 
             this.Dtg_Solutions.ItemsSource = this.crmSolutions;
+            }
+            catch (Exception)
+            {
+                // Ignore if the solution does not exists in CRM
+            }
         }
 
         /// <summary>
