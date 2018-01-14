@@ -34,6 +34,8 @@ every time you start this application</system:String>
     <system:String x:Key="MainWindow_List_LocalFolder">Local Folder</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageGerman">German</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageEnglish">English</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader">Solution Uploader</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader_Description">Uploads multiple Solution into CRM</system:String>
     <!-- Solution Downloader/Selector -->
     <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Unique Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>

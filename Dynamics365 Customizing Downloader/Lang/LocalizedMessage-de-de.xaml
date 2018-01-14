@@ -35,6 +35,8 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="MainWindow_List_LocalFolder">Lokaler Ordner</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageGerman">Deutsch</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageEnglish">Englisch</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader">Solution Uploader</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader_Description">Läd mehrere Solutions ins CRM</system:String>
     <!-- Solution Downloader/Selector -->
     <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Eindeutiger Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>

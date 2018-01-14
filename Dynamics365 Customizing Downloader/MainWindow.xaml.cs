@@ -154,8 +154,11 @@ namespace Dynamics365CustomizingDownloader
         private List<Pages.MenuItem> GetMenu()
         {
             List<Pages.MenuItem> listMenuItems = new List<Pages.MenuItem>();
+
+            // Customizing Extractor
             Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
             solutionSelector.ReloadConnections();
+
             Pages.MenuItem menuItem = new Pages.MenuItem
             {
                 Name = (string)Application.Current.FindResource("MainWindow_Code_Customizing_Downloader"),
@@ -165,6 +168,7 @@ namespace Dynamics365CustomizingDownloader
 
             listMenuItems.Add(menuItem);
 
+            // Solution Downloader
             Pages.SolutionDownloader solutionDownloader = new Pages.SolutionDownloader();
 
             menuItem = new Pages.MenuItem()
@@ -172,6 +176,18 @@ namespace Dynamics365CustomizingDownloader
                 Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader"),
                 Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader_Description"),
                 Content = solutionDownloader
+            };
+
+            listMenuItems.Add(menuItem);
+
+            // Solution Uploader
+            Pages.SolutionUploader solutionUploader = new Pages.SolutionUploader();
+
+            menuItem = new Pages.MenuItem()
+            {
+                Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader"),
+                Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader_Description"),
+                Content = solutionUploader
             };
 
             listMenuItems.Add(menuItem);
