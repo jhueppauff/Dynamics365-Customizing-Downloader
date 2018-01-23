@@ -50,6 +50,8 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="SolutionDownloader_btn_download">Herunterladen</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_connection">Verbindung</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_localRepositories">Lokale Repositories:</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_UploadOrder">Import Reihenfolge</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_LocalPath">Lokaler Pfad</system:String>
     <!-- Download Solution -->
     <system:String x:Key="DownloadSolution">Download Solution</system:String>
     <system:String x:Key="DownloadSolution_btn_cancel">Abbrechen</system:String>
