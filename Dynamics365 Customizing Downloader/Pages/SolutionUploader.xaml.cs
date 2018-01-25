@@ -10,6 +10,7 @@
 
 namespace Dynamics365CustomizingDownloader.Pages
 {
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Linq;
@@ -66,17 +67,16 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 // Ignore File Not found
             }
-        }
-
-        private void LoadSolutions()
-        {
-
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+            }
         }
 
         private void Cbx_Connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.selectedCrmConnection = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey).SingleOrDefault(x => x.Name == Cbx_Connection.SelectedItem.ToString());
-            LoadSolutions();
         }
+       
     }
 }
