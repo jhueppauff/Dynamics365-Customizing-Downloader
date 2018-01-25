@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" Width="833.115">
+             mc:Ignorable="d" >
     <Grid>
         <ComboBox x:Name="Cbx_Connection" HorizontalAlignment="Left" Margin="10,41,0,0" VerticalAlignment="Top" Width="188" SelectionChanged="Cbx_Connection_SelectionChanged"/>
         <Label Content="{DynamicResource SolutionDownloader_Lbl_connection}" x:Name="Lbl_connection" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top"/>

@@ -10,6 +10,9 @@
 
 namespace Dynamics365CustomizingDownloader.Pages
 {
+    using System.Collections.Generic;
+    using System.ComponentModel;
+    using System.Linq;
     using System.Windows.Controls;
 
     /// <summary>
@@ -18,16 +21,62 @@ namespace Dynamics365CustomizingDownloader.Pages
     public partial class SolutionUploader : UserControl
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// BackGround Worker
+        /// </summary>
+        private BackgroundWorker worker = new BackgroundWorker();
+
+        /// <summary>
+        /// Selected CRM Connection
+        /// </summary>
+        private Core.Xrm.CrmConnection selectedCrmConnection;
+
+        /// <summary>
+        /// List of all CRM Solutions/>
+        /// </summary>
+        private List<Core.Xrm.CrmSolution> crmSolutions = new List<Core.Xrm.CrmSolution>();
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="SolutionUploader"/> class.
         /// </summary>
         public SolutionUploader()
         {
             this.InitializeComponent();
+            LoadConnections();
+        }
+
+        private void LoadConnections()
+        {
+            try
+            {
+                List<Core.Xrm.CrmConnection> crmConnections = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey);
+                Cbx_Connection.Items.Clear();
+                this.Dtg_Solutions.ItemsSource = null;
+
+                foreach (Core.Xrm.CrmConnection crmConnection in crmConnections)
+                {
+                    this.Cbx_Connection.Items.Add(crmConnection.Name);
+                }
+            }
+            catch (System.IO.FileNotFoundException)
+            {
+                // Ignore File Not found
+            }
+        }
+
+        private void LoadSolutions()
+        {
+
         }
 
         private void Cbx_Connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            this.selectedCrmConnection = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey).SingleOrDefault(x => x.Name == Cbx_Connection.SelectedItem.ToString());
+            LoadSolutions();
         }
     }
 }

@@ -69,5 +69,16 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// Gets or sets the Local Solution Version
         /// </summary>
         public string LocalVersion { get; set; }
+
+        /// <summary>
+        /// Gets or sets the path of the Solution
+        /// </summary>
+        public string LocalPath { get; set; }
+
+
+        /// <summary>
+        /// Gets or sets the import order
+        /// </summary>
+        public int ImportOrder { get; set; }
     }
 }
