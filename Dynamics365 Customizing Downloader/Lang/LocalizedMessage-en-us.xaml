@@ -91,6 +91,8 @@ Folder</system:String>
     <!-- Solution Uploader -->
     <system:String x:Key="SolutionUploader">Solution Uploader</system:String>
     <system:String x:Key="SolutionUploader_OverwriteCustomizings">Overwrite Customizings</system:String>
+    <system:String x:Key="SolutionUploader_Btn_DeleteAll">Delete all</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Add">Add</system:String>
     <!-- Shared -->
     <system:String x:Key="Loading">Please wait ...</system:String>
     <system:String x:Key="True">True</system:String>
