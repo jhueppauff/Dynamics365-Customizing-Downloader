@@ -9,7 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Properties {
-      
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.5.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
@@ -73,6 +74,15 @@ namespace Dynamics365CustomizingDownloader.Properties {
         public string SolutionPackagerLogPath {
             get {
                 return ((string)(this["SolutionPackagerLogPath"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("577567a3-fe74-4b16-88c1-aa0ad85c1b7b")]
+        public string AppInsights {
+            get {
+                return ((string)(this["AppInsights"]));
             }
         }
     }

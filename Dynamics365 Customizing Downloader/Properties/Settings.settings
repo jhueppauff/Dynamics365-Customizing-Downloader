@@ -20,5 +20,8 @@
     <Setting Name="SolutionPackagerLogPath" Type="System.String" Scope="Application">
       <Value Profile="(Default)" />
     </Setting>
+    <Setting Name="AppInsights" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">577567a3-fe74-4b16-88c1-aa0ad85c1b7b</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

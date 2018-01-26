@@ -157,6 +157,10 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
     <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.Management">
+      <HintPath>..\packages\System.Management.dll.1.0.0\lib\System.Management.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
@@ -206,6 +210,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ApplicationInsightHelper.cs" />
     <Compile Include="ConnectionManger.xaml.cs">
       <DependentUpon>ConnectionManger.xaml</DependentUpon>
     </Compile>

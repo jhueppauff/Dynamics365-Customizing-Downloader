@@ -17,5 +17,33 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            try
+            {
+                _applicationInsightHelper = new ApplicationInsightHelper();
+
+                _context = new DataContext(_applicationInsightHelper);
+
+
+                //We use this to get access to unhandled exceptions so we can 
+
+                //report app crashes to the Telemetry client
+
+                var currentDomain = AppDomain.CurrentDomain;
+
+                currentDomain.UnhandledException += CurrentDomain_UnhandledException;
+
+                currentDomain.ProcessExit += CurrentDomain_ProcessExit;
+
+                var mainWindow = new MainWindow(_context, _applicationInsightHelper);
+
+                mainWindow.Show();
+            }
+            catch
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
