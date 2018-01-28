@@ -15,6 +15,7 @@ namespace Dynamics365CustomizingDownloader.Pages
     using System.ComponentModel;
     using System.Linq;
     using System.Windows.Controls;
+    using System.Windows.Forms;
 
     /// <summary>
     /// Interaction logic for SolutionUploader
@@ -47,9 +48,12 @@ namespace Dynamics365CustomizingDownloader.Pages
         public SolutionUploader()
         {
             this.InitializeComponent();
-            LoadConnections();
+            this.LoadConnections();
         }
 
+        /// <summary>
+        /// Loads the CRM Connections into the Connection ComboBox
+        /// </summary>
         private void LoadConnections()
         {
             try
@@ -73,10 +77,33 @@ namespace Dynamics365CustomizingDownloader.Pages
             }
         }
 
+        /// <summary>
+        /// Event Method if the selection of the Connection ComboBox changed
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void Cbx_Connection_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             this.selectedCrmConnection = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey).SingleOrDefault(x => x.Name == Cbx_Connection.SelectedItem.ToString());
         }
-       
+
+        private void Btn_Add_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog
+            {
+                DefaultExt = ".zip",
+                Filter = "Zip Archives (.zip)"
+            };
+
+            DialogResult result = openFileDialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                Core.Xrm.CrmSolution crmSolution = new Core.Xrm.CrmSolution
+                {
+                    LocalPath = openFileDialog.FileName
+                };
+            }
+        }
     }
 }

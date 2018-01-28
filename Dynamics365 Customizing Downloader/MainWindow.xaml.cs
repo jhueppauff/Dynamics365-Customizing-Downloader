@@ -24,7 +24,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// App Insight Helper
         /// </summary>
-        public static ApplicationInsightHelper ApplicationInsightHelper;
+        private static ApplicationInsightHelper applicationInsightHelper = null;
 
         /// <summary>
         /// Busy Indicator
@@ -44,11 +44,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
+        /// <param name="applicationInsightHelper">AI Helper</param>
         public MainWindow(ApplicationInsightHelper applicationInsightHelper)
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            MainWindow.ApplicationInsightHelper = applicationInsightHelper;
+            MainWindow.applicationInsightHelper = applicationInsightHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);
@@ -89,6 +90,11 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets the AI Helper
+        /// </summary>
+        public static ApplicationInsightHelper ApplicationInsightHelper { get; set; }
 
         /// <summary>
         /// Gets or sets the Encryption Key
@@ -287,6 +293,11 @@ namespace Dynamics365CustomizingDownloader
             Btn_ChangeLanguageEnglish.IsEnabled = false;
         }
 
+        /// <summary>
+        /// Closes the whole Application
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         private void Win_MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             Environment.Exit(0);
