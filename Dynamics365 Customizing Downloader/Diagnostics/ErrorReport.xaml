@@ -31,7 +31,7 @@
         </Grid>
         <Grid Margin="0,294,0,0">
             <Button x:Name="Btn_close" Content="{StaticResource ErrorReport_Btn_close}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="88" Height="31" Click="Btn_close_Click" Margin="10,10,0,0"/>
-            <Button x:Name="Btn_Report" Visibility="Visible" Content="{StaticResource ErrorReport_Btn_Report}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Height="31" Margin="396,10,0,0" Click="Btn_Report_Click"/>
+            <Button x:Name="Btn_Report" Visibility="Visible" Content="{StaticResource ErrorReport_Btn_Report}" IsEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" Width="138" Height="31" Margin="396,10,0,0" Click="Btn_Report_Click"/>
         </Grid>
     </Grid>
 </Window>

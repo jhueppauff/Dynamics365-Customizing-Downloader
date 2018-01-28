@@ -22,6 +22,11 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window
     {
         /// <summary>
+        /// App Insight Helper
+        /// </summary>
+        public static ApplicationInsightHelper ApplicationInsightHelper;
+
+        /// <summary>
         /// Busy Indicator
         /// </summary>
         private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
@@ -39,10 +44,11 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        public MainWindow()
+        public MainWindow(ApplicationInsightHelper applicationInsightHelper)
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
+            MainWindow.ApplicationInsightHelper = applicationInsightHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);
@@ -279,6 +285,11 @@ namespace Dynamics365CustomizingDownloader
             this.LoadLanguage("en-us");
             Btn_ChangeLanguageGerman.IsEnabled = true;
             Btn_ChangeLanguageEnglish.IsEnabled = false;
+        }
+
+        private void Win_MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

@@ -18,6 +18,8 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
     /// </summary>
     public partial class ErrorReport : Window
     {
+        private Exception exception;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="ErrorReport"/> class.
         /// </summary>
@@ -26,6 +28,7 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
         public ErrorReport(Exception ex, string customMessage = "")
         {
             this.InitializeComponent();
+            this.exception = exception;
 
             if (customMessage != string.Empty)
             {
@@ -56,7 +59,8 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Report_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException("Sorry, this is not availible yet");   
+            MainWindow.ApplicationInsightHelper.TrackFatalException(exception);
+            this.Close();
         }
     }
 }

@@ -12,36 +12,27 @@
 
     public class ApplicationInsightHelper
     {
-        private readonly TelemetryClient _telemetryClient;
+        private readonly TelemetryClient telemetryClient;
 
-        private string _sessionKey;
+        private string sessionKey;
 
-        private string _userName;
+        private string osName;
 
-        private string _osName;
+        private string version;
 
-        private string _version;
-
-        private string _application;
-
-        private string _manufacturer;
-
-        private string _model;
-
+        private string application;
 
         private void GatherDetails()
 
         {
 
-            _sessionKey = Guid.NewGuid().ToString();
+            sessionKey = Guid.NewGuid().ToString();
 
-            _userName = Environment.UserName;
+            osName = GetWindowsFriendlyName();
 
-            _osName = GetWindowsFriendlyName();
+            version = $"v.{ Assembly.GetEntryAssembly().GetName().Version}";
 
-            _version = $"v.{ Assembly.GetEntryAssembly().GetName().Version}";
-
-            _application = $"{ Assembly.GetEntryAssembly().GetName().Name} {_version}";
+            application = $"{ Assembly.GetEntryAssembly().GetName().Name} {version}";
         }
 
         /// <summary>
@@ -55,23 +46,16 @@
             return name != null ? name.ToString() : "Unknown";
         }
 
+        /// <summary>
+        /// Populates the Selemetry Client
+        /// </summary>
         private void SetupTelemetry()
         {
-
-            _telemetryClient.Context.Properties.Add("Application Version",
-
-                 _version);
-
-            _telemetryClient.Context.User.Id = _userName;
-
-            _telemetryClient.Context.User.UserAgent = _application;
-
-            _telemetryClient.Context.Component.Version = _version;
-
-            _telemetryClient.Context.Session.Id = _sessionKey;
-
-            _telemetryClient.Context.Device.OperatingSystem = _osName;
-
+            telemetryClient.Context.Properties.Add("Application Version", version);
+            telemetryClient.Context.User.UserAgent = application;
+            telemetryClient.Context.Component.Version = version;
+            telemetryClient.Context.Session.Id = sessionKey;
+            telemetryClient.Context.Device.OperatingSystem = osName;
         }
 
         /// <summary>
@@ -79,16 +63,24 @@
         /// </summary>
         public ApplicationInsightHelper()
         {
-            _telemetryClient = new TelemetryClient() { InstrumentationKey = Properties.Settings.Default.AppInsights };
+            telemetryClient = new TelemetryClient() { InstrumentationKey = Properties.Settings.Default.AppInsights };
             GatherDetails();
             SetupTelemetry();
         }
 
+        /// <summary>
+        /// Tracks the Page Views
+        /// </summary>
+        /// <param name="pageName">Name of the Page</param>
         public void TrackPageView(string pageName)
         {
-            _telemetryClient.TrackPageView(pageName);
+            telemetryClient.TrackPageView(pageName);
         }
 
+        /// <summary>
+        /// Tracks NonFatal Exception
+        /// </summary>
+        /// <param name="ex">Excetion to Track</param>
         public void TrackNonFatalExceptions(Exception ex)
         {
             IDictionary<string, double> metric = new Dictionary<string, double>
@@ -96,29 +88,30 @@
                 { "Non-fatal Exception", 1 }
             };
 
-            _telemetryClient.TrackException(ex, null, metric);
+            telemetryClient.TrackException(ex, null, metric);
         }
 
+        /// <summary>
+        /// Tracks Fatal Exception
+        /// </summary>
+        /// <param name="ex">Excetion to Track</param>
         public void TrackFatalException(Exception ex)
         {
 
-            var exceptionTelemetry = new Microsoft.ApplicationInsights.DataContracts.ExceptionTelemetry(new
+            var exceptionTelemetry = new Microsoft.ApplicationInsights.DataContracts.ExceptionTelemetry(new Exception())
+            {
+                HandledAt = Microsoft.ApplicationInsights.DataContracts.ExceptionHandledAt.Unhandled
+            };
 
-                Exception());
-
-            exceptionTelemetry.HandledAt =
-
-               Microsoft.ApplicationInsights.DataContracts.ExceptionHandledAt.
-
-               Unhandled;
-
-            _telemetryClient.TrackException(exceptionTelemetry);
-
+            telemetryClient.TrackException(exceptionTelemetry);
         }
 
+        /// <summary>
+        /// Flushes the tememetry Client
+        /// </summary>
         public void FlushData()
         {
-            DoDataFlush();
+            telemetryClient.Flush();
         }
     }
 }

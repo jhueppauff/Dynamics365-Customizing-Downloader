@@ -70,7 +70,7 @@ namespace Dynamics365CustomizingDownloader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        [global::System.Configuration.DefaultSettingValueAttribute("solutionPackager.log")]
         public string SolutionPackagerLogPath {
             get {
                 return ((string)(this["SolutionPackagerLogPath"]));
