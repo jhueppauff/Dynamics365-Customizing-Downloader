@@ -92,7 +92,8 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
 
                     ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
                     {
-                        CustomizationFile = fileBytes
+                        CustomizationFile = fileBytes,
+                        ImportJobId = Guid.NewGuid()
                     };
 
                     crmServiceClient.Execute(importSolutionRequest);
