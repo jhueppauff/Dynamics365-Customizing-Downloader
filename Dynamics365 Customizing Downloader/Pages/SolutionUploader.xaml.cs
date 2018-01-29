@@ -20,7 +20,7 @@ namespace Dynamics365CustomizingDownloader.Pages
     /// <summary>
     /// Interaction logic for SolutionUploader
     /// </summary>
-    public partial class SolutionUploader : UserControl
+    public partial class SolutionUploader : System.Windows.Controls.UserControl
     {
         /// <summary>
         /// Log4Net Logger
