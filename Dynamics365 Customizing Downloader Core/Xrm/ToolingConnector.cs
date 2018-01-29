@@ -78,6 +78,34 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         }
 
         /// <summary>
+        /// Uploads the <see cref="List{CrmSolution}"/> to CRM
+        /// </summary>
+        /// <param name="crmSolutions">List of all CRM Solutions. <see cref="List{CrmSolution}"/></param>
+        /// <param name="crmServiceClient">CRM Service Client to connect to CRM. <see cref="CrmServiceClient"/></param>
+        public void UploadCrmSolutions(List<CrmSolution> crmSolutions, CrmServiceClient crmServiceClient)
+        {
+            foreach (CrmSolution crmSolution in crmSolutions)
+            {
+                try
+                {
+                    byte[] fileBytes = File.ReadAllBytes(crmSolution.LocalPath);
+
+                    ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
+                    {
+                        CustomizationFile = fileBytes
+                    };
+
+                    crmServiceClient.Execute(importSolutionRequest);
+                }
+                catch (Exception)
+                {
+
+                    throw;
+                }
+            }
+        }
+
+        /// <summary>
         /// Connect to CRM and get the CRM service client
         /// </summary>
         /// <param name="connectionString">XRM Connection String</param>
