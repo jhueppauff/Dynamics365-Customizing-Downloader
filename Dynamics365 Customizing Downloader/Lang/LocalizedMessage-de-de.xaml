@@ -89,6 +89,12 @@ auswählen</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Verbindungszeichenkette:</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_Connection">Verbindung:</system:String>
     <system:String x:Key="ConnectionOverview">Verbindungsübersicht</system:String>
+    <!-- Solution Uploader -->
+    <system:String x:Key="SolutionUploader">Solution Uploader</system:String>
+    <system:String x:Key="SolutionUploader_OverwriteCustomizings">Überschreibe Customizings</system:String>
+    <system:String x:Key="SolutionUploader_Btn_DeleteAll">Alles löschen</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Add">Hinzufügen</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Upload">Hochladen</system:String>
     <!-- Shared -->
     <system:String x:Key="Loading">Bitte warten ...</system:String>
     <system:String x:Key="True">Wahr</system:String>

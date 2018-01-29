@@ -10,14 +10,13 @@
         <DataGrid x:Name="Dtg_Solutions" Margin="10,74,0,83" ItemsSource="{Binding}" CanUserAddRows="False" CanUserDeleteRows="False" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridCheckBoxColumn Binding="{Binding IsChecked}"></DataGridCheckBoxColumn>
-                <DataGridTextColumn Binding="{Binding UploadOrder}" Header="{DynamicResource SolutionDownloader_Grid_UploadOrder}" Width="140"/>
-                <DataGridTextColumn Binding="{Binding Name}" Header="{DynamicResource SolutionDownloader_Grid_Solution_Name}" IsReadOnly="True" Width="360" />
-                <DataGridTextColumn Binding="{Binding Path}" Header="{DynamicResource SolutionDownloader_Grid_LocalPath}" IsReadOnly="True" Width="450"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding ImportOrder}" Header="{DynamicResource SolutionDownloader_Grid_UploadOrder}" Width="140"/>
+                <DataGridTextColumn Binding="{Binding LocalPath}" Header="{DynamicResource SolutionDownloader_Grid_LocalPath}" IsReadOnly="True" Width="450"></DataGridTextColumn>
             </DataGrid.Columns>
         </DataGrid>
-        <Button Content="{DynamicResource SolutionUploader_Btn_DeleteAll}" x:Name="Btn_DeleteAll" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
+        <Button Content="{DynamicResource SolutionUploader_Btn_DeleteAll}" x:Name="Btn_DeleteAll" Click="Btn_DeleteAll_Click" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
         <CheckBox Content="{DynamicResource SolutionUploader_OverwriteCustomizings}" Foreground="White" HorizontalAlignment="Left" Margin="203,46,0,0" VerticalAlignment="Top"/>
         <Button Content="{DynamicResource SolutionUploader_Btn_Add}" x:Name="Btn_Add" Click="Btn_Add_Click" HorizontalAlignment="Left" Margin="203,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
-
+        <Button Content="{DynamicResource SolutionUploader_Btn_Upload}" x:Name="Btn_Upload" Click="Btn_Upload_Click" HorizontalAlignment="Left" Margin="458,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
     </Grid>
 </UserControl>

@@ -87,12 +87,17 @@ namespace Dynamics365CustomizingDownloader.Pages
             this.selectedCrmConnection = Core.Data.StorageExtensions.Load(MainWindow.EncryptionKey).SingleOrDefault(x => x.Name == Cbx_Connection.SelectedItem.ToString());
         }
 
+        /// <summary>
+        /// Add a new Item to the List
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Add_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 DefaultExt = ".zip",
-                Filter = "Zip Archives (.zip)"
+                Filter = "Zip Archives (.zip) | *.zip"
             };
 
             DialogResult result = openFileDialog.ShowDialog();
@@ -101,9 +106,36 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 Core.Xrm.CrmSolution crmSolution = new Core.Xrm.CrmSolution
                 {
-                    LocalPath = openFileDialog.FileName
+                    LocalPath = openFileDialog.FileName,
+                    ImportOrder = crmSolutions.Count
                 };
+
+                crmSolutions.Add(crmSolution);
+
+                Dtg_Solutions.ItemsSource = null;
+                Dtg_Solutions.ItemsSource = crmSolutions;
             }
+        }
+
+        /// <summary>
+        /// Remove all Items from List
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_DeleteAll_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+            Dtg_Solutions.ItemsSource = null;
+            crmSolutions.Clear();
+        }
+
+        /// <summary>
+        /// Starts Upload to CRM
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
+        private void Btn_Upload_Click(object sender, System.Windows.RoutedEventArgs e)
+        {
+
         }
     }
 }
