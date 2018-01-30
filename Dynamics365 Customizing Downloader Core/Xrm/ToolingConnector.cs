@@ -80,29 +80,26 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <summary>
         /// Uploads the <see cref="List{CrmSolution}"/> to CRM
         /// </summary>
-        /// <param name="crmSolutions">List of all CRM Solutions. <see cref="List{CrmSolution}"/></param>
+        /// <param name="crmSolution">CRM Solutions to Upload</param>
         /// <param name="crmServiceClient">CRM Service Client to connect to CRM. <see cref="CrmServiceClient"/></param>
-        public void UploadCrmSolutions(List<CrmSolution> crmSolutions, CrmServiceClient crmServiceClient)
+        public void UploadCrmSolution(CrmSolution crmSolution, CrmServiceClient crmServiceClient)
         {
-            foreach (CrmSolution crmSolution in crmSolutions)
+            try
             {
-                try
+                byte[] fileBytes = File.ReadAllBytes(crmSolution.LocalPath);
+
+                ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
                 {
-                    byte[] fileBytes = File.ReadAllBytes(crmSolution.LocalPath);
+                    CustomizationFile = fileBytes,
+                    ImportJobId = Guid.NewGuid()
+                };
 
-                    ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
-                    {
-                        CustomizationFile = fileBytes,
-                        ImportJobId = Guid.NewGuid()
-                    };
-
-                    crmServiceClient.Execute(importSolutionRequest);
-                }
-                catch (Exception)
-                {
-
-                    throw;
-                }
+                crmServiceClient.Execute(importSolutionRequest);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -204,7 +201,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
             {
                 filename = Path.Combine(filePath, crmSolutionName + ".zip");
             }
-            
+
             File.WriteAllBytes(filename, exportXml);
         }
 
