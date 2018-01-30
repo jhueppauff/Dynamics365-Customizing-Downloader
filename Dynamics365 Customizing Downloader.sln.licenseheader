@@ -1,7 +1,7 @@
 extensions: .aspx .ascx .cs .cpp .h
 //-----------------------------------------------------------------------
 // <copyright file="%FileName%" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright %CurrentYear% %UserName%
+// Copyright %CurrentYear% Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
