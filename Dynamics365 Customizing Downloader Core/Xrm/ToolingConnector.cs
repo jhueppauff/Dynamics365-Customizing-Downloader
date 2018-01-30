@@ -82,7 +82,10 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         /// <param name="crmSolution">CRM Solutions to Upload</param>
         /// <param name="crmServiceClient">CRM Service Client to connect to CRM. <see cref="CrmServiceClient"/></param>
-        public void UploadCrmSolution(CrmSolution crmSolution, CrmServiceClient crmServiceClient)
+        /// <param name="overwriteCustomizing">Defines if the customizing should be overwritten</param>
+        /// <param name="convertToManaged">Defines if components should be converted to manage</param>
+        /// <param name="publishWorkflow">Defines if workflows should be published after import</param>
+        public void UploadCrmSolution(CrmSolution crmSolution, CrmServiceClient crmServiceClient, bool overwriteCustomizing = false, bool convertToManaged = false, bool publishWorkflow = true)
         {
             try
             {
@@ -91,7 +94,10 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
                 {
                     CustomizationFile = fileBytes,
-                    ImportJobId = Guid.NewGuid()
+                    ImportJobId = Guid.NewGuid(),
+                    OverwriteUnmanagedCustomizations = overwriteCustomizing,
+                    ConvertToManaged = convertToManaged,
+                    PublishWorkflows = publishWorkflow
                 };
 
                 crmServiceClient.Execute(importSolutionRequest);
@@ -180,6 +186,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <param name="crmServiceClient">CRM Service Client</param>
         /// <param name="crmSolutionName">CRM Solution Name</param>
         /// <param name="filePath">File Path</param>
+        /// <param name="isManaged">Defines if the Solution should be downloaded Managed</param>
         public void DownloadSolution(CrmServiceClient crmServiceClient, string crmSolutionName, string filePath, bool isManaged = false)
         {
             ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
