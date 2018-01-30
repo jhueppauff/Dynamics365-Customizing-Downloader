@@ -38,7 +38,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// Initializes a new instance of the <see cref="CrmConnectionException"/> class with a specified error message and a reference to the inner exception that is the cause of this exception.
         /// </summary>
         /// <param name="message">Exception Message</param>
-        /// <param name="inner">Inner Exception Details</param>
+        /// <param name="innerException">Inner Exception Details</param>
         public CrmConnectionException(string message, Exception innerException) : base(message, innerException)
         {
         }
@@ -52,7 +52,14 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         {
         }
 
+        /// <summary>
+        /// Gets or sets the Exception Help Link
+        /// </summary>
         public override string HelpLink { get => base.HelpLink; set => base.HelpLink = value; }
+
+        /// <summary>
+        /// Gets or sets the Exception Source
+        /// </summary>
         public override string Source { get => base.Source; set => base.Source = value; }
 
         public override void GetObjectData(SerializationInfo info, StreamingContext context)

@@ -75,7 +75,6 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         public string LocalPath { get; set; }
 
-
         /// <summary>
         /// Gets or sets the import order
         /// </summary>

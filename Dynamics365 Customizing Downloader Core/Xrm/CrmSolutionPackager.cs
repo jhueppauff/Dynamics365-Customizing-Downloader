@@ -28,6 +28,8 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         /// <param name="path">Path of the Solution</param>
         /// <param name="extractFolder">Path to the extraction Folder</param>
+        /// <param name="logPath">Path to save the Packager Logs to</param>
+        /// <param name="localize">Defines if the Packager should extract the labels into resource Files</param>
         /// <returns>Returns the log Messages</returns>
         public string ExtractCustomizing(string path, string extractFolder, string logPath = null, bool localize = false)
         {
