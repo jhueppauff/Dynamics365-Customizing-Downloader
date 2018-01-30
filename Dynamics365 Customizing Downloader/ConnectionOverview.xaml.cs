@@ -42,6 +42,8 @@ namespace Dynamics365CustomizingDownloader
         {
             this.InitializeComponent();
             this.LoadCRMConnections();
+
+            this.Owner = App.Current.MainWindow;
         }
 
         /// <summary>

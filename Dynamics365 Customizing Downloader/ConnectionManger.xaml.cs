@@ -43,6 +43,8 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
             this.tbx_connectionName.Visibility = Visibility.Hidden;
             this.Lbl_ConnectionName.Visibility = Visibility.Hidden;
+
+            this.Owner = App.Current.MainWindow;
         }
 
         /// <summary>

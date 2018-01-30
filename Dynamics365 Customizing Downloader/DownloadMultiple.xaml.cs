@@ -88,6 +88,8 @@ namespace Dynamics365CustomizingDownloader
 
             this.tbx_download.Text = crmConnection.LocalPath;
             DownloadMultiple.LogToUI($"Pulled Path form config: {crmConnection.LocalPath}", true);
+
+            this.Owner = App.Current.MainWindow;
         }
 
         /// <summary>

@@ -37,6 +37,7 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
             }
             
             this.Tbx_StackTrace.Text = ex.StackTrace;
+            this.Owner = App.Current.MainWindow;
             MainWindow.ApplicationInsightHelper.TrackFatalException(ex);
         }
 
