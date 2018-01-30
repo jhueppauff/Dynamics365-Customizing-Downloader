@@ -94,7 +94,7 @@ namespace Dynamics365CustomizingDownloader.Pages
             }
             catch (System.Exception ex)
             {
-                tbx_status.Text += ("\n {0} \nStackTrace: {1}", ex.Message, ex.StackTrace);
+                tbx_status.Text += $"\n {ex.Message} \nStackTrace: {ex.StackTrace}";
             }
         }
 
