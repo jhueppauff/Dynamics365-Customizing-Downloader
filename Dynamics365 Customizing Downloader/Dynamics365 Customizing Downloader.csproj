@@ -247,6 +247,9 @@
     <Compile Include="Pages\SolutionSelector.xaml.cs">
       <DependentUpon>SolutionSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\SolutionUploadDialog.xaml.cs">
+      <DependentUpon>SolutionUploadDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SolutionUploader.xaml.cs">
       <DependentUpon>SolutionUploader.xaml</DependentUpon>
     </Compile>
@@ -317,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Pages\SolutionSelector.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\SolutionUploadDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

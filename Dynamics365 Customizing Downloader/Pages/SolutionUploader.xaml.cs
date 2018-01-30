@@ -28,11 +28,6 @@ namespace Dynamics365CustomizingDownloader.Pages
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// BackGround Worker
-        /// </summary>
-        private BackgroundWorker worker = new BackgroundWorker();
-
-        /// <summary>
         /// Selected CRM Connection
         /// </summary>
         private Core.Xrm.CrmConnection selectedCrmConnection;
@@ -107,13 +102,13 @@ namespace Dynamics365CustomizingDownloader.Pages
                 Core.Xrm.CrmSolution crmSolution = new Core.Xrm.CrmSolution
                 {
                     LocalPath = openFileDialog.FileName,
-                    ImportOrder = crmSolutions.Count
+                    ImportOrder = this.crmSolutions.Count
                 };
 
-                crmSolutions.Add(crmSolution);
+                this.crmSolutions.Add(crmSolution);
 
                 Dtg_Solutions.ItemsSource = null;
-                Dtg_Solutions.ItemsSource = crmSolutions;
+                Dtg_Solutions.ItemsSource = this.crmSolutions;
             }
         }
 
@@ -125,7 +120,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         private void Btn_DeleteAll_Click(object sender, System.Windows.RoutedEventArgs e)
         {
             Dtg_Solutions.ItemsSource = null;
-            crmSolutions.Clear();
+            this.crmSolutions.Clear();
         }
 
         /// <summary>
@@ -135,7 +130,8 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Upload_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-
+            SolutionUploadDialog solutionUploadDialog = new SolutionUploadDialog(this.selectedCrmConnection, this.crmSolutions);
+            solutionUploadDialog.ShowDialog();
         }
     }
 }
