@@ -15,7 +15,10 @@ See more https://msdn.microsoft.com/en-us/library/jj602987.aspx
 - Start Visual Studio 2017 (you need .NET 4.7)
 - Build the Dynamics365CustomizingDownloader Solution
 
-## Basic Usage
+## Dokumentation 
+
+The Dokumentation can be found in the Wiki:
+https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/wiki/Home
 
 ##### CRM Connection:
 
