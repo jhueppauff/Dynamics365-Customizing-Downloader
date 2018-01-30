@@ -21,6 +21,11 @@ namespace Dynamics365CustomizingDownloader.Pages
     public partial class SolutionUploadDialog : Window
     {
         /// <summary>
+        /// Defines if the Solution Import should overwrite the Customizings
+        /// </summary>
+        private readonly bool overwriteCustomizings = false;
+
+        /// <summary>
         /// BackGround Worker for the Import
         /// </summary>
         private readonly BackgroundWorker backgroundWorker = new BackgroundWorker();
@@ -28,12 +33,12 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <summary>
         /// CRM Connection
         /// </summary>
-        private CrmConnection crmConnection;
+        private readonly CrmConnection crmConnection;
 
         /// <summary>
         /// <see cref="List{CrmSolution}"/> to Upload to CRM
         /// </summary>
-        private List<CrmSolution> crmSolutions;
+        private readonly List<CrmSolution> crmSolutions;
 
         /// <summary>
         /// Helper to iterate the Solution list
@@ -45,12 +50,13 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// </summary>
         /// <param name="crmConnection">CRM Connection</param>
         /// <param name="crmSolutions">Solutions to Upload</param>
-        public SolutionUploadDialog(CrmConnection crmConnection, List<CrmSolution> crmSolutions)
+        public SolutionUploadDialog(CrmConnection crmConnection, List<CrmSolution> crmSolutions, bool overwriteCustomizings)
         {
             this.InitializeComponent();
 
             this.crmConnection = crmConnection;
             this.crmSolutions = crmSolutions;
+            this.overwriteCustomizings = overwriteCustomizings;
         }
 
         /// <summary>
@@ -84,7 +90,7 @@ namespace Dynamics365CustomizingDownloader.Pages
 
             try
             {
-                toolingConnector.UploadCrmSolution(crmSolution: crmSolution, crmServiceClient: toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString));
+                toolingConnector.UploadCrmSolution(crmSolution: crmSolution, crmServiceClient: toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString), overwriteCustomizing: overwriteCustomizings);
             }
             catch (System.Exception ex)
             {

@@ -130,7 +130,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_Upload_Click(object sender, System.Windows.RoutedEventArgs e)
         {
-            SolutionUploadDialog solutionUploadDialog = new SolutionUploadDialog(this.selectedCrmConnection, this.crmSolutions);
+            SolutionUploadDialog solutionUploadDialog = new SolutionUploadDialog(this.selectedCrmConnection, this.crmSolutions, (bool)cbx_overwrite.IsChecked);
             solutionUploadDialog.ShowDialog();
         }
     }

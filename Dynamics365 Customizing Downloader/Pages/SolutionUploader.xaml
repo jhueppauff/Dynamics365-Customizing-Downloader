@@ -15,7 +15,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <Button Content="{DynamicResource SolutionUploader_Btn_DeleteAll}" x:Name="Btn_DeleteAll" Click="Btn_DeleteAll_Click" HorizontalAlignment="Left" Margin="330,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
-        <CheckBox Content="{DynamicResource SolutionUploader_OverwriteCustomizings}" Foreground="White" HorizontalAlignment="Left" Margin="203,46,0,0" VerticalAlignment="Top"/>
+        <CheckBox x:Name="cbx_overwrite" Content="{DynamicResource SolutionUploader_OverwriteCustomizings}" Foreground="White" HorizontalAlignment="Left" Margin="203,46,0,0" VerticalAlignment="Top"/>
         <Button Content="{DynamicResource SolutionUploader_Btn_Add}" x:Name="Btn_Add" Click="Btn_Add_Click" HorizontalAlignment="Left" Margin="203,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
         <Button Content="{DynamicResource SolutionUploader_Btn_Upload}" x:Name="Btn_Upload" Click="Btn_Upload_Click" HorizontalAlignment="Left" Margin="458,10,0,0" VerticalAlignment="Top" Width="123" Height="26"/>
     </Grid>
