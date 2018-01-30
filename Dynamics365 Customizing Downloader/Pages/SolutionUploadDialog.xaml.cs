@@ -108,9 +108,11 @@ namespace Dynamics365CustomizingDownloader.Pages
             {
                 tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
                 tbx_status.Text += "\n Upload completed";
+                pgr_upload.Value = 100;
             }
             else
             {
+                pgr_upload.Value += (100 / uploadCount);
                 tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
             }
         }
