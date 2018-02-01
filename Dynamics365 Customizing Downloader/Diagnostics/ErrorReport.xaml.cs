@@ -16,26 +16,38 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
     public partial class ErrorReport : Window
     {
         /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="ErrorReport"/> class.
         /// </summary>
         /// <param name="ex">The <see cref="System.Exception"/> for the Error Report</param>
         /// <param name="customMessage">If this is set, the Custom Message will be displayed before the <see cref="Exception.Message"/> in the Error Dialog.</param>
         public ErrorReport(Exception ex, string customMessage = "")
         {
-            this.InitializeComponent();
-            
-            if (customMessage != string.Empty)
+            try
             {
-                this.Tbx_ErrorMessage.Text = $"{customMessage} : {ex.Message}";
+                this.InitializeComponent();
+
+                if (customMessage != string.Empty)
+                {
+                    this.Tbx_ErrorMessage.Text = $"{customMessage} : {ex.Message}";
+                }
+                else
+                {
+                    this.Tbx_ErrorMessage.Text = ex.Message;
+                }
+
+                this.Tbx_StackTrace.Text = ex.StackTrace;
+                this.Owner = App.Current.MainWindow;
+                MainWindow.ApplicationInsightHelper.TrackFatalException(ex);
             }
-            else
+            catch (Exception exc)
             {
-                this.Tbx_ErrorMessage.Text = ex.Message;
+                Log.Error(exc.Message, exc);
             }
-            
-            this.Tbx_StackTrace.Text = ex.StackTrace;
-            this.Owner = App.Current.MainWindow;
-            MainWindow.ApplicationInsightHelper.TrackFatalException(ex);
         }
 
         /// <summary>
