@@ -47,6 +47,7 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
             catch (Exception exc)
             {
                 Log.Error(exc.Message, exc);
+                MessageBox.Show("There was an error showing the error Dialog", "Ups, you broke it", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
