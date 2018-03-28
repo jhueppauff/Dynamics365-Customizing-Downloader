@@ -323,7 +323,7 @@ namespace Dynamics365CustomizingDownloader
 
                                 if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
                                 {
-                                    Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
+                                    Core.IO.Directory.DeleteDirectory(Path.Combine(this.selectedPath, solution.UniqueName));
                                     DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
                                 }
 
