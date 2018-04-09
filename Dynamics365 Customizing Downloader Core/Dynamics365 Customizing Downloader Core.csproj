@@ -121,7 +121,8 @@
     <Compile Include="Data\Cryptography.cs" />
     <Compile Include="Data\StorageExtensions.cs" />
     <Compile Include="IO\Directory.cs" />
-    <Compile Include="Plugin\PluginBase.cs" />
+    <Compile Include="Plugin\IPlugin.cs" />
+    <Compile Include="Plugin\IPluginContext.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Connector.cs" />
     <Compile Include="Update\Asset.cs" />
