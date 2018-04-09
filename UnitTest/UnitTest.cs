@@ -16,8 +16,6 @@ namespace UnitTest
     [TestClass]
     public class UnitTest
     {
-        private const string GitHubApiUrl = "https://api.github.com/repos/jhueppauff/Dynamics365-Customizing-Downloader";
-
         /// <summary>
         /// Tests the Cryptography Module if the Data could be Encrypted and Decrypted without losing any Data
         /// </summary>
@@ -29,31 +27,6 @@ namespace UnitTest
             {
                 throw new Exception("String does not match");
             }
-        }
-
-        /// <summary>
-        /// Validates if the Release Infos can be retrieved
-        /// </summary>
-        [TestMethod]
-        public void GithubRetrieveReleaseInfo()
-        {
-            Dynamics365CustomizingDownloader.Core.Update.UpdateChecker updateChecker = new Dynamics365CustomizingDownloader.Core.Update.UpdateChecker();
-            var release = updateChecker.GetReleaseInfo(GitHubApiUrl);
-
-            if (release == null || release.Name == null)
-            {
-                throw new Exception("Release retrieve failed.");
-            }
-        }
-
-        /// <summary>
-        /// Validates if the Update Check works
-        /// </summary>
-        [TestMethod]
-        public void GitHubUpdateCheck()
-        {
-            Dynamics365CustomizingDownloader.Core.Update.UpdateChecker updateChecker = new Dynamics365CustomizingDownloader.Core.Update.UpdateChecker();
-            updateChecker.IsUpdateAvailable(GitHubApiUrl);
         }
     }
 }
