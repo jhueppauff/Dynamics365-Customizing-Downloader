@@ -40,7 +40,7 @@ namespace UnitTest
         public void GitHubUpdateCheck()
         {
             Dynamics365CustomizingDownloader.Core.Update.UpdateChecker updateChecker = new Dynamics365CustomizingDownloader.Core.Update.UpdateChecker();
-            updateChecker.IsUpdateAvailable(GitHubApiUrl);
+            bool updateAvailable = updateChecker.IsUpdateAvailable(GitHubApiUrl);
         }
 
         /// <summary>
