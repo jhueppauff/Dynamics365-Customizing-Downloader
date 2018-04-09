@@ -1,13 +1,15 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
+﻿//-----------------------------------------------------------------------
+// <copyright file="GitHub.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+//-----------------------------------------------------------------------
 
 namespace UnitTest
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
+
     /// <summary>
     /// Unit Test for GitHub Releated functions
     /// </summary>
