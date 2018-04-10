@@ -301,6 +301,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Resource Include="Ressources\NullStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Resource>
     <Resource Include="bin\coretools\Other Redistributable.txt" />
     <Resource Include="bin\coretools\CrmSvcUtil.xml" />
     <Content Include="bin\coretools\CrmSvcUtil.exe" />
@@ -448,6 +452,10 @@
     <ProjectReference Include="..\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj">
       <Project>{4376e28a-8075-4e9b-9a03-5154865c9971}</Project>
       <Name>Dynamics365 Customizing Downloader Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dynamics365CustomizingDownloader.Ressources\Dynamics365CustomizingDownloader.Ressources.csproj">
+      <Project>{38a49566-9d3e-44e9-9283-b965d21485ef}</Project>
+      <Name>Dynamics365CustomizingDownloader.Ressources</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -64,6 +64,7 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="ConnectionManager_Btn_Connect">Verbinden</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Fehler bei der CRM Verbindung</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">Ein Fehler ist aufgetreten</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_TryConnectionManager">Teste den Verbindungsdialog?</system:String>
     <!-- Patch Notes -->
     <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Versions Nummer:</system:String>
     <system:String x:Key="PatchNotes_Lbl_CreatedAt">Erstellt am:</system:String>

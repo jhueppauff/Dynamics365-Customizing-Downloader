@@ -21,7 +21,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// App Insight Helper
         /// </summary>
-        private static ApplicationInsightHelper applicationInsightHelper = null;
+        private ApplicationInsightHelper applicationInsightHelper = null;
 
         /// <summary>
         /// Busy Indicator
@@ -46,7 +46,7 @@ namespace Dynamics365CustomizingDownloader
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            MainWindow.applicationInsightHelper = applicationInsightHelper;
+            this.applicationInsightHelper = applicationInsightHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);

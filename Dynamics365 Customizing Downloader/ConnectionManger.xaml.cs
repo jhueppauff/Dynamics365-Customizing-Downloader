@@ -165,5 +165,30 @@ namespace Dynamics365CustomizingDownloader
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
+
+        private void Lbl_ConnectionWizard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Pages.CrmConnectionDialog crmConnectionDialog = new Pages.CrmConnectionDialog();
+            crmConnectionDialog.ConnectionToCrmCompleted += CrmConnectionDialog_CrmConnectionCompleted;
+            crmConnectionDialog.ShowDialog();
+
+            // Validate connection to crm
+            if (crmConnectionDialog.CrmConnectionManager != null && crmConnectionDialog.CrmConnectionManager.CrmSvc != null && crmConnectionDialog.CrmConnectionManager.CrmSvc.IsReady)
+            {
+                // ToDo: get connection string or equaly connection config which may end in additional work if connection string is not possible from the wpf control
+
+            }
+        }
+
+        private void CrmConnectionDialog_CrmConnectionCompleted(object sender, EventArgs e)
+        {
+            if (sender is Pages.CrmConnectionDialog source)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    source.Close();
+                });
+            }
+        }
     }
 }

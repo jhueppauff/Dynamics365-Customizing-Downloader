@@ -63,6 +63,7 @@ every time you start this application</system:String>
     <system:String x:Key="ConnectionManager_Btn_Connect">Connect</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Unable to open CRM Connection</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">An error occured</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_TryConnectionManager">Try the connection wizard?</system:String>
     <!-- Patch Notes -->
     <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Version Number:</system:String>
     <system:String x:Key="PatchNotes_Lbl_CreatedAt">Created at:</system:String>

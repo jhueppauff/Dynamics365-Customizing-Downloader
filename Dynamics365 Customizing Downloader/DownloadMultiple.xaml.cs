@@ -30,6 +30,11 @@ namespace Dynamics365CustomizingDownloader
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
+        /// Crm Service Client
+        /// </summary>
+        private CrmServiceClient crmServiceClient = null;
+
+        /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
         /// </summary>
         private static TextBox statusTextBox = new TextBox();
@@ -294,7 +299,6 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            CrmServiceClient crmServiceClient = null;
             try
             {
                 // Create Folder if it does not exists
@@ -307,7 +311,7 @@ namespace Dynamics365CustomizingDownloader
                 {
                     if (!this.worker.CancellationPending)
                     {
-                        ProcessSolutions(crmServiceClient, solution);
+                        ProcessSolutions(solution);
                     }
                     else
                     {
@@ -335,7 +339,7 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
-        private void ProcessSolutions(CrmServiceClient crmServiceClient, CrmSolution solution)
+        private void ProcessSolutions(CrmSolution solution)
         {
             using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
             {
