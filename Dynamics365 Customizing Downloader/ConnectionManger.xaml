@@ -28,6 +28,6 @@
         <TextBox x:Name="tbx_connectionName" HorizontalAlignment="Left" Height="23" Margin="10,248,0,0" IsReadOnly="True" TextWrapping="Wrap" VerticalAlignment="Top" Width="272"/>
         <Label x:Name="Lbl_ConnectionName" Content="{DynamicResource ConnectionManager_Lbl_ConnectionName}" HorizontalAlignment="Left" Margin="10,217,0,0" VerticalAlignment="Top"/>
         <Button x:Name="btn_save" Content="{DynamicResource ConnectionManager_btn_save}" HorizontalAlignment="Left" Margin="214,276,0,0" IsEnabled="False" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.22,0.527" Click="Btn_save_Click"/>
-        <Label x:Name="Lbl_ConnectionWizard"  MouseLeftButtonUp="Lbl_ConnectionWizard_MouseLeftButtonUp" Content="{DynamicResource ConnectionManager_Lbl_TryConnectionManager}" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="224" Foreground="#DD75A7FF"/>
+        <Label x:Name="Lbl_ConnectionWizard" Visibility="Collapsed" MouseLeftButtonUp="Lbl_ConnectionWizard_MouseLeftButtonUp" Content="{DynamicResource ConnectionManager_Lbl_TryConnectionManager}" HorizontalAlignment="Left" Margin="10,36,0,0" VerticalAlignment="Top" Width="224" Foreground="#DD75A7FF"/>
     </Grid>
 </Window>
