@@ -305,8 +305,8 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Resource>
-    <Resource Include="bin\coretools\Other Redistributable.txt" />
-    <Resource Include="bin\coretools\CrmSvcUtil.xml" />
+    <None Include="bin\coretools\Other Redistributable.txt" />
+    <None Include="bin\coretools\CrmSvcUtil.xml" />
     <Content Include="bin\coretools\CrmSvcUtil.exe" />
     <Content Include="bin\coretools\Microsoft.Crm.Sdk.Proxy.dll" />
     <Content Include="bin\coretools\Microsoft.IdentityModel.Clients.ActiveDirectory.dll" />
