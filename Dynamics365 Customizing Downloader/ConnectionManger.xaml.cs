@@ -1,11 +1,8 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ConnectionManger.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2017 Jhueppauff
-// MIT  
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// </copyright>
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -43,6 +40,8 @@ namespace Dynamics365CustomizingDownloader
             this.InitializeComponent();
             this.tbx_connectionName.Visibility = Visibility.Hidden;
             this.Lbl_ConnectionName.Visibility = Visibility.Hidden;
+
+            this.Owner = App.Current.MainWindow;
         }
 
         /// <summary>
@@ -164,6 +163,31 @@ namespace Dynamics365CustomizingDownloader
                 }
 
                 ConnectionManger.Log.Error(ex.Message, ex);
+            }
+        }
+
+        private void Lbl_ConnectionWizard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            Pages.CrmConnectionDialog crmConnectionDialog = new Pages.CrmConnectionDialog();
+            crmConnectionDialog.ConnectionToCrmCompleted += CrmConnectionDialog_CrmConnectionCompleted;
+            crmConnectionDialog.ShowDialog();
+
+            // Validate connection to crm
+            if (crmConnectionDialog.CrmConnectionManager != null && crmConnectionDialog.CrmConnectionManager.CrmSvc != null && crmConnectionDialog.CrmConnectionManager.CrmSvc.IsReady)
+            {
+                // ToDo: get connection string or equaly connection config which may end in additional work if connection string is not possible from the wpf control
+
+            }
+        }
+
+        private void CrmConnectionDialog_CrmConnectionCompleted(object sender, EventArgs e)
+        {
+            if (sender is Pages.CrmConnectionDialog source)
+            {
+                this.Dispatcher.Invoke(() =>
+                {
+                    source.Close();
+                });
             }
         }
     }

@@ -1,11 +1,8 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="Cryptography.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2017 Jhueppauff
-// MIT  
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// </copyright>
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Core.Data
@@ -82,11 +79,10 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
                         using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                            {
-                                // Write all data to the stream.
-                                swEncrypt.Write(plainText);
-                            }
+                            StreamWriter swEncrypt = new StreamWriter(csEncrypt);
+
+                            // Write all data to the stream.
+                            swEncrypt.Write(plainText);
                         }
 
                         outStr = Convert.ToBase64String(msEncrypt.ToArray());
@@ -160,12 +156,11 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
                         using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
-                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
-                            {
-                                // Read the decrypted bytes from the decrypting stream
-                                // and place them in a string.
-                                plainText = srDecrypt.ReadToEnd();
-                            }
+                            StreamReader srDecrypt = new StreamReader(csDecrypt);
+
+                            // Read the decrypted bytes from the decrypting stream
+                            // and place them in a string.
+                            plainText = srDecrypt.ReadToEnd();
                         }
                     }
                 }

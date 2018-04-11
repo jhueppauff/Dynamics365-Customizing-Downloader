@@ -1,11 +1,8 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="DownloadMultiple.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2017 Jhueppauff
-// MIT  
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// </copyright>
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -19,6 +16,8 @@ namespace Dynamics365CustomizingDownloader
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
+    using Microsoft.Xrm.Tooling.Connector;
+    using Dynamics365CustomizingDownloader.Core.Xrm;
 
     /// <summary>
     /// Interaction logic for DownloadMultiple
@@ -29,6 +28,11 @@ namespace Dynamics365CustomizingDownloader
         /// Log4Net Logger
         /// </summary>
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// Crm Service Client
+        /// </summary>
+        private CrmServiceClient crmServiceClient = null;
 
         /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
@@ -88,6 +92,8 @@ namespace Dynamics365CustomizingDownloader
 
             this.tbx_download.Text = crmConnection.LocalPath;
             DownloadMultiple.LogToUI($"Pulled Path form config: {crmConnection.LocalPath}", true);
+
+            this.Owner = App.Current.MainWindow;
         }
 
         /// <summary>
@@ -293,7 +299,6 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="DoWorkEventArgs"/> instance containing the event data.</param>
         private void Worker_DoWork(object sender, DoWorkEventArgs e)
         {
-            Microsoft.Xrm.Tooling.Connector.CrmServiceClient crmServiceClient = null;
             try
             {
                 // Create Folder if it does not exists
@@ -302,52 +307,11 @@ namespace Dynamics365CustomizingDownloader
                     Directory.CreateDirectory(this.CRMConnection.LocalPath);
                 }
 
-                foreach (Core.Xrm.CrmSolution solution in this.CRMSolutions)
+                foreach (CrmSolution solution in this.CRMSolutions)
                 {
                     if (!this.worker.CancellationPending)
                     {
-                        using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
-                        {
-                            // Delete Solution File if it exists
-                            if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
-                            {
-                                File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                            }
-
-                            crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
-
-                            try
-                            {
-                                toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
-
-                                Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
-
-                                if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
-                                {
-                                    Directory.Delete(Path.Combine(this.selectedPath, solution.UniqueName), true);
-                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
-                                }
-
-                                string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName), Properties.Settings.Default.SolutionPackagerLogPath, this.localizeSupport);
-                                DownloadMultiple.UpdateUI(log, false);
-                            }
-                            catch (Exception ex)
-                            {
-                                Log.Error(ex.Message, ex);
-                                if (!Properties.Settings.Default.DisableErrorReports)
-                                {
-                                    throw;
-                                }
-                            }
-                            finally
-                            {
-                                if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()))
-                                {
-                                    File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
-                                    DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
-                                }
-                            }
-                        }
+                        ProcessSolutions(solution);
                     }
                     else
                     {
@@ -371,6 +335,52 @@ namespace Dynamics365CustomizingDownloader
                 if (crmServiceClient != null)
                 {
                     crmServiceClient.Dispose();
+                }
+            }
+        }
+
+        private void ProcessSolutions(CrmSolution solution)
+        {
+            using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
+            {
+                // Delete Solution File if it exists
+                if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
+                {
+                    File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                }
+
+                crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
+
+                try
+                {
+                    toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
+
+                    Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
+
+                    if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
+                    {
+                        Core.IO.Directory.DeleteDirectory(Path.Combine(this.selectedPath, solution.UniqueName));
+                        DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName).ToString()}", true);
+                    }
+
+                    string log = crmSolutionPackager.ExtractCustomizing(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"), Path.Combine(this.selectedPath, solution.UniqueName), Properties.Settings.Default.SolutionPackagerLogPath, this.localizeSupport);
+                    DownloadMultiple.UpdateUI(log, false);
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex.Message, ex);
+                    if (!Properties.Settings.Default.DisableErrorReports)
+                    {
+                        throw;
+                    }
+                }
+                finally
+                {
+                    if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()))
+                    {
+                        File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
+                        DownloadMultiple.UpdateUI($"Delete {Path.Combine(this.selectedPath, solution.UniqueName + ".zip").ToString()}", true);
+                    }
                 }
             }
         }

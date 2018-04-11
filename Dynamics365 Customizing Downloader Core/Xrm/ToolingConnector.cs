@@ -1,11 +1,8 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="ToolingConnector.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2017 Jhueppauff
-// MIT  
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// </copyright>
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Core.Xrm
@@ -74,6 +71,38 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 {
                     crmServiceClient.Dispose();
                 }
+            }
+        }
+
+        /// <summary>
+        /// Uploads the <see cref="List{CrmSolution}"/> to CRM
+        /// </summary>
+        /// <param name="crmSolution">CRM Solutions to Upload</param>
+        /// <param name="crmServiceClient">CRM Service Client to connect to CRM. <see cref="CrmServiceClient"/></param>
+        /// <param name="overwriteCustomizing">Defines if the customizing should be overwritten</param>
+        /// <param name="convertToManaged">Defines if components should be converted to manage</param>
+        /// <param name="publishWorkflow">Defines if workflows should be published after import</param>
+        public void UploadCrmSolution(CrmSolution crmSolution, CrmServiceClient crmServiceClient, bool overwriteCustomizing = false, bool convertToManaged = false, bool publishWorkflow = true)
+        {
+            try
+            {
+                byte[] fileBytes = File.ReadAllBytes(crmSolution.LocalPath);
+
+                ImportSolutionRequest importSolutionRequest = new ImportSolutionRequest()
+                {
+                    CustomizationFile = fileBytes,
+                    ImportJobId = Guid.NewGuid(),
+                    OverwriteUnmanagedCustomizations = overwriteCustomizing,
+                    ConvertToManaged = convertToManaged,
+                    PublishWorkflows = publishWorkflow
+                };
+
+                crmServiceClient.Execute(importSolutionRequest);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+                throw;
             }
         }
 
@@ -154,6 +183,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <param name="crmServiceClient">CRM Service Client</param>
         /// <param name="crmSolutionName">CRM Solution Name</param>
         /// <param name="filePath">File Path</param>
+        /// <param name="isManaged">Defines if the Solution should be downloaded Managed</param>
         public void DownloadSolution(CrmServiceClient crmServiceClient, string crmSolutionName, string filePath, bool isManaged = false)
         {
             ExportSolutionRequest exportSolutionRequest = new ExportSolutionRequest
@@ -175,7 +205,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
             {
                 filename = Path.Combine(filePath, crmSolutionName + ".zip");
             }
-            
+
             File.WriteAllBytes(filename, exportXml);
         }
 

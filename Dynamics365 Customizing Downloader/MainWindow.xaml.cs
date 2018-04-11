@@ -1,11 +1,8 @@
 ﻿//-----------------------------------------------------------------------
 // <copyright file="MainWindow.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2017 Jhueppauff
-// MIT  
-// Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions
-// The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-// </copyright>
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -21,6 +18,11 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// App Insight Helper
+        /// </summary>
+        private ApplicationInsightHelper applicationInsightHelper = null;
+
         /// <summary>
         /// Busy Indicator
         /// </summary>
@@ -39,10 +41,12 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        public MainWindow()
+        /// <param name="applicationInsightHelper">AI Helper</param>
+        public MainWindow(ApplicationInsightHelper applicationInsightHelper)
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
+            this.applicationInsightHelper = applicationInsightHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);
@@ -83,6 +87,11 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
+
+        /// <summary>
+        /// Gets or sets the AI Helper
+        /// </summary>
+        public static ApplicationInsightHelper ApplicationInsightHelper { get; set; }
 
         /// <summary>
         /// Gets or sets the Encryption Key
@@ -154,8 +163,11 @@ namespace Dynamics365CustomizingDownloader
         private List<Pages.MenuItem> GetMenu()
         {
             List<Pages.MenuItem> listMenuItems = new List<Pages.MenuItem>();
+
+            // Customizing Extractor
             Pages.SolutionSelector solutionSelector = new Pages.SolutionSelector();
             solutionSelector.ReloadConnections();
+
             Pages.MenuItem menuItem = new Pages.MenuItem
             {
                 Name = (string)Application.Current.FindResource("MainWindow_Code_Customizing_Downloader"),
@@ -165,6 +177,7 @@ namespace Dynamics365CustomizingDownloader
 
             listMenuItems.Add(menuItem);
 
+            // Solution Downloader
             Pages.SolutionDownloader solutionDownloader = new Pages.SolutionDownloader();
 
             menuItem = new Pages.MenuItem()
@@ -172,6 +185,18 @@ namespace Dynamics365CustomizingDownloader
                 Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader"),
                 Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Downloader_Description"),
                 Content = solutionDownloader
+            };
+
+            listMenuItems.Add(menuItem);
+
+            // Solution Uploader
+            Pages.SolutionUploader solutionUploader = new Pages.SolutionUploader();
+
+            menuItem = new Pages.MenuItem()
+            {
+                Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader"),
+                Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader_Description"),
+                Content = solutionUploader
             };
 
             listMenuItems.Add(menuItem);
@@ -263,6 +288,16 @@ namespace Dynamics365CustomizingDownloader
             this.LoadLanguage("en-us");
             Btn_ChangeLanguageGerman.IsEnabled = true;
             Btn_ChangeLanguageEnglish.IsEnabled = false;
+        }
+
+        /// <summary>
+        /// Closes the whole Application
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
+        private void Win_MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

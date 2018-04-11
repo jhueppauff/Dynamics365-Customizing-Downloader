@@ -34,6 +34,8 @@ every time you start this application</system:String>
     <system:String x:Key="MainWindow_List_LocalFolder">Local Folder</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageGerman">German</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageEnglish">English</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader">Solution Uploader</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader_Description">Uploads multiple Solution into CRM</system:String>
     <!-- Solution Downloader/Selector -->
     <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Unique Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>
@@ -47,6 +49,8 @@ every time you start this application</system:String>
     <system:String x:Key="SolutionDownloader_btn_download">Download</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_connection">Connection</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_localRepositories">Local Repositories:</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_UploadOrder">Upload Order</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_LocalPath">Local Path</system:String>
     <!-- Download Solution -->
     <system:String x:Key="DownloadSolution">Download Solution</system:String>
     <system:String x:Key="DownloadSolution_btn_cancel">Cancel</system:String>
@@ -59,6 +63,7 @@ every time you start this application</system:String>
     <system:String x:Key="ConnectionManager_Btn_Connect">Connect</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Unable to open CRM Connection</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">An error occured</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_TryConnectionManager">Try the connection wizard?</system:String>
     <!-- Patch Notes -->
     <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Version Number:</system:String>
     <system:String x:Key="PatchNotes_Lbl_CreatedAt">Created at:</system:String>
@@ -84,6 +89,12 @@ Folder</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Connection String:</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_Connection">Connection:</system:String>
     <system:String x:Key="ConnectionOverview">Connection Overview</system:String>
+    <!-- Solution Uploader -->
+    <system:String x:Key="SolutionUploader">Solution Uploader</system:String>
+    <system:String x:Key="SolutionUploader_OverwriteCustomizings">Overwrite Customizings</system:String>
+    <system:String x:Key="SolutionUploader_Btn_DeleteAll">Delete all</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Add">Add</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Upload">Upload</system:String>
     <!-- Shared -->
     <system:String x:Key="Loading">Please wait ...</system:String>
     <system:String x:Key="True">True</system:String>

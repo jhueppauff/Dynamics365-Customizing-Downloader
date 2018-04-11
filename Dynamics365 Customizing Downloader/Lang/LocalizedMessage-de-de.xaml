@@ -35,6 +35,8 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="MainWindow_List_LocalFolder">Lokaler Ordner</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageGerman">Deutsch</system:String>
     <system:String x:Key="MainWindow_Btn_ChangeLanaguageEnglish">Englisch</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader">Solution Uploader</system:String>
+    <system:String x:Key="MainWindow_Code_Solution_Uploader_Description">Läd mehrere Solutions ins CRM</system:String>
     <!-- Solution Downloader/Selector -->
     <system:String x:Key="SolutionDownloader_Grid_Unique_Name">Eindeutiger Name</system:String>
     <system:String x:Key="SolutionDownloader_Grid_Solution_Name">Solution Name</system:String>
@@ -48,6 +50,8 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="SolutionDownloader_btn_download">Herunterladen</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_connection">Verbindung</system:String>
     <system:String x:Key="SolutionDownloader_Lbl_localRepositories">Lokale Repositories:</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_UploadOrder">Import Reihenfolge</system:String>
+    <system:String x:Key="SolutionDownloader_Grid_LocalPath">Lokaler Pfad</system:String>
     <!-- Download Solution -->
     <system:String x:Key="DownloadSolution">Download Solution</system:String>
     <system:String x:Key="DownloadSolution_btn_cancel">Abbrechen</system:String>
@@ -60,6 +64,7 @@ ist dieser erforderlich</system:String>
     <system:String x:Key="ConnectionManager_Btn_Connect">Verbinden</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM">Fehler bei der CRM Verbindung</system:String>
     <system:String x:Key="ConnectionManager_Code_UnableToOpenCRM_Caption">Ein Fehler ist aufgetreten</system:String>
+    <system:String x:Key="ConnectionManager_Lbl_TryConnectionManager">Teste den Verbindungsdialog?</system:String>
     <!-- Patch Notes -->
     <system:String x:Key="PatchNotes_Lbl_LabelVersionNumber">Versions Nummer:</system:String>
     <system:String x:Key="PatchNotes_Lbl_CreatedAt">Erstellt am:</system:String>
@@ -85,6 +90,12 @@ auswählen</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_ConnectionString">Verbindungszeichenkette:</system:String>
     <system:String x:Key="ConnectionOverview_Lbl_Connection">Verbindung:</system:String>
     <system:String x:Key="ConnectionOverview">Verbindungsübersicht</system:String>
+    <!-- Solution Uploader -->
+    <system:String x:Key="SolutionUploader">Solution Uploader</system:String>
+    <system:String x:Key="SolutionUploader_OverwriteCustomizings">Überschreibe Customizings</system:String>
+    <system:String x:Key="SolutionUploader_Btn_DeleteAll">Alles löschen</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Add">Hinzufügen</system:String>
+    <system:String x:Key="SolutionUploader_Btn_Upload">Hochladen</system:String>
     <!-- Shared -->
     <system:String x:Key="Loading">Bitte warten ...</system:String>
     <system:String x:Key="True">Wahr</system:String>
