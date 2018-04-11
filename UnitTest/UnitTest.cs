@@ -16,17 +16,6 @@ namespace UnitTest
     [TestClass]
     public class UnitTest
     {
-        /// <summary>
-        /// Tests the Cryptography Module if the Data could be Encrypted and Decrypted without losing any Data
-        /// </summary>
-        [TestMethod]
-        public void TestCryptographyModule()
-        {
-            string encryptedString = Dynamics365CustomizingDownloader.Core.Data.Cryptography.EncryptStringAES("Something", "secret");
-            if (Dynamics365CustomizingDownloader.Core.Data.Cryptography.DecryptStringAES(encryptedString, "secret") != "Something")
-            {
-                throw new Exception("String does not match");
-            }
-        }
+
     }
 }
