@@ -3,6 +3,7 @@
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -16,8 +17,8 @@ namespace Dynamics365CustomizingDownloader
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using Microsoft.Xrm.Tooling.Connector;
     using Dynamics365CustomizingDownloader.Core.Xrm;
+    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// Interaction logic for DownloadMultiple
@@ -30,11 +31,6 @@ namespace Dynamics365CustomizingDownloader
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
-        /// Crm Service Client
-        /// </summary>
-        private CrmServiceClient crmServiceClient = null;
-
-        /// <summary>
         /// Static Status Text Box, used for multi threading UI Update
         /// </summary>
         private static TextBox statusTextBox = new TextBox();
@@ -43,6 +39,11 @@ namespace Dynamics365CustomizingDownloader
         /// BackGround Worker
         /// </summary>
         private readonly BackgroundWorker worker = new BackgroundWorker();
+
+        /// <summary>
+        /// CRM Service Client
+        /// </summary>
+        private CrmServiceClient crmServiceClient = null;
 
         /// <summary>
         /// Dispose bool
@@ -311,7 +312,7 @@ namespace Dynamics365CustomizingDownloader
                 {
                     if (!this.worker.CancellationPending)
                     {
-                        ProcessSolutions(solution);
+                        this.ProcessSolutions(solution);
                     }
                     else
                     {
@@ -332,16 +333,20 @@ namespace Dynamics365CustomizingDownloader
             }
             finally
             {
-                if (crmServiceClient != null)
+                if (this.crmServiceClient != null)
                 {
-                    crmServiceClient.Dispose();
+                    this.crmServiceClient.Dispose();
                 }
             }
         }
 
+        /// <summary>
+        /// Will Extract the Solution into the folder
+        /// </summary>
+        /// <param name="solution">CRM Solution which should be extracted</param>
         private void ProcessSolutions(CrmSolution solution)
         {
-            using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
+            using (ToolingConnector toolingConnector = new ToolingConnector())
             {
                 // Delete Solution File if it exists
                 if (File.Exists(Path.Combine(this.selectedPath, solution.UniqueName + ".zip")))
@@ -349,13 +354,13 @@ namespace Dynamics365CustomizingDownloader
                     File.Delete(Path.Combine(this.selectedPath, solution.UniqueName + ".zip"));
                 }
 
-                crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
+                this.crmServiceClient = toolingConnector.GetCrmServiceClient(connectionString: this.CRMConnection.ConnectionString);
 
                 try
                 {
-                    toolingConnector.DownloadSolution(crmServiceClient, solution.UniqueName, this.selectedPath);
+                    toolingConnector.DownloadSolution(this.crmServiceClient, solution.UniqueName, this.selectedPath);
 
-                    Core.Xrm.CrmSolutionPackager crmSolutionPackager = new Core.Xrm.CrmSolutionPackager();
+                    CrmSolutionPackager crmSolutionPackager = new CrmSolutionPackager();
 
                     if (Directory.Exists(Path.Combine(this.selectedPath, solution.UniqueName)))
                     {

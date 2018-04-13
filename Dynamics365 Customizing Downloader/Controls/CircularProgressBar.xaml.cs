@@ -1,10 +1,10 @@
-﻿//  --------------------------------
-//  <copyright file="CircularProgressBar.xaml.cs" company="None">
-//  Copyright (c) Huy Pham. All rights reserved.
-//  This source code is made available under the terms of the Microsoft Public License (Ms-PL)
-//  http://www.opensource.org/licenses/ms-pl.html
-//  </copyright>
-//  ---------------------------------
+﻿//-----------------------------------------------------------------------
+// <copyright file="CircularProgressBar.xaml.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
+//-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Controls
 {

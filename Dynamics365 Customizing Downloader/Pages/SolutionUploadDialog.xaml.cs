@@ -3,6 +3,7 @@
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Pages
@@ -18,7 +19,7 @@ namespace Dynamics365CustomizingDownloader.Pages
     public partial class SolutionUploadDialog : Window
     {
         /// <summary>
-        /// Defines if the Solution Import should overwrite the Customizings
+        /// Defines if the Solution Import should overwrite the Customizing
         /// </summary>
         private readonly bool overwriteCustomizings = false;
 
@@ -47,6 +48,7 @@ namespace Dynamics365CustomizingDownloader.Pages
         /// </summary>
         /// <param name="crmConnection">CRM Connection</param>
         /// <param name="crmSolutions">Solutions to Upload</param>
+        /// <param name="overwriteCustomizings">Indicates if the Customizing should be overwritten</param>
         public SolutionUploadDialog(CrmConnection crmConnection, List<CrmSolution> crmSolutions, bool overwriteCustomizings)
         {
             this.InitializeComponent();
@@ -87,11 +89,11 @@ namespace Dynamics365CustomizingDownloader.Pages
 
             try
             {
-                toolingConnector.UploadCrmSolution(crmSolution: crmSolution, crmServiceClient: toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString), overwriteCustomizing: overwriteCustomizings);
+                toolingConnector.UploadCrmSolution(crmSolution: crmSolution, crmServiceClient: toolingConnector.GetCrmServiceClient(this.crmConnection.ConnectionString), overwriteCustomizing: this.overwriteCustomizings);
             }
             catch (System.Exception ex)
             {
-                tbx_status.Text += $"\n {ex.Message} \nStackTrace: {ex.StackTrace}";
+                this.tbx_status.Text += $"\n {ex.Message} \nStackTrace: {ex.StackTrace}";
             }
         }
 
@@ -109,14 +111,14 @@ namespace Dynamics365CustomizingDownloader.Pages
             }
             else if (this.uploadCount == this.crmSolutions.Count)
             {
-                tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
-                tbx_status.Text += "\n Upload completed";
-                pgr_upload.Value = 100;
+                this.tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
+                this.tbx_status.Text += "\n Upload completed";
+                this.pgr_upload.Value = 100;
             }
             else
             {
-                pgr_upload.Value += (100 / uploadCount);
-                tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
+                this.pgr_upload.Value += 100.00 / this.uploadCount;
+                this.tbx_status.Text += "\n Upload of {0} completed" + this.crmSolutions[this.uploadCount].LocalPath;
             }
         }
     }

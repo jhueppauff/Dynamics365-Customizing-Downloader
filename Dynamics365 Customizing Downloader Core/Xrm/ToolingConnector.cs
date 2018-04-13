@@ -3,6 +3,7 @@
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader.Core.Xrm
@@ -111,7 +112,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         /// <param name="connectionString">XRM Connection String</param>
         /// <returns>Returns <see cref="CrmServiceClient"/>Returns the <see cref="Microsoft.Xrm.Tooling.Connector.CrmServiceClient"/></returns>
-        public Microsoft.Xrm.Tooling.Connector.CrmServiceClient GetCrmServiceClient(string connectionString)
+        public CrmServiceClient GetCrmServiceClient(string connectionString)
         {
             try
             {

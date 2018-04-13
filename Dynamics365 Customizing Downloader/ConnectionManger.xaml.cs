@@ -3,6 +3,7 @@
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -121,7 +122,7 @@ namespace Dynamics365CustomizingDownloader
         /// Button Save click Event
         /// </summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="RoutedEventArgs"/> instance containing the event data.</param>
         private void Btn_save_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -154,7 +155,7 @@ namespace Dynamics365CustomizingDownloader
                     this.Close();
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 if (!Properties.Settings.Default.DisableErrorReports)
                 {
@@ -166,20 +167,29 @@ namespace Dynamics365CustomizingDownloader
             }
         }
 
+        /// <summary>
+        /// Will open the WPF Connection Control
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void Lbl_ConnectionWizard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
             Pages.CrmConnectionDialog crmConnectionDialog = new Pages.CrmConnectionDialog();
-            crmConnectionDialog.ConnectionToCrmCompleted += CrmConnectionDialog_CrmConnectionCompleted;
+            crmConnectionDialog.ConnectionToCrmCompleted += this.CrmConnectionDialog_CrmConnectionCompleted;
             crmConnectionDialog.ShowDialog();
 
             // Validate connection to crm
             if (crmConnectionDialog.CrmConnectionManager != null && crmConnectionDialog.CrmConnectionManager.CrmSvc != null && crmConnectionDialog.CrmConnectionManager.CrmSvc.IsReady)
             {
                 // ToDo: get connection string or equaly connection config which may end in additional work if connection string is not possible from the wpf control
-
             }
         }
 
+        /// <summary>
+        /// Event will be raised on a successful Connection
+        /// </summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CrmConnectionDialog_CrmConnectionCompleted(object sender, EventArgs e)
         {
             if (sender is Pages.CrmConnectionDialog source)

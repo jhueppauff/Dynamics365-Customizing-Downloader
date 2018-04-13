@@ -3,6 +3,7 @@
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
 //-----------------------------------------------------------------------
 
 namespace Dynamics365CustomizingDownloader
@@ -19,14 +20,14 @@ namespace Dynamics365CustomizingDownloader
     public partial class MainWindow : Window
     {
         /// <summary>
-        /// App Insight Helper
-        /// </summary>
-        private ApplicationInsightHelper applicationInsightHelper = null;
-
-        /// <summary>
         /// Busy Indicator
         /// </summary>
         private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
+
+        /// <summary>
+        /// App Insight Helper
+        /// </summary>
+        private ApplicationInsightHelper applicationInsightHelper = null;
 
         /// <summary>
         /// Dispose bool
