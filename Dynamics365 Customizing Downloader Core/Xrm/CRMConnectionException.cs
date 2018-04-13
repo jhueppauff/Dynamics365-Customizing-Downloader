@@ -41,11 +41,21 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         {
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class. Which contains the help link and Exception source 
+        /// </summary>
+        /// <param name="helpLink">Help Link</param>
+        /// <param name="source">Exception Source</param>
         public CrmConnectionException(string helpLink, string source) : this(helpLink)
         {
             this.Source = source;
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class. Which contains <see cref="SerializationInfo"/> and <see cref="StreamingContext"/>
+        /// </summary>
+        /// <param name="info">Serialization Info</param>
+        /// <param name="context">Streaming Context</param>
         protected CrmConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }
@@ -60,6 +70,11 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         public override string Source { get => base.Source; set => base.Source = value; }
 
+        /// <summary>
+        /// Gets the Object Date
+        /// </summary>
+        /// <param name="info">Serialization Info</param>
+        /// <param name="context">Streaming Context</param>
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

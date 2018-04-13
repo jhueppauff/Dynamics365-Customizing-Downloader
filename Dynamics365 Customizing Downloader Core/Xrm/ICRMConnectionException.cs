@@ -25,10 +25,24 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         string Source { get; set; }
 
+        /// <summary>
+        /// Gets the equality
+        /// </summary>
+        /// <param name="obj">Object data</param>
+        /// <returns>Returns <see cref="bool"/></returns>
         bool Equals(object obj);
 
+        /// <summary>
+        /// Gets the HashCode
+        /// </summary>
+        /// <returns>Returns the hash code</returns>
         int GetHashCode();
 
+        /// <summary>
+        /// Gets the Object Date
+        /// </summary>
+        /// <param name="info"><see cref="SerializationInfo"/> Info</param>
+        /// <param name="context"><see cref="StreamingContext"/> context</param>
         void GetObjectData(SerializationInfo info, StreamingContext context);
     }
 }

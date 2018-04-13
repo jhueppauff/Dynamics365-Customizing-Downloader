@@ -11,7 +11,7 @@ namespace Dynamics365CustomizingDownloader.Core.IO
     using System.IO;
 
     /// <summary>
-    /// Directory implemetation
+    /// Directory implementation
     /// </summary>
     public static class Directory
     {

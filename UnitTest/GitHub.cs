@@ -8,19 +8,22 @@
 
 namespace UnitTest
 {
-    using Microsoft.VisualStudio.TestTools.UnitTesting;
     using System;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
     /// <summary>
-    /// Unit Test for GitHub Releated functions
+    /// Unit Test for GitHub related functions
     /// </summary>
     [TestClass]
     public class GitHub
     {
+        /// <summary>
+        /// GitHub API URL
+        /// </summary>
         private const string GitHubApiUrl = "https://api.github.com/repos/jhueppauff/Dynamics365-Customizing-Downloader";
 
         /// <summary>
-        /// Validates if the Release Infos can be retrieved
+        /// Validates if the Release Information can be retrieved
         /// </summary>
         [TestMethod]
         public void GithubRetrieveReleaseInfo()
