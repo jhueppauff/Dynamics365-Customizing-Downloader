@@ -111,7 +111,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// </summary>
         /// <param name="connectionString">XRM Connection String</param>
         /// <returns>Returns <see cref="CrmServiceClient"/>Returns the <see cref="Microsoft.Xrm.Tooling.Connector.CrmServiceClient"/></returns>
-        public Microsoft.Xrm.Tooling.Connector.CrmServiceClient GetCrmServiceClient(string connectionString)
+        public CrmServiceClient GetCrmServiceClient(string connectionString)
         {
             try
             {
