@@ -142,6 +142,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                            this.CrmLoginControl.IsEnabled = true;
                        }
                         ));
+
                 this.resetUiFlag = false;
             }
             else
@@ -166,8 +167,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                {
                    this.Title = "Notification from Parent";
                    this.CrmLoginControl.IsEnabled = true;
-               }
-                ));
+               }));
 
             // Notify Caller that we are done with success. 
             ConnectionToCrmCompleted?.Invoke(this, EventArgs.Empty);
@@ -188,8 +188,7 @@ namespace Dynamics365CustomizingDownloader.Pages
                                 method: new Action(() =>
                                 {
                                     this.Title = string.IsNullOrWhiteSpace(e.StatusMessage) ? e.ErrorMessage : e.StatusMessage;
-                                }
-                                    ));
+                                }));
         }
 
         /// <summary>
@@ -238,9 +237,9 @@ namespace Dynamics365CustomizingDownloader.Pages
                                {
                                    this.Title = "Starting Login Process. ";
                                    this.CrmLoginControl.IsEnabled = true;
-                               }
-                                   ));
+                               }));
         }
+
         #endregion
     }
 }
