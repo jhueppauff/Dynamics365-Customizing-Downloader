@@ -105,7 +105,7 @@ namespace Dynamics365CustomizingDownloader
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show("An exception occured while trying to test the CRM Connection : " + ex.Message, "An Exception occured", MessageBoxButton.OK, MessageBoxImage.Error);
                 ConnectionOverview.Log.Error(ex.Message, ex);
