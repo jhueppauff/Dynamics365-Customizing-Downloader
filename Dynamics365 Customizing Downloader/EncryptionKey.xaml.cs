@@ -11,7 +11,6 @@ namespace Dynamics365CustomizingDownloader
     using System;
     using System.Collections.Generic;
     using System.IO;
-    using System.Text;
     using System.Windows;
     using Newtonsoft.Json;
 
