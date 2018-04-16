@@ -106,7 +106,7 @@ namespace Dynamics365CustomizingDownloader
                     }
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 if (!Properties.Settings.Default.DisableErrorReports)
                 {
