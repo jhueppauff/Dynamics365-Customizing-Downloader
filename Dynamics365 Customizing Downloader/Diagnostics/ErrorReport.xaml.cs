@@ -43,7 +43,9 @@ namespace Dynamics365CustomizingDownloader.Diagnostics
 
                 this.Tbx_StackTrace.Text = ex.StackTrace;
                 this.Owner = App.Current.MainWindow;
-                MainWindow.ApplicationInsightHelper.TrackFatalException(ex);
+
+                // AI Modul throws object was not set to an instance of an object exception, need further investigation
+                // MainWindow.ApplicationInsightHelper.TrackFatalException(ex);
             }
             catch (Exception exc)
             {
