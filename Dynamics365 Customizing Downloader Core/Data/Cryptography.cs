@@ -1,5 +1,5 @@
 ﻿//-----------------------------------------------------------------------
-// <copyright file="Cryptography.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// <copyright file="StorageExtensions.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
 // Copyright 2018 Jhueppauff
 // Mozilla Public License Version 2.0 
 // For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
@@ -80,10 +80,11 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
                         using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
                         {
-                            StreamWriter swEncrypt = new StreamWriter(csEncrypt);
-
-                            // Write all data to the stream.
-                            swEncrypt.Write(plainText);
+                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
+                            {
+                                // Write all data to the stream.
+                                swEncrypt.Write(plainText);
+                            }
                         }
 
                         outStr = Convert.ToBase64String(msEncrypt.ToArray());
@@ -157,11 +158,12 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
                         using (CryptoStream csDecrypt = new CryptoStream(msDecrypt, decryptor, CryptoStreamMode.Read))
                         {
-                            StreamReader srDecrypt = new StreamReader(csDecrypt);
-
-                            // Read the decrypted bytes from the decrypting stream
-                            // and place them in a string.
-                            plainText = srDecrypt.ReadToEnd();
+                            using (StreamReader srDecrypt = new StreamReader(csDecrypt))
+                            {
+                                // Read the decrypted bytes from the decrypting stream
+                                // and place them in a string.
+                                plainText = srDecrypt.ReadToEnd();
+                            }
                         }
                     }
                 }
