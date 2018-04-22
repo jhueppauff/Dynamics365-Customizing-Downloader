@@ -131,7 +131,7 @@
     <Compile Include="Update\UpdateChecker.cs" />
     <Compile Include="Update\Uploader.cs" />
     <Compile Include="Xrm\CrmConnection.cs" />
-    <Compile Include="Xrm\CRMConnectionException.cs" />
+    <Compile Include="Xrm\CrmConnectionException.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />
     <Compile Include="Xrm\ICrmConnectionException.cs" />
