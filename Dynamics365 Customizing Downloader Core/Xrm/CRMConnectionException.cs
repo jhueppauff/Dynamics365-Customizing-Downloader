@@ -9,7 +9,6 @@
 namespace Dynamics365CustomizingDownloader.Core.Xrm
 {
     using System;
-    using System.Collections;
     using System.Runtime.Serialization;
 
     /// <summary>
