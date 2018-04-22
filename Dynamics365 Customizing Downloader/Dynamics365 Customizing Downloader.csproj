@@ -221,6 +221,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ApplicationInsightHelper.cs" />
+    <Compile Include="AppMetricHelper.cs" />
     <Compile Include="ConnectionManger.xaml.cs">
       <DependentUpon>ConnectionManger.xaml</DependentUpon>
     </Compile>

@@ -19,7 +19,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// AI Helper
         /// </summary>
-        private ApplicationInsightHelper applicationInsightHelper;
+        private AppMetricHelper appMetricHelper;
 
         /// <summary>
         /// Overwrite for the Application Startup
@@ -29,7 +29,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                this.applicationInsightHelper = new ApplicationInsightHelper();
+                this.appMetricHelper = new AppMetricHelper();
 
                 // We use this to get access to unhandled exceptions so we can 
                 // report app crashes to the Telemetry client
@@ -39,7 +39,7 @@ namespace Dynamics365CustomizingDownloader
                 currentDomain.ProcessExit += this.CurrentDomain_ProcessExit;
 
                 // Open Application
-                var mainWindow = new MainWindow(this.applicationInsightHelper);
+                var mainWindow = new MainWindow(this.appMetricHelper);
                 mainWindow.Show();   
             }
             catch (Exception ex)
@@ -55,7 +55,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            this.applicationInsightHelper.FlushData();
+            this.appMetricHelper.FlushData();
         }
 
         /// <summary>
@@ -65,9 +65,9 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            this.applicationInsightHelper.TrackFatalException(e.ExceptionObject as Exception);
+            this.appMetricHelper.TrackFatalException(e.ExceptionObject as Exception);
 
-            this.applicationInsightHelper.FlushData();
+            this.appMetricHelper.FlushData();
         }
     }
 }

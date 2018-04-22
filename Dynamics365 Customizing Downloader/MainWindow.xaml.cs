@@ -27,7 +27,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// App Insight Helper
         /// </summary>
-        private ApplicationInsightHelper applicationInsightHelper = null;
+        private AppMetricHelper appMetricHelper = null;
 
         /// <summary>
         /// Dispose bool
@@ -43,11 +43,11 @@ namespace Dynamics365CustomizingDownloader
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
         /// <param name="applicationInsightHelper">AI Helper</param>
-        public MainWindow(ApplicationInsightHelper applicationInsightHelper)
+        public MainWindow(AppMetricHelper appMetricHelper)
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            this.applicationInsightHelper = applicationInsightHelper;
+            this.appMetricHelper = appMetricHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);
