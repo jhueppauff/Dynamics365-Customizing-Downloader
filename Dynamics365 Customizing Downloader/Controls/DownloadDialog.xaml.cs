@@ -11,7 +11,6 @@ namespace Dynamics365CustomizingDownloader.Controls
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
-    using System.Threading;
     using System.Windows.Controls;
 
     /// <summary>
@@ -84,6 +83,11 @@ namespace Dynamics365CustomizingDownloader.Controls
 
                 this.disposedValue = true;
             }
+        }
+
+        ~DownloadDialog()
+        {
+            Dispose(false);
         }
     }
 }
