@@ -29,5 +29,12 @@ namespace UnitTest
                 throw new Exception("String does not match");
             }
         }
+
+        [TestMethod]
+        public void TestMetricClientClientIdRetrive()
+        {
+            Dynamics365CustomizingDownloader.Core.Metric.MetricClient metricClient = new Dynamics365CustomizingDownloader.Core.Metric.MetricClient();
+            metricClient.GetClientId();
+        }
     }
 }
