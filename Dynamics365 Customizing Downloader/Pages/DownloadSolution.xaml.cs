@@ -135,7 +135,6 @@ namespace Dynamics365CustomizingDownloader.Pages
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>

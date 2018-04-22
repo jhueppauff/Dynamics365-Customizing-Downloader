@@ -63,9 +63,8 @@ namespace Dynamics365CustomizingDownloader.Controls
         /// </summary>
         void IDisposable.Dispose()
         {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) below.
             this.Dispose(true);
-            GC.SuppressFinalize(this);
         }
 
         /// <summary>
@@ -83,11 +82,6 @@ namespace Dynamics365CustomizingDownloader.Controls
 
                 this.disposedValue = true;
             }
-        }
-
-        ~DownloadDialog()
-        {
-            Dispose(false);
         }
     }
 }
