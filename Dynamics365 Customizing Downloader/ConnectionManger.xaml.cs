@@ -65,7 +65,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 if (disposing)
                 {
-                    // Nothing to dispose
+                    crmConnection = null;
                 }
 
                 this.disposedValue = true;
@@ -81,6 +81,8 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
+                crmConnection = null;
+
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {
                     CrmServiceClient crmServiceClient = toolingConnector.GetCrmServiceClient(tbx_connectionString.Text);
