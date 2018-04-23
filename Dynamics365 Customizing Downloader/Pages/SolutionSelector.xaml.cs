@@ -259,9 +259,11 @@ namespace Dynamics365CustomizingDownloader.Pages
                 if (Lbx_Repos.SelectedItem != null)
                 {
                     Lbx_Repos.IsEnabled = false;
+                    this.selectedCrmConnection = null;
                     Core.Xrm.CrmConnection crmConnection = (Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem;
 
                     Core.Repository.Connector repositoryConnector = new Core.Repository.Connector();
+                    this.localSolutions = null;
                     this.localSolutions = repositoryConnector.GetLocalCRMSolutions(((Core.Xrm.CrmConnection)Lbx_Repos.SelectedItem).LocalPath);
 
                     this.Dtg_Solutions.ItemsSource = null;
