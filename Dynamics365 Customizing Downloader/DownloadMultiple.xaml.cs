@@ -399,7 +399,7 @@ namespace Dynamics365CustomizingDownloader
         {
             if (e.Error != null)
             {
-                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occured while downloading or extracting the solution");
+                Diagnostics.ErrorReport errorReport = new Diagnostics.ErrorReport(e.Error, "An error occurred while downloading or extracting the solution");
                 errorReport.Show();
             }
 
