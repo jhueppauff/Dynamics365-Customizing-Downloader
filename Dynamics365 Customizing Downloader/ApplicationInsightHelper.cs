@@ -50,7 +50,7 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         public ApplicationInsightHelper()
         {
-            this.telemetryClient = new TelemetryClient() { InstrumentationKey = Properties.Settings.Default.AppInsights };
+            //this.telemetryClient = new TelemetryClient() { InstrumentationKey = Properties.Settings.Default.AppInsights };
             this.GatherDetails();
             this.SetupTelemetry();
         }

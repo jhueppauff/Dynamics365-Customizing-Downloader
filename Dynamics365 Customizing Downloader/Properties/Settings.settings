@@ -23,5 +23,23 @@
     <Setting Name="EnableMetric" Type="System.Boolean" Scope="Application">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="AppMetricAppId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">0492835b-22f9-4434-9445-5fc7f95316a5</Value>
+    </Setting>
+    <Setting Name="AppMetricApiId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">8362b58d-40fa-49c1-a6d2-057234da2bef</Value>
+    </Setting>
+    <Setting Name="AppMetricApiKey" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">fa1301f8-4f66-4ff8-9a0d-f4462146aa0f</Value>
+    </Setting>
+    <Setting Name="AppMetricBaseCompId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">91ba9a23-05f2-4168-93df-0d14f83edf35</Value>
+    </Setting>
+    <Setting Name="AppMetricVersionId" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">84393536-08f2-446d-b7be-f24ebf914640</Value>
+    </Setting>
+    <Setting Name="AppMetricEndpoint" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">https://appmetric.azurewebsites.net/api/metric</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

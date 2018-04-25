@@ -9,6 +9,7 @@
 namespace Dynamics365CustomizingDownloader
 {
     using System;
+    using System.Net.NetworkInformation;
     using System.Windows;
 
     /// <summary>
@@ -40,7 +41,9 @@ namespace Dynamics365CustomizingDownloader
 
                 // Open Application
                 var mainWindow = new MainWindow(this.appMetricHelper);
-                mainWindow.Show();   
+                mainWindow.Show();
+
+                appMetricHelper.ReportUsage(null);
             }
             catch (Exception ex)
             {
@@ -68,6 +71,20 @@ namespace Dynamics365CustomizingDownloader
             this.appMetricHelper.TrackFatalException(e.ExceptionObject as Exception);
 
             this.appMetricHelper.FlushData();
+        }
+
+        private PhysicalAddress GetMacAddress()
+        {
+            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
+            {
+                // Only consider Ethernet network interfaces
+                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet &&
+                    nic.OperationalStatus == OperationalStatus.Up)
+                {
+                    return nic.GetPhysicalAddress();
+                }
+            }
+            return null;
         }
     }
 }
