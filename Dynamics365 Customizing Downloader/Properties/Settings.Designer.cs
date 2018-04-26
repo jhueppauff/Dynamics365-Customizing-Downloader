@@ -133,7 +133,7 @@ namespace Dynamics365CustomizingDownloader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("https://appmetric.azurewebsites.net/api/metric")]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:49692/api/metric")]
         public string AppMetricEndpoint {
             get {
                 return ((string)(this["AppMetricEndpoint"]));

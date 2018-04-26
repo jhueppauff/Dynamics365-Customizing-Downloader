@@ -38,7 +38,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
             foreach (RestHeader restHeader in restHeaders)
             {
-                restRequest.AddParameter(restHeader.KeyName, restHeader.KeyValue);
+                restRequest.AddHeader(restHeader.KeyName, restHeader.KeyValue);
             }
 
             IRestResponse restResponse = await restClient.ExecuteTaskAsync(restRequest, cancellationTokenSource.Token).ConfigureAwait(false);
