@@ -246,6 +246,7 @@
     <Compile Include="EncryptionKey.xaml.cs">
       <DependentUpon>EncryptionKey.xaml</DependentUpon>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="HelperClasses\CommandManagerHelper.cs" />
     <Compile Include="HelperClasses\DelegateCommand.cs" />
     <Compile Include="Pages\CrmConnectionDialog.xaml.cs">

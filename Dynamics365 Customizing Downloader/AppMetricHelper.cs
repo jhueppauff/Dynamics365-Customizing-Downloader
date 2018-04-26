@@ -28,16 +28,39 @@ namespace Dynamics365CustomizingDownloader
         /// </summary>
         private readonly string applicationId;
 
+        /// <summary>
+        /// Log4Net Logger
+        /// </summary>
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
+        /// <summary>
+        /// The API key
+        /// </summary>
         private readonly string apiKey;
 
+        /// <summary>
+        /// The API identifier
+        /// </summary>
         private readonly string apiId;
 
+        /// <summary>
+        /// The session identifier
+        /// </summary>
         private readonly Guid sessionId;
 
+        /// <summary>
+        /// The client identifier
+        /// </summary>
         private readonly string clientId;
 
-        const string queryString = "SELECT SerialNumber FROM Win32_OperatingSystem";
+        /// <summary>
+        /// The query string
+        /// </summary>
+        private const string queryString = "SELECT SerialNumber FROM Win32_OperatingSystem";
 
+        /// <summary>
+        /// The product identifier
+        /// </summary>
         string productId = (from ManagementObject managementObject in new ManagementObjectSearcher(queryString).Get()
                             from PropertyData propertyData in managementObject.Properties
                             where propertyData.Name == "SerialNumber"
@@ -66,13 +89,44 @@ namespace Dynamics365CustomizingDownloader
             this.clientId = CalculateMD5Hash(productId);
         }
 
+        public async Task TrackFatalException(Exception exception)
+        {
+            RestSharp.IRestResponse response = null;
+
+            try
+            {
+                RestClient restClient = new RestClient();
+                RestHeader[] restHeaders = new RestHeader[6];
+
+                restHeaders[0] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
+                restHeaders[1] = new RestHeader() { KeyName = "apiId", KeyValue = apiId };
+                restHeaders[2] = new RestHeader() { KeyName = "clientId", KeyValue = clientId };
+                restHeaders[3] = new RestHeader() { KeyName = "applicationId", KeyValue = applicationId };
+                restHeaders[4] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
+                restHeaders[5] = new RestHeader() { KeyName = "versionId", KeyValue = Properties.Settings.Default.AppMetricVersionId };
+
+                string body = Newtonsoft.Json.JsonConvert.SerializeObject(exception);
+
+                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportError", restHeaders, body, RestSharp.Method.POST);
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex.Message, ex);
+
+                if (response != null && !response.IsSuccessful)
+                {
+                    Log.Error(response.ErrorException.Message, response.ErrorException);
+                }
+            }
+        }
+
         public async Task ReportUsage(string componentId = null)
         {
             if (componentId == null)
             {
                 componentId = Properties.Settings.Default.AppMetricBaseCompId;
             }
-
+            RestSharp.IRestResponse response = null;
             try
             {
                 RestClient restClient = new RestClient();
@@ -86,21 +140,20 @@ namespace Dynamics365CustomizingDownloader
                 restHeaders[5] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
                 restHeaders[6] = new RestHeader() { KeyName = "versionId", KeyValue = Properties.Settings.Default.AppMetricVersionId };
 
-                await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, null, RestSharp.Method.POST);
+                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, null, RestSharp.Method.POST);
             }
             catch (Exception ex)
             {
+                Log.Error(ex.Message, ex);
 
-                throw;
+                if (response != null && !response.IsSuccessful)
+                {
+                    Log.Error(response.ErrorException.Message, response.ErrorException);
+                }
             }
         }
 
         public void FlushData()
-        {
-
-        }
-
-        public void TrackFatalException(Exception exception)
         {
 
         }

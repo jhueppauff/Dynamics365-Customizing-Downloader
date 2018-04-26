@@ -68,23 +68,9 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
-            this.appMetricHelper.TrackFatalException(e.ExceptionObject as Exception);
+            this.appMetricHelper.TrackFatalException(e.ExceptionObject as Exception).ConfigureAwait(false).GetAwaiter().GetResult();
 
             this.appMetricHelper.FlushData();
-        }
-
-        private PhysicalAddress GetMacAddress()
-        {
-            foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                // Only consider Ethernet network interfaces
-                if (nic.NetworkInterfaceType == NetworkInterfaceType.Ethernet &&
-                    nic.OperationalStatus == OperationalStatus.Up)
-                {
-                    return nic.GetPhysicalAddress();
-                }
-            }
-            return null;
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
 
             if (body != null)
             {
-                restRequest.AddBody(body);
+                restRequest.AddParameter("undefined", body, ParameterType.RequestBody);
             }
 
             foreach (RestHeader restHeader in restHeaders)
