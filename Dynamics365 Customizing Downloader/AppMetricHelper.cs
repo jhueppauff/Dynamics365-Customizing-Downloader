@@ -61,7 +61,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// The product identifier
         /// </summary>
-        string productId = (from ManagementObject managementObject in new ManagementObjectSearcher(queryString).Get()
+        private readonly string productId = (from ManagementObject managementObject in new ManagementObjectSearcher(queryString).Get()
                             from PropertyData propertyData in managementObject.Properties
                             where propertyData.Name == "SerialNumber"
                             select (string)propertyData.Value).FirstOrDefault();

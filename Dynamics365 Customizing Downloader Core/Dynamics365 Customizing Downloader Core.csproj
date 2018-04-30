@@ -125,6 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Data\Cryptography.cs" />
+    <Compile Include="Data\MetricData.cs" />
     <Compile Include="Data\RestClient.cs" />
     <Compile Include="Data\RestHeader.cs" />
     <Compile Include="Data\StorageExtensions.cs" />
