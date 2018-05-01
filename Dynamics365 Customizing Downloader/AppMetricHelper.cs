@@ -130,17 +130,22 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 RestClient restClient = new RestClient();
-                RestHeader[] restHeaders = new RestHeader[7];
+                RestHeader[] restHeaders = new RestHeader[3];
 
                 restHeaders[0] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
                 restHeaders[1] = new RestHeader() { KeyName = "apiId", KeyValue = apiId };
-                restHeaders[2] = new RestHeader() { KeyName = "clientId", KeyValue = clientId };
-                restHeaders[3] = new RestHeader() { KeyName = "applicationId", KeyValue = applicationId };
-                restHeaders[4] = new RestHeader() { KeyName = "componentId", KeyValue = componentId };
-                restHeaders[5] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
-                restHeaders[6] = new RestHeader() { KeyName = "versionId", KeyValue = Properties.Settings.Default.AppMetricVersionId };
+                restHeaders[2] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
 
-                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, null, RestSharp.Method.POST);
+                MetricData metricData = new MetricData()
+                {
+                    ApplicationId = this.applicationId,
+                    ClientId = this.clientId,
+                    ComponentId = componentId,
+                    SessionId = this.sessionId.ToString(),
+                    VersionId = this.version
+                };
+
+                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, Newtonsoft.Json.JsonConvert.SerializeObject(metricData), RestSharp.Method.POST);
             }
             catch (Exception ex)
             {

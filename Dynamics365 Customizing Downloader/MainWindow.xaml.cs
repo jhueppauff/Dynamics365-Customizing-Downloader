@@ -90,11 +90,6 @@ namespace Dynamics365CustomizingDownloader
         }
 
         /// <summary>
-        /// Gets or sets the AI Helper
-        /// </summary>
-        public static ApplicationInsightHelper ApplicationInsightHelper { get; set; }
-
-        /// <summary>
         /// Gets or sets the Encryption Key
         /// </summary>
         public static string EncryptionKey { get; set; }

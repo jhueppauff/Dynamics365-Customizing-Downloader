@@ -15,16 +15,26 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <summary>
         /// Gets or sets the session identifier.
         /// </summary>
-        public Guid SessionId { get; set; }
+        public string SessionId { get; set; }
 
         /// <summary>
         /// Gets or sets the application identifier.
         /// </summary>
-        public Guid ApplicationId { get; set; }
+        public string ApplicationId { get; set; }
 
         /// <summary>
         /// Gets or sets the component identifier.
         /// </summary>
-        public Guid ComponentId { get; set; }
+        public string ComponentId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the client identifier.
+        /// </summary>
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the version identifier.
+        /// </summary>
+        public string VersionId { get; set; }
     }
 }

@@ -124,15 +124,6 @@ namespace Dynamics365CustomizingDownloader.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("84393536-08f2-446d-b7be-f24ebf914640")]
-        public string AppMetricVersionId {
-            get {
-                return ((string)(this["AppMetricVersionId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:49692/api/metric")]
         public string AppMetricEndpoint {
             get {
