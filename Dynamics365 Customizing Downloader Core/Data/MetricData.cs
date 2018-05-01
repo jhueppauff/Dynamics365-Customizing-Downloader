@@ -9,17 +9,22 @@
 namespace Dynamics365CustomizingDownloader.Core.Data
 {
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
 
     public class MetricData
     {
+        /// <summary>
+        /// Gets or sets the session identifier.
+        /// </summary>
         public Guid SessionId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the application identifier.
+        /// </summary>
         public Guid ApplicationId { get; set; }
 
+        /// <summary>
+        /// Gets or sets the component identifier.
+        /// </summary>
         public Guid ComponentId { get; set; }
     }
 }
