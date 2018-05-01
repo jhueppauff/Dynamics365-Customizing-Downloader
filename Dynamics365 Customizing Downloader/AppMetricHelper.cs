@@ -103,7 +103,7 @@ namespace Dynamics365CustomizingDownloader
                 restHeaders[2] = new RestHeader() { KeyName = "clientId", KeyValue = clientId };
                 restHeaders[3] = new RestHeader() { KeyName = "applicationId", KeyValue = applicationId };
                 restHeaders[4] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
-                restHeaders[5] = new RestHeader() { KeyName = "versionId", KeyValue = Properties.Settings.Default.AppMetricVersionId };
+                restHeaders[5] = new RestHeader() { KeyName = "versionId", KeyValue = this.version };
 
                 string body = Newtonsoft.Json.JsonConvert.SerializeObject(exception);
 
