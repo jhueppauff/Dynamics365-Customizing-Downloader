@@ -31,14 +31,14 @@ namespace Dynamics365CustomizingDownloader.Core.Data
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             RestRequest restRequest = new RestRequest(method);
 
-            if (body != null)
-            {
-                restRequest.AddParameter("undefined", body, ParameterType.RequestBody);
-            }
-
             foreach (RestHeader restHeader in restHeaders)
             {
                 restRequest.AddHeader(restHeader.KeyName, restHeader.KeyValue);
+            }
+
+            if (body != null)
+            {
+                restRequest.AddParameter("undefined", body, ParameterType.RequestBody);
             }
 
             IRestResponse restResponse = await restClient.ExecuteTaskAsync(restRequest, cancellationTokenSource.Token).ConfigureAwait(false);

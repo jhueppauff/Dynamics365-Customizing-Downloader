@@ -130,11 +130,13 @@ namespace Dynamics365CustomizingDownloader
             try
             {
                 RestClient restClient = new RestClient();
-                RestHeader[] restHeaders = new RestHeader[3];
+                RestHeader[] restHeaders = new RestHeader[4];
 
-                restHeaders[0] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
-                restHeaders[1] = new RestHeader() { KeyName = "apiId", KeyValue = apiId };
-                restHeaders[2] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
+                restHeaders[0] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
+                restHeaders[1] = new RestHeader() { KeyName = "Accept", KeyValue = "application/json" };
+                restHeaders[2] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
+                restHeaders[3] = new RestHeader() { KeyName = "apiId", KeyValue = apiId };
+                
 
                 MetricData metricData = new MetricData()
                 {
