@@ -147,7 +147,9 @@ namespace Dynamics365CustomizingDownloader
                     VersionId = this.version
                 };
 
-                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, Newtonsoft.Json.JsonConvert.SerializeObject(metricData), RestSharp.Method.POST);
+                string body = Newtonsoft.Json.JsonConvert.SerializeObject(metricData).ToString();
+
+                response = await restClient.ExecuteRestRequest(Properties.Settings.Default.AppMetricEndpoint + "/ReportUsage", restHeaders, body, RestSharp.Method.POST);
             }
             catch (Exception ex)
             {
