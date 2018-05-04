@@ -130,5 +130,14 @@ namespace Dynamics365CustomizingDownloader.Properties {
                 return ((string)(this["AppMetricEndpoint"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int RestTimeout {
+            get {
+                return ((int)(this["RestTimeout"]));
+            }
+        }
     }
 }

@@ -95,7 +95,7 @@ namespace Dynamics365CustomizingDownloader
 
             try
             {
-                RestClient restClient = new RestClient();
+                RestClient restClient = new RestClient(Properties.Settings.Default.RestTimeout);
                 RestHeader[] restHeaders = new RestHeader[6];
 
                 restHeaders[0] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
@@ -129,7 +129,7 @@ namespace Dynamics365CustomizingDownloader
             RestSharp.IRestResponse response = null;
             try
             {
-                RestClient restClient = new RestClient();
+                RestClient restClient = new RestClient(Properties.Settings.Default.RestTimeout);
                 RestHeader[] restHeaders = new RestHeader[4];
 
                 restHeaders[0] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };

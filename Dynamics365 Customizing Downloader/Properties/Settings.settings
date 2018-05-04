@@ -38,5 +38,8 @@
     <Setting Name="AppMetricEndpoint" Type="System.String" Scope="Application">
       <Value Profile="(Default)">http://localhost:49692/api/metric</Value>
     </Setting>
+    <Setting Name="RestTimeout" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">30</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

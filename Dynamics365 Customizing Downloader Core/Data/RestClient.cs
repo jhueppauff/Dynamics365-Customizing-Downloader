@@ -17,6 +17,17 @@ namespace Dynamics365CustomizingDownloader.Core.Data
     /// </summary>
     public class RestClient
     {
+        private readonly int timeout;
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="RestClient"/> class.
+        /// </summary>
+        /// <param name="timeout">The timeout Value for the rest connection.</param>
+        public RestClient(int timeout)
+        {
+            this.timeout = timeout;
+        }
+
         /// <summary>
         /// Executes the rest request async.
         /// </summary>
@@ -29,7 +40,11 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         {
             RestSharp.RestClient restClient = new RestSharp.RestClient(url);
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
-            RestRequest restRequest = new RestRequest(method);
+            RestRequest restRequest = new RestRequest(method)
+            {
+                Timeout = timeout,
+                ReadWriteTimeout = timeout
+            };
 
             foreach (RestHeader restHeader in restHeaders)
             {
