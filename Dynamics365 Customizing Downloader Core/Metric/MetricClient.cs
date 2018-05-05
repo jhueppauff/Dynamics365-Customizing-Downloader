@@ -39,18 +39,21 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
 
         private const string applicationId = "26AA1555-A88A-49B1-9A3E-499C275ECD50";
 
+        private readonly int timeout;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="MetricClient"/> class.
         /// </summary>
         /// <param name="apiKey">The API key.</param>
         /// <param name="apiId">The API identifier.</param>
         /// <param name="endpointBaseUrl">The endpoint base URL.</param>
-        public MetricClient(string apiKey, string apiId, string endpointBaseUrl)
+        public MetricClient(string apiKey, string apiId, string endpointBaseUrl, int timeout)
         {
             this.apiId = apiId;
             this.apiKey = apiKey;
             this.endpointBaseUrl = endpointBaseUrl;
             this.clientId = GetClientId();
+            this.timeout = timeout;
         }
 
         /// <summary>
@@ -67,7 +70,7 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
         /// <returns></returns>
         public async Task ReportUsage(string componentId)
         {
-            Data.RestClient restClient = new Data.RestClient();
+            Data.RestClient restClient = new Data.RestClient(timeout);
 
             Data.RestHeader[] restHeaders = new Data.RestHeader[5];
 
