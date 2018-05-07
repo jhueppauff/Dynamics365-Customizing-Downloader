@@ -8,8 +8,9 @@
 
 namespace Dynamics365CustomizingDownloader.Core.Data
 {
-    using System;
-
+    /// <summary>
+    /// Metric Data Schema Class
+    /// </summary>
     public class MetricData
     {
         /// <summary>

@@ -65,7 +65,7 @@ namespace Dynamics365CustomizingDownloader
             {
                 if (disposing)
                 {
-                    crmConnection = null;
+                    this.crmConnection = null;
                 }
 
                 this.disposedValue = true;
@@ -81,7 +81,7 @@ namespace Dynamics365CustomizingDownloader
         {
             try
             {
-                crmConnection = null;
+                this.crmConnection = null;
 
                 using (Core.Xrm.ToolingConnector toolingConnector = new Core.Xrm.ToolingConnector())
                 {

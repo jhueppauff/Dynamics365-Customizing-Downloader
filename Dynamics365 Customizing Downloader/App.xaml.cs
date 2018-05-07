@@ -43,7 +43,7 @@ namespace Dynamics365CustomizingDownloader
                 var mainWindow = new MainWindow(this.appMetricHelper);
                 mainWindow.Show();
 
-                appMetricHelper.ReportUsage(null);
+                this.appMetricHelper.ReportUsage(null);
             }
             catch (Exception ex)
             {

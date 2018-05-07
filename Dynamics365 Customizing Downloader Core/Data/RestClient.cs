@@ -17,6 +17,9 @@ namespace Dynamics365CustomizingDownloader.Core.Data
     /// </summary>
     public class RestClient
     {
+        /// <summary>
+        /// The timeout value for the rest client
+        /// </summary>
         private readonly int timeout;
 
         /// <summary>
@@ -42,8 +45,8 @@ namespace Dynamics365CustomizingDownloader.Core.Data
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             RestRequest restRequest = new RestRequest(method)
             {
-                Timeout = timeout,
-                ReadWriteTimeout = timeout
+                Timeout = this.timeout,
+                ReadWriteTimeout = this.timeout
             };
 
             foreach (RestHeader restHeader in restHeaders)

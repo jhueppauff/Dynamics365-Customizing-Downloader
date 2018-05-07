@@ -35,9 +35,12 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
         /// </summary>
         private readonly string endpointBaseUrl;
 
+        /// <summary>
+        /// The client identifier
+        /// </summary>
         private readonly string clientId;
 
-        private const string applicationId = "26AA1555-A88A-49B1-9A3E-499C275ECD50";
+        private readonly string applicationId = "26AA1555-A88A-49B1-9A3E-499C275ECD50";
 
         private readonly int timeout;
 
@@ -47,12 +50,13 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
         /// <param name="apiKey">The API key.</param>
         /// <param name="apiId">The API identifier.</param>
         /// <param name="endpointBaseUrl">The endpoint base URL.</param>
+        /// <param name="timeout">Timeout Value for the Rest call</param>
         public MetricClient(string apiKey, string apiId, string endpointBaseUrl, int timeout)
         {
             this.apiId = apiId;
             this.apiKey = apiKey;
             this.endpointBaseUrl = endpointBaseUrl;
-            this.clientId = GetClientId();
+            this.clientId = this.GetClientId();
             this.timeout = timeout;
         }
 
@@ -67,20 +71,20 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
         /// Reports the usage.
         /// </summary>
         /// <param name="componentId">Id of the module/component.</param>
-        /// <returns></returns>
+        /// <returns>Returns <see cref="Task"/></returns>
         public async Task ReportUsage(string componentId)
         {
-            Data.RestClient restClient = new Data.RestClient(timeout);
+            Data.RestClient restClient = new Data.RestClient(this.timeout);
 
             Data.RestHeader[] restHeaders = new Data.RestHeader[5];
 
-            restHeaders[0] = new Data.RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
-            restHeaders[1] = new Data.RestHeader() { KeyName = "apiId", KeyValue = apiId };
+            restHeaders[0] = new Data.RestHeader() { KeyName = "apiKey", KeyValue = this.apiKey };
+            restHeaders[1] = new Data.RestHeader() { KeyName = "apiId", KeyValue = this.apiId };
             restHeaders[2] = new Data.RestHeader() { KeyName = "applicationId", KeyValue = applicationId };
             restHeaders[3] = new Data.RestHeader() { KeyName = "componentId", KeyValue = componentId };
-            restHeaders[4] = new Data.RestHeader() { KeyName = "clientId", KeyValue = clientId };
+            restHeaders[4] = new Data.RestHeader() { KeyName = "clientId", KeyValue = this.clientId };
 
-            RestSharp.IRestResponse restResponse = await restClient.ExecuteRestRequest(endpointBaseUrl + "/metric/ReportUsage", restHeaders, null, RestSharp.Method.POST);
+            RestSharp.IRestResponse restResponse = await restClient.ExecuteRestRequest(this.endpointBaseUrl + "/metric/ReportUsage", restHeaders, null, RestSharp.Method.POST);
 
             if (!restResponse.IsSuccessful)
             {
@@ -90,9 +94,9 @@ namespace Dynamics365CustomizingDownloader.Core.Metric
         }
 
         /// <summary>
-        /// Gets the Microsft Windows Product Id
+        /// Gets the Client Id
         /// </summary>
-        /// <returns></returns>
+        /// <returns>Returns the Client Id</returns>
         public string GetClientId()
         {
             RegistryKey key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion");
