@@ -118,21 +118,27 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message, ex);
+                this.log.Error(ex.Message, ex);
 
                 if (response != null && !response.IsSuccessful)
                 {
-                    log.Error(response.ErrorException.Message, response.ErrorException);
+                    this.log.Error(response.ErrorException.Message, response.ErrorException);
                 }
             }
         }
 
+        /// <summary>
+        /// Reports the usage to the metric system.
+        /// </summary>
+        /// <param name="componentId">The component identifier.</param>
+        /// <returns>Returns <see cref="Task"/></returns>
         public async Task ReportUsage(string componentId = null)
         {
             if (componentId == null)
             {
                 componentId = Properties.Settings.Default.AppMetricBaseCompId;
             }
+
             RestSharp.IRestResponse response = null;
             try
             {
@@ -140,9 +146,8 @@ namespace Dynamics365CustomizingDownloader
                 RestHeader[] restHeaders = new RestHeader[3];
 
                 restHeaders[0] = new RestHeader() { KeyName = "Content-Type", KeyValue = "application/json" };
-                restHeaders[1] = new RestHeader() { KeyName = "apiKey", KeyValue = apiKey };
-                restHeaders[2] = new RestHeader() { KeyName = "apiId", KeyValue = apiId };
-                
+                restHeaders[1] = new RestHeader() { KeyName = "apiKey", KeyValue = this.apiKey };
+                restHeaders[2] = new RestHeader() { KeyName = "apiId", KeyValue = this.apiId };
 
                 MetricData metricData = new MetricData()
                 {
@@ -159,18 +164,13 @@ namespace Dynamics365CustomizingDownloader
             }
             catch (Exception ex)
             {
-                log.Error(ex.Message, ex);
+                this.log.Error(ex.Message, ex);
 
                 if (response != null && !response.IsSuccessful)
                 {
-                    log.Error(response.ErrorException.Message, response.ErrorException);
+                    this.log.Error(response.ErrorException.Message, response.ErrorException);
                 }
             }
-        }
-
-        public void FlushData()
-        {
-
         }
 
         /// <summary>
@@ -184,7 +184,12 @@ namespace Dynamics365CustomizingDownloader
             return name != null ? name.ToString() : "Unknown";
         }
 
-        public string CalculateMD5Hash(string input)
+        /// <summary>
+        /// Calculates the m d5 hash.
+        /// </summary>
+        /// <param name="input">The input which will be hashed.</param>
+        /// <returns>Returns MD5 Hash</returns>
+        private string CalculateMD5Hash(string input)
         {
             string salt = System.Environment.MachineName;
 

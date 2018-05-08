@@ -42,7 +42,7 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        /// <param name="applicationInsightHelper">AI Helper</param>
+        /// <param name="appMetricHelper">App metric Helper</param>
         public MainWindow(AppMetricHelper appMetricHelper)
         {
             log4net.Config.XmlConfigurator.Configure();

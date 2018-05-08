@@ -9,7 +9,6 @@
 namespace Dynamics365CustomizingDownloader
 {
     using System;
-    using System.Net.NetworkInformation;
     using System.Windows;
 
     /// <summary>
@@ -58,7 +57,7 @@ namespace Dynamics365CustomizingDownloader
         /// <param name="e">The <see cref="UnhandledExceptionEventArgs"/> instance containing the event data.</param>
         private void CurrentDomain_ProcessExit(object sender, EventArgs e)
         {
-            this.appMetricHelper.FlushData();
+            // ToDo
         }
 
         /// <summary>
@@ -69,8 +68,6 @@ namespace Dynamics365CustomizingDownloader
         private void CurrentDomain_UnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
             this.appMetricHelper.TrackFatalException(e.ExceptionObject as Exception).ConfigureAwait(false).GetAwaiter().GetResult();
-
-            this.appMetricHelper.FlushData();
         }
     }
 }
