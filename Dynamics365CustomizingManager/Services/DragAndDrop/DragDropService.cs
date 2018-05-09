@@ -1,4 +1,12 @@
-﻿using Dynamics365CustomizingManager.Models;
+﻿//-----------------------------------------------------------------------
+// <copyright file="DragDropService.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
+// Copyright 2018 Jhueppauff
+// Mozilla Public License Version 2.0 
+// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
+// </copyright>
+//-----------------------------------------------------------------------
+
+using Dynamics365CustomizingManager.Models;
 
 using Windows.ApplicationModel.DataTransfer;
 using Windows.UI.Xaml;
