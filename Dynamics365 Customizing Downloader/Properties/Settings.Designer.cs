@@ -12,7 +12,7 @@ namespace Dynamics365CustomizingDownloader.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.6.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -74,69 +74,6 @@ namespace Dynamics365CustomizingDownloader.Properties {
         public string SolutionPackagerLogPath {
             get {
                 return ((string)(this["SolutionPackagerLogPath"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool EnableMetric {
-            get {
-                return ((bool)(this["EnableMetric"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("0492835b-22f9-4434-9445-5fc7f95316a5")]
-        public string AppMetricAppId {
-            get {
-                return ((string)(this["AppMetricAppId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("8362b58d-40fa-49c1-a6d2-057234da2bef")]
-        public string AppMetricApiId {
-            get {
-                return ((string)(this["AppMetricApiId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("fa1301f8-4f66-4ff8-9a0d-f4462146aa0f")]
-        public string AppMetricApiKey {
-            get {
-                return ((string)(this["AppMetricApiKey"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("91ba9a23-05f2-4168-93df-0d14f83edf35")]
-        public string AppMetricBaseCompId {
-            get {
-                return ((string)(this["AppMetricBaseCompId"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:49692/api/metric")]
-        public string AppMetricEndpoint {
-            get {
-                return ((string)(this["AppMetricEndpoint"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("30")]
-        public int RestTimeout {
-            get {
-                return ((int)(this["RestTimeout"]));
             }
         }
     }
