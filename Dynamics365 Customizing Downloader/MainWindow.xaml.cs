@@ -25,11 +25,6 @@ namespace Dynamics365CustomizingDownloader
         private static Xceed.Wpf.Toolkit.BusyIndicator busyIndicator = new Xceed.Wpf.Toolkit.BusyIndicator();
 
         /// <summary>
-        /// App Insight Helper
-        /// </summary>
-        private ApplicationInsightHelper applicationInsightHelper = null;
-
-        /// <summary>
         /// Dispose bool
         /// </summary>
         private bool disposed = false;
@@ -42,12 +37,11 @@ namespace Dynamics365CustomizingDownloader
         /// <summary>
         /// Initializes a new instance of the <see cref="MainWindow"/> class.
         /// </summary>
-        /// <param name="applicationInsightHelper">AI Helper</param>
-        public MainWindow(ApplicationInsightHelper applicationInsightHelper)
+        /// <param name="appMetricHelper">App metric Helper</param>
+        public MainWindow()
         {
             log4net.Config.XmlConfigurator.Configure();
             this.InitializeComponent();
-            this.applicationInsightHelper = applicationInsightHelper;
 
             // Load Language
             this.LoadLanguage(Properties.Settings.Default.Culture);
@@ -88,11 +82,6 @@ namespace Dynamics365CustomizingDownloader
                 }
             }
         }
-
-        /// <summary>
-        /// Gets or sets the AI Helper
-        /// </summary>
-        public static ApplicationInsightHelper ApplicationInsightHelper { get; set; }
 
         /// <summary>
         /// Gets or sets the Encryption Key
