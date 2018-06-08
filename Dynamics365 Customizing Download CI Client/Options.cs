@@ -22,5 +22,7 @@ namespace Dynamics365CustomizingDownload.CIClient
         [Option('c', "Connection Name", Required = true, HelpText = "Name of the Connection")]
         public string ConnectionName { get; set; }
 
+        [Option('s', "Solution Name", Required = true, HelpText = "Name of the Solution to Download")]
+        public string SolutionName { get; set; }
     }
 }
