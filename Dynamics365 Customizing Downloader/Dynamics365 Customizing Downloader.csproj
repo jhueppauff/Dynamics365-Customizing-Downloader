@@ -419,11 +419,6 @@
     <Folder Include="bin\Release\" />
   </ItemGroup>
   <ItemGroup>
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.1.4822\analyzers\Google.Protobuf.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.1.4822\analyzers\SonarAnalyzer.CSharp.dll" />
-    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.0.1.4822\analyzers\SonarAnalyzer.dll" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj">
       <Project>{4376e28a-8075-4e9b-9a03-5154865c9971}</Project>
       <Name>Dynamics365 Customizing Downloader Core</Name>
@@ -432,6 +427,11 @@
       <Project>{38a49566-9d3e-44e9-9283-b965d21485ef}</Project>
       <Name>Dynamics365CustomizingDownloader.Ressources</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.1.0.5212\analyzers\Google.Protobuf.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.1.0.5212\analyzers\SonarAnalyzer.CSharp.dll" />
+    <Analyzer Include="..\packages\SonarAnalyzer.CSharp.7.1.0.5212\analyzers\SonarAnalyzer.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
