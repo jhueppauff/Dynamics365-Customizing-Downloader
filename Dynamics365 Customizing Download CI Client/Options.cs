@@ -6,8 +6,6 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-
-
 namespace Dynamics365CustomizingDownload.CIClient
 {
     using CommandLine;
