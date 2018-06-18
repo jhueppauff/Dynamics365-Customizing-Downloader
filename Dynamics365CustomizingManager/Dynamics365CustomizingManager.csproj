@@ -110,7 +110,7 @@
       <Version>10.1711.28001</Version>
     </PackageReference>
     <PackageReference Include="SonarAnalyzer.CSharp">
-      <Version>7.1.0.5212</Version>
+      <Version>7.2.0.5463</Version>
     </PackageReference>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
       <Name>Microsoft Engagement Framework</Name>
