@@ -1,14 +1,7 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="DefaultLaunchActivationHandler.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2018 Jhueppauff
-// Mozilla Public License Version 2.0 
-// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
-// </copyright>
-//-----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Threading.Tasks;
 
+using Dynamics365CustomizingManager.Helpers;
 using Dynamics365CustomizingManager.Services;
 
 using Windows.ApplicationModel.Activation;
@@ -17,11 +10,19 @@ namespace Dynamics365CustomizingManager.Activation
 {
     internal class DefaultLaunchActivationHandler : ActivationHandler<LaunchActivatedEventArgs>
     {
-        private readonly Type _navElement;
+        private readonly string _navElement;
+
+        private NavigationServiceEx NavigationService
+        {
+            get
+            {
+                return CommonServiceLocator.ServiceLocator.Current.GetInstance<NavigationServiceEx>();
+            }
+        }
 
         public DefaultLaunchActivationHandler(Type navElement)
         {
-            _navElement = navElement;
+            _navElement = navElement.FullName;
         }
 
         protected override async Task HandleInternalAsync(LaunchActivatedEventArgs args)
@@ -30,6 +31,9 @@ namespace Dynamics365CustomizingManager.Activation
             // the new page by passing required information in the navigation parameter
             NavigationService.Navigate(_navElement, args.Arguments);
 
+            // TODO WTS: Remove or change this sample which shows a toast notification when the app is launched.
+            // You can use this sample to create toast notifications where needed in your app.
+            Singleton<ToastNotificationsService>.Instance.ShowToastNotificationSample();
             await Task.CompletedTask;
         }
 

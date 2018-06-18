@@ -1,12 +1,4 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="CrmBackgroundHandler.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2018 Jhueppauff
-// Mozilla Public License Version 2.0 
-// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
-// </copyright>
-//-----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,7 +7,7 @@ using Windows.System.Threading;
 
 namespace Dynamics365CustomizingManager.BackgroundTasks
 {
-    public sealed class CrmBackgroundHandler : BackgroundTask
+    public sealed class CrmBackendTask : BackgroundTask
     {
         public static string Message { get; set; }
 

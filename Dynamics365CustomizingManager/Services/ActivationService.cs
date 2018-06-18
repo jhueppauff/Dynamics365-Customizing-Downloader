@@ -1,18 +1,11 @@
-﻿//-----------------------------------------------------------------------
-// <copyright file="ActivationService.cs" company="https://github.com/jhueppauff/Dynamics365-Customizing-Downloader">
-// Copyright 2018 Jhueppauff
-// Mozilla Public License Version 2.0 
-// For licence details visit https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/blob/master/LICENSE
-// </copyright>
-//-----------------------------------------------------------------------
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 using Dynamics365CustomizingManager.Activation;
 using Dynamics365CustomizingManager.Helpers;
+using Dynamics365CustomizingManager.Services;
 
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Core;
@@ -28,6 +21,10 @@ namespace Dynamics365CustomizingManager.Services
         private readonly App _app;
         private readonly Lazy<UIElement> _shell;
         private readonly Type _defaultNavItem;
+
+        private ViewModels.ViewModelLocator Locator => Application.Current.Resources["Locator"] as ViewModels.ViewModelLocator;
+
+        private NavigationServiceEx NavigationService => Locator.NavigationService;
 
         public ActivationService(App app, Type defaultNavItem, Lazy<UIElement> shell = null)
         {
@@ -89,21 +86,18 @@ namespace Dynamics365CustomizingManager.Services
         {
             await Singleton<BackgroundTaskService>.Instance.RegisterBackgroundTasksAsync();
             await ThemeSelectorService.InitializeAsync();
-            await Task.CompletedTask;
         }
 
         private async Task StartupAsync()
         {
             ThemeSelectorService.SetRequestedTheme();
-            await Singleton<DevCenterNotificationsService>.Instance.InitializeAsync();
-            await FirstRunDisplayService.ShowIfAppropriateAsync();
             await WhatsNewDisplayService.ShowIfAppropriateAsync();
-            await Task.CompletedTask;
+            await FirstRunDisplayService.ShowIfAppropriateAsync();
         }
 
         private IEnumerable<ActivationHandler> GetActivationHandlers()
         {
-            yield return Singleton<DevCenterNotificationsService>.Instance;
+            yield return Singleton<ToastNotificationsService>.Instance;
             yield return Singleton<BackgroundTaskService>.Instance;
         }
 

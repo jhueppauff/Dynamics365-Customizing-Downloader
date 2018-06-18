@@ -5,12 +5,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Style="{StaticResource PageStyle}"
+    DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}"
     xmlns:helper="using:Dynamics365CustomizingManager.Helpers"
     xmlns:xaml="using:Windows.UI.Xaml"
     mc:Ignorable="d">
     <Page.Resources>
         <helper:EnumToBooleanConverter x:Key="EnumToBooleanConverter" EnumType="ElementTheme" />
     </Page.Resources>
+
     <Grid Margin="{StaticResource MediumLeftRightMargin}">
         <StackPanel
             x:Name="ContentArea">
@@ -23,29 +25,29 @@
                     Style="{StaticResource BodyTextStyle}" />
 
                 <StackPanel Margin="{StaticResource EightTopMargin}">
-                    <RadioButton 
-                        x:Uid="Settings_Theme_Light" 
-                        GroupName="AppTheme" 
-                        Checked="ThemeChanged_CheckedAsync" 
-                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}">
+                    <RadioButton
+                        x:Uid="Settings_Theme_Light"
+                        GroupName="AppTheme"
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}">
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Light</xaml:ElementTheme>
-                        </RadioButton.CommandParameter> 
+                        </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton 
-                        x:Uid="Settings_Theme_Dark" 
+                    <RadioButton
+                        x:Uid="Settings_Theme_Dark"
                         GroupName="AppTheme"
-                        Checked="ThemeChanged_CheckedAsync" 
-                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}">
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}">
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Dark</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
                     </RadioButton>
-                    <RadioButton 
+                    <RadioButton
                         x:Uid="Settings_Theme_Default"
                         GroupName="AppTheme"
-                        Checked="ThemeChanged_CheckedAsync"
-                        IsChecked="{x:Bind ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}">
+                        IsChecked="{x:Bind ViewModel.ElementTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Default, Mode=OneWay}"
+                        Command="{x:Bind ViewModel.SwitchThemeCommand}">
                         <RadioButton.CommandParameter>
                             <xaml:ElementTheme>Default</xaml:ElementTheme>
                         </RadioButton.CommandParameter>
@@ -54,27 +56,26 @@
             </StackPanel>
 
             <TextBlock
-                    x:Uid="Settings_About"
-                    Style="{StaticResource SubtitleTextBlockStyle}"/>
+                x:Uid="Settings_About"
+                Style="{StaticResource SubtitleTextBlockStyle}" />
 
             <StackPanel Margin="{StaticResource EightTopMargin}">
                 <TextBlock
-                    Text="{x:Bind VersionDescription, Mode=OneWay}" />
+                    Text="{x:Bind ViewModel.VersionDescription, Mode=OneWay}" />
                 <TextBlock
                     x:Uid="Settings_AboutDescription"
                     Margin="{StaticResource EightTopMargin}" />
 
                 <HyperlinkButton
-                    x:Uid="Settings_PrivacyTermsLink" 
+                    x:Uid="Settings_PrivacyTermsLink"
                     Margin="{StaticResource EightTopMargin}" />
 
                 <HyperlinkButton
+                    Margin="{StaticResource EightTopMargin}"
                     x:Uid="FeedbackHub_Link"
-                    x:Name="FeedbackLink"
-                    Visibility="Collapsed"
-                    Click="FeedbackLink_Click"
-                    Margin="{StaticResource EightTopMargin}" />
+                    Command="{x:Bind ViewModel.LaunchFeedbackHubCommand}"
+                    Visibility="{x:Bind ViewModel.FeedbackLinkVisibility}" />
             </StackPanel>
         </StackPanel>
-    </Grid>
+    </Grid>    
 </Page>

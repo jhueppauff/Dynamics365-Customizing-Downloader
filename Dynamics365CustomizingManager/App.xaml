@@ -2,10 +2,12 @@
     x:Class="Dynamics365CustomizingManager.App"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:vms="using:Dynamics365CustomizingManager.ViewModels"
     >
 
     <Application.Resources>
         <ResourceDictionary>
+            <vms:ViewModelLocator x:Key="Locator" />
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="/Styles/_Colors.xaml"/>
                 <ResourceDictionary Source="/Styles/_FontSizes.xaml"/>

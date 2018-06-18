@@ -4,15 +4,16 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"    
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    DataContext="{Binding ShellViewModel, Source={StaticResource Locator}}"
     xmlns:helpers="using:Dynamics365CustomizingManager.Helpers"
-    xmlns:views="using:Dynamics365CustomizingManager.Views"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
     mc:Ignorable="d">
 
     <NavigationView
         x:Name="navigationView"
-        SelectedItem="{x:Bind Selected, Mode=OneWay}"
-        Header="{x:Bind Selected.Content, Mode=OneWay}"
-        ItemInvoked="OnItemInvoked"
+        SelectedItem="{x:Bind ViewModel.Selected, Mode=OneWay}"
+        Header="{x:Bind ViewModel.Selected.Content, Mode=OneWay}"
         IsSettingsVisible="True"
         Background="{ThemeResource SystemControlBackgroundAltHighBrush}">
         <NavigationView.MenuItems>
@@ -22,7 +23,11 @@
             Or to use an IconElement instead of a Symbol see https://github.com/Microsoft/WindowsTemplateStudio/blob/master/docs/projectTypes/navigationpane.md
             Edit String/en-US/Resources.resw: Add a menu item title for each page
             -->
-            <NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="views:MainPage" />
+            <NavigationViewItem x:Uid="Shell_Main" Icon="Document" helpers:NavHelper.NavigateTo="Dynamics365CustomizingManager.ViewModels.MainViewModel" />
+            <NavigationViewItem x:Uid="Shell_Downloader" Icon="Document" helpers:NavHelper.NavigateTo="Dynamics365CustomizingManager.ViewModels.DownloaderViewModel" />
+            <NavigationViewItem x:Uid="Shell_Extractor" Icon="Document" helpers:NavHelper.NavigateTo="Dynamics365CustomizingManager.ViewModels.ExtractorViewModel" />
+            <NavigationViewItem x:Uid="Shell_Packager" Icon="Document" helpers:NavHelper.NavigateTo="Dynamics365CustomizingManager.ViewModels.PackagerViewModel" />
+            <NavigationViewItem x:Uid="Shell_Uploader" Icon="Document" helpers:NavHelper.NavigateTo="Dynamics365CustomizingManager.ViewModels.UploaderViewModel" />
         </NavigationView.MenuItems>
         <NavigationView.HeaderTemplate>
             <DataTemplate>
@@ -33,6 +38,11 @@
                     Text="{Binding}" />
             </DataTemplate>
         </NavigationView.HeaderTemplate>
+        <i:Interaction.Behaviors>
+            <ic:EventTriggerBehavior EventName="ItemInvoked">
+                <ic:InvokeCommandAction Command="{x:Bind ViewModel.ItemInvokedCommand}" />
+            </ic:EventTriggerBehavior>
+        </i:Interaction.Behaviors>
         <Grid>
             <Frame x:Name="shellFrame" />
         </Grid>
