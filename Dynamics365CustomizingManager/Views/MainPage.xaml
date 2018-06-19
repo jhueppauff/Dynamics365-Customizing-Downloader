@@ -12,6 +12,8 @@
         Margin="{StaticResource MediumLeftRightMargin}">
         <Grid
             Background="{ThemeResource SystemControlPageBackgroundChromeLowBrush}">
+            <ComboBox x:Name="CbxRepositories" HorizontalAlignment="Left" Margin="112,159,0,0" VerticalAlignment="Top" Width="421"/>
+            <TextBlock HorizontalAlignment="Left" Margin="112,134,0,0" Text="Please select a Repository:" TextWrapping="Wrap" VerticalAlignment="Top"/>
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
         </Grid>
