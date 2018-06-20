@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader", "Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj", "{F13C631B-FFEF-4C60-AAE0-AC2BF7C013A9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader", "Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj", "{F13C631B-FFEF-4C60-AAE0-AC2BF7C013A9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "UnitTest\UnitTest.csproj", "{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest", "Dynamics365CustomizingDownloader\UnitTest\UnitTest.csproj", "{D9C51BC7-18DF-4EB9-BC6F-A20BFEEFFAE2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Download CI Client", "Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj", "{127D25E2-C6A3-4362-93C5-E9B58EA913F7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Download CI Client", "Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj", "{127D25E2-C6A3-4362-93C5-E9B58EA913F7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader Core", "Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj", "{4376E28A-8075-4E9B-9A03-5154865C9971}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365 Customizing Downloader Core", "Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj", "{4376E28A-8075-4E9B-9A03-5154865C9971}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{35700CFE-9BCC-4529-B506-1310E01AE5DB}"
 	ProjectSection(SolutionItems) = preProject
@@ -17,11 +17,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SonarQube", "SonarQube", "{
 		SonarQube\SolutionBinding.sqconfig = SonarQube\SolutionBinding.sqconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingDownloader.Ressources", "Dynamics365CustomizingDownloader.Ressources\Dynamics365CustomizingDownloader.Ressources.csproj", "{38A49566-9D3E-44E9-9283-B965D21485EF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingDownloader.Ressources", "Dynamics365CustomizingDownloader\Dynamics365CustomizingDownloader.Ressources\Dynamics365CustomizingDownloader.Ressources.csproj", "{38A49566-9D3E-44E9-9283-B965D21485EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingManager", "Dynamics365CustomizingManager\Dynamics365CustomizingManager.csproj", "{77967CB0-44D0-44AA-AF2E-43797E9DE395}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingManager", "Dynamics365CustomizingManager\Dynamics365CustomizingManager\Dynamics365CustomizingManager.csproj", "{77967CB0-44D0-44AA-AF2E-43797E9DE395}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingManager.Core", "Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj", "{3F714CFF-CB93-47B8-A2E1-D87FE0155216}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingManager.Core", "Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj", "{3F714CFF-CB93-47B8-A2E1-D87FE0155216}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
