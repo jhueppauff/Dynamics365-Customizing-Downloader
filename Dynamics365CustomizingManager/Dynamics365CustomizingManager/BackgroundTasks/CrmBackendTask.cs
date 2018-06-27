@@ -11,7 +11,7 @@ namespace Dynamics365CustomizingManager.BackgroundTasks
     {
         public static string Message { get; set; }
 
-        private volatile bool _cancelRequested = false;
+        private readonly volatile bool _cancelRequested = false;
         private IBackgroundTaskInstance _taskInstance;
         private BackgroundTaskDeferral _deferral;
 
