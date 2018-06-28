@@ -6,7 +6,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.Data
+namespace Dynamics365CustomizingManager.Core.Data
 {
     using System;
     using System.Collections.Generic;
@@ -23,23 +23,14 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <summary>
         /// Log4Net Logger
         /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Local Path of the JSON Storage File
         /// </summary>
-        private static string storagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Dyn365_Configuration.json");
+        private static readonly Windows.Storage.StorageFolder localFolder = Windows.Storage.ApplicationData.Current.LocalFolder;
 
-        /// <summary>
-        /// Gets the local path of the JSON Storage File
-        /// </summary>
-        public static string StoragePath
-        {
-            get
-            {
-                return storagePath;
-            }
-        }
+        private static readonly string storagePath = localFolder.Path + @"\datastore.json";
 
         /// <summary>
         /// Saves the <see cref="Xrm.CrmConnection"/> to the local Configuration
@@ -51,40 +42,34 @@ namespace Dynamics365CustomizingDownloader.Core.Data
             List<Xrm.CrmConnection> crmConnections = new List<Xrm.CrmConnection>();
 
             // Create if File does not exist
-            if (!File.Exists(StoragePath))
+            if (!File.Exists(storagePath))
             {
-                File.Create(StoragePath).Close();
+                File.Create(storagePath);
 
                 // Encrypt Connection String
-                crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
+                // crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
                 crmConnection.LocalPath = string.Empty;
                 crmConnections.Add(crmConnection);
-                string json = JsonConvert.SerializeObject(crmConnections);
+                string jsonCreate = JsonConvert.SerializeObject(crmConnections);
 
-                File.WriteAllText(StoragePath, json);
+                File.WriteAllText(storagePath, jsonCreate);
             }
             else
             {
-                using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
-                {
-                    string localJSON = streamReader.ReadToEnd();
+                string localJSON = File.ReadAllText(storagePath);
 
-                    // Convert Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(localJSON);
+                // Convert Json to List
+                crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(localJSON);
 
-                    // Encrypt Connection String
-                    crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
-                    crmConnection.LocalPath = string.Empty;
-                    crmConnections.Add(crmConnection);
-
-                    // Close File Stream
-                    streamReader.Close();
-                }
-
-                // Write to Configuration File
-                string json = JsonConvert.SerializeObject(crmConnections);
-                File.WriteAllText(StoragePath, json);
+                // Encrypt Connection String
+                //crmConnection.ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
+                crmConnection.LocalPath = string.Empty;
+                crmConnections.Add(crmConnection);
             }
+
+            // Write to Configuration File
+            string json = JsonConvert.SerializeObject(crmConnections);
+            File.WriteAllText(storagePath, json);
         }
 
         /// <summary>
@@ -96,28 +81,23 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         {
             List<Xrm.CrmConnection> crmConnections;
 
-            if (File.Exists(StoragePath))
+            if (File.Exists(storagePath))
             {
-                using (StreamReader streamReader = new StreamReader(Data.StorageExtensions.StoragePath))
-                {
-                    string json = streamReader.ReadToEnd();
+                string json = File.ReadAllText(storagePath);
 
-                    // Converts Json to List
-                    crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
+                // Converts Json to List
+                crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-                    foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
-                    {
-                        crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, encryptionKey);
-                    }
+                //foreach (Xrm.CrmConnection crmTempConnection in crmConnections)
+                //{
+                //    crmTempConnection.ConnectionString = Cryptography.DecryptStringAES(crmTempConnection.ConnectionString, encryptionKey);
+                //}
 
-                    // Close File Stream
-                    streamReader.Close();
-                }
             }
             else
             {
-                StorageExtensions.Log.Error("File was not found", new FileNotFoundException("File was not found", StoragePath));
-                throw new FileNotFoundException("File was not found", StoragePath);
+                //StorageExtensions.Log.Error("File was not found", new FileNotFoundException("File was not found", StoragePath));
+                throw new FileNotFoundException("File was not found");
             }
 
             return crmConnections;
@@ -130,15 +110,16 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <param name="encryptionKey">The Encryption key used in <see cref="Core.Data.Cryptography"/></param>
         public static void Update(Xrm.CrmConnection crmConnection, string encryptionKey)
         {
-            string json = File.ReadAllText(StoragePath);
+            string json = File.ReadAllText(storagePath);
             List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
-            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = Cryptography.EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
+            //crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = EncryptStringAES(crmConnection.ConnectionString, encryptionKey);
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).ConnectionString = crmConnection.ConnectionString;
             crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).LocalPath = crmConnection.LocalPath;
-            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).Name  = crmConnection.Name;
+            crmConnections.Find(x => x.ConnectionID == crmConnection.ConnectionID).Name = crmConnection.Name;
 
             string jsonNew = JsonConvert.SerializeObject(crmConnections);
-            File.WriteAllText(StoragePath, jsonNew);
+            File.WriteAllText(storagePath, jsonNew);
         }
 
         /// <summary>
@@ -148,18 +129,18 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <returns>Returns the <see cref="Guid"/> of the connection.</returns>
         public static Guid FindConnectionIDByName(string connectionName)
         {
-            string json = File.ReadAllText(StoragePath);
+            string json = File.ReadAllText(storagePath);
             List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             // Add GUID if it does not exists
             if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
             {
                 Guid connectionID = Guid.NewGuid();
-                
+
                 crmConnections.Find(x => x.Name == connectionName).ConnectionID = connectionID;
 
                 string jsonNew = JsonConvert.SerializeObject(crmConnections);
-                File.WriteAllText(StoragePath, jsonNew);
+                File.WriteAllText(storagePath, jsonNew);
             }
 
             return crmConnections.Find(x => x.Name == connectionName).ConnectionID;
@@ -173,7 +154,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         public static Guid UpdateConnectionWithID(string connectionName)
         {
             Guid connectionID = Guid.NewGuid();
-            string json = File.ReadAllText(StoragePath);
+            string json = File.ReadAllText(storagePath);
             List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             if (crmConnections.Find(x => x.Name == connectionName).ConnectionID == Guid.Empty)
@@ -181,7 +162,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
                 crmConnections.Find(x => x.Name == connectionName).ConnectionID = connectionID;
 
                 string jsonNew = JsonConvert.SerializeObject(crmConnections);
-                File.WriteAllText(StoragePath, jsonNew);
+                File.WriteAllText(storagePath, jsonNew);
 
                 return connectionID;
             }
@@ -198,7 +179,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <returns>Returns a count <see cref="int"/> of all found connections</returns>
         public static int GetCountOfConnectionNamesByName(string connectionName)
         {
-            string json = File.ReadAllText(StoragePath);
+            string json = File.ReadAllText(storagePath);
             List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
             int count = 0;
@@ -215,9 +196,9 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <param name="wipeData">if this is set, all data within the local folder will be wiped out!</param>
         public static void Delete(string connectionName, bool wipeData = false)
         {
-            if (File.Exists(StoragePath))
+            if (File.Exists(storagePath))
             {
-                string json = File.ReadAllText(StoragePath);
+                string json = File.ReadAllText(storagePath);
                 List<Xrm.CrmConnection> crmConnections = JsonConvert.DeserializeObject<List<Xrm.CrmConnection>>(json);
 
                 try
@@ -233,17 +214,17 @@ namespace Dynamics365CustomizingDownloader.Core.Data
                     if (crmConnections.Count == 0)
                     {
                         // Delete File if there is no Connection left
-                        File.Delete(StoragePath);
+                        File.Delete(storagePath);
                     }
                     else
                     {
                         string jsonNew = JsonConvert.SerializeObject(crmConnections);
-                        File.WriteAllText(StoragePath, jsonNew);
+                        File.WriteAllText(storagePath, jsonNew);
                     }
                 }
                 catch (Exception ex)
                 {
-                    Log.Error(ex.Message, ex);
+                    //Log.Error(ex.Message, ex);
                     throw;
                 }
             }

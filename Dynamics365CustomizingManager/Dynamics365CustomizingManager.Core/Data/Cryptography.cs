@@ -6,7 +6,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.Data
+namespace Dynamics365CustomizingManager.Core.Data
 {
     using System;
     using System.IO;
@@ -21,7 +21,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <summary>
         /// Log4Net Logger
         /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        //private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// While an app specific salt is not the best practice for
@@ -39,70 +39,7 @@ namespace Dynamics365CustomizingDownloader.Core.Data
         /// <returns>Returns a encrypted string</returns>
         public static string EncryptStringAES(string plainText, string encryptionKey)
         {
-            if (string.IsNullOrEmpty(plainText))
-            {
-                var ex = new ArgumentNullException("plainText");
-                Cryptography.Log.Error(ex.Message, ex);
-                throw new ArgumentNullException("plainText");
-            }
-
-            if (string.IsNullOrEmpty(encryptionKey))
-            {
-                var ex = new ArgumentNullException("encryptionKey");
-                Cryptography.Log.Error(ex.Message, ex);
-                throw new ArgumentNullException("encryptionKey");
-            }
-
-            // Encrypted string to return
-            string outStr = null;
-
-            // RijndaelManaged object used to encrypt the data.
-            RijndaelManaged aesAlg = null;
-
-            try
-            {
-                // generate the key from the shared secret and the salt
-                using (Rfc2898DeriveBytes key = new Rfc2898DeriveBytes(encryptionKey, salt))
-                {
-                    // Create a RijndaelManaged object
-                    aesAlg = new RijndaelManaged();
-                    aesAlg.Key = key.GetBytes(aesAlg.KeySize / 8);
-
-                    // Create a decryptor to perform the stream transform.
-                    ICryptoTransform encryptor = aesAlg.CreateEncryptor(aesAlg.Key, aesAlg.IV);
-
-                    // Create the streams used for encryption.
-                    using (MemoryStream msEncrypt = new MemoryStream())
-                    {
-                        // prepend the IV
-                        msEncrypt.Write(BitConverter.GetBytes(aesAlg.IV.Length), 0, sizeof(int));
-                        msEncrypt.Write(aesAlg.IV, 0, aesAlg.IV.Length);
-
-                        using (CryptoStream csEncrypt = new CryptoStream(msEncrypt, encryptor, CryptoStreamMode.Write))
-                        {
-                            using (StreamWriter swEncrypt = new StreamWriter(csEncrypt))
-                            {
-                                // Write all data to the stream.
-                                swEncrypt.Write(plainText);
-                            }
-                        }
-
-                        outStr = Convert.ToBase64String(msEncrypt.ToArray());
-                    }
-                }
-            }
-            finally
-            {
-                // Clear the RijndaelManaged object.
-                if (aesAlg != null)
-                {
-                    aesAlg.Clear();
-                    aesAlg.Dispose();
-                }
-            }
-
-            // Return the encrypted bytes from the memory stream.
-            return outStr;
+           
         }
 
         /// <summary>

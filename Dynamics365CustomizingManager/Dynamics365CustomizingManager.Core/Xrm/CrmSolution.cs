@@ -6,7 +6,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.Xrm
+namespace Dynamics365CustomizingManager.Core.Xrm
 {
     using System;
     using System.IO;

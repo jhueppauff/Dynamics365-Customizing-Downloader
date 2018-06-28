@@ -274,7 +274,12 @@
     <Compile Include="Helpers\ResourceExtensions.cs" />
     <Compile Include="Helpers\Singleton.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj">
+      <Project>{3f714cff-cb93-47b8-a2e1-d87fe0155216}</Project>
+      <Name>Dynamics365CustomizingManager.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
