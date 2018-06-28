@@ -6,7 +6,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.IO
+namespace Dynamics365CustomizingManager.Core.IO
 {
     using System.IO;
 

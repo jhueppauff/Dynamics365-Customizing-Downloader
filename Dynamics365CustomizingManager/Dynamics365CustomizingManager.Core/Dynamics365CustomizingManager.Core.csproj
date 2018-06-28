@@ -114,22 +114,16 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Data\Cryptography.cs" />
+    <None Include="Data\Cryptography.cs" />
     <Compile Include="Data\StorageExtensions.cs" />
     <Compile Include="IO\Directory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Update\Asset.cs" />
-    <Compile Include="Update\Author.cs" />
-    <Compile Include="Update\Person.cs" />
-    <Compile Include="Update\Release.cs" />
-    <Compile Include="Update\UpdateChecker.cs" />
-    <Compile Include="Update\Uploader.cs" />
     <Compile Include="Xrm\CrmConnection.cs" />
-    <Compile Include="Xrm\CrmConnectionException.cs" />
+    <None Include="Xrm\CrmConnectionException.cs" />
     <Compile Include="Xrm\CrmSolution.cs" />
     <Compile Include="Xrm\CrmSolutionPackager.cs" />
     <Compile Include="Xrm\ICRMConnectionException.cs" />
-    <Compile Include="Xrm\ToolingConnector.cs" />
+    <None Include="Xrm\ToolingConnector.cs" />
     <EmbeddedResource Include="Properties\Dynamics365CustomizingManager.Core.rd.xml" />
   </ItemGroup>
   <ItemGroup>

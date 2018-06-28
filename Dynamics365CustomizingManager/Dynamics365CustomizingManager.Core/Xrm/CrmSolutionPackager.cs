@@ -6,7 +6,7 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.Xrm
+namespace Dynamics365CustomizingManager.Core.Xrm
 {
     using System.Diagnostics;
     using System.IO;
@@ -19,7 +19,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <summary>
         /// Log4Net Logger
         /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        // private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Extract the CRM Solution
@@ -35,7 +35,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
 
             if (!File.Exists(path))
             {
-                CrmSolutionPackager.Log.Error("Assumed solution file not found: " + path, new FileNotFoundException("Assumed solution file not found: " + path));
+                //CrmSolutionPackager.Log.Error("Assumed solution file not found: " + path, new FileNotFoundException("Assumed solution file not found: " + path));
                 throw new FileNotFoundException("Assumed solution file not found: " + path);
             }
 
@@ -46,7 +46,6 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
                 UseShellExecute = false,
                 FileName = "SolutionPackager.exe",
                 RedirectStandardOutput = true,
-                WindowStyle = ProcessWindowStyle.Normal,
                 Arguments = $"/action:Extract /zipfile:{path} /folder:{extractFolder} /packagetype:Unmanaged /allowWrite:yes /allowDelete:yes /clobber /nologo"
             };
 
@@ -75,7 +74,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
             }
             catch (System.Exception ex)
             {
-                CrmSolutionPackager.Log.Error(ex.Message, ex);
+                //CrmSolutionPackager.Log.Error(ex.Message, ex);
                 throw;
             }
         }

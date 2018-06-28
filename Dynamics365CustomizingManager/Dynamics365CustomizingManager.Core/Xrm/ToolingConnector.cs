@@ -6,17 +6,13 @@
 // </copyright>
 //-----------------------------------------------------------------------
 
-namespace Dynamics365CustomizingDownloader.Core.Xrm
+namespace Dynamics365CustomizingManager.Core.Xrm
 {
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Runtime.InteropServices;
-    using Microsoft.Crm.Sdk.Messages;
     using Microsoft.Win32.SafeHandles;
-    using Microsoft.Xrm.Sdk;
-    using Microsoft.Xrm.Sdk.Query;
-    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// XRM/CRM Tooling Connector
@@ -26,7 +22,7 @@ namespace Dynamics365CustomizingDownloader.Core.Xrm
         /// <summary>
         /// Log4Net Logger
         /// </summary>
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        // private static readonly log4net.ILog Log = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         /// <summary>
         /// Instantiate a SafeHandle instance.
