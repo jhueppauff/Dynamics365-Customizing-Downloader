@@ -50,14 +50,14 @@ namespace Dynamics365CustomizingManager.Core.Xrm
             this.Source = source;
         }
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="CrmConnectionException"/> class. Which contains <see cref="SerializationInfo"/> and <see cref="StreamingContext"/>
-        /// </summary>
-        /// <param name="info">Serialization Info</param>
-        /// <param name="context">Streaming Context</param>
-        protected CrmConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
+        ///// <summary>
+        ///// Initializes a new instance of the <see cref="CrmConnectionException"/> class. Which contains <see cref="SerializationInfo"/> and <see cref="StreamingContext"/>
+        ///// </summary>
+        ///// <param name="info">Serialization Info</param>
+        ///// <param name="context">Streaming Context</param>
+        //protected CrmConnectionException(SerializationInfo info, StreamingContext context) : base(info, context)
+        //{
+        //}
 
         /// <summary>
         /// Gets or sets the Exception Help Link
@@ -68,15 +68,32 @@ namespace Dynamics365CustomizingManager.Core.Xrm
         /// Gets or sets the Exception Source
         /// </summary>
         public override string Source { get => base.Source; set => base.Source = value; }
+        string ICrmConnectionException.HelpLink { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        string ICrmConnectionException.Source { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-        /// <summary>
-        /// Gets the Object Date
-        /// </summary>
-        /// <param name="info">Serialization Info</param>
-        /// <param name="context">Streaming Context</param>
-        public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        bool ICrmConnectionException.Equals(object obj)
         {
-            base.GetObjectData(info, context);
+            return base.Equals(obj);
         }
+
+        int ICrmConnectionException.GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        void ICrmConnectionException.GetObjectData(SerializationInfo info, StreamingContext context)
+        {
+            throw new NotImplementedException();
+        }
+
+        ///// <summary>
+        ///// Gets the Object Date
+        ///// </summary>
+        ///// <param name="info">Serialization Info</param>
+        ///// <param name="context">Streaming Context</param>
+        //public override void GetObjectData(SerializationInfo info, StreamingContext context)
+        //{
+        //    base.GetObjectData(info, context);
+        //}
     }
 }

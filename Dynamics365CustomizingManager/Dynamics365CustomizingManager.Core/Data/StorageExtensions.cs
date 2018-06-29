@@ -97,7 +97,7 @@ namespace Dynamics365CustomizingManager.Core.Data
             else
             {
                 //StorageExtensions.Log.Error("File was not found", new FileNotFoundException("File was not found", StoragePath));
-                throw new FileNotFoundException("File was not found");
+                return crmConnections = new List<Xrm.CrmConnection>();
             }
 
             return crmConnections;
