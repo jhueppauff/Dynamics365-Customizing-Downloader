@@ -35,7 +35,13 @@
             <TextBlock HorizontalAlignment="Left" Margin="112,134,0,0" Text="Please select a Repository:" TextWrapping="Wrap" VerticalAlignment="Top"/>
             <!--The SystemControlPageBackgroundChromeLowBrush background represents where you should place your content. 
                 Place your content here.-->
+            <StackPanel>
+                <Rectangle Fill="Red" Height="44"/>
+                <Rectangle Fill="Blue" Height="44"/>
+                <Rectangle Fill="Green" Height="44"/>
+                <Rectangle Fill="Orange" Height="44"/>
+            </StackPanel>
         </Grid>
-        
+     
     </Grid>
 </Page>
