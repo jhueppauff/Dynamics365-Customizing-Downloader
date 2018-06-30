@@ -1,11 +1,8 @@
 ﻿using System;
-
 using Dynamics365CustomizingManager.Services;
-
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 
