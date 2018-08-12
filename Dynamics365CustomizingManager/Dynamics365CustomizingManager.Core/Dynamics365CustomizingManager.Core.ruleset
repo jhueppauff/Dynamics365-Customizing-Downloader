@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="SonarQube - Dynamics365 Customizing Downloader Sonar way" ToolsVersion="15.0">
-  <Include Path="..\..\sonarqube\dynamics365customizingdownloadercsharp.ruleset" Action="Default" />
-  <Include Path="..\sonarqube\dynamics365customizingdownloadercsharp.ruleset" Action="Default" />
-</RuleSet>
