@@ -1,3 +1,5 @@
+resources:
+- repo: self
 queue:
   name: Hosted VS2017
   demands: 
@@ -36,7 +38,7 @@ steps:
     secureFile: 'e53042c3-bd12-4148-b1e6-1ab3bc858fc4'
 
 
-- powershell: ./ '$(System.DefaultWorkingDirectory)\Set-AssemblyVersion.ps1' 
+- powershell: ./ '$(Agent.TempDirectory)\Set-AssemblyVersion.ps1' 
   arguments: '-Verbose'
 
   failOnStderr: true
@@ -148,5 +150,6 @@ steps:
   displayName: 'Publish Artifact: drop'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
+
 
 
