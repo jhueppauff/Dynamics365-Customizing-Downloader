@@ -3,7 +3,7 @@ Build Status:
 
 |VSTS Build Status|SonarQube|
 |-----------------|----------------------|
-|![Build Status](https://vss-hueppauff.visualstudio.com/_apis/public/build/definitions/c6b6194e-ccf7-4bfb-b69b-08e22f70ac52/8/badge)|![Quality Gate](https://sonarcloud.io/api/badges/gate?key=Dynamics365CustomizingDownloader)|
+|[![Build status](https://dev.azure.com/jhueppauff/Dynamics365CustomizingDownloader/_apis/build/status/Dynamics365CustomizingDownloader-.NET%20Desktop-CI)](https://dev.azure.com/jhueppauff/Dynamics365CustomizingDownloader/_build/latest?definitionId=3)|![Quality Gate](https://sonarcloud.io/api/badges/gate?key=Dynamics365CustomizingDownloader)|
 
 #### Release Stats:
 
