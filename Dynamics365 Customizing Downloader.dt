@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT18M55.0800304S" SolutionTotalViewTime="PT1H31M45.3896544S" SolutionTotalDebugTime="PT3.4959865S">
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT18M55.0800304S" SolutionTotalViewTime="PT1H49M51.515567S" SolutionTotalDebugTime="PT3.4959865S">
   <FileVersion>
     <Major>1</Major>
     <Minor>0</Minor>
@@ -7,18 +7,68 @@
   <SolutionFolder>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader</SolutionFolder>
   <SessionTimeList />
   <LastSessionTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT1M20.031075S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT5M25.0528813S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Update\Asset.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:52:46.2566712+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT14.5131262S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\ConnectionManger.xaml.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:02:57.9493743+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M0.1204449S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName />
-      <CreatedDate>2018-10-01T21:52:05.756534+02:00</CreatedDate>
+      <CreatedDate>2018-10-01T21:54:27.9997534+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT11M26.4394602S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Options.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:41:10.9219125+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
   </LastSessionTimeList>
   <TotalTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT5M25.0528813S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Update\Asset.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:52:46.2566712+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT14.5131262S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\ConnectionManger.xaml.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:02:57.9493743+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT4M55.0100615S" EditActiveTime="PT18M29.6702507S">
       <ModifiedDate>2018-06-24T21:00:54.8568824+02:00</ModifiedDate>
       <ModifiedBy>julian</ModifiedBy>
@@ -40,10 +90,10 @@
       <CreatedDate>2018-06-28T17:56:16.8771578+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT32M42.2709805S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT33M42.3914254S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
-      <ViewedCount>3</ViewedCount>
+      <ViewedCount>4</ViewedCount>
       <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName />
@@ -71,6 +121,16 @@
       <CreatedDate>2018-06-24T21:00:10.8225113+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT11M26.4394602S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Options.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:41:10.9219125+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT26M22.4015638S" EditActiveTime="PT24.1051387S">
       <ModifiedDate>2018-06-28T18:00:17.2649397+02:00</ModifiedDate>
       <ModifiedBy>julian</ModifiedBy>
@@ -94,6 +154,46 @@
     </DevTrackerDataItem>
   </TotalTimeList>
   <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT5M25.0528813S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Update\Asset.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:52:46.2566712+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT11M26.4394602S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Options.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Download CI Client\Dynamics365 Customizing Download CI Client.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:41:10.9219125+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT14.5131262S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\ConnectionManger.xaml.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingDownloader\Dynamics365 Customizing Downloader\Dynamics365 Customizing Downloader.csproj</ProjectName>
+      <CreatedDate>2018-10-01T22:02:57.9493743+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT1M0.1204449S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2018-10-01T21:54:27.9997534+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT1M20.0300795S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
