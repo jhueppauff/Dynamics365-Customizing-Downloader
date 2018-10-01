@@ -180,16 +180,16 @@ namespace Dynamics365CustomizingDownloader
             listMenuItems.Add(menuItem);
 
             // Solution Uploader
-            Pages.SolutionUploader solutionUploader = new Pages.SolutionUploader();
+            //Pages.SolutionUploader solutionUploader = new Pages.SolutionUploader();
 
-            menuItem = new Pages.MenuItem()
-            {
-                Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader"),
-                Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader_Description"),
-                Content = solutionUploader
-            };
+            //menuItem = new Pages.MenuItem()
+            //{
+            //    Name = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader"),
+            //    Description = (string)Application.Current.FindResource("MainWindow_Code_Solution_Uploader_Description"),
+            //    Content = solutionUploader
+            //};
 
-            listMenuItems.Add(menuItem);
+            //listMenuItems.Add(menuItem);
             return listMenuItems;
         }
 
