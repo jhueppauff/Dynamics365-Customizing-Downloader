@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-16"?>
-<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT18M55.0800304S" SolutionTotalViewTime="PT1H9M8.7320574S" SolutionTotalDebugTime="PT3.4959865S">
+<DevTrackerData xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" SolutionTotalEditTime="PT18M55.0800304S" SolutionTotalViewTime="PT1H30M25.3615793S" SolutionTotalDebugTime="PT3.4959865S">
   <FileVersion>
     <Major>1</Major>
     <Minor>0</Minor>
@@ -7,36 +7,56 @@
   <SolutionFolder>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader</SolutionFolder>
   <SessionTimeList />
   <LastSessionTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT10M5.7773866S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT0.0279989S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <CreatedDate>2018-06-29T23:08:26.5757664+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT21M16.4665195S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName />
-      <CreatedDate>2018-06-29T22:48:07.0680547+02:00</CreatedDate>
+      <CreatedDate>2018-06-29T23:08:26.3457616+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT9M42.4220371S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT0.0990029S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
       <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
-      <CreatedDate>2018-06-29T22:32:42.4127009+02:00</CreatedDate>
+      <CreatedDate>2018-06-29T23:08:26.4367675+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT0.0360006S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <CreatedDate>2018-06-29T23:08:26.5387654+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
   </LastSessionTimeList>
   <TotalTimeList>
-    <DevTrackerDataItem ViewActiveTime="PT4M54.9820626S" EditActiveTime="PT18M29.6702507S">
+    <DevTrackerDataItem ViewActiveTime="PT4M55.0100615S" EditActiveTime="PT18M29.6702507S">
       <ModifiedDate>2018-06-24T21:00:54.8568824+02:00</ModifiedDate>
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>2</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
+      <ViewedCount>3</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T16:28:56.1765398+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -50,10 +70,10 @@
       <CreatedDate>2018-06-28T17:56:16.8771578+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT10M5.7753868S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT31M22.2419063S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
-      <ViewedCount>1</ViewedCount>
+      <ViewedCount>2</ViewedCount>
       <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
       <ItemType>ProjectItem</ItemType>
       <ProjectName />
@@ -75,35 +95,75 @@
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Metric\MetricClient.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Metric\MetricClient.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T21:00:10.8225113+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT26M22.3025609S" EditActiveTime="PT24.1051387S">
+    <DevTrackerDataItem ViewActiveTime="PT26M22.4015638S" EditActiveTime="PT24.1051387S">
       <ModifiedDate>2018-06-28T18:00:17.2649397+02:00</ModifiedDate>
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
-      <ViewedCount>2</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
+      <ViewedCount>3</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-28T17:56:22.6851444+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
-    <DevTrackerDataItem ViewActiveTime="PT27M9.3768512S" EditActiveTime="PT0S">
+    <DevTrackerDataItem ViewActiveTime="PT27M9.4128518S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
-      <ViewedCount>3</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <ViewedCount>4</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T21:00:59.3509957+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
   </TotalTimeList>
   <HistoryTimeList>
+    <DevTrackerDataItem ViewActiveTime="PT0.0279989S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <CreatedDate>2018-06-29T23:08:26.5757664+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT0.0360006S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <CreatedDate>2018-06-29T23:08:26.5387654+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT0.0990029S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <CreatedDate>2018-06-29T23:08:26.4367675+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
+    <DevTrackerDataItem ViewActiveTime="PT21M16.4665195S" EditActiveTime="PT0S">
+      <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
+      <EditedCount>0</EditedCount>
+      <ViewedCount>1</ViewedCount>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365 Customizing Downloader.dt</Item>
+      <ItemType>ProjectItem</ItemType>
+      <ProjectName />
+      <CreatedDate>2018-06-29T23:08:26.3457616+02:00</CreatedDate>
+      <ViewedBy>julian</ViewedBy>
+    </DevTrackerDataItem>
     <DevTrackerDataItem ViewActiveTime="PT10M5.776387S" EditActiveTime="PT0S">
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
@@ -118,9 +178,9 @@
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-29T22:32:42.4127009+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -129,9 +189,9 @@
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Data\StorageExtensions.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-28T17:56:22.6851444+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -149,9 +209,9 @@
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-28T16:57:02.0797791+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -159,9 +219,9 @@
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-28T16:57:02.0137801+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -169,9 +229,9 @@
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-28T16:55:21.0128821+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -179,9 +239,9 @@
       <ModifiedDate>0001-01-01T00:00:00</ModifiedDate>
       <EditedCount>0</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\ToolingConnector.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T21:00:59.3509957+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -190,9 +250,9 @@
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Metric\MetricClient.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Metric\MetricClient.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T21:00:10.8225113+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
@@ -211,9 +271,9 @@
       <ModifiedBy>julian</ModifiedBy>
       <EditedCount>1</EditedCount>
       <ViewedCount>1</ViewedCount>
-      <Item>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
+      <Item>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Xrm\CrmConnectionException.cs</Item>
       <ItemType>ProjectItem</ItemType>
-      <ProjectName>C:\Users\julian\source\repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
+      <ProjectName>C:\Users\julian\Source\Repos\Dynamics365-Customizing-Downloader\Dynamics365CustomizingManager\Dynamics365CustomizingManager.Core\Dynamics365CustomizingManager.Core.csproj</ProjectName>
       <CreatedDate>2018-06-24T16:28:56.1765398+02:00</CreatedDate>
       <ViewedBy>julian</ViewedBy>
     </DevTrackerDataItem>
