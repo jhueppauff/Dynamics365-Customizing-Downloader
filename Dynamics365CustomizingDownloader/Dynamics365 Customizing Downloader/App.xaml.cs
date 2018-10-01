@@ -8,6 +8,7 @@
 
 namespace Dynamics365CustomizingDownloader
 {
+    using System;
     using System.Windows;
 
     /// <summary>
@@ -15,5 +16,21 @@ namespace Dynamics365CustomizingDownloader
     /// </summary>
     public partial class App : Application
     {
+        /// <summary>
+        /// Overwrite for the Application Startup
+        /// </summary>
+        /// <param name="e">The <see cref="StartupEventArgs"/> instance containing the event data.</param>
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            try
+            {
+                MainWindow = new MainWindow();
+                MainWindow.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
     }
 }
