@@ -21,7 +21,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingDownl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dynamics365-Customizing-Downloader-WpfCore", "Dynamics365CustomizingDownloader\Dynamics365-Customizing-Downloader-WpfCore\Dynamics365-Customizing-Downloader-WpfCore.csproj", "{43B59C8F-D610-4124-9DFE-A18D094CE05F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dynamics365CustomizingDownloader.Core", "netstandard\Dynamics365CustomizingDownloader.Core\Dynamics365CustomizingDownloader.Core.csproj", "{4ED6F745-1D6E-4197-83E6-DE9E6FABB4B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dynamics365CustomizingDownloader.Core", "netstandard\Dynamics365CustomizingDownloader.Core\Dynamics365CustomizingDownloader.Core.csproj", "{4ED6F745-1D6E-4197-83E6-DE9E6FABB4B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnitTest.Core", "netstandard\UnitTest.Core\UnitTest.Core.csproj", "{0908F345-5C8D-4044-A78F-CA5F023074CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -147,6 +149,22 @@ Global
 		{4ED6F745-1D6E-4197-83E6-DE9E6FABB4B3}.Release|x64.Build.0 = Release|Any CPU
 		{4ED6F745-1D6E-4197-83E6-DE9E6FABB4B3}.Release|x86.ActiveCfg = Release|Any CPU
 		{4ED6F745-1D6E-4197-83E6-DE9E6FABB4B3}.Release|x86.Build.0 = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|ARM.Build.0 = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|x64.Build.0 = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Debug|x86.Build.0 = Debug|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|ARM.ActiveCfg = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|ARM.Build.0 = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|x64.ActiveCfg = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|x64.Build.0 = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|x86.ActiveCfg = Release|Any CPU
+		{0908F345-5C8D-4044-A78F-CA5F023074CA}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
