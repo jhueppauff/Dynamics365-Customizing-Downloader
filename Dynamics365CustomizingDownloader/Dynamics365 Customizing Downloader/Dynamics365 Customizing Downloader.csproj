@@ -422,16 +422,6 @@
     <Folder Include="bin\Release\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Dynamics365 Customizing Downloader Core\Dynamics365 Customizing Downloader Core.csproj">
-      <Project>{4376e28a-8075-4e9b-9a03-5154865c9971}</Project>
-      <Name>Dynamics365 Customizing Downloader Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Dynamics365CustomizingDownloader.Ressources\Dynamics365CustomizingDownloader.Ressources.csproj">
-      <Project>{38a49566-9d3e-44e9-9283-b965d21485ef}</Project>
-      <Name>Dynamics365CustomizingDownloader.Ressources</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.5.0.6605\analyzers\Google.Protobuf.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.5.0.6605\analyzers\SonarAnalyzer.CSharp.dll" />
     <Analyzer Include="..\..\packages\SonarAnalyzer.CSharp.7.5.0.6605\analyzers\SonarAnalyzer.dll" />
