@@ -1,4 +1,4 @@
-### Changes/Imporovements:
+### Changes/Improvements:
 <!--
     Please include a summary of the proposed changes below.
 -->

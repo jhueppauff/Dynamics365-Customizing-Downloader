@@ -1,8 +1,15 @@
 # Dynamics365CustomizingDownloader
 Build Status:
 
-![Build Status](https://vss-hueppauff.visualstudio.com/_apis/public/build/definitions/c6b6194e-ccf7-4bfb-b69b-08e22f70ac52/8/badge)
-![Quality Gate](https://sonarcloud.io/api/badges/gate?key=Dynamics365CustomizingDownloader)
+|VSTS Build Status|SonarQube|
+|-----------------|----------------------|
+|[![Build status](https://dev.azure.com/jhueppauff/Dynamics365CustomizingDownloader/_apis/build/status/Dynamics365CustomizingDownloader-.NET%20Desktop-CI)](https://dev.azure.com/jhueppauff/Dynamics365CustomizingDownloader/_build/latest?definitionId=3)|![Quality Gate](https://sonarcloud.io/api/badges/gate?key=Dynamics365CustomizingDownloader)|
+
+#### Release Stats:
+
+|All Releases: |Latest Release:|
+|--------------|---------------|
+|[![Github Releases](https://img.shields.io/github/downloads/jhueppauff/Dynamics365-Customizing-Downloader/total.svg)](https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/releases)|[![Github Releases](https://img.shields.io/github/downloads/jhueppauff/Dynamics365-Customizing-Downloader/latest/total.svg)](https://github.com/jhueppauff/Dynamics365-Customizing-Downloader/releases/latest)|
 
 A simple WPF Application Which Downloads and Extracts Dynamics365 Customizing Solutions.
 The whole Application is built around the XRM SDK and the Solution Packager.
