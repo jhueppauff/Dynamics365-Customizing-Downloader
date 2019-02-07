@@ -35,22 +35,29 @@ namespace Dynamics365CustomizingDownloader.CIClient
         /// <param name="args">Command Line Args</param>
         public static void Main(string[] args)
         {
-            GetParameter(args);
+            InitParameters(args);
             Core.Xrm.ToolingConnector toolingConnector = null;
             try
             {
                 toolingConnector = new Core.Xrm.ToolingConnector();
-                using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(parameters.SingleOrDefault(x => x.Name == "connection-string").Value))
+                using (CrmServiceClient client = toolingConnector.GetCrmServiceClient(GetParameter("connection-string")))
                 {
+                    if (HasParameter("timeout"))
+                    {
+                        client.OrganizationServiceProxy.Timeout = TimeSpan.FromMinutes(
+                            Convert.ToDouble(GetParameter("timeout"))
+                        );
+                    }
+
                     if (client.IsReady)
                     {
-                        string solutionName = parameters.SingleOrDefault(x => x.Name == "solution-name").Value;
-                        string localPath = parameters.SingleOrDefault(x => x.Name == "local-path").Value;
+                        string solutionName = GetParameter("solution-name");
+                        string localPath = GetParameter("local-path");
 
                         toolingConnector.DownloadSolution(client, solutionName, localPath);
                         Console.WriteLine("Download completed: " + Path.Combine(localPath, solutionName + ".zip").ToString());
 
-                        if (Convert.ToBoolean(parameters.SingleOrDefault(x => x.Name == "action").Value))
+                        if (Convert.ToBoolean(GetParameter("action")))
                         {
                             // Extract Solution
                             Core.Xrm.CrmSolutionPackager packager = new Core.Xrm.CrmSolutionPackager();
@@ -78,6 +85,21 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     ((IDisposable)toolingConnector).Dispose();
                 }
             }
+        }
+
+        private static string GetParameter(string name)
+        {
+            ConfigurationParameter parameter = parameters.SingleOrDefault(x => x.Name == name);
+            if (parameter == null)
+            {
+                throw new ArgumentException($"Parameter {name} is not set");
+            }
+            return parameter.Value;
+        }
+
+        private static bool HasParameter(string name)
+        {
+            return parameters.Any(x => x.Name == name);
         }
 
         /// <summary>
@@ -111,7 +133,7 @@ namespace Dynamics365CustomizingDownloader.CIClient
         /// Extracts the Parameter from the command line
         /// </summary>
         /// <param name="args">Command Line Parameters</param>
-        private static void GetParameter(string[] args)
+        private static void InitParameters(string[] args)
         {
             try
             {
@@ -133,40 +155,10 @@ namespace Dynamics365CustomizingDownloader.CIClient
                         switch (arg.ToLowerInvariant())
                         {
                             case "--connection-string":
-                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
-                                {
-                                    LogError("Missing Parameter Value : " + arg);
-                                }
-                                else
-                                {
-                                    parameter.Value = args[counter + 1];
-                                }
-
-                                break;
                             case "--solution-name":
-                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
-                                {
-                                    LogError("Missing Parameter Value : " + arg);
-                                }
-                                else
-                                {
-                                    parameter.Value = args[counter + 1];
-                                }
-
-                                break;
                             case "--local-path":
-                                parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
-                                if (args[counter + 1].ToString().StartsWith("--") || args[counter + 1] == null)
-                                {
-                                    LogError("Missing Parameter Value : " + arg);
-                                }
-                                else
-                                {
-                                    parameter.Value = args[counter + 1];
-                                }
-
+                            case "--timeout":
+                                AddParameter(arg.Remove(0, 2).ToLowerInvariant(), args[counter + 1]);
                                 break;
                             case "--action":
                                 parameter.Name = arg.Remove(0, 2).ToLowerInvariant();
@@ -195,11 +187,24 @@ namespace Dynamics365CustomizingDownloader.CIClient
                     counter++;
                 }
             }
-            catch (System.Exception ex)
+            catch (Exception ex)
             {
                 LogError(ex.Message);
                 LogError(ex.StackTrace);
             }
+        }
+
+        private static void AddParameter(string name, string value)
+        {
+            if (value == null || value.StartsWith("--"))
+            {
+                LogError($"Missing Parameter Value for : {name}");
+                return;
+            }
+            parameters.Add(new ConfigurationParameter {
+                Name = name,
+                Value = value
+            });
         }
 
         /// <summary>
