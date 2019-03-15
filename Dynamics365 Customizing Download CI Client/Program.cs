@@ -8,11 +8,11 @@
 
 namespace Dynamics365CustomizingDownloader.CIClient
 {
+    using Microsoft.Xrm.Tooling.Connector;
     using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Linq;
-    using Microsoft.Xrm.Tooling.Connector;
 
     /// <summary>
     /// Command Line Main Class
