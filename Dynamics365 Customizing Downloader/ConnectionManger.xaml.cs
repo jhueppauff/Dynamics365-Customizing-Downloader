@@ -168,39 +168,5 @@ namespace Dynamics365CustomizingDownloader
                 ConnectionManger.Log.Error(ex.Message, ex);
             }
         }
-
-        /// <summary>
-        /// Will open the WPF Connection Control
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void Lbl_ConnectionWizard_MouseLeftButtonUp(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            Pages.CrmConnectionDialog crmConnectionDialog = new Pages.CrmConnectionDialog();
-            crmConnectionDialog.ConnectionToCrmCompleted += this.CrmConnectionDialog_CrmConnectionCompleted;
-            crmConnectionDialog.ShowDialog();
-
-            // Validate connection to crm
-            if (crmConnectionDialog.CrmConnectionManager != null && crmConnectionDialog.CrmConnectionManager.CrmSvc != null && crmConnectionDialog.CrmConnectionManager.CrmSvc.IsReady)
-            {
-                // ToDo: get connection string or equaly connection config which may end in additional work if connection string is not possible from the wpf control
-            }
-        }
-
-        /// <summary>
-        /// Event will be raised on a successful Connection
-        /// </summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void CrmConnectionDialog_CrmConnectionCompleted(object sender, EventArgs e)
-        {
-            if (sender is Pages.CrmConnectionDialog source)
-            {
-                this.Dispatcher.Invoke(() =>
-                {
-                    source.Close();
-                });
-            }
-        }
     }
 }
